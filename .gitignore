@@ -35,6 +35,12 @@ transmissions/*/artwork/generated/
 *.key
 secrets/
 
+# Wrangler (Cloudflare Pages CLI) — cache local + account info por dev
+.wrangler/
+
+# Node deps (por si se agrega algo con npm en el futuro)
+node_modules/
+
 # ============================================================
 # Python
 # ============================================================
