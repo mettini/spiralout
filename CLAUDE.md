@@ -91,6 +91,65 @@ Project-local skills are in `.claude/skills/`:
   (mutagen), distributor comparison; trigger when finishing tracks for
   release.
 
+## Commits — hard rules
+
+### Author identity — inherit from global git config
+
+NEVER override `user.name` or `user.email` per-repo. The global config
+already has the correct identity for the user's commits. Setting a
+different email per-repo will cause GitHub to attribute commits to the
+wrong account (or none).
+
+Before the first commit in this repo (or any new clone), verify:
+
+```bash
+git config user.email   # must match what's in `git config --global user.email`
+git config user.name    # same
+```
+
+If a previous session accidentally set a per-repo override, remove it:
+
+```bash
+git config --unset user.email
+git config --unset user.name
+```
+
+If commits were already authored with the wrong identity, rewrite with git filter-branch --env-filter (set GIT_AUTHOR_* and GIT_COMMITTER_* from the global config) and force-push.
+
+NO Co-Authored-By: Claude trailer — ever.
+
+Commit messages MUST NOT include any of:
+
+- Co-Authored-By: Claude ...
+- 🤖 Generated with [Claude Code]...
+- Any other AI attribution line.
+
+The user does the commits. The assistant is a tool. No co-authorship.
+
+If a commit message ever accumulates one of these, strip it before committing. If it slips into history, rewrite with
+git filter-branch --msg-filter 'grep -v "Co-Authored-By: Claude"' and force-push.
+
+Use the commit-master skill.
+
+The repo ships with a commit-master skill under .claude/skills/.
+Use it when crafting commits — it encodes the user's conventions (format, language, scope). Do not fall back to generic commit templates.
+
+## 2️⃣  `~/.claude/CLAUDE.md` (al final)
+
+## Commits — assistant rules  
+
+The assistant is a tool. Commits belong to the user.
+
+- **NEVER override `git config user.email` or `user.name` per-repo.** Inherit from the global config. Setting a per-repo override has caused commits to be attributed to the wrong GitHub account in the past.
+- **NEVER add a `Co-Authored-By: Claude ...` trailer** to commit messages.
+- **NEVER add `🤖 Generated with [Claude Code]...`** or any AI attribution.
+- If a default template would inject these, strip them before committing.
+- If they slip into history, rewrite with `git filter-branch --msg-filter 'grep -v "Co-Authored-By: Claude"'` + force-push.
+
+If a project provides a `commit-master` (or equivalent) skill in `.claude/skills/`, invoke it to follow that project's commit conventions instead of falling back to generic templates.
+
+Before the first commit in any new repo, verify `git config user.email` matches the global config and do not override it unless the user explicitly asks.
+
 ## Conventions across the whole repo
 
 - Spanish in code comments / docstrings / variable docstrings.
