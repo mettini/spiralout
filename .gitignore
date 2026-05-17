@@ -1,0 +1,74 @@
+# ============================================================
+# Outputs renderizados (regenerables con task render:*)
+# ============================================================
+# masters de demos / scratch — derivables del compose
+transmissions/*/out/*/master/
+transmissions/*/out/*/stems/
+# se conserva: transmissions/*/out/index.json (manifest del player)
+
+# Carpeta de release: masters finales + distribución
+# Se regeneran con task release:bundle. Pesados, no van a git.
+transmissions/*/release/
+
+# Carpeta finals/v*/ — snapshots versionados (PESADOS pero importantes
+# como historia). Decidir caso por caso si versionar:
+#   - si los considerás "deliverables release" → gitignored
+#   - si querés trazabilidad de evoluciones → versionados
+# Por ahora ignorados (los stems pesan mucho)
+transmissions/*/themes/*/finals/*/stems/
+transmissions/*/themes/*/finals/*/master.wav
+# Se conservan: version.md, compose_snapshot.py (los chiquitos)
+
+# legacy outputs antes de la reorg
+out/
+
+# Artwork AI-generation iterations — solo se conservan los seleccionados
+# que se promueven a transmissions/*/artwork/cover_*.* en el root del dir.
+# Las iteraciones brutas viven en R2 (ver docs/20_storage_and_github.md).
+transmissions/*/artwork/generated/
+
+# Credenciales / secrets — nunca commitear
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# ============================================================
+# Player runtime
+# ============================================================
+.player.pid
+.player.port
+.player.log
+
+# ============================================================
+# Sistema operativo
+# ============================================================
+.DS_Store
+Thumbs.db
+
+# ============================================================
+# Editor
+# ============================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ============================================================
+# Samples reales (cuando los bajemos) — los wavs originales
+# son grandes; mejor que cada dev los baje on-demand
+# ============================================================
+samples/raw/
+samples/voyager_golden_record/
+samples/cmb_recordings/

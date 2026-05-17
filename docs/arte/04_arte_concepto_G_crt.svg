@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=VT323&amp;display=swap');
+    text { font-family: 'VT323', 'Courier New', 'Courier', monospace; }
+  </style>
+  <defs>
+    <pattern id="scanlines" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0.5" x2="4" y2="0.5" stroke="#000" stroke-width="1"/>
+    </pattern>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.4" in="SourceGraphic" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1000" height="1000" fill="#001A0D"/>
+
+  <g filter="url(#glow)">
+    <rect x="30" y="30" width="940" height="940" rx="14" stroke="#39FF14" stroke-width="0.8" fill="none" opacity="0.28"/>
+
+    <text x="70" y="180" font-size="100" letter-spacing="8" fill="#39FF14">ÆM</text>
+    <text x="70" y="222" font-size="22" letter-spacing="10" fill="#39FF14" opacity="0.85">HELIOPAUSE</text>
+
+    <line x1="70" y1="270" x2="930" y2="270" stroke="#39FF14" stroke-width="1.5" opacity="0.55"/>
+    <line x1="70" y1="275" x2="930" y2="275" stroke="#39FF14" stroke-width="1.5" opacity="0.55"/>
+
+    <text x="70" y="325" font-size="20" letter-spacing="2" fill="#39FF14">&gt; TRANSMISSION   01</text>
+    <text x="70" y="355" font-size="20" letter-spacing="2" fill="#39FF14">&gt; ORIGIN         EM</text>
+
+    <text x="70" y="435" font-size="14" letter-spacing="4" fill="#39FF14" opacity="0.7">[ TRACKS ]</text>
+    <line x1="70" y1="448" x2="540" y2="448" stroke="#39FF14" stroke-width="0.8" opacity="0.35"/>
+
+    <text x="70" y="485" font-size="20" letter-spacing="2" fill="#39FF14">01    OUTBOUND          08:00</text>
+    <text x="70" y="515" font-size="20" letter-spacing="2" fill="#39FF14">02    CROSSING          13:00</text>
+    <text x="70" y="545" font-size="20" letter-spacing="2" fill="#39FF14">03    RECURSION         21:00</text>
+
+    <rect x="70" y="608" width="20" height="14" fill="#FFB000"/>
+    <text x="100" y="622" font-size="18" letter-spacing="3" fill="#FFB000">SIGNAL ACTIVE</text>
+
+    <polygon points="825,740 805.6,782.5 752.5,813.6 680,825 607.5,813.6 554.4,782.5 535,740 554.4,697.5 607.5,666.4 680,655 752.5,666.4 805.6,697.5" stroke="#39FF14" stroke-width="2.5" fill="none" opacity="0.95" stroke-linejoin="miter"/>
+
+    <rect x="628" y="734" width="12" height="12" fill="#39FF14"/>
+
+    <line x1="640" y1="740" x2="848" y2="731" stroke="#39FF14" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.6"/>
+
+    <rect x="820" y="734" width="14" height="14" stroke="#39FF14" stroke-width="2" fill="none"/>
+
+    <rect x="844" y="724" width="14" height="14" fill="#FFB000"/>
+    <line x1="851" y1="722" x2="851" y2="700" stroke="#FFB000" stroke-width="1.5"/>
+    <text x="859" y="697" font-size="12" letter-spacing="1.5" fill="#FFB000">VOYAGER 1</text>
+
+    <text x="70" y="940" font-size="18" letter-spacing="3" fill="#39FF14" opacity="0.78">&gt; SPIRAL / 1</text>
+    <rect x="240" y="924" width="11" height="18" fill="#39FF14">
+      <animate attributeName="opacity" values="1;1;0;0" dur="1.2s" repeatCount="indefinite"/>
+    </rect>
+    <text x="930" y="940" font-size="18" letter-spacing="3" fill="#39FF14" opacity="0.78" text-anchor="end">AEM.FM</text>
+  </g>
+
+  <rect width="1000" height="1000" fill="url(#vignette)" pointer-events="none"/>
+  <rect width="1000" height="1000" fill="url(#scanlines)" opacity="0.4" pointer-events="none"/>
+</svg>

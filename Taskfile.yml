@@ -1,0 +1,596 @@
+version: '3'
+
+# Taskfile del proyecto Spiral Out (ÆM, Heliopause, transmissions).
+# Uso:  task <nombre>     ej:   task serve
+# Lista: task --list
+
+vars:
+  PYTHON: python3.10
+  TX: '01'                  # transmission activa (override: TX=02 task <nombre>)
+  TX_DIR: 'transmissions/{{.TX}}'
+  ROOT:
+    sh: pwd
+  PID_FILE: '.player.pid'
+  PORT_FILE: '.player.port'
+  PORT: '8765'
+  PLAYER_LOG: '.player.log'
+
+tasks:
+
+  default:
+    desc: Lista las tareas disponibles
+    silent: true
+    cmds:
+      - task --list
+
+  # ---------------------------------------------------------------------
+  # Setup
+  # ---------------------------------------------------------------------
+
+  install:
+    desc: Instala las dependencias Python (numpy, scipy)
+    cmds:
+      - "{{.PYTHON}} -m pip install --user numpy scipy"
+
+  # ---------------------------------------------------------------------
+  # Server / player
+  # ---------------------------------------------------------------------
+
+  serve:
+    desc: Arranca el player local en background y abre el browser
+    deps: [serve:stop]
+    cmds:
+      - 'nohup {{.PYTHON}} player/serve.py --port {{.PORT}} --pid-file {{.PID_FILE}} --port-file {{.PORT_FILE}} --no-open > {{.PLAYER_LOG}} 2>&1 &'
+      - sleep 0.6
+      - 'echo "player running on http://localhost:{{.PORT}}/player/"'
+      - 'echo "PID: $(cat {{.PID_FILE}} 2>/dev/null) · log: {{.PLAYER_LOG}}"'
+      - open "http://localhost:{{.PORT}}/player/" || true
+
+  serve:fg:
+    desc: Arranca el player en foreground (ctrl+c para parar)
+    cmds:
+      - "{{.PYTHON}} player/serve.py --port {{.PORT}}"
+
+  serve:stop:
+    desc: Mata el player local si está corriendo
+    silent: true
+    cmds:
+      - |
+        if [ -f {{.PID_FILE}} ]; then
+          PID=$(cat {{.PID_FILE}})
+          if kill -0 $PID 2>/dev/null; then
+            kill $PID && echo "killed PID $PID"
+          fi
+          rm -f {{.PID_FILE}} {{.PORT_FILE}}
+        fi
+        pkill -f "player/serve.py" 2>/dev/null || true
+
+  serve:status:
+    desc: Estado del player local
+    silent: true
+    cmds:
+      - |
+        if [ -f {{.PID_FILE}} ] && kill -0 $(cat {{.PID_FILE}}) 2>/dev/null; then
+          echo "player running · PID $(cat {{.PID_FILE}}) · port $(cat {{.PORT_FILE}} 2>/dev/null)"
+          echo "url: http://localhost:$(cat {{.PORT_FILE}} 2>/dev/null)/player/"
+        else
+          echo "player not running"
+        fi
+
+  serve:logs:
+    desc: Tail del log del player
+    cmds:
+      - tail -f {{.PLAYER_LOG}}
+
+  open:
+    desc: Abre el player en el browser (asume que está corriendo)
+    cmds:
+      - 'open http://localhost:$(cat {{.PORT_FILE}} 2>/dev/null || echo {{.PORT}})/player/'
+
+  # ---------------------------------------------------------------------
+  # Render — Outbound
+  # ---------------------------------------------------------------------
+
+  render:outbound:
+    desc: Renderea el tema completo Outbound — master + stems
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/outbound/compose_full.py"
+
+  render:outbound:v0:
+    desc: Outbound v0 prototype (BALANCED)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/outbound/prototypes/compose_v0.py"
+
+  render:outbound:v1:
+    desc: Outbound v1 prototype (TEXTURE)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/outbound/prototypes/compose_v1.py"
+
+  render:outbound:v2:
+    desc: Outbound v2 prototype (RHYTHMIC)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/outbound/prototypes/compose_v2.py"
+
+  render:outbound:all:
+    desc: Renderea todas las variantes de Outbound + rebuild index
+    cmds:
+      - task: render:outbound
+      - task: render:outbound:v0
+      - task: render:outbound:v1
+      - task: render:outbound:v2
+      - task: index:rebuild
+
+  # ---------------------------------------------------------------------
+  # Render — Crossing (tema 2)
+  # ---------------------------------------------------------------------
+
+  render:crossing:
+    desc: Renderea Crossing — master + stems
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/crossing/compose_full.py"
+
+  render:crossing:v0:
+    desc: Crossing v0 prototype (DARK MASS — Lustmord-style)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/crossing/prototypes/compose_v0.py"
+
+  render:crossing:v1:
+    desc: Crossing v1 prototype (DUNE CHANT — vocal grave protagonista)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/crossing/prototypes/compose_v1.py"
+
+  render:crossing:v2:
+    desc: Crossing v2 prototype (VOID DRIFT — espacial, objetos pasando)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/crossing/prototypes/compose_v2.py"
+
+  render:crossing:all:
+    desc: Renderea Crossing FULL + todos los prototipos + rebuild index
+    cmds:
+      - task: render:crossing
+      - task: render:crossing:v0
+      - task: render:crossing:v1
+      - task: render:crossing:v2
+      - task: index:rebuild
+
+  # ---------------------------------------------------------------------
+  # Render — Recursion (tema 3)
+  # ---------------------------------------------------------------------
+
+  render:recursion:
+    desc: Renderea Recursion full (3:00) — master + stems
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/recursion/compose_full.py"
+
+  render:recursion:A:
+    desc: Recursion v0 prototype A (BLACK MASS RETURN — Sunn O))) drone metal)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/recursion/prototypes/compose_v0_A.py"
+
+  render:recursion:B:
+    desc: Recursion v1 prototype B (GHOST IN THE MACHINE — Burial-style glitch)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/recursion/prototypes/compose_v1_B.py"
+
+  render:recursion:C:
+    desc: Recursion v2 prototype C (ETERNAL RECURRENCE — Steve Reich phase music)
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/recursion/prototypes/compose_v2_C.py"
+
+  render:recursion:all:
+    desc: Renderea Recursion FULL + 3 prototipos + rebuild index
+    cmds:
+      - task: render:recursion
+      - task: render:recursion:A
+      - task: render:recursion:B
+      - task: render:recursion:C
+      - task: index:rebuild
+
+  # ---------------------------------------------------------------------
+  # Render — todo
+  # ---------------------------------------------------------------------
+
+  render:all:
+    desc: Renderea todo lo que tengamos
+    cmds:
+      - task: render:outbound:all
+      - task: render:crossing:all
+      - task: render:recursion:all
+
+  render:final:
+    desc: 'Pipeline completo: render 3 temas full + master:bounce:all + ep:assemble (sin variantes/prototipos)'
+    cmds:
+      - task: render:outbound
+      - task: render:crossing
+      - task: render:recursion
+      - task: master:bounce:all
+      - task: ep:assemble
+
+  # ---------------------------------------------------------------------
+  # Voyager Lab — motivo aislado para iterar el sweet spot (15-20s)
+  # ---------------------------------------------------------------------
+
+  voyager:quena:
+    desc: 'Render Voyager QUENA — flauta espacial con soplo, release largo, reverb gigante'
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/voyager_quena/compose.py"
+      - "{{.PYTHON}} scripts/build_index.py {{.TX_DIR}}"
+
+  voyager:tool:
+    desc: 'Render Voyager TOOL — stereo delay + bajo Wal + drone + reverb plate'
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/voyager_tool/compose.py"
+      - "{{.PYTHON}} scripts/build_index.py {{.TX_DIR}}"
+
+  voyager:roach:
+    desc: 'Render Voyager STEVE ROACH — pad ambient layered + reverb gigante'
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/voyager_roach/compose.py"
+      - "{{.PYTHON}} scripts/build_index.py {{.TX_DIR}}"
+
+  voyager:all:
+    desc: 'Render lab + tool + roach (los 3 sabores) + rebuild index'
+    cmds:
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/voyager_quena/compose.py"
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/voyager_tool/compose.py"
+      - "{{.PYTHON}} {{.TX_DIR}}/themes/voyager_roach/compose.py"
+      - "{{.PYTHON}} scripts/build_index.py {{.TX_DIR}}"
+
+  # ---------------------------------------------------------------------
+  # Versionar (snapshot final de un tema)
+  # ---------------------------------------------------------------------
+
+  finalize:outbound:
+    desc: 'Snapshot del outbound como version final. Uso: task finalize:outbound -- v2'
+    cmds:
+      - |
+        VER="${1:-v1}"
+        DEST="{{.TX_DIR}}/themes/outbound/finals/$VER"
+        if [ -d "$DEST" ]; then
+          echo "ya existe $DEST — borrá primero o pasá otra versión"; exit 1
+        fi
+        mkdir -p "$DEST/stems"
+        cp {{.TX_DIR}}/out/outbound/master/outbound_FULL.wav "$DEST/master.wav"
+        cp -R {{.TX_DIR}}/out/outbound/stems/outbound_FULL/* "$DEST/stems/"
+        cp {{.TX_DIR}}/themes/outbound/compose_full.py "$DEST/compose_snapshot.py"
+        echo "Snapshot creado en $DEST" > "$DEST/version.md"
+        echo "snapshot listo en $DEST"
+
+  # ---------------------------------------------------------------------
+  # QA — checklist automatico contra la skill aem-composer
+  # ---------------------------------------------------------------------
+
+  qa:
+    desc: 'QA de una composicion: task qa -- <theme> <comp_id>  (ej: task qa -- crossing crossing_v0)'
+    cmds:
+      - "{{.PYTHON}} scripts/qa_check.py {{.TX}} {{.CLI_ARGS}}"
+
+  qa:finals:
+    desc: 'QA de un final versionado: task qa:finals -- <theme> <version>  (ej: task qa:finals -- outbound v1)'
+    cmds:
+      - "{{.PYTHON}} scripts/qa_check.py --finals {{.TX}} {{.CLI_ARGS}}"
+
+  qa:scan:
+    desc: 'QA estatico del codigo fuente — detecta T_NOISE_FRITURA (noise/bells/risers fuera de rango anti-fritura)'
+    cmds:
+      - "{{.PYTHON}} scripts/qa_scan_code.py"
+
+  qa:spectral:
+    desc: 'QA espectral — analiza WAVs renderizados, bandas HOT 1.5-4 kHz + BRIGHT 4-8 kHz'
+    silent: true
+    cmds:
+      - |
+        FAIL=0
+        for w in {{.TX_DIR}}/out/*/master/*_FULL.wav; do
+          if [ -f "$w" ]; then
+            echo "--- $(basename $w)"
+            {{.PYTHON}} scripts/qa_scan_spectral.py "$w" || FAIL=1
+          fi
+        done
+        exit $FAIL
+
+  qa:voyager:
+    desc: 'QA regresion del voyager_safe — diff espectral contra benchmark'
+    cmds:
+      - "{{.PYTHON}} scripts/qa_voyager_regression.py"
+
+  qa:stems:
+    desc: 'QA por stem — recorre cada track buscando frituras (transients abruptos, onset/offset duros, banda HOT/BRIGHT)'
+    silent: true
+    cmds:
+      - |
+        FAIL=0
+        for theme in outbound crossing recursion; do
+          if [ -d "{{.TX_DIR}}/out/$theme/stems/${theme}_FULL" ]; then
+            echo "--- qa:stems $theme ---"
+            {{.PYTHON}} scripts/qa_scan_stems.py $theme || FAIL=1
+          fi
+        done
+        exit $FAIL
+
+  qa:perceptual:
+    desc: 'QA perceptual — densidad de capas + overlap melodico + transientes anomalos'
+    cmds:
+      - "{{.PYTHON}} scripts/qa_scan_perceptual.py {{.TX_DIR}}/out/outbound/master/outbound_FULL.wav"
+
+  render:full:
+    desc: 'Render COMPLETO + master + ep + QA exhaustivo automatico (single command)'
+    cmds:
+      - task: render:outbound
+      - task: render:crossing
+      - task: render:recursion
+      - task: master:bounce:all
+      - task: ep:assemble
+      - task: expose:masters
+      - 'echo "\n=========================================="'
+      - 'echo "  QA exhaustivo automatico"'
+      - 'echo "==========================================\n"'
+      - task: qa:all
+
+  voyager:benchmark:
+    desc: '[CUIDADO] Regenera el benchmark del voyager_safe — solo si user aprobo cambios al voyager'
+    cmds:
+      - "{{.PYTHON}} scripts/render_voyager_benchmark.py"
+
+  qa:all:
+    desc: 'QA COMPLETO: estatico + spectral + voyager regression + per-stem (frituras) + perceptual (density+overlap) + runtime'
+    silent: true
+    cmds:
+      - 'echo "=== 1. estatico (T_NOISE_FRITURA) ==="'
+      - "{{.PYTHON}} scripts/qa_scan_code.py"
+      - 'echo "\n=== 2. voyager regression vs benchmark ==="'
+      - "{{.PYTHON}} scripts/qa_voyager_regression.py"
+      - |
+        echo "\n=== 3. spectral (HOT+BRIGHT bands) ==="
+        FAIL=0
+        for w in {{.TX_DIR}}/out/*/master/*_FULL.wav; do
+          if [ -f "$w" ]; then
+            echo "--- $(basename $w)"
+            {{.PYTHON}} scripts/qa_scan_spectral.py "$w" || FAIL=1
+          fi
+        done
+        echo "\n=== 4. per-stem (T_ABRUPT_ENTRY/END, T_INTERNAL_TRANSIENT, T_HOT/BRIGHT) ==="
+        for theme in outbound crossing recursion; do
+          if [ -d "{{.TX_DIR}}/out/$theme/stems/${theme}_FULL" ]; then
+            echo "--- $theme"
+            {{.PYTHON}} scripts/qa_scan_stems.py $theme || FAIL=1
+          fi
+        done
+        echo "\n=== 5. perceptual (density+overlap+transients) ==="
+        for theme in outbound crossing recursion; do
+          if [ -f "{{.TX_DIR}}/out/$theme/master/${theme}_FULL.wav" ]; then
+            echo "--- $theme"
+            {{.PYTHON}} scripts/qa_scan_perceptual.py "{{.TX_DIR}}/out/$theme/master/${theme}_FULL.wav" --no-transients || FAIL=1
+          fi
+        done
+        echo "\n=== 6. runtime checklist (solo EP: outbound/crossing/recursion FULL) ==="
+        for theme in outbound crossing recursion; do
+          comp="${theme}_FULL"
+          if [ -d "{{.TX_DIR}}/out/$theme/stems/$comp" ]; then
+            {{.PYTHON}} scripts/qa_check.py {{.TX}} "$theme" "$comp" || FAIL=1
+          fi
+        done
+        exit $FAIL
+
+  # ---------------------------------------------------------------------
+  # Index — manifiesta lo renderizado
+  # ---------------------------------------------------------------------
+
+  index:rebuild:
+    desc: Reconstruye <transmission>/out/index.json escaneando los stems disponibles
+    cmds:
+      - "{{.PYTHON}} scripts/build_index.py {{.TX_DIR}}"
+
+  # ---------------------------------------------------------------------
+  # Release pipeline (mastering, EP assembly, export, metadata, distribución)
+  # Ver docs/12_release_pipeline.md y skill aem-release.
+  # Estos tasks crean la estructura — implementacion esta en progreso.
+  # ---------------------------------------------------------------------
+
+  release:plan:
+    desc: Imprime el plan de release y dónde estamos
+    silent: true
+    cmds:
+      - 'echo "Pipeline de release — ver docs/12_release_pipeline.md"'
+      - 'echo'
+      - 'echo "Estado:"'
+      - 'echo "  ✓ Demos renderizados (transmissions/01/out/)"'
+      - 'echo "  ✓ QA pasado (task qa:all)"'
+      - 'echo "  ✓ Arte final (transmissions/01/artwork/)"'
+      - 'echo "  ⏳ Re-render a 44.1 kHz                  task production:upgrade"'
+      - 'echo "  ⏳ Mastering                              task master:bounce"'
+      - 'echo "  ⏳ EP assembly (3 temas con crossfades)   task ep:assemble"'
+      - 'echo "  ⏳ Export formatos (FLAC/MP3/WAV 24)      task export:formats"'
+      - 'echo "  ⏳ Metadata + artwork                     task tag"'
+      - 'echo "  ⏳ Validación final                       task release:check"'
+      - 'echo "  ⏳ Bundle para upload                     task release:bundle"'
+      - 'echo'
+      - 'echo "Comandos disponibles:"'
+      - 'task --list | grep -E "^\\* (master|ep|export|tag|release|production):" || true'
+
+  production:upgrade:
+    desc: 'WIP — sube SR a 44.1 kHz en framework/aem/core.py y re-renderiza todo'
+    cmds:
+      - 'echo "TODO: implementar — cambiar SR=22050 a SR=44100 en framework/aem/core.py + task render:all"'
+      - 'echo "ver docs/12_release_pipeline.md sección Etapa 2"'
+
+  master:bounce:
+    desc: 'Aplica master chain (HPF+glue+limiter+LUFS) a un tema. Uso: task master:bounce -- <theme>'
+    cmds:
+      - "{{.PYTHON}} scripts/master_bounce.py {{.CLI_ARGS}}"
+
+  master:bounce:all:
+    desc: Master chain a los 3 temas full (outbound + crossing + recursion)
+    cmds:
+      - "{{.PYTHON}} scripts/master_bounce.py outbound"
+      - "{{.PYTHON}} scripts/master_bounce.py crossing"
+      - "{{.PYTHON}} scripts/master_bounce.py recursion"
+
+  review:masters:
+    desc: Abre la carpeta de masters en Finder + lista contenido
+    silent: true
+    cmds:
+      - 'ls -lh {{.TX_DIR}}/release/masters/'
+      - 'open {{.TX_DIR}}/release/masters/'
+
+  expose:masters:
+    desc: 'Expone los masters al player web (aparecen en el dropdown como <theme>_MASTER)'
+    cmds:
+      - "{{.PYTHON}} scripts/expose_masters.py"
+      - task: index:rebuild
+
+  ep:assemble:
+    desc: Concatena los 3 masters con crossfades en un master continuo del EP (24:00)
+    cmds:
+      - "{{.PYTHON}} scripts/assemble_ep.py"
+
+  export:formats:
+    desc: Convierte masters a FLAC + MP3 320 + WAV 16-bit (3 tracks individuales)
+    cmds:
+      - "{{.PYTHON}} scripts/export_formats.py"
+
+  export:formats:full:
+    desc: Como export:formats pero incluye tambien el continuous EP
+    cmds:
+      - "{{.PYTHON}} scripts/export_formats.py --continuous"
+
+  export:midi:
+    desc: Exporta los 3 temas a MIDI (partes melódicas/armónicas/rítmicas)
+    cmds:
+      - "{{.PYTHON}} scripts/export_midi.py"
+
+  tag:
+    desc: 'WIP — embebe metadata + artwork en FLAC y MP3'
+    cmds:
+      - 'echo "TODO: implementar scripts/tag_release.py con mutagen"'
+      - 'echo "  Lee transmissions/01/release/metadata.json y aplica a cada archivo"'
+      - 'echo "ver skill aem-release sección Mutagen patrones"'
+
+  release:check:
+    desc: 'Valida masters: sample rate, bit depth, LUFS, true peak, stereo correlation'
+    cmds:
+      - "{{.PYTHON}} scripts/release_check.py"
+
+  release:bundle:
+    desc: 'WIP — arma transmissions/01/release/distribution/ lista para upload'
+    cmds:
+      - 'echo "TODO: orquesta master:bounce → ep:assemble → export:formats → tag → release:check"'
+      - 'echo "Output: transmissions/01/release/distribution/{flac,mp3,wav_44k}/"'
+
+  install:release:
+    desc: Instala las deps Python adicionales para release (soundfile, pyloudnorm, mutagen, pydub, Pillow, mido)
+    cmds:
+      - "{{.PYTHON}} -m pip install --user soundfile pyloudnorm mutagen pydub Pillow mido"
+
+  # ---------------------------------------------------------------------
+  # Artwork generation (AI image gen LOCAL, open source)
+  # ---------------------------------------------------------------------
+  # Workflow:
+  #   1) task gen:install              (una vez — instala torch + diffusers)
+  #   2) task gen:list                 (ver briefs disponibles)
+  #   3) task gen:artwork -- <brief>   (genera 4 imagenes del brief)
+  #
+  # Modelos soportados (auto-baja primera vez en ~/.cache/huggingface):
+  #   - sdxl-turbo (~7 GB, rapido, 4 steps) ← DEFAULT
+  #   - stable-diffusion-xl-base-1.0 (~13 GB, calidad alta)
+  #   - FLUX.1-schnell (~24 GB, calidad SOTA, requiere >= 32 GB RAM)
+  #
+  # Hardware: Mac M1/M2/M3+ con MPS (Metal Performance Shaders)
+  # Output: transmissions/01/artwork/generated/<brief_id>/<timestamp>_NN.png
+  # ---------------------------------------------------------------------
+
+  gen:install:
+    desc: Instala deps de AI image gen (torch + diffusers + transformers + accelerate)
+    cmds:
+      - "{{.PYTHON}} -m pip install --user diffusers transformers accelerate torch"
+
+  gen:list:
+    desc: Lista briefs de artwork disponibles
+    cmds:
+      - "{{.PYTHON}} scripts/generate_artwork.py --list"
+
+  gen:artwork:
+    desc: 'Genera artwork con SDXL Turbo. Uso: task gen:artwork -- <brief_id> [--n 4 --width 1024 --height 1024]'
+    cmds:
+      - "{{.PYTHON}} scripts/generate_artwork.py {{.CLI_ARGS}}"
+
+  gen:artwork:hq:
+    desc: 'Genera con SDXL base (mejor calidad, mas lento). Uso: task gen:artwork:hq -- <brief_id>'
+    cmds:
+      - "{{.PYTHON}} scripts/generate_artwork.py --model stabilityai/stable-diffusion-xl-base-1.0 --steps 25 {{.CLI_ARGS}}"
+
+  gen:artwork:flux:
+    desc: 'Genera con FLUX.1 schnell (calidad SOTA, requiere >=32GB RAM). Uso: task gen:artwork:flux -- <brief_id>'
+    cmds:
+      - "{{.PYTHON}} scripts/generate_artwork.py --model black-forest-labs/FLUX.1-schnell --steps 4 {{.CLI_ARGS}}"
+
+  gen:open:
+    desc: Abre la carpeta de artwork generado en Finder
+    cmds:
+      - 'open transmissions/01/artwork/generated/'
+
+  gen:all:
+    desc: 'Genera 4 imagenes por cada brief (TODO el pack). Tarda 30-60 min.'
+    cmds:
+      - "{{.PYTHON}} scripts/generate_artwork.py 00_artist_photo --n 4 --width 1024 --height 1024"
+      - "{{.PYTHON}} scripts/generate_artwork.py 01_hero_background --n 4 --width 1024 --height 576"
+      - "{{.PYTHON}} scripts/generate_artwork.py 02_spotify_canvas --n 4 --width 768 --height 1344"
+      - "{{.PYTHON}} scripts/generate_artwork.py 03_bandcamp_banner --n 4 --width 1408 --height 256"
+      - "{{.PYTHON}} scripts/generate_artwork.py 04_poster_print --n 4 --width 1024 --height 1280"
+      - "{{.PYTHON}} scripts/generate_artwork.py 05_social_square --n 4 --width 1024 --height 1024"
+      - 'echo "Total generado: 24 imagenes en transmissions/01/artwork/generated/"'
+
+  # ---------------------------------------------------------------------
+  # Limpieza
+  # ---------------------------------------------------------------------
+
+  clean:out:
+    desc: Borra todos los WAVs renderizados en la transmission activa. NO toca código.
+    prompt: Esto borra todos los WAVs renderizados. Continuar?
+    cmds:
+      - rm -rf {{.TX_DIR}}/out/*/master/*.wav
+      - rm -rf {{.TX_DIR}}/out/*/stems/*
+
+  clean:cache:
+    desc: Borra __pycache__ y .pyc del framework + scripts
+    silent: true
+    cmds:
+      - find . -type d -name '__pycache__' -prune -exec rm -rf {} + 2>/dev/null || true
+      - find . -type f -name '*.pyc' -delete 2>/dev/null || true
+      - echo "cache limpiada"
+
+  # ---------------------------------------------------------------------
+  # Site / Cloudflare Pages (spiralout.space)
+  # ---------------------------------------------------------------------
+
+  site:install:
+    desc: Instala wrangler globalmente (una sola vez). Despues task site:login.
+    cmds:
+      - npm install -g wrangler
+      - echo "wrangler instalado. Proximo paso -> task site:login"
+
+  site:login:
+    desc: Autentica con Cloudflare via OAuth en browser (una sola vez).
+    cmds:
+      - wrangler login
+
+  site:dev:
+    desc: Preview local del site en http://localhost:8788
+    dir: site/spiralout
+    cmds:
+      - wrangler pages dev . --port 8788
+
+  site:deploy:
+    desc: Deploy site/spiralout a Cloudflare Pages (proyecto spiralout, branch main).
+    cmds:
+      - wrangler pages deploy site/spiralout --project-name=spiralout --branch=main --commit-dirty=true
+
+  site:list:
+    desc: Lista los ultimos deployments de spiralout.
+    cmds:
+      - wrangler pages deployment list --project-name=spiralout
+
+  site:share:
+    desc: 'Regenera todas las share images (OG, IG, Pinterest) para home y /aem'
+    cmds:
+      - "{{.PYTHON}} scripts/generate_share_images.py"

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /spirals/
+
+Sitemap: https://spiralout.space/sitemap.xml

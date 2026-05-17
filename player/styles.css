@@ -1,0 +1,430 @@
+/* ÆM player — estilo dark/monospace, panel de control */
+
+:root {
+  --bg: #0d1014;
+  --bg-2: #141821;
+  --bg-3: #1c2230;
+  --border: #232a39;
+  --text: #d8dde7;
+  --text-dim: #7a8499;
+  --text-mute: #4a5366;
+  --accent: #6ad0e0;
+  --accent-warm: #e6c34d;
+  --danger: #d04545;
+  --solo: #e6c34d;
+  --mute: #6a7080;
+  --mono: 'Berkeley Mono', 'JetBrains Mono', 'IBM Plex Mono', 'SF Mono',
+          ui-monospace, Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+button, input, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--text);
+}
+
+button {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+button:hover {
+  background: #2a3245;
+  border-color: var(--accent);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+button.btn-primary:hover {
+  background: #82dde8;
+}
+
+select, input[type="range"] {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 4px 6px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 4px;
+  background: var(--bg-3);
+  outline: none;
+  padding: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* ---------------- topbar ---------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.sub {
+  color: var(--text-dim);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.comp-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comp-picker label {
+  color: var(--text-dim);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#comp-select {
+  min-width: 280px;
+}
+
+/* spinner clasico tipo border circle — gira impecable en su eje.
+   align-self: center centra contra el texto sub aunque el .brand sea baseline */
+.spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid rgba(106, 208, 224, 0.18);
+  border-top-color: var(--accent);
+  border-right-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  align-self: center;
+  margin-left: 4px;
+  box-shadow: 0 0 6px rgba(106, 208, 224, 0.3);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Loading state — disable interactions during load */
+body.loading .transport button,
+body.loading .track-controls button,
+body.loading input[type="range"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ---------------- transport ---------------- */
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.transport-buttons button {
+  min-width: 38px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.time-display {
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  color: var(--text-dim);
+  min-width: 110px;
+}
+
+#time-current { color: var(--text); }
+.time-sep { margin: 0 6px; color: var(--text-mute); }
+
+.seek-wrap {
+  flex: 1;
+  min-width: 200px;
+}
+
+#seek {
+  width: 100%;
+}
+
+.master-gain-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.master-gain-wrap label {
+  color: var(--text-dim);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#master-gain {
+  width: 100px;
+}
+
+#master-gain-value {
+  min-width: 40px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.all-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.all-actions button {
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+/* ---------------- tracks ---------------- */
+
+.tracks {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.track-row {
+  display: grid;
+  grid-template-columns: 240px 140px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 16px;
+  border-bottom: 1px solid var(--border);
+  min-height: 70px;
+}
+
+.track-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.track-row.muted .track-name,
+.track-row.muted .track-meta { opacity: 0.4; }
+
+.track-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  gap: 2px;
+}
+
+.track-controls .mute,
+.track-controls .solo {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-controls .mute.active {
+  background: var(--mute);
+  color: var(--bg);
+  border-color: var(--mute);
+}
+
+.track-controls .solo.active {
+  background: var(--solo);
+  color: var(--bg);
+  border-color: var(--solo);
+}
+
+.track-name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.track-num {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  background: rgba(106, 208, 224, 0.1);
+  border: 1px solid rgba(106, 208, 224, 0.3);
+  padding: 1px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.track-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-meta {
+  display: block;
+  font-size: 10px;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+
+.track-controls > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+/* gain column */
+.track-gain {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.track-gain .gain-slider {
+  flex: 1;
+  min-width: 60px;
+}
+
+.track-gain .gain-value {
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--text-dim);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* waveform */
+.track-waveform-wrap {
+  position: relative;
+  height: 56px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.waveform {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--accent);
+  pointer-events: none;
+  left: 0;
+  box-shadow: 0 0 6px rgba(106, 208, 224, 0.6);
+}
+
+/* ---------------- statusbar ---------------- */
+
+.statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.statusbar .hint {
+  color: var(--text-mute);
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ÆM · Hexagram 24 preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Major+Mono+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --phosphor: #a6d65f;
+      --phosphor-dim: #6a9034;
+      --bg-dark: #0d1014;
+      --text-mute: #4a5366;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-dark);
+      color: var(--phosphor);
+      min-height: 100vh;
+      font-family: 'VT323', monospace;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+    h1, h2 { font-weight: normal; }
+    .section-title {
+      font-size: 18px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      border-bottom: 1px solid var(--text-mute);
+      padding-bottom: 6px;
+      margin-bottom: 24px;
+    }
+
+    /* ==== LOCKUP DEMO ==== */
+    .lockup {
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      background: var(--bg-dark);
+      padding: 80px 60px;
+      border: 1px solid #232a39;
+    }
+    .lockup .hex {
+      width: 280px;
+      height: 280px;
+      flex-shrink: 0;
+    }
+    .lockup .meta {
+      flex: 1;
+    }
+    .lockup .meta .hex-num {
+      font-family: 'VT323', monospace;
+      font-size: 96px;
+      line-height: 1;
+      letter-spacing: 0.05em;
+      color: var(--phosphor);
+      text-shadow: 0 0 12px rgba(166, 214, 95, 0.45);
+    }
+    .lockup .meta .hex-name {
+      font-family: 'VT323', monospace;
+      font-size: 48px;
+      letter-spacing: 0.4em;
+      color: var(--phosphor);
+      opacity: 0.85;
+      margin-top: 8px;
+    }
+    .lockup .meta .hex-chinese {
+      font-family: 'VT323', monospace;
+      font-size: 28px;
+      letter-spacing: 0.2em;
+      color: var(--phosphor-dim);
+      margin-top: 16px;
+    }
+    .lockup .meta .hex-tagline {
+      font-family: 'VT323', monospace;
+      font-size: 22px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      margin-top: 24px;
+    }
+
+    /* ==== FONT COMPARISON ==== */
+    .fonts {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
+    .font-sample {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 24px;
+      border: 1px solid #232a39;
+    }
+    .font-sample .name {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      color: var(--text-mute);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .font-sample .demo {
+      color: var(--phosphor);
+      font-size: 36px;
+      line-height: 1.2;
+      letter-spacing: 0.05em;
+    }
+    .vt323 { font-family: 'VT323', monospace; }
+    .share { font-family: 'Share Tech Mono', monospace; }
+    .major { font-family: 'Major Mono Display', monospace; }
+
+    /* ==== PALETTE ==== */
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .swatch {
+      padding: 24px;
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      border: 1px solid #232a39;
+    }
+    .swatch .label { font-size: 14px; opacity: 0.7; margin-top: 6px; }
+
+    /* ==== LOGO SIZES ==== */
+    .sizes {
+      display: flex;
+      gap: 32px;
+      align-items: flex-end;
+    }
+    .sizes .size {
+      text-align: center;
+    }
+    .sizes .size .label {
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      color: var(--text-mute);
+      margin-top: 8px;
+    }
+    .sizes img.s32  { width: 32px; }
+    .sizes img.s64  { width: 64px; }
+    .sizes img.s128 { width: 128px; }
+    .sizes img.s256 { width: 256px; }
+  </style>
+</head>
+<body>
+  <h1 style="font-size: 36px; letter-spacing: 0.05em;">ÆM · Hexagram 24 preview</h1>
+
+  <!-- Lockup -->
+  <section>
+    <div class="section-title">Lockup propuesto · símbolo + tipografía VT323</div>
+    <div class="lockup">
+      <img class="hex" src="hexagram_24_logo.svg" alt="Hexagram 24">
+      <div class="meta">
+        <div class="hex-num">HEX 24</div>
+        <div class="hex-name">RETURN</div>
+        <div class="hex-chinese">復 · FÙ</div>
+        <div class="hex-tagline">The turning point</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logo en tamaños -->
+  <section>
+    <div class="section-title">Símbolo solo · escala</div>
+    <div class="sizes">
+      <div class="size">
+        <img class="s32" src="hexagram_24_logo.svg">
+        <div class="label">32 PX</div>
+      </div>
+      <div class="size">
+        <img class="s64" src="hexagram_24_logo.svg">
+        <div class="label">64 PX</div>
+      </div>
+      <div class="size">
+        <img class="s128" src="hexagram_24_logo.svg">
+        <div class="label">128 PX</div>
+      </div>
+      <div class="size">
+        <img class="s256" src="hexagram_24_logo.svg">
+        <div class="label">256 PX</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Font comparison -->
+  <section>
+    <div class="section-title">Tipografía candidata</div>
+    <div class="fonts">
+      <div class="font-sample">
+        <div class="name">VT323 (recomendada)</div>
+        <div class="demo vt323">ÆM HELIOPAUSE<br>HEX 24 · RETURN<br>TRANSMISSION 01</div>
+      </div>
+      <div class="font-sample">
+        <div class="name">Share Tech Mono</div>
+        <div class="demo share">ÆM HELIOPAUSE<br>HEX 24 · RETURN<br>TRANSMISSION 01</div>
+      </div>
+      <div class="font-sample">
+        <div class="name">Major Mono Display</div>
+        <div class="demo major">ÆM HELIOPAUSE<br>HEX 24 · RETURN<br>TRANSMISSION 01</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paleta -->
+  <section>
+    <div class="section-title">Paleta</div>
+    <div class="palette">
+      <div class="swatch" style="background: #a6d65f; color: #0d1014;">
+        #a6d65f
+        <div class="label">PHOSPHOR · accent principal</div>
+      </div>
+      <div class="swatch" style="background: #6a9034; color: #0d1014;">
+        #6a9034
+        <div class="label">PHOSPHOR DIM · sombras</div>
+      </div>
+      <div class="swatch" style="background: #0d1014; color: #a6d65f; border-color: #a6d65f;">
+        #0d1014
+        <div class="label">BG DARK · fondo</div>
+      </div>
+      <div class="swatch" style="background: #4a5366; color: #0d1014;">
+        #4a5366
+        <div class="label">TEXT MUTE · labels</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

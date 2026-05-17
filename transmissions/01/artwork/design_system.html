@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ÆM · Design System</title>
+  <link rel="icon" type="image/svg+xml" href="/player/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --phosphor: #a6d65f;
+      --phosphor-dim: #6a9034;
+      --bg-dark: #0d1014;
+      --bg-deep: #060810;
+      --text-dim: #7a8499;
+      --text-mute: #4a5366;
+      --warm-amber: #d4a04a;
+      --signal-red: #c84040;
+      --border: #232a39;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-dark);
+      color: var(--phosphor);
+      font-family: 'VT323', monospace;
+      padding: 60px 80px;
+    }
+    .page-title {
+      font-size: 64px;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 18px;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 80px;
+    }
+    section { margin-bottom: 96px; }
+    .section-num {
+      font-size: 14px;
+      letter-spacing: 0.4em;
+      color: var(--text-mute);
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: 36px;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 32px;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* ====== BRAND ====== */
+    .logo-card {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      padding: 60px;
+      text-align: center;
+    }
+    .logo-card .logo-display {
+      font-size: 128px;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      color: var(--phosphor);
+      text-shadow: 0 0 20px rgba(166, 214, 95, 0.3);
+    }
+    .logo-card .logo-mark {
+      font-size: 192px;
+      line-height: 1;
+      color: var(--phosphor);
+    }
+    .logo-card .logo-label {
+      font-size: 14px;
+      color: var(--text-mute);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-top: 24px;
+    }
+
+    /* ====== COLOR ====== */
+    .swatch {
+      padding: 24px;
+      border: 1px solid var(--border);
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .swatch .hex {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .swatch .name {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .swatch .meta {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    /* ====== TYPE ====== */
+    .type-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      align-items: baseline;
+      padding: 16px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta {
+      font-size: 14px;
+      color: var(--text-mute);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .type-display { color: var(--phosphor); }
+
+    /* ====== SPACING ====== */
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 12px 0;
+    }
+    .spacing-row .label {
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      color: var(--text-mute);
+      width: 60px;
+    }
+    .spacing-row .value {
+      font-size: 14px;
+      color: var(--text-dim);
+      width: 80px;
+    }
+    .spacing-row .bar {
+      height: 16px;
+      background: var(--phosphor);
+    }
+
+    /* ====== COMPONENTS ====== */
+    .component-card {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      padding: 32px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+    .component-card .comp-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      align-self: flex-start;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+    }
+    .component-card { position: relative; }
+
+    .lockup-mini {
+      text-align: left;
+      width: 100%;
+    }
+    .lockup-mini .lk-logo { font-size: 56px; line-height: 1; color: var(--phosphor); }
+    .lockup-mini .lk-album { font-size: 22px; letter-spacing: 0.3em; color: var(--phosphor); opacity: 0.85; margin-top: 4px; }
+    .lockup-mini .lk-sep { display: block; height: 1px; background: var(--phosphor-dim); width: 60%; margin: 12px 0 8px; }
+    .lockup-mini .lk-meta {
+      font-size: 14px;
+      color: var(--text-mute);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .track-lockup {
+      width: 100%;
+      font-size: 22px;
+    }
+    .track-lockup .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      color: var(--phosphor);
+      letter-spacing: 0.05em;
+    }
+
+    .coord-label {
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--phosphor-dim);
+    }
+
+    .hex-badge img { width: 80px; height: 80px; }
+
+    .divider-demo {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--phosphor-dim);
+      font-size: 12px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+    .divider-demo .line { flex: 1; height: 1px; background: var(--phosphor-dim); }
+
+    /* ====== LAYOUT PATTERNS ====== */
+    .pattern {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      aspect-ratio: 1 / 1;
+      padding: 24px;
+      position: relative;
+    }
+    .pattern .label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    .pattern.split { aspect-ratio: 16 / 9; }
+    .pattern.vertical { aspect-ratio: 9 / 16; }
+    .pattern .ph {
+      background: rgba(166, 214, 95, 0.08);
+      border: 1px dashed var(--phosphor-dim);
+      color: var(--phosphor-dim);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+    .pattern.hero { display: grid; grid-template-rows: 1fr 2fr 1fr; gap: 8px; }
+    .pattern.split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 16px; }
+    .pattern.vertical { display: grid; grid-template-rows: 1fr 1fr 1fr; gap: 8px; padding: 16px; }
+
+  </style>
+</head>
+<body>
+  <h1 class="page-title">ÆM · Design System</h1>
+  <div class="page-sub">v1 · transmission 01 · 2026-05-03</div>
+
+  <!-- ====== BRAND ====== -->
+  <section>
+    <div class="section-num">01</div>
+    <div class="section-title">Brand</div>
+    <div class="grid-2">
+      <div class="logo-card">
+        <img src="hexagram/hexagram_24_logo.svg" alt="Hexagram 24" style="width: 280px; height: 280px; image-rendering: pixelated;">
+        <div class="logo-label">Marca principal · hexagrama 24 (復 Fù)</div>
+      </div>
+      <div class="logo-card">
+        <div class="logo-display">ÆM</div>
+        <div class="logo-label">Logotype secundario · texto</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== COLOR ====== -->
+  <section>
+    <div class="section-num">02</div>
+    <div class="section-title">Color tokens</div>
+    <div class="grid-4">
+      <div class="swatch" style="background: #a6d65f; color: #0d1014;">
+        <div class="hex">#a6d65f</div>
+        <div>
+          <div class="name">PHOSPHOR</div>
+          <div class="meta">accent principal</div>
+        </div>
+      </div>
+      <div class="swatch" style="background: #6a9034; color: #0d1014;">
+        <div class="hex">#6a9034</div>
+        <div>
+          <div class="name">PHOSPHOR DIM</div>
+          <div class="meta">sombras / atenuadas</div>
+        </div>
+      </div>
+      <div class="swatch" style="background: #0d1014; color: #a6d65f; border-color: #a6d65f;">
+        <div class="hex">#0d1014</div>
+        <div>
+          <div class="name">BG DARK</div>
+          <div class="meta">fondo principal</div>
+        </div>
+      </div>
+      <div class="swatch" style="background: #060810; color: #a6d65f; border-color: #232a39;">
+        <div class="hex">#060810</div>
+        <div>
+          <div class="name">BG DEEP</div>
+          <div class="meta">fondo aún más profundo</div>
+        </div>
+      </div>
+      <div class="swatch" style="background: #7a8499; color: #0d1014;">
+        <div class="hex">#7a8499</div>
+        <div>
+          <div class="name">TEXT DIM</div>
+          <div class="meta">metadata secundaria</div>
+        </div>
+      </div>
+      <div class="swatch" style="background: #4a5366; color: #0d1014;">
+        <div class="hex">#4a5366</div>
+        <div>
+          <div class="name">TEXT MUTE</div>
+          <div class="meta">labels terciarios</div>
+        </div>
+      </div>
+      <div class="swatch" style="background: #d4a04a; color: #0d1014;">
+        <div class="hex">#d4a04a</div>
+        <div>
+          <div class="name">WARM AMBER</div>
+          <div class="meta">accent raro · 2-3 veces</div>
+        </div>
+      </div>
+      <div class="swatch" style="background: #c84040; color: #0d1014;">
+        <div class="hex">#c84040</div>
+        <div>
+          <div class="name">SIGNAL RED</div>
+          <div class="meta">solo errores / cierre</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== TYPOGRAPHY ====== -->
+  <section>
+    <div class="section-num">03</div>
+    <div class="section-title">Typography · VT323</div>
+    <div class="type-row">
+      <div class="type-meta">DISPLAY · 128PX</div>
+      <div class="type-display" style="font-size: 128px; letter-spacing: 0.05em; line-height: 1;">ÆM</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">H1 · 64PX</div>
+      <div class="type-display" style="font-size: 64px; letter-spacing: 0.05em;">HELIOPAUSE</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">H2 · 48PX</div>
+      <div class="type-display" style="font-size: 48px; letter-spacing: 0.10em;">HEX 24 · RETURN</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">H3 · 28PX</div>
+      <div class="type-display" style="font-size: 28px; letter-spacing: 0.15em;">TRANSMISSION 01</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">BODY · 20PX</div>
+      <div class="type-display" style="font-size: 20px; letter-spacing: 0.05em; opacity: 0.95;">
+        ÆM emite desde la heliopausa: la frontera real del sistema solar.
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">LABEL · 16PX</div>
+      <div class="type-display" style="font-size: 16px; letter-spacing: 0.20em; text-transform: uppercase;">SIGNAL ACTIVE · ORIGIN: EM</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">META · 13PX</div>
+      <div class="type-display" style="font-size: 13px; letter-spacing: 0.30em; text-transform: uppercase; color: var(--text-mute);">SPIRAL / 1 · 42HZ · 2026</div>
+    </div>
+  </section>
+
+  <!-- ====== SPACING ====== -->
+  <section>
+    <div class="section-num">04</div>
+    <div class="section-title">Spacing · 8px grid</div>
+    <div class="spacing-row"><div class="label">XS</div><div class="value">4px</div><div class="bar" style="width: 4px;"></div></div>
+    <div class="spacing-row"><div class="label">S</div><div class="value">8px</div><div class="bar" style="width: 8px;"></div></div>
+    <div class="spacing-row"><div class="label">SM</div><div class="value">12px</div><div class="bar" style="width: 12px;"></div></div>
+    <div class="spacing-row"><div class="label">MD</div><div class="value">16px</div><div class="bar" style="width: 16px;"></div></div>
+    <div class="spacing-row"><div class="label">LG</div><div class="value">24px</div><div class="bar" style="width: 24px;"></div></div>
+    <div class="spacing-row"><div class="label">XL</div><div class="value">40px</div><div class="bar" style="width: 40px;"></div></div>
+    <div class="spacing-row"><div class="label">2XL</div><div class="value">80px</div><div class="bar" style="width: 80px;"></div></div>
+    <div class="spacing-row"><div class="label">3XL</div><div class="value">120px</div><div class="bar" style="width: 120px;"></div></div>
+  </section>
+
+  <!-- ====== COMPONENTS ====== -->
+  <section>
+    <div class="section-num">05</div>
+    <div class="section-title">Components</div>
+
+    <div class="grid-2">
+
+      <div class="component-card">
+        <div class="comp-label">Lockup ÆM</div>
+        <div class="lockup-mini">
+          <div class="lk-logo">ÆM</div>
+          <div class="lk-album">HELIOPAUSE</div>
+          <span class="lk-sep"></span>
+          <div class="lk-meta">TRANSMISSION 01<br>ORIGIN: Em</div>
+        </div>
+      </div>
+
+      <div class="component-card">
+        <div class="comp-label">Track lockup</div>
+        <div class="track-lockup">
+          <div class="row"><span>01 OUTBOUND</span><span>08:00</span></div>
+          <div class="row"><span>02 CROSSING</span><span>13:00</span></div>
+          <div class="row"><span>03 RECURSION</span><span>03:00</span></div>
+        </div>
+      </div>
+
+      <div class="component-card">
+        <div class="comp-label">Coordinate label</div>
+        <div class="coord-label">SIGNAL ACTIVE</div>
+        <div class="coord-label">SUB42 · 42HZ</div>
+        <div class="coord-label">SPIRAL / 1</div>
+      </div>
+
+      <div class="component-card hex-badge">
+        <div class="comp-label">Hexagram badge</div>
+        <img src="hexagram/hexagram_24_logo.svg" alt="Hexagram 24">
+        <div class="coord-label">HEX 24 · 復</div>
+      </div>
+
+      <div class="component-card" style="grid-column: span 2;">
+        <div class="comp-label">Section divider</div>
+        <div class="divider-demo">
+          <div class="line"></div>
+          <div>TRANSMISSION 01</div>
+          <div class="line"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== LAYOUT PATTERNS ====== -->
+  <section>
+    <div class="section-num">06</div>
+    <div class="section-title">Layout patterns</div>
+
+    <div class="grid-3">
+      <div>
+        <div class="pattern hero">
+          <div class="label">A · HERO 1:1</div>
+          <div class="ph">LOCKUP ÆM</div>
+          <div class="ph">SÍMBOLO CENTRAL</div>
+          <div class="ph">TRACKLIST / META</div>
+        </div>
+        <div class="coord-label" style="margin-top: 12px;">cover, lockup card</div>
+      </div>
+
+      <div>
+        <div class="pattern split">
+          <div class="label">B · SPLIT 16:9</div>
+          <div class="ph">SÍMBOLO</div>
+          <div class="ph">ÆM + METADATA</div>
+        </div>
+        <div class="coord-label" style="margin-top: 12px;">banner web, hero, video</div>
+      </div>
+
+      <div>
+        <div class="pattern vertical">
+          <div class="label">C · STACK 9:16</div>
+          <div class="ph">LOCKUP ÆM</div>
+          <div class="ph">SÍMBOLO</div>
+          <div class="ph">METADATA</div>
+        </div>
+        <div class="coord-label" style="margin-top: 12px;">Spotify Canvas, Story</div>
+      </div>
+    </div>
+  </section>
+
+  <div style="text-align: center; padding: 40px 0; color: var(--text-mute); font-size: 13px; letter-spacing: 0.3em;">
+    ÆM · END OF DESIGN SYSTEM v1
+  </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <rect width="1000" height="1000" fill="#0A0A0A"/>
+
+  <!-- Registration marks -->
+  <g stroke="#F4ECD8" stroke-width="0.4" opacity="0.22">
+    <line x1="22" y1="22" x2="44" y2="22"/>
+    <line x1="22" y1="22" x2="22" y2="44"/>
+    <line x1="978" y1="22" x2="956" y2="22"/>
+    <line x1="978" y1="22" x2="978" y2="44"/>
+    <line x1="22" y1="978" x2="44" y2="978"/>
+    <line x1="22" y1="978" x2="22" y2="956"/>
+    <line x1="978" y1="978" x2="956" y2="978"/>
+    <line x1="978" y1="978" x2="978" y2="956"/>
+  </g>
+
+  <!-- Header -->
+  <text x="60" y="190" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="86" letter-spacing="11" fill="#F4ECD8">ÆM</text>
+  <text x="60" y="232" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="19" letter-spacing="7" fill="#F4ECD8" opacity="0.72">Heliopause</text>
+
+  <line x1="60" y1="278" x2="940" y2="278" stroke="#F4ECD8" stroke-width="0.5" opacity="0.22"/>
+
+  <!-- Data block -->
+  <text x="60" y="332" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="13" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55">Transmission</text>
+  <text x="240" y="332" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="13" letter-spacing="2.5" fill="#F4ECD8" opacity="0.95">01</text>
+  <text x="60" y="358" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="13" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55">Origin</text>
+  <text x="240" y="358" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="13" letter-spacing="2.5" fill="#F4ECD8" opacity="0.95">Em</text>
+
+  <!-- Tracks -->
+  <text x="60" y="450" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="11" letter-spacing="4" fill="#F4ECD8" opacity="0.45">Tracks</text>
+  <line x1="60" y1="462" x2="540" y2="462" stroke="#F4ECD8" stroke-width="0.4" opacity="0.15"/>
+
+  <text x="60" y="498" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55">01</text>
+  <text x="115" y="498" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.95">Outbound</text>
+  <text x="540" y="498" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55" text-anchor="end">08:00</text>
+
+  <text x="60" y="528" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55">02</text>
+  <text x="115" y="528" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.95">Crossing</text>
+  <text x="540" y="528" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55" text-anchor="end">13:00</text>
+
+  <text x="60" y="558" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55">03</text>
+  <text x="115" y="558" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.95">Recursion</text>
+  <text x="540" y="558" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="14" letter-spacing="2.5" fill="#F4ECD8" opacity="0.55" text-anchor="end">21:00</text>
+
+  <!-- Signal active (aligned to x-height) -->
+  <rect x="60" y="636" width="44" height="3" fill="#E87B1C"/>
+  <text x="118" y="641" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="11" letter-spacing="3" fill="#F4ECD8" opacity="0.78">Signal active</text>
+
+  <!-- Diagram (logo-like, bigger, bolder, padded) -->
+  <ellipse cx="670" cy="735" rx="145" ry="85" stroke="#F4ECD8" fill="none" stroke-width="1.1" opacity="0.92"/>
+  <circle cx="625" cy="735" r="3" fill="#F4ECD8"/>
+  <circle cx="625" cy="735" r="9" fill="none" stroke="#F4ECD8" stroke-width="0.5" opacity="0.4"/>
+  <line x1="625" y1="735" x2="840" y2="730" stroke="#F4ECD8" stroke-width="0.7" opacity="0.55" stroke-dasharray="3,4"/>
+  <circle cx="815" cy="731" r="6" stroke="#F4ECD8" fill="none" stroke-width="1.0" opacity="0.95"/>
+  <circle cx="840" cy="730" r="5" fill="#E87B1C"/>
+  <line x1="840" y1="725" x2="840" y2="700" stroke="#E87B1C" stroke-width="0.8" opacity="0.75"/>
+  <text x="847" y="697" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="11" letter-spacing="1.5" fill="#F4ECD8" opacity="0.9">Voyager 1</text>
+
+  <!-- Footer -->
+  <text x="60" y="940" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="11" letter-spacing="3" fill="#F4ECD8" opacity="0.5">Spiral / 1</text>
+  <text x="940" y="940" font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace" font-size="11" letter-spacing="3" fill="#F4ECD8" opacity="0.5" text-anchor="end">aem.fm</text>
+</svg>
