@@ -594,3 +594,48 @@ tasks:
     desc: 'Regenera todas las share images (OG, IG, Pinterest) para home y /aem'
     cmds:
       - "{{.PYTHON}} scripts/generate_share_images.py"
+
+  # ---------------------------------------------------------------------
+  # Dashboard de control (HTML estatico, NO se deploya — solo local)
+  # ---------------------------------------------------------------------
+
+  dashboard:
+    desc: 'Levanta el dashboard de seguimiento (persistente en background)'
+    deps: [dashboard:stop]
+    cmds:
+      - 'nohup {{.PYTHON}} -m http.server 8787 --directory dashboard > .dashboard.log 2>&1 &'
+      - sleep 0.6
+      - 'pgrep -f "http.server 8787" > .dashboard.pid 2>/dev/null || true'
+      - 'echo "dashboard en http://localhost:8787/  ·  PID $(cat .dashboard.pid 2>/dev/null)"'
+      - 'echo "  └─ helen deck:  http://localhost:8787/helen-deck.html"'
+      - open "http://localhost:8787/" || true
+
+  dashboard:stop:
+    desc: 'Mata el server del dashboard'
+    silent: true
+    cmds:
+      - |
+        if [ -f .dashboard.pid ]; then
+          PID=$(cat .dashboard.pid)
+          if kill -0 $PID 2>/dev/null; then
+            kill $PID && echo "dashboard detenido (PID $PID)"
+          fi
+          rm -f .dashboard.pid
+        fi
+        pkill -f "http.server 8787" 2>/dev/null || true
+
+  dashboard:status:
+    desc: 'Estado del dashboard'
+    silent: true
+    cmds:
+      - |
+        if [ -f .dashboard.pid ] && kill -0 $(cat .dashboard.pid) 2>/dev/null; then
+          echo "dashboard running · PID $(cat .dashboard.pid) · http://localhost:8787/"
+        else
+          echo "dashboard not running"
+        fi
+
+  helen:deck:
+    desc: 'Abre el deck de Helen (HTML standalone, no requiere server)'
+    cmds:
+      - open dashboard/helen-deck.html

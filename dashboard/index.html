@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spiral Out — Control Dashboard</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-2: #14141a;
+      --bg-3: #1c1c24;
+      --fg: #e8e8ec;
+      --fg-2: #a0a0a8;
+      --muted: #5a5a64;
+      --accent: #8a7a90;
+      --green: #6db86d;
+      --yellow: #d4a84a;
+      --red: #c66060;
+      --blue: #6080c0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    @media (max-width: 700px) { html { font-size: 16px; } }
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-weight: 300;
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    body { padding: 2rem 2rem 4rem; }
+    .bg {
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,90,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,50,80,0.10) 0%, transparent 55%),
+        var(--bg);
+      z-index: -1;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* Header */
+    header { margin-bottom: 3rem; }
+    h1 {
+      font-size: 1.4rem; font-weight: 300; letter-spacing: 0.3em;
+      text-transform: lowercase; margin-bottom: 0.5rem;
+    }
+    .meta { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.15em; }
+    .meta .sep { opacity: 0.4; margin: 0 0.5em; }
+
+    /* Macro stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .stat {
+      background: var(--bg-2);
+      border: 1px solid var(--bg-3);
+      border-radius: 4px;
+      padding: 1.2rem;
+    }
+    .stat .label {
+      font-size: 0.7rem; color: var(--fg-2);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .stat .value {
+      font-size: 1.8rem; font-weight: 300; color: var(--fg);
+      margin-bottom: 0.5rem;
+    }
+    .stat .bar {
+      height: 4px; background: var(--bg-3); border-radius: 2px; overflow: hidden;
+    }
+    .stat .bar-fill {
+      height: 100%; background: var(--accent);
+      transition: width 0.4s ease;
+    }
+    .stat .breakdown {
+      font-size: 0.7rem; color: var(--muted);
+      margin-top: 0.5rem; letter-spacing: 0.1em;
+    }
+    .stat .breakdown .done { color: var(--green); }
+    .stat .breakdown .progress { color: var(--yellow); }
+    .stat .breakdown .blocked { color: var(--red); }
+
+    /* Project blocks */
+    .project {
+      background: var(--bg-2);
+      border: 1px solid var(--bg-3);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    .project-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .project h2 {
+      font-size: 1.15rem; font-weight: 300; letter-spacing: 0.15em;
+      text-transform: lowercase; color: var(--fg);
+    }
+    .project .subtitle {
+      font-size: 0.8rem; color: var(--fg-2);
+      margin-top: 0.3rem; font-style: italic;
+    }
+    .project .project-progress {
+      font-size: 0.85rem; color: var(--fg);
+      text-align: right; min-width: 200px;
+    }
+    .project .project-progress .pct {
+      font-size: 1.4rem; font-weight: 300; letter-spacing: 0.05em;
+    }
+    .project .project-progress .bar {
+      height: 4px; background: var(--bg-3); border-radius: 2px;
+      overflow: hidden; margin-top: 0.4rem;
+    }
+    .project .project-progress .bar-fill { height: 100%; transition: width 0.4s ease; }
+
+    /* Phase */
+    .phase {
+      margin-bottom: 1.5rem; padding-top: 1rem;
+      border-top: 1px solid var(--bg-3);
+    }
+    .phase:first-child { border-top: 0; padding-top: 0; }
+    .phase-header {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; margin-bottom: 0.8rem; cursor: pointer;
+      user-select: none;
+    }
+    .phase-header h3 {
+      font-size: 0.85rem; font-weight: 300; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--fg-2);
+    }
+    .phase-header .phase-progress {
+      font-size: 0.75rem; color: var(--muted);
+      letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .phase-header .phase-progress .mini-bar {
+      width: 80px; height: 3px; background: var(--bg-3); border-radius: 2px;
+      overflow: hidden;
+    }
+    .phase-header .phase-progress .mini-bar-fill {
+      height: 100%; transition: width 0.4s ease;
+    }
+    .phase-header .toggle::before {
+      content: '▾'; color: var(--muted); margin-right: 0.5rem;
+      display: inline-block; transition: transform 0.2s;
+    }
+    .phase.collapsed .phase-header .toggle::before {
+      transform: rotate(-90deg);
+    }
+    .phase.collapsed .tasks { display: none; }
+
+    /* Task */
+    .tasks { display: flex; flex-direction: column; gap: 0.4rem; padding-left: 0.5rem; }
+    .task {
+      display: grid;
+      grid-template-columns: 24px 1fr auto auto;
+      gap: 0.8rem; align-items: center;
+      padding: 0.5rem 0.6rem;
+      border-radius: 3px;
+      font-size: 0.85rem;
+      transition: background 0.15s;
+    }
+    .task:hover { background: var(--bg-3); }
+    .task .checkbox {
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--muted);
+      border-radius: 3px;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .task.done .checkbox {
+      background: var(--green); border-color: var(--green);
+    }
+    /* Checkmark drawn with CSS borders — bottom-left corner of a rotated rectangle */
+    .task.done .checkbox::after {
+      content: ''; display: block;
+      width: 9px; height: 5px;
+      border-left: 2px solid var(--bg);
+      border-bottom: 2px solid var(--bg);
+      transform: translateY(-1px) rotate(-45deg);
+    }
+    .task.in_progress .checkbox { border-color: var(--yellow); }
+    .task.in_progress .checkbox::after {
+      content: ''; display: block;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--yellow);
+    }
+    .task.blocked .checkbox { border-color: var(--red); opacity: 0.6; }
+    /* X drawn with two rotated lines — perfectly centered */
+    .task.blocked .checkbox::before,
+    .task.blocked .checkbox::after {
+      content: ''; position: absolute;
+      width: 11px; height: 1.5px;
+      background: var(--red);
+      top: 50%; left: 50%;
+    }
+    .task.blocked .checkbox::before { transform: translate(-50%, -50%) rotate(45deg); }
+    .task.blocked .checkbox::after  { transform: translate(-50%, -50%) rotate(-45deg); }
+    .task .title {
+      color: var(--fg); text-decoration: none;
+    }
+    .task.done .title { color: var(--fg-2); text-decoration: line-through; opacity: 0.7; }
+    .task.blocked .title { color: var(--fg-2); }
+    .task .note {
+      font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem;
+      font-style: italic; display: block;
+    }
+    .task .owner, .task .eta {
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      padding: 0.2rem 0.5rem; border-radius: 2px;
+      text-transform: uppercase;
+    }
+    .task .owner.user { background: rgba(96,128,192,0.15); color: var(--blue); }
+    .task .owner.claude { background: rgba(138,122,144,0.15); color: var(--accent); }
+    .task .owner.both { background: rgba(109,184,109,0.12); color: var(--green); }
+    .task .eta { background: var(--bg-3); color: var(--muted); }
+
+    /* Filters */
+    .filters {
+      display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .filter {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.4rem 0.9rem; border-radius: 3px;
+      background: var(--bg-2); color: var(--fg-2);
+      cursor: pointer; border: 1px solid var(--bg-3);
+      transition: all 0.15s;
+    }
+    .filter:hover { color: var(--fg); border-color: var(--accent); }
+    .filter.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+    /* Footer */
+    footer {
+      margin-top: 3rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--bg-3);
+      font-size: 0.7rem; color: var(--muted);
+      letter-spacing: 0.15em; text-align: center;
+    }
+    footer a { color: var(--fg-2); text-decoration: none; }
+    footer a:hover { color: var(--fg); }
+
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      .project-header { flex-direction: column; align-items: flex-start; }
+      .project .project-progress { text-align: left; min-width: 0; }
+      .task { grid-template-columns: 20px 1fr; }
+      .task .owner, .task .eta { grid-column: 2; justify-self: start; margin-top: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <div class="container">
+    <header>
+      <h1>spiral out · control dashboard</h1>
+      <div class="meta">
+        <span>updated <span id="updated">—</span></span>
+        <span class="sep">·</span>
+        <span>next review <span id="next-review">—</span></span>
+        <span class="sep">·</span>
+        <span>v<span id="version">—</span></span>
+      </div>
+    </header>
+
+    <section class="stats" id="stats"></section>
+
+    <div class="filters">
+      <button class="filter active" data-filter="all">all</button>
+      <button class="filter" data-filter="mine">user todo</button>
+      <button class="filter" data-filter="claude">claude todo</button>
+      <button class="filter" data-filter="blocked">blocked</button>
+      <button class="filter" data-filter="in_progress">in progress</button>
+    </div>
+
+    <main id="projects"></main>
+
+    <footer>
+      data source: <a href="data.json">data.json</a> · edit it to update the board
+    </footer>
+  </div>
+
+  <script>
+    let DATA = null;
+    let CURRENT_FILTER = 'all';
+
+    async function load() {
+      const res = await fetch('data.json');
+      DATA = await res.json();
+      render();
+    }
+
+    function render() {
+      document.getElementById('updated').textContent = DATA.meta.updated;
+      document.getElementById('next-review').textContent = DATA.meta.next_review;
+      document.getElementById('version').textContent = DATA.meta.version;
+      renderStats();
+      renderProjects();
+      attachToggles();
+    }
+
+    function flattenTasks() {
+      const all = [];
+      DATA.projects.forEach(p => {
+        p.phases.forEach(ph => {
+          ph.tasks.forEach(t => all.push({...t, project: p.id, phase: ph.id}));
+        });
+      });
+      return all;
+    }
+
+    function statusCounts(tasks) {
+      const c = {done: 0, in_progress: 0, blocked: 0, todo: 0, total: tasks.length};
+      tasks.forEach(t => { c[t.status] = (c[t.status] || 0) + 1; });
+      return c;
+    }
+
+    function pct(c) {
+      return c.total === 0 ? 0 : Math.round((c.done / c.total) * 100);
+    }
+
+    function renderStats() {
+      const all = flattenTasks();
+      const cAll = statusCounts(all);
+
+      const blocks = [
+        {label: 'overall progress', tasks: all, color: 'var(--accent)'},
+        {label: 'user todo', tasks: all.filter(t => t.owner === 'user' && t.status !== 'done'), color: 'var(--blue)', showCount: true},
+        {label: 'claude todo', tasks: all.filter(t => t.owner === 'claude' && t.status !== 'done'), color: 'var(--accent)', showCount: true},
+        {label: 'blocked', tasks: all.filter(t => t.status === 'blocked'), color: 'var(--red)', showCount: true},
+      ];
+
+      const el = document.getElementById('stats');
+      el.innerHTML = blocks.map(b => {
+        const c = statusCounts(b.tasks);
+        if (b.showCount) {
+          return `
+            <div class="stat">
+              <div class="label">${b.label}</div>
+              <div class="value">${b.tasks.length}</div>
+              <div class="bar"><div class="bar-fill" style="width: ${pct(c)}%; background: ${b.color};"></div></div>
+              <div class="breakdown">${c.done} done · ${c.in_progress} in progress · ${c.blocked} blocked</div>
+            </div>
+          `;
+        }
+        return `
+          <div class="stat">
+            <div class="label">${b.label}</div>
+            <div class="value">${pct(c)}%</div>
+            <div class="bar"><div class="bar-fill" style="width: ${pct(c)}%; background: ${b.color};"></div></div>
+            <div class="breakdown">
+              <span class="done">${c.done}</span> · <span class="progress">${c.in_progress}</span> · <span class="blocked">${c.blocked}</span> · ${c.total} total
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function taskMatchesFilter(t) {
+      if (CURRENT_FILTER === 'all') return true;
+      if (CURRENT_FILTER === 'mine') return t.owner === 'user' && t.status !== 'done';
+      if (CURRENT_FILTER === 'claude') return t.owner === 'claude' && t.status !== 'done';
+      if (CURRENT_FILTER === 'blocked') return t.status === 'blocked';
+      if (CURRENT_FILTER === 'in_progress') return t.status === 'in_progress';
+      return true;
+    }
+
+    function renderProjects() {
+      const el = document.getElementById('projects');
+      el.innerHTML = DATA.projects.map(p => {
+        const allTasks = p.phases.flatMap(ph => ph.tasks);
+        const c = statusCounts(allTasks);
+        const projectPct = pct(c);
+
+        const phasesHtml = p.phases.map(ph => {
+          const phC = statusCounts(ph.tasks);
+          const phPct = pct(phC);
+          const tasksHtml = ph.tasks
+            .filter(taskMatchesFilter)
+            .map(t => renderTask(t))
+            .join('');
+          const hidden = tasksHtml === '' ? 'style="display:none"' : '';
+          return `
+            <div class="phase" data-phase-id="${p.id}-${ph.id}" ${hidden}>
+              <div class="phase-header">
+                <h3><span class="toggle"></span>${escapeHtml(ph.title)}</h3>
+                <div class="phase-progress">
+                  <span>${phC.done}/${phC.total}</span>
+                  <div class="mini-bar"><div class="mini-bar-fill" style="width: ${phPct}%; background: ${p.color};"></div></div>
+                  <span>${phPct}%</span>
+                </div>
+              </div>
+              <div class="tasks">${tasksHtml || '<span style="color:var(--muted);font-size:0.75rem;padding:0.5rem;">no tasks match filter</span>'}</div>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <section class="project" style="border-left-color: ${p.color};">
+            <div class="project-header">
+              <div>
+                <h2>${escapeHtml(p.title)}</h2>
+                <div class="subtitle">${escapeHtml(p.subtitle)}</div>
+              </div>
+              <div class="project-progress">
+                <div class="pct">${projectPct}%</div>
+                <div class="bar"><div class="bar-fill" style="width: ${projectPct}%; background: ${p.color};"></div></div>
+                <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;margin-top:0.3rem;">
+                  ${c.done} / ${c.total} done · ${c.blocked} blocked
+                </div>
+              </div>
+            </div>
+            ${phasesHtml}
+          </section>
+        `;
+      }).join('');
+    }
+
+    function renderTask(t) {
+      const owner = t.owner || 'user';
+      const status = t.status || 'todo';
+      const note = t.note ? `<span class="note">${escapeHtml(t.note)}</span>` : '';
+      const eta = t.eta ? `<span class="eta">${escapeHtml(t.eta)}</span>` : '';
+      return `
+        <div class="task ${status}">
+          <div class="checkbox"></div>
+          <div class="title-cell">${escapeHtml(t.title)}${note}</div>
+          <span class="owner ${owner}">${owner}</span>
+          ${eta}
+        </div>
+      `;
+    }
+
+    function attachToggles() {
+      document.querySelectorAll('.phase-header').forEach(h => {
+        h.addEventListener('click', () => {
+          const phase = h.closest('.phase');
+          const id = phase.dataset.phaseId;
+          phase.classList.toggle('collapsed');
+          // remember
+          const collapsed = JSON.parse(localStorage.getItem('spiralout.collapsed') || '[]');
+          if (phase.classList.contains('collapsed')) {
+            if (!collapsed.includes(id)) collapsed.push(id);
+          } else {
+            const idx = collapsed.indexOf(id);
+            if (idx >= 0) collapsed.splice(idx, 1);
+          }
+          localStorage.setItem('spiralout.collapsed', JSON.stringify(collapsed));
+        });
+      });
+      // restore
+      const collapsed = JSON.parse(localStorage.getItem('spiralout.collapsed') || '[]');
+      collapsed.forEach(id => {
+        const phase = document.querySelector(`[data-phase-id="${id}"]`);
+        if (phase) phase.classList.add('collapsed');
+      });
+    }
+
+    document.querySelectorAll('.filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        CURRENT_FILTER = btn.dataset.filter;
+        renderProjects();
+        attachToggles();
+      });
+    });
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    load();
+  </script>
+</body>
+</html>

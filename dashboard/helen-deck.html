@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brief de lanzamiento — Humana — Helen Olhausen — agosto 2026</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-2: #14141a;
+      --bg-3: #1c1c24;
+      --bg-4: #25252e;
+      --fg: #e8e8ec;
+      --fg-2: #a0a0a8;
+      --muted: #6a6a74;
+      --line: #2a2a32;
+
+      /* Phase colors — protagonist Helen */
+      --pre: #d4a84a;                            /* yellow / preparación */
+      --pre-bg: rgba(212, 168, 74, 0.08);
+      --pre-border: rgba(212, 168, 74, 0.35);
+
+      --during: #c66060;                         /* coral / release week */
+      --during-bg: rgba(198, 96, 96, 0.08);
+      --during-border: rgba(198, 96, 96, 0.35);
+
+      --post: #6080c0;                           /* blue / sostenido */
+      --post-bg: rgba(96, 128, 192, 0.08);
+      --post-border: rgba(96, 128, 192, 0.35);
+
+      /* Lo nuestro — apartado secundario */
+      --ours: #8a7a90;
+      --ours-bg: rgba(138, 122, 144, 0.08);
+      --ours-border: rgba(138, 122, 144, 0.35);
+
+      /* Research / data — neutral */
+      --data: #7a9078;
+      --data-bg: rgba(122, 144, 120, 0.05);
+      --data-border: rgba(122, 144, 120, 0.25);
+
+      --warn: #c66060;
+      --warn-bg: rgba(198, 96, 96, 0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    @media (max-width: 700px) { html { font-size: 16px; } }
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-weight: 300;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bg {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,90,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,50,80,0.10) 0%, transparent 55%),
+        var(--bg);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 0 1rem 4rem; }
+    }
+
+    /* Back-to-top floating button (aparece al scrollear) */
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+      width: 44px; height: 44px;
+      background: rgba(20, 20, 26, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--fg-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 1.1rem; line-height: 1;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s, color 0.2s, border-color 0.2s;
+    }
+    .back-to-top.visible { opacity: 0.85; visibility: visible; }
+    .back-to-top:hover { color: var(--fg); border-color: var(--fg-2); opacity: 1; }
+    @media print { .back-to-top { display: none; } }
+
+    /* Cover */
+    .cover {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4rem;
+    }
+    .cover .pretitle {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.2rem;
+    }
+    .cover h1 {
+      font-size: 2.2rem; font-weight: 300; letter-spacing: 0.03em;
+      line-height: 1.25; margin-bottom: 1rem; color: var(--fg);
+    }
+    @media (max-width: 600px) {
+      .cover h1 { font-size: 1.6rem; line-height: 1.3; }
+      .cover { padding: 2.5rem 0 2rem; }
+      .cover .subtitle { font-size: 0.95rem; }
+    }
+    .cover .subtitle {
+      font-size: 1rem; color: var(--fg-2);
+      font-style: italic;
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .cover .meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .cover .meta .sep { opacity: 0.4; }
+    .cover .meta .countdown { color: var(--pre); font-weight: 600; }
+
+    /* Índice */
+    .index {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .index h3 {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem; margin-top: 0;
+    }
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.4rem 1.5rem;
+    }
+    .index-grid a {
+      display: flex; align-items: baseline; gap: 0.7rem;
+      font-size: 0.85rem;
+      color: var(--fg-2); text-decoration: none;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .index-grid a:hover { color: var(--fg); border-bottom-color: var(--line); }
+    .index-grid a .num {
+      font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums;
+      min-width: 1.4em; letter-spacing: 0.05em;
+    }
+    .index-grid a.pre    .num { color: var(--pre); }
+    .index-grid a.during .num { color: var(--during); }
+    .index-grid a.post   .num { color: var(--post); }
+    .index-grid a.ours   .num { color: var(--ours); }
+    .index-grid a.data   .num { color: var(--data); }
+
+    /* Sections */
+    section { margin-bottom: 4rem; scroll-margin-top: 5rem; }
+    h2 {
+      font-size: 1.35rem; font-weight: 300; letter-spacing: 0.06em;
+      margin-bottom: 1.3rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 {
+      font-size: 1.15rem; font-weight: 600; letter-spacing: 0.02em;
+      margin-top: 2.2rem; margin-bottom: 1rem;
+      color: var(--fg);
+    }
+    h4 {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--fg-2);
+      margin-top: 1.5rem; margin-bottom: 0.7rem;
+    }
+    p { margin-bottom: 1rem; font-size: 1rem; }
+    a {
+      color: var(--fg); text-decoration: underline;
+      text-decoration-color: var(--muted); text-underline-offset: 3px;
+    }
+    a:hover { color: var(--ours); text-decoration-color: var(--ours); }
+    strong { color: var(--fg); font-weight: 500; }
+    em { color: var(--fg); font-style: italic; }
+    code {
+      font-family: 'Courier New', monospace; font-size: 0.85em;
+      background: var(--bg-3); padding: 0.1em 0.4em; border-radius: 2px;
+      color: var(--fg-2);
+    }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.5rem; }
+
+    /* Block headers */
+    .block-header {
+      display: flex; align-items: baseline; gap: 1rem;
+      margin-bottom: 1.3rem; padding-bottom: 0.7rem;
+      border-bottom: 2px solid;
+      flex-wrap: wrap;
+    }
+    .block-header .tag {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.3rem 0.7rem; border-radius: 2px;
+      font-weight: 600; white-space: nowrap;
+    }
+    .block-header h2 {
+      flex: 1; border: 0; padding: 0; margin: 0;
+      font-size: 1.45rem; min-width: 250px;
+    }
+    .block-header .when {
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pre-block    .block-header { border-color: var(--pre-border); }
+    .pre-block    .block-header .tag { background: var(--pre); color: var(--bg); }
+    .pre-block    .block-header h2 { color: var(--pre); }
+    .during-block .block-header { border-color: var(--during-border); }
+    .during-block .block-header .tag { background: var(--during); color: var(--bg); }
+    .during-block .block-header h2 { color: var(--during); }
+    .post-block   .block-header { border-color: var(--post-border); }
+    .post-block   .block-header .tag { background: var(--post); color: var(--bg); }
+    .post-block   .block-header h2 { color: var(--post); }
+    .ours-block   .block-header { border-color: var(--ours-border); }
+    .ours-block   .block-header .tag { background: var(--ours); color: var(--bg); }
+    .ours-block   .block-header h2 { color: var(--ours); }
+    .data-block   .block-header { border-color: var(--data-border); }
+    .data-block   .block-header .tag { background: var(--data); color: var(--bg); }
+    .data-block   .block-header h2 { color: var(--data); }
+
+    /* Cards */
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+      background: var(--bg-2);
+    }
+    .card.intro { background: var(--bg-3); }
+    .pre-block    .card { border-left: 3px solid var(--pre);    background: var(--pre-bg); }
+    .during-block .card { border-left: 3px solid var(--during); background: var(--during-bg); }
+    .post-block   .card { border-left: 3px solid var(--post);   background: var(--post-bg); }
+    .ours-block   .card { border-left: 3px solid var(--ours);   background: var(--ours-bg); }
+
+    /* Action items */
+    .actions { display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0 1.5rem; }
+    .action {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.9rem; align-items: start;
+      padding: 0.9rem 1.1rem;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 600px) {
+      .action {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .action .marker { justify-self: start; }
+      .action .meta-tag { justify-self: start; padding-top: 0; }
+    }
+    .action.crit { border-left: 3px solid var(--warn); }
+    .action.high { border-left: 3px solid var(--pre); }
+    .action.med  { border-left: 3px solid var(--fg-2); }
+    .action.low  { border-left: 3px solid var(--post); }
+    .action .marker {
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border-radius: 2px;
+      white-space: nowrap;
+    }
+    .action.crit .marker { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+    .action.high .marker { background: var(--pre-bg);  color: var(--pre);  border: 1px solid var(--pre-border); }
+    .action.med  .marker { background: var(--bg-3);    color: var(--fg-2); border: 1px solid var(--line); }
+    .action.low  .marker { background: var(--post-bg); color: var(--post); border: 1px solid var(--post-border); }
+    .action .body strong { display: block; margin-bottom: 0.35rem; color: var(--fg); }
+    .action .body small { color: var(--fg-2); font-size: 0.88rem; line-height: 1.7; }
+    .action .meta-tag {
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap; padding-top: 0.2rem;
+    }
+
+    /* Tables */
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-size: 0.92rem;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    th {
+      text-align: left; padding: 0.7rem 0.9rem;
+      font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.68rem; color: var(--fg-2);
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--line);
+    }
+    td {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top; color: var(--fg);
+    }
+    tr:last-child td { border-bottom: 0; }
+    tr:hover td { background: var(--bg-3); }
+    td small { color: var(--fg-2); font-size: 0.78rem; display: block; margin-top: 0.2rem; }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: 1.5rem 0;
+      padding-left: 1.8rem;
+      border-left: 2px solid var(--line);
+    }
+    .timeline-row {
+      position: relative;
+      padding: 0.7rem 0 1.1rem 1.2rem;
+    }
+    .timeline-row::before {
+      content: '';
+      position: absolute; left: -2.2rem; top: 1rem;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--fg-2);
+    }
+    .timeline-row.now::before     { background: var(--pre);    border-color: var(--pre); }
+    .timeline-row.release::before { background: var(--during); border-color: var(--during); }
+    .timeline-row .phase {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.25rem;
+    }
+    .timeline-row .when-h {
+      font-size: 0.92rem; font-weight: 500; margin-bottom: 0.35rem;
+    }
+    .timeline-row .what { font-size: 0.84rem; color: var(--fg-2); }
+    .timeline-row.now .when-h     { color: var(--pre); }
+    .timeline-row.release .when-h { color: var(--during); }
+
+    /* KPI grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem; margin: 1.5rem 0;
+    }
+    .kpi {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      padding: 1.1rem;
+    }
+    .kpi .label {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--fg-2); margin-bottom: 0.5rem;
+    }
+    .kpi .value {
+      font-size: 1.2rem; font-weight: 300; color: var(--fg);
+      margin-bottom: 0.3rem;
+    }
+    .kpi .delta { font-size: 0.75rem; color: var(--fg-2); }
+    .kpi.viable   { border-left: 3px solid var(--post); }
+    .kpi.good     { border-left: 3px solid var(--data); }
+    .kpi.breakout { border-left: 3px solid var(--pre); }
+
+    /* Chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.5rem 0 1rem; }
+    .chip {
+      font-size: 0.75rem; padding: 0.3rem 0.7rem;
+      background: var(--bg-3); border: 1px solid var(--line);
+      border-radius: 12px; color: var(--fg-2);
+    }
+
+    /* Callouts */
+    .callout {
+      margin: 1.3rem 0;
+      padding: 1rem 1.2rem;
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+    .callout.warn { background: var(--warn-bg); border-left: 3px solid var(--warn); color: var(--fg); }
+    .callout.note { background: var(--bg-2); border-left: 3px solid var(--fg-2); color: var(--fg-2); }
+    .callout.info { background: var(--ours-bg); border-left: 3px solid var(--ours); color: var(--fg); }
+    .callout strong { color: var(--fg); }
+
+    /* Bridge templates */
+    .template {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--data);
+      padding: 1rem 1.2rem;
+      margin: 0.8rem 0;
+      border-radius: 3px;
+      font-style: italic;
+      color: var(--fg-2);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+    .template::before {
+      content: 'PARA: ' attr(data-audience);
+      display: block;
+      font-style: normal; font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--data);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.08em; text-align: center;
+      line-height: 2;
+    }
+
+    /* Print */
+    @media print {
+      body { background: white; color: black; }
+      .bg, nav.toc { display: none; }
+      .container { max-width: 100%; padding: 1rem; }
+      .card, .action, table, .kpi, .callout, .template {
+        background: white !important; color: black !important;
+        border-color: #999 !important;
+      }
+      a { color: black; text-decoration-color: #666; }
+      h2, h3, h4, strong { color: black !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#cover" class="back-to-top" id="backToTop" aria-label="volver al inicio">↑</a>
+
+  <div class="container">
+
+    <!-- ====================== COVER ====================== -->
+    <section class="cover" id="cover">
+      <div class="pretitle">documento de soporte · v0.1 · 17 de mayo 2026</div>
+      <h1>Brief de lanzamiento · <em>Humana</em> · agosto 2026</h1>
+      <p class="subtitle">
+        Research consolidada sobre el contexto donde se sitúa el pivote
+        modular / industrial / dark electronic, plan de ejecución por
+        fase (pre-lanzamiento, durante el lanzamiento, post-lanzamiento),
+        y una sección sobre la difusión satelital independiente desde
+        Spiral Out, con reportes cada 2-3 semanas.
+      </p>
+      <div class="meta">
+        <span class="countdown">T-77</span>
+      </div>
+
+      <div class="index">
+        <h3>Índice</h3>
+        <div class="index-grid">
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#summary"><span class="num">0</span>Resumen ejecutivo</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#diag"><span class="num">1</span>Diagnóstico inicial</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#pre" class="pre"><span class="num">2</span>Plan pre-lanzamiento</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#during" class="during"><span class="num">3</span>Plan durante el lanzamiento</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#post" class="post"><span class="num">4</span>Plan post-lanzamiento</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#reactivacion"><span class="num">5</span>Reactivación de <em>Romperse</em></a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#ours" class="ours"><span class="num">6</span>Difusión satelital</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#timeline" class="data"><span class="num">7</span>Timeline integrado</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#similar" class="data"><span class="num">8</span>Artistas similares</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#press" class="data"><span class="num">9</span>Targets de prensa</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#playlists" class="data"><span class="num">10</span>Playlists</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#communities" class="data"><span class="num">11</span>Comunidades</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#kpis" class="data"><span class="num">12</span>KPIs y benchmarks</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#risks" class="data"><span class="num">13</span>Riesgos y anti-patterns</a>
+          <a href="file:///Users/emilianomettini/Library/Containers/net.whatsapp.WhatsApp/Data/tmp/documents/DD0A8D63-51F0-41FC-A514-62C24EE2CEC6/helen-deck.html#bridge" class="data"><span class="num">14</span>Bridge messaging</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== RESUMEN ====================== -->
+    <section id="summary">
+      <h2>0 · Resumen ejecutivo</h2>
+      <div class="card intro">
+        <p>
+          <em>Humana</em> marca un <strong>pivote estilístico fuerte</strong>:
+          de cantautora rioplatense a modular/industrial/dark-electronic.
+          El diferencial competitivo es claro y poco saturado a nivel
+          mundial: <strong>voz en castellano + sensibilidad
+          latinoamericana + modular pesado</strong> en línea Caterina
+          Barbieri / Helena Hauff / Holly Herndon / Pharmakon.
+        </p>
+        <p>
+          La research indica que esto posiciona el nuevo disco en territorio
+          global primero, no Latam por defecto. La prensa modular/experimental
+          internacional ya cubre artistas latinos hispanohablantes — Lila
+          Tirando a Violeta fue <em>Bandcamp Daily Album of the Day</em> en abril
+          2025
+          (<a href="https://daily.bandcamp.com/album-of-the-day/lila-tirando-a-violeta-dream-of-snakes-review" target="_blank">ref</a>);
+          Lucrecia Dalt recibió <em>Pitchfork Best New Music</em> en septiembre
+          2025
+          (<a href="https://www.metacritic.com/music/ay!/lucrecia-dalt" target="_blank">ref</a>).
+          La ventana existe.
+        </p>
+        <p>
+          <strong>Métricas objetivo:</strong> pasar de 358 monthly listeners
+          a un rango realista de <strong>1.500–3.000 a T+90</strong> si
+          entran 2–3 placements de prensa Tier 1/2; <em>breakout</em>
+          sería 8.000+ con un Pitchfork o Bandcamp Daily centerpiece.
+        </p>
+        <p>
+          El documento plantea una <strong>campaña integral</strong>:
+          plan por fase (pre-lanzamiento, durante el lanzamiento,
+          post-lanzamiento) con accionables concretos por etapa, research
+          de soporte (artistas similares, prensa, playlists, comunidades,
+          KPIs, riesgos, bridge messaging), <strong>plan tentativo de
+          crecimiento mes a mes hasta T+180 con probabilidades por
+          escenario</strong>, y una sección sobre la difusión satelital
+          que Em y Spiral Out asumen desde afuera (un pedacito del total,
+          no el plan completo).
+        </p>
+        <p>
+          <strong>La difusión paralela es complementaria, no central.</strong>
+          La campaña integral es lo que mueve la aguja; Spiral Out suma
+          exposición incremental en nichos específicos.
+        </p>
+      </div>
+    </section>
+
+    <!-- ====================== DIAGNÓSTICO ====================== -->
+    <section id="diag">
+      <h2>1 · Diagnóstico inicial</h2>
+
+      <h3>Identidad digital de Helen — estado actual</h3>
+      <p>
+        Audit a mayo 2026 — lo público y constatable:
+      </p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Plataforma</th><th>Estado</th></tr></thead>
+        <tbody>
+        <tr><td>Spotify Artist</td><td><a href="https://open.spotify.com/artist/473NegwRWuSwoynM2mTkSe" target="_blank">link</a> — <strong>358 monthly listeners · 1.563 followers</strong></td></tr>
+        <tr><td>Apple Music</td><td><a href="https://music.apple.com/us/artist/helen-olhausen/1532329637" target="_blank">link</a> — activo</td></tr>
+        <tr><td>Bandcamp</td><td><a href="https://helenolhausen.bandcamp.com/" target="_blank">helenolhausen.bandcamp.com</a> — activo</td></tr>
+        <tr><td>YouTube canal manual</td><td><a href="https://youtube.com/c/HelenOlhausen" target="_blank">link</a> — vanity URL = manual (no Topic auto)</td></tr>
+        <tr><td>TIDAL / Deezer</td><td>activos</td></tr>
+        <tr><td>Instagram</td><td>@helenolhausen — activo</td></tr>
+        <tr><td>Facebook</td><td>activo</td></tr>
+        <tr><td>SoundCloud</td><td><a href="https://soundcloud.com/helen-olhausen" target="_blank">link</a> (handle "Ohsn")</td></tr>
+        <tr><td>Sofar Sounds</td><td><a href="https://www.sofarsounds.com/artists/helen-olhausen" target="_blank">perfil con shows</a></td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Gaps detectados (FYI — vos decidís si los tapás)</h3>
+      <div class="callout note">
+        Cosas que <strong>no existen hoy</strong> y que pueden ayudar
+        cuando el release ya tenga tracción. No son urgentes — pero las
+        anotamos:
+        <ul style="margin-top: 0.6rem; margin-bottom: 0">
+          <li><strong><code>helenolhausen.com</code> está libre</strong> (~$10/año). Vale la pena reclamarlo antes de un domain squatter.</li>
+          <li><strong>X / Bluesky / TikTok</strong>: no tenés <code>@helenolhausen</code> en ninguna. Squateables.</li>
+          <li><strong>MusicBrainz</strong>: no hay entry artista propia. Sí hay release del vinilo 2023 vía Discogs.</li>
+          <li><strong>Wikidata</strong>: sin ítem. Es la fuente principal que consumen los LLMs (ChatGPT, Claude, Gemini) para identificar artistas.</li>
+          <li><strong>Sitio web propio</strong>: no existe. Tu landing actual son los perfiles externos.</li>
+        </ul>
+      </div>
+
+      <h3>Catálogo confirmado</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Año</th><th>Release</th><th>Formato</th><th>Notas</th></tr></thead>
+        <tbody>
+        <tr><td>dic 2020</td><td><strong>Romperse</strong></td><td>LP, 9 tracks</td><td>Debut. Gira/presentación 2021. Sello: Little Butterfly Records (UY) + Feel de Agua.</td></tr>
+        <tr><td>2020</td><td>Fuego, Hoy</td><td>singles</td><td>Pre-singles del LP</td></tr>
+        <tr><td>2022</td><td><strong>Yeguón</strong></td><td>EP</td><td>Concierto de danza contemporánea</td></tr>
+        <tr><td>2022</td><td><strong>Todo Puede Romperse (En Vivo)</strong></td><td>live album</td><td>Little Butterfly Records</td></tr>
+        <tr><td>2023</td><td>Romperse — reedición vinilo</td><td>LP físico</td><td>Little Butterfly Records</td></tr>
+        <tr><td>2024</td><td><a href="https://open.spotify.com/track/0T1tarXUbpbOsnzfOoON24" target="_blank">Orbita</a></td><td>single</td><td>Activo en Spotify</td></tr>
+        <tr><td>2026 (agosto)</td><td><strong>Humana</strong></td><td>LP</td><td>Pivote a modular / industrial / dark electronic</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Press existente</h3>
+      <p>Cobertura previa, toda en Uruguay:</p>
+      <ul>
+        <li><strong>la diaria</strong> (oct 2021) — <a href="https://ladiaria.com.uy/cultura/articulo/2021/10/helen-olhausen-cuando-pasen-20-anos-las-maquinas-van-a-ser-las-nuevas-guitarras/" target="_blank">"Cuando pasen 20 años las máquinas van a ser las nuevas guitarras"</a>. <strong>Clave</strong>: ya en 2021 enunciaste el interés por máquinas que ahora aterriza en el pivote modular. <em>Hook narrativo perfecto para todo el bridge messaging.</em></li>
+        <li><strong>Radio Pedal</strong> (abr 2022) — <a href="https://radiopedal.uy/romperse-desde-la-raiz/" target="_blank">"Romperse desde la raíz"</a></li>
+        <li><strong>Latido Beat</strong> (abr 2022) — <a href="https://www.latidobeat.uy/Beat/Helen-Olhausen-el-sonido-de-la-musica-experimental-y-sus-cuatro-frentes-uc818705" target="_blank">"Cuatro frentes de la música experimental"</a></li>
+        <li><strong>En Perspectiva / Radiomundo</strong> — auto-tag "Pop-Electro-Melánco"</li>
+        <li><strong>MUTEK Argentina</strong> — programada como dúo con Sofía Córdoba</li>
+      </ul>
+      <p>
+        <strong>Gap a aprovechar:</strong> no hay cobertura en Pitchfork,
+        Quietus, Bandcamp Daily ni press AR mainstream ni press español.
+        Con el pivote modular, este gap se convierte en upside —
+        oportunidades de press internacional que con <em>Romperse</em>
+        no estaban en target.
+      </p>
+    </section>
+
+    <!-- ====================== PRE-LANZAMIENTO ====================== -->
+    <section class="pre-block" id="pre">
+      <div class="block-header">
+        <span class="tag">Fase 1</span>
+        <h2>2 · Plan pre-lanzamiento</h2>
+        <span class="when">hoy → T-7 · mayo a 24 jul</span>
+      </div>
+
+      <div class="card">
+        <p>
+          Lo crítico está en esta fase. Una vez que el release sale,
+          mucho del trabajo de press tiene que estar <em>ya en marcha</em>
+          o llega tarde (los outlets internacionales necesitan 4-8 semanas
+          de lead). Te separo accionables por urgencia.
+        </p>
+      </div>
+
+      <h3>Decisiones de release</h3>
+      <p>
+        Cronograma y decisiones de release que afectan a la difusión.
+        <em>El armado del disco (master + arte de tapa + material visual)
+        se asume manejado por Helen — este deck cubre solo
+        difusión y promoción.</em>
+      </p>
+
+      <h4>Timing crítico de distribución (CD Baby / DistroKid)</h4>
+      <p>
+        El release debe estar entregado al distribuidor con tiempo
+        suficiente para que <strong>Spotify procese el ingest</strong>
+        (típicamente 2-4 días) <strong>y para abrir la ventana de pitch
+        editorial</strong>. Reglas duras:
+      </p>
+      <ul>
+        <li><strong>Mínimo absoluto T-7 días</strong> para que Spotify reciba el pitch a editorial. Por debajo de 7 días, el botón "Pitch to Editorial" en Spotify for Artists está deshabilitado.</li>
+        <li><strong>Ideal T-21 a T-30</strong>. Pitch llega cuando los curadores editoriales todavía pueden incluirte en playlists temáticas semanales/quincenales.</li>
+        <li>Apple Music acepta pitch en cualquier momento via Apple Music for Artists, pero ideal T-14+ para Editorial.</li>
+      </ul>
+
+      <h4>Smart link / pre-save — alternativas</h4>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Tool</th><th>Costo</th><th>Para qué sirve</th></tr></thead>
+        <tbody>
+        <tr><td><strong>ToneDen</strong></td><td>Free (limit features)</td><td>Pre-save de Spotify + smart link multi-plataforma. Suficiente para indie un release/año. Setup en 15 min.</td></tr>
+        <tr><td><strong>Linkfire</strong></td><td>$12-26/mes</td><td>Estándar de la industria indie pro. Pre-save + smart links + analytics detallados + dominios custom + pixel de retargeting. <strong>Recomendado si hay budget</strong> — los analytics permiten optimizar el resto de la campaña.</td></tr>
+        <tr><td><strong>Feature.fm</strong></td><td>$10-50/mes</td><td>Alternativa con foco en Action Pages (descarga gratuita a cambio de email/follow). Útil para construir mailing list.</td></tr>
+        <tr><td><strong>DistroKid Hyperfollow</strong></td><td>Gratis si usás DistroKid</td><td>Pre-save + smart link nativos. Menos features que Linkfire pero zero overhead.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="actions">
+        <div class="action high">
+          <span class="marker">alta · T-30</span>
+          <div class="body">
+            <strong>Pre-save link activo (recomendado: Linkfire o Feature.fm)</strong>
+            <small>El pre-save de Spotify es señal algorítmica fuerte el día del release: cada pre-save cuenta como follow + save automático en T+0, lo cual empuja al algoritmo de Discover Weekly. Los smart links agregados permiten medir CTR por canal de tráfico — datos para optimizar el resto.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · T-30 / T-14</span>
+          <div class="body">
+            <strong>Single 1 (T-30) + Single 2 (T-14)</strong>
+            <small>Práctica estándar para este nicho. Single 1 da material para playlists y press; single 2 sostiene momentum justo antes del release. Recomendado: que single 1 sea el track más "puente" (algún elemento melódico/vocal reconocible para fans viejos) y single 2 el más arriesgado/representativo del pivote modular.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+      </div>
+
+      <h3>Pitch directo a prensa (cosas que solo vos podés hacer)</h3>
+      <div class="actions">
+        <div class="action crit">
+          <span class="marker">crit · esta semana</span>
+          <div class="body">
+            <strong>Pitch a Bandcamp Daily</strong>
+            <small>Lead time 4-8 semanas. Si querés <em>Album of the Day</em> o entrar en la columna mensual <em>Best Latin</em> (curada por Maria Barrios) de agosto, el pitch sale ahora. Hook: pivote modular + La Siesta del Fauno + voz en castellano. Precedente: Lila Tirando a Violeta fue AotD en abril 2025 (<a href="https://daily.bandcamp.com/album-of-the-day/lila-tirando-a-violeta-dream-of-snakes-review" target="_blank">ref</a>).</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action crit">
+          <span class="marker">crit · próx 2 sem</span>
+          <div class="body">
+            <strong>Pitch a The Quietus</strong>
+            <small>Lead time 4-8 sem. <code>editor@thequietus.com</code>. Citá su review de <em>Caterina Barbieri Myuthafoo</em> (<a href="https://thequietus.com/articles/33037-caterina-barbieri-myuthafoo-review" target="_blank">ref</a>) — ese es el espacio donde tu disco entra naturalmente.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action crit">
+          <span class="marker">crit · próx 3 sem</span>
+          <div class="body">
+            <strong>Pitch a The Wire + Resident Advisor + FACT Mag + Crack</strong>
+            <small>Lead times 4-12 sem según outlet. Mismo press kit, ángulo levemente distinto: Wire para análisis composicional, RA para club/electronic, FACT para premiere, Crack para perfil cultural. Contactos en sección 9.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · T-21 mín</span>
+          <div class="body">
+            <strong>Spotify for Artists → Pitch to Editorial</strong>
+            <small>Mínimo 7 días antes del release, ideal 21+. Llenar todos los campos: mood, instruments, lyrics theme, story behind the song. <em>Esto solo lo podés hacer vos desde tu dashboard</em>.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · T-21</span>
+          <div class="body">
+            <strong>Apple Music for Artists pitch</strong>
+            <small>1 song por release. Submit via dashboard. Mismo concepto que Spotify pero más restrictivo.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · paralelo</span>
+          <div class="body">
+            <strong>Pitch Tier 2 castellano</strong>
+            <small>la diaria (Federico Medina ya te cubrió en 2021), Radio Pedal, Indie Hoy AR (<code>contacto@indiehoy.com</code>), Página/12 cultura, Mondo Sonoro España, Remezcla, Indie Rocks! México. Lead time 2-4 semanas — ventana más relajada que Tier 1.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+      </div>
+
+      <h3>Press kit para pitches</h3>
+      <p>
+        Lo que los outlets piden cuando se les pitchea — separado del
+        armado de tapa/visual del disco (eso es otro entregable).
+      </p>
+      <div class="actions">
+        <div class="action high">
+          <span class="marker">alta · ya</span>
+          <div class="body">
+            <strong>Press kit listo</strong>
+            <small><strong>Bio 50 palabras</strong> (one-liner para sidebar) + <strong>bio 150 palabras</strong> (paragraph para review), ambas con énfasis en pivote modular + La Siesta del Fauno + arco Romperse→nuevo. <strong>One-sheet PDF</strong> con tracklist, fecha de release, sello/distribuidor, contactos. <strong>Stream privado del álbum</strong> (Bandcamp tiene esta opción nativa — link con password expirable). <strong>Quote sheet</strong> con las citas de la press existente (la diaria 2021, Radio Pedal 2022, Latido Beat 2022) — funciona como social proof.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== DURANTE EL LANZAMIENTO ====================== -->
+    <section class="during-block" id="during">
+      <div class="block-header">
+        <span class="tag">Fase 2</span>
+        <h2>3 · Plan durante el lanzamiento</h2>
+        <span class="when">T-7 → T+7 · 24 jul a 7 ago</span>
+      </div>
+
+      <div class="card">
+        <p>
+          <strong>Las 2 semanas alrededor del release</strong> son cuando
+          más se gana o se pierde momentum. Las acciones son cortas y
+          puntuales: Helen coordina el drop, las plataformas
+          empujan, y la difusión paralela desde Spiral Out intensifica
+          posts en comunidades.
+        </p>
+      </div>
+
+      <div class="actions">
+        <div class="action crit">
+          <span class="marker">crit · release day</span>
+          <div class="body">
+            <strong>Drop coordinated en todas las redes</strong>
+            <small>Mismo timing, copy distinto por plataforma: IG con visual, Bluesky/X con texto + link, YouTube con visualizer del álbum o un track key. Empezá a las 9-10 AM hora local — pico de actividad en plataformas. Posteá un único contenedor con todos los links de stream.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action crit">
+          <span class="marker">crit · T+0</span>
+          <div class="body">
+            <strong>YouTube full album upload</strong>
+            <small>Si lo permitís: subir el álbum completo en un solo video (con tracklist + timestamps en la descripción) + videos individuales por track con visualizer. Es contenido evergreen para discovery long-tail.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action crit">
+          <span class="marker">crit · T+0</span>
+          <div class="body">
+            <strong>Bandcamp release day push</strong>
+            <small>Bandcamp tiene "new arrivals" listing automático del día. Asegurate que el release esté con todo: liner notes, créditos, tags correctos (ambient, dark electronic, modular, AI, deep space, montevideo), pre-order convertido a release.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · T+0 a T+3</span>
+          <div class="body">
+            <strong>Newsletter / mail blast</strong>
+            <small>Si tenés lista (aunque sea chica) mandá blast el día. Buttondown / Substack si necesitás tooling indie-friendly. Esta gente es tu base más leal.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · T-3 a T+0</span>
+          <div class="body">
+            <strong>Stories countdown en IG + recordatorios</strong>
+            <small>3 días antes, 1 día antes, día del release. Usar el sticker countdown nativo. Tag de la gente que colaboró (Ernesto Romeo, ingenieros, etc.) si están en IG.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · T+1 a T+7</span>
+          <div class="body">
+            <strong>Submit a AlbumOfTheYear + RateYourMusic</strong>
+            <small>Bases de datos community-driven que indexan releases y agregan votos. Submission vía formulario. RYM es high-signal para descubrimiento entre coleccionistas obsesivos del nicho.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action med">
+          <span class="marker">med · T+0 a T+7</span>
+          <div class="body">
+            <strong>Live stream / DJ set / listening session</strong>
+            <small>Opcional pero potente: Twitch / YouTube Live / IG Live con visual mínimo y comentario sobre el making-of mientras pasa el álbum. Construye conexión real con fans del modular que valoran "behind the patch".</small>
+          </div>
+          <span class="meta-tag">opcional</span>
+        </div>
+      </div>
+
+      <div class="callout note">
+        <strong>Ventana de reviews:</strong> Las reseñas de outlets Tier 1
+        short-lead (Stereogum, BrooklynVegan, FACT) suelen aterrizar T+0
+        a T+14. Las long-lead (Quietus, A Closer Listen, Headphone
+        Commute) entre T+7 y T+45. Bandcamp Daily Album of the Day
+        idealmente cae T+0 a T+21.
+      </div>
+    </section>
+
+    <!-- ====================== POST-LANZAMIENTO ====================== -->
+    <section class="post-block" id="post">
+      <div class="block-header">
+        <span class="tag">Fase 3</span>
+        <h2>4 · Plan post-lanzamiento</h2>
+        <span class="when">T+7 → T+180 · 7 ago a fin de año</span>
+      </div>
+
+      <div class="card">
+        <p>
+          Acá el ritmo baja pero no se apaga. La métrica cambia: ya no es
+          "cuántos posts hoy" sino "cómo sostenemos el calor por 6 meses
+          para que el álbum se siga descubriendo". Mucho de esto es trabajo
+          de bajo volumen pero alta consistencia.
+        </p>
+      </div>
+
+      <h3>Mantener calor (T+7 a T+45)</h3>
+      <div class="actions">
+        <div class="action high">
+          <span class="marker">alta · T+7</span>
+          <div class="body">
+            <strong>Pull métricas + decisión sobre push pagado</strong>
+            <small>Spotify for Artists / Apple Music for Artists / Bandcamp dashboards. Si tracción orgánica es buena → considerar <strong>Spotify Marquee</strong> (campaña dentro de Spotify, ~$250-500 USD; push notification a usuarios que escucharon artistas similares). Si Bandcamp pre-orders fueron sólidos → activar <strong>Bandcamp Boost</strong>.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action high">
+          <span class="marker">alta · T+7 a T+30</span>
+          <div class="body">
+            <strong>Behind-the-scenes content</strong>
+            <small>Making-of de un track. Foto del setup modular. Anécdota del proceso de grabación. Los scripts/patches modulares <em>son contenido</em> para el nicho.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action med">
+          <span class="marker">med · T+14 a T+45</span>
+          <div class="body">
+            <strong>Posibles colaboraciones / remixes</strong>
+            <small>Un remix de un track del álbum por un artista adyacente (Lila Tirando a Violeta, Lechuga Zafiro, Genosidra, Ale Hop) extiende vida del release y abre cross-audience. Sale T+30 a T+60 como "nuevo contenido" que reactiva interés.</small>
+          </div>
+          <span class="meta-tag">opcional</span>
+        </div>
+        <div class="action med">
+          <span class="marker">med · T+30 a T+60</span>
+          <div class="body">
+            <strong>Aplicar a podcasts</strong>
+            <small>Echoes (John Diliberto), Hearts of Space, Disquiet, 15 Questions. Lead times cortos (1-3 semanas), inversión mínima de tu tiempo, audiencia altamente targeted.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+      </div>
+
+      <h3>Cola larga (T+45 a T+180)</h3>
+      <div class="actions">
+        <div class="action low">
+          <span class="marker">low · long tail</span>
+          <div class="body">
+            <strong>Pitch a year-end lists (oct-dic 2026)</strong>
+            <small>Ciclo propio. Outlets que publican "best of 2026": empezar pitch en octubre/noviembre. Bandcamp Daily, The Quietus, Pitchfork, FACT, Crack Magazine. Mencionar press existente como social proof.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action low">
+          <span class="marker">low · T+60+</span>
+          <div class="body">
+            <strong>Live / gira con setup modular</strong>
+            <small>La research indica que para este nicho, <strong>el directo es donde rinde más el modular</strong>. La grabación es marketing del directo. Festivales target con applications abiertas nov 2026 - mar 2027: MUTEK BA, MUTEK MTL, Unsound, CTM, Le Guess Who?, Sónar+D.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action low">
+          <span class="marker">low · cuando quieras</span>
+          <div class="body">
+            <strong>MusicBrainz + Wikidata entries</strong>
+            <small>Crear entries artista + álbum (retroactivo + nuevo). Alimenta Spotify/Apple/last.fm metadata + es la fuente principal que consumen los LLMs para identificarte. No urgente — pero suma a descubrimiento a 12+ meses.</small>
+          </div>
+          <span class="meta-tag">opcional / SEO</span>
+        </div>
+        <div class="action low">
+          <span class="marker">low · cuando quieras</span>
+          <div class="body">
+            <strong>YouTube Official Artist Channel claim</strong>
+            <small>Tu distribuidor (CDB / DistroKid) tiene un proceso para mergear <code>youtube.com/c/HelenOlhausen</code> con el "Helen Olhausen - Topic" auto-generado. Te da el checkmark + unifica audience.</small>
+          </div>
+          <span class="meta-tag">Helen</span>
+        </div>
+        <div class="action low">
+          <span class="marker">low · T+90+</span>
+          <div class="body">
+            <strong>Evaluar si "doblar la apuesta" o "refugiarse en directo"</strong>
+            <small>La research muestra dos rutas habituales para artistas en pivote a T+90: <strong>(a) segundo álbum modular o EP confirmando dirección</strong> (12-18 meses), o <strong>(b) gira con setup modular + live album</strong>. Tu historial sugiere que (b) puede ser más rentable: ya hiciste <em>Todo Puede Romperse</em> en vivo en 2022.</small>
+          </div>
+          <span class="meta-tag">decisión estratégica</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== REACTIVACIÓN ====================== -->
+    <section id="reactivacion">
+      <h2>5 · Reactivación del catálogo (Romperse)</h2>
+      <div class="card">
+        <p>
+          La research marca esto como <strong>palanca real</strong>: el
+          catálogo existente puede traccionar antes del release nuevo si
+          se trabaja entre T-60 y T-30 (entre 17 de junio y 17 de julio).
+          Con 358 monthly listeners hoy, un release nuevo "frío" tiene
+          menos chances que uno con base recalentada.
+        </p>
+        <p>
+          <strong>Hook narrativo perfecto:</strong> tu nota en <em>la
+          diaria</em> de octubre 2021 tiene el título profético
+          <strong>"Cuando pasen 20 años las máquinas van a ser las
+          nuevas guitarras"</strong>
+          (<a href="https://ladiaria.com.uy/cultura/articulo/2021/10/helen-olhausen-cuando-pasen-20-anos-las-maquinas-van-a-ser-las-nuevas-guitarras/" target="_blank">link</a>).
+          <strong>Pre-anunciaste el pivote sin saberlo.</strong> Es oro
+          para todo el bridge messaging.
+        </p>
+      </div>
+
+      <h3>Tácticas posibles</h3>
+      <ul>
+        <li><strong>Post "Re-listening <em>Romperse</em> 5 años después"</strong> — blog/Substack/IG longform. Anécdota making-of + foto inédita + anuncio del próximo disco (críptico al principio).</li>
+        <li><strong>Bridge single</strong> — relanzar UN track de <em>Romperse</em> en versión modular como teaser. Es "single nuevo" para el algoritmo, mantiene la marca Romperse → próximo disco. Candidato natural: "Hoy" (~41K streams, el más fuerte) o "Fuego" (~34K, ya tiene video oficial).</li>
+        <li><strong>Pitch retrospectivo a Bandcamp Daily</strong> — "5 años de <em>Romperse</em>: el disco uruguayo que predijo el pivote modular". Maria Barrios curaría algo así en columna Best Latin.</li>
+        <li><strong>Compartir foto del vinilo</strong> en redes — señal cuantitativa a Little Butterfly + discovery cualitativo.</li>
+        <li><strong>Playlist propia</strong> en Spotify "Mujeres del cono sur en electrónica" — Helen + Lila Tirando a Violeta + Lucrecia Dalt + Lechuga Zafiro + Mabe Fratti. Bridge audiencia natural.</li>
+      </ul>
+
+      <div class="callout note">
+        <strong>NO hacer:</strong> NO sacar <em>Romperse</em> como
+        "re-release" en distribuidor — confunde la fecha original a Spotify.
+        El catalog de 2020 se mantiene en 2020.
+      </div>
+    </section>
+
+    <!-- ====================== DIFUSIÓN SATELITAL ====================== -->
+    <section class="ours-block" id="ours">
+      <div class="block-header">
+        <span class="tag">Fase 4</span>
+        <h2>6 · Difusión satelital</h2>
+        <span class="when">en paralelo a la campaña</span>
+      </div>
+
+      <div class="card">
+        <p>
+          Em y Spiral Out van a operar como <strong>punto satélite</strong>
+          alrededor de la campaña principal: amplificación desde afuera,
+          desde la posición de fan / participante de comunidades de nicho,
+          sin estructura de prensa ni rol oficial.
+        </p>
+      </div>
+
+      <h3>Qué es difusión satelital — el concepto</h3>
+      <p>
+        En músicas de nicho (modular, dark electronic, experimental) la
+        prensa y las playlists hacen el trabajo grande, pero buena parte
+        del descubrimiento real pasa por <strong>recomendación lateral</strong>:
+        un fan que postea en r/modular, alguien que comenta en un thread
+        de Modwiggler, una playlist personal en Spotify, un mensaje
+        directo entre productores. Ese tráfico no tiene un canal
+        centralizado — se construye sumando presencias dispersas.
+      </p>
+      <p>
+        La difusión satelital es <strong>ocupar esas posiciones con
+        intención</strong>: estar en las conversaciones donde un fan
+        nuevo puede descubrirla, con la voz de alguien que ya forma
+        parte de esas conversaciones. No es publicidad, no es PR, no es
+        editorial. Es presencia distribuida.
+      </p>
+
+      <h3>Cómo se traduce en acciones concretas</h3>
+      <ul>
+        <li><strong>Recomendaciones en comunidades</strong> donde Em ya participa: Reddit (r/experimentalmusic, r/modular, r/synthesizers, r/listentothis, r/Uruguay, r/argentina), Discord servers de modular / dark electronic / latam, foros (Modwiggler, lines.community, Elektronauts). Posteos como fan, no como rep.</li>
+        <li><strong>Threads de "si te gusta X, escuchá Y"</strong> en r/ifyoulikeblank — formato natural para recomendación lateral; los referentes adyacentes (Caterina Barbieri, Lucrecia Dalt, Lila Tirando a Violeta) son el ancla.</li>
+        <li><strong>Shares desde cuentas personales</strong> de Em (Bluesky / X) cuando salgan singles / álbum, sin disfraz de campaña.</li>
+        <li><strong>Playlists públicas</strong> curadas por Em en Spotify / Apple / Bandcamp con el catálogo de Helen entre referentes — las playlists públicas son descubribles por followers de los referentes incluidos.</li>
+        <li><strong>last.fm scrobble + tags</strong> ("modular", "uruguayan", "latin ambient", "dark electronic"). Esto alimenta el grafo "similar artists" que Spotify, Bandcamp y Pitchfork consultan indirectamente.</li>
+        <li><strong>Recomendaciones 1-to-1</strong> a contactos en la red personal de Em (productores, otros músicos, periodistas amigos del nicho). Bajo perfil, sin template.</li>
+      </ul>
+
+      <h3>Escala honesta</h3>
+      <p>
+        No mueve la aguja por sí solo. Lo realista: <strong>5-15% de
+        exposición incremental en nichos específicos</strong> (modular /
+        dark electronic angloparlante + comunidad rioplatense online +
+        red personal). La campaña principal es lo que tracciona. Esto
+        suma alrededor.
+      </p>
+
+      <div class="callout note">
+        <strong>Helen puede vetar retroactivo</strong> cualquier acción
+        que no le guste — se saca al toque. Si surge algo sensible se
+        pausa y se consulta antes de seguir.
+      </div>
+
+      <h3>Reportes a Helen</h3>
+      <p>
+        Cada <strong>2-3 semanas</strong> durante la campaña activa
+        (mayo - noviembre 2026). Cada reporte:
+      </p>
+      <ul>
+        <li>Qué se hizo en la ventana — canales tocados, posts publicados, threads sembrados, scrobbles agregados.</li>
+        <li>Lo que observamos en comunidades — feedback, reacciones, menciones detectadas.</li>
+        <li>FYI para Helen — oportunidades, gaps, comentarios útiles (siempre como información, nunca como instrucción).</li>
+        <li>Próximos pasos.</li>
+      </ul>
+
+      <div class="callout info">
+        <strong>Primer reporte:</strong> ~3 semanas desde hoy (aprox 7 de
+        junio). Hasta entonces se está montando tracking + integrándose
+        como participante orgánico en 2-3 comunidades sin mencionar a
+        Helen todavía.
+      </div>
+    </section>
+
+    <!-- ====================== TIMELINE ====================== -->
+    <section class="data-block" id="timeline">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>7 · Timeline integrado · T-77 → T+90</h2>
+      </div>
+
+      <p>
+        Plan integrado: acciones de la campaña principal + difusión
+        paralela en una misma vista. Los dos tiers — global anglo y
+        castellano/Latam — corren <strong>en paralelo</strong>, no
+        secuenciados. Evidencia: la prensa modular internacional ya cubre
+        voz latina en electrónica experimental como categoría propia.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-row now">
+          <div class="phase">hoy · 17 may 2026</div>
+          <div class="when-h">T-77 · pre-anuncio</div>
+          <div class="what">
+            <strong>Helen:</strong> confirmar fecha exacta de release, iniciar press kit (bio + one-sheet + stream privado). <strong>Spiral Out:</strong> montar tracking + integrarse en 2-3 comunidades como participante orgánico.
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="phase">17 jun – 2 jul</div>
+          <div class="when-h">T-45 a T-30 · soft tease</div>
+          <div class="what">
+            <strong>Tu equipo:</strong> reactivación de <em>Romperse</em> (post 5 años, bridge single, etc.). Pitch crítico a Tier 1 (Bandcamp Daily, Quietus, Wire) — ventanas cerrándose. <strong>Nosotros:</strong> posts curatoriales sembrando bridge messaging.
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="phase">2 jul – 17 jul</div>
+          <div class="when-h">T-30 a T-14 · anuncio + single 1</div>
+          <div class="what">
+            <strong>Tu equipo:</strong> single 1 drop, pre-save live, Spotify pitch editorial (cierra mín. T-21). Bandcamp Daily Best Latin column del 1 de julio sirve. <strong>Nosotros:</strong> intensificar Reddit / Discord; primer reporte semana del 7 de junio.
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="phase">17 jul – 24 jul</div>
+          <div class="when-h">T-14 a T-7 · single 2 + Tier 1 short-lead</div>
+          <div class="what">
+            <strong>Tu equipo:</strong> single 2, recordatorios IG, newsletter blast. Reviews Tier 1 short-lead aterrizan (Stereogum, BrooklynVegan, FACT). <strong>Nosotros:</strong> push final en comunidades.
+          </div>
+        </div>
+        <div class="timeline-row release">
+          <div class="phase">1 ago 2026</div>
+          <div class="when-h">T+0 · RELEASE</div>
+          <div class="what">
+            Drop coordinado. YouTube upload. AOTD Bandcamp idealmente en esta ventana o T+7-21. Reviews Quietus aterrizan T+0 a T+14.
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="phase">7 ago – 14 sep</div>
+          <div class="when-h">T+7 a T+45 · post-release sostenido</div>
+          <div class="what">
+            Reseñas long-lead. Evaluación Marquee. Behind-the-scenes content. Pull métricas. Posibles colaboraciones / remixes.
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="phase">14 sep – 30 oct</div>
+          <div class="when-h">T+45 a T+90 · cola larga</div>
+          <div class="what">
+            Pitch year-end (ciclo oct-dic). Aplicaciones a festivales 2027. ROI por post adicional cae fuerte — pasamos a maintenance.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout note">
+        <strong>Duración total de campaña activa:</strong> ~6 meses
+        (mayo → noviembre 2026). Pico de tracción T-7 a T+14 (dos semanas).
+        Meseta hasta T+45. Decay marcado después. Más de T+90: el próximo
+        ciclo se construye con singles/gira/remixes, no con más posts del
+        mismo álbum.
+      </div>
+    </section>
+
+    <!-- ====================== ARTISTAS SIMILARES ====================== -->
+    <section class="data-block" id="similar">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>8 · Mapa de artistas similares</h2>
+      </div>
+
+      <h3>Top 15 internacionales adyacentes</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>#</th><th>Artista</th><th>País</th><th>Sello</th><th>Por qué adyacente</th></tr></thead>
+        <tbody>
+        <tr><td>1</td><td><strong>Caterina Barbieri</strong></td><td>IT/DE</td><td>Light-Years</td><td>Modular Buchla/Eurorack, pasajes barrocos hipnóticos. <a href="https://thequietus.com/articles/33037-caterina-barbieri-myuthafoo-review" target="_blank">Myuthafoo (2023)</a></td></tr>
+        <tr><td>2</td><td><strong>Holly Herndon</strong></td><td>US/DE</td><td>RVNG Intl.</td><td>Vocal processing + AI + ensamble.</td></tr>
+        <tr><td>3</td><td><strong>Helena Hauff</strong></td><td>DE</td><td>Ninja Tune / Tresor</td><td>Electro/acid analógica cruda, hardware-only.</td></tr>
+        <tr><td>4</td><td><strong>FKA twigs</strong></td><td>UK</td><td>Young / Atlantic</td><td>Faceta industrial-IDM. EUSEXUA (2025).</td></tr>
+        <tr><td>5</td><td><strong>Lucrecia Dalt</strong> ★</td><td>CO/DE</td><td>RVNG Intl.</td><td><strong>Cita conceptual obligada</strong>: voz castellano + electrónica de cámara. Pitchfork BNM 2025.</td></tr>
+        <tr><td>6</td><td><strong>Suzanne Ciani</strong></td><td>US</td><td>Finders Keepers / RVNG</td><td>Pionera Buchla, cuadrafónica.</td></tr>
+        <tr><td>7</td><td><strong>Pharmakon</strong></td><td>US</td><td>Sacred Bones</td><td>Death-industrial femenino. Maggot Mass (2024).</td></tr>
+        <tr><td>8</td><td><strong>Lyra Pramuk</strong></td><td>US/DE</td><td>Bedroom Community</td><td>Voz como única materia + procesamiento digital.</td></tr>
+        <tr><td>9</td><td><strong>Tirzah</strong> ★</td><td>UK</td><td>Domino</td><td><strong>Artista puente cantautora→experimental.</strong> R&amp;B fragmentado + Mica Levi.</td></tr>
+        <tr><td>10</td><td><strong>Cosey Fanni Tutti</strong></td><td>UK</td><td>Conspiracy Intl.</td><td>Throbbing Gristle ex, puente histórico industrial.</td></tr>
+        <tr><td>11</td><td>Mica Levi</td><td>UK</td><td>Hyperdub</td><td>Compositora cine + electrónica abstracta.</td></tr>
+        <tr><td>12</td><td>Kaitlyn Aurelia Smith</td><td>US</td><td>Ghostly Intl.</td><td>Buchla Music Easel, colaboradora Ciani.</td></tr>
+        <tr><td>13</td><td>Klein</td><td>UK</td><td>Pentaco</td><td>Voz pitchada + art-pop deconstruido.</td></tr>
+        <tr><td>14</td><td>Loraine James</td><td>UK</td><td>Hyperdub</td><td>IDM/club deconstruido con voz íntima.</td></tr>
+        <tr><td>15</td><td>Marina Herlop</td><td>ES</td><td>PAN</td><td>Voz procesada y composición no-occidental.</td></tr>
+        </tbody>
+      </table></div>
+      <p><small>★ marca artistas-puente clave para storytelling del pivote. La research completa lista 25 (lista total en repo). Otros relevantes: Yves Tumor, Arca, Pan Daijing, Sofia Kourtesis, Anna von Hausswolff, Eartheater.</small></p>
+
+      <h3>5 artistas puente (trayectoria cantautora → modular)</h3>
+      <ul>
+        <li><strong>Annie Clark / St. Vincent</strong> — <em>Marry Me</em> (cantautora) → <em>MASSEDUCTION</em> (electrónica abrasiva) → <em>All Born Screaming</em> (modular-industrial autoproducido 2024). El arco más famoso del pivote.</li>
+        <li><strong>Mitski</strong> — <em>Bury Me at Makeout Creek</em> (indie-rock) → <em>Laurel Hell</em> (2022, synth-pop denso).</li>
+        <li><strong>Lucrecia Dalt</strong> — songwriter folk → electrónica de cámara con voz castellano en RVNG. <em>El paralelo regional más exacto.</em></li>
+        <li><strong>FKA twigs</strong> — debut minimal-pop → art-rock industrial vía <em>MAGDALENE</em>.</li>
+        <li><strong>Tirzah</strong> — cantautora Purcell School → R&amp;B fragmentado con Mica Levi.</li>
+      </ul>
+
+      <h3>5 Latam menos mainstream en modular / dark electronic con voz</h3>
+      <ol>
+        <li><strong>Lila Tirando a Violeta</strong> (UY/Waterford) — Hyperdub / N.A.A.F.I. <em>Dream of Snakes</em> fue Bandcamp Daily AotD abril 2025. <strong>Referente local directo.</strong></li>
+        <li><strong>Lechuga Zafiro</strong> (UY) — Salviatek (cofundador). RA Podcast 985 (2025).</li>
+        <li><strong>Mabe Fratti</strong> (GT/CDMX) — Unheard of Hope. <em>HAGEN</em> con Titanic (2025).</li>
+        <li><strong>Ale Hop</strong> (PE/DE) — Buh Records. Cofundadora Radical Sounds Latin America.</li>
+        <li><strong>Genosidra</strong> (CO/BA) — Hiedrah Club de Baile. <em>Haxan Tek</em> (2024).</li>
+      </ol>
+    </section>
+
+    <!-- ====================== PRENSA ====================== -->
+    <section class="data-block" id="press">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>9 · Targets de prensa por tier</h2>
+      </div>
+
+      <h3>Tier 1 — internacional (modular / industrial / experimental)</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Outlet</th><th>Cobertura adyacente</th><th>Contacto</th><th>Lead</th></tr></thead>
+        <tbody>
+        <tr><td><strong>The Quietus</strong></td><td><a href="https://thequietus.com/articles/33037-caterina-barbieri-myuthafoo-review" target="_blank">Barbieri review</a></td><td><code>editor@thequietus.com</code></td><td>4-8 sem</td></tr>
+        <tr><td><strong>Bandcamp Daily</strong></td><td><a href="https://daily.bandcamp.com/album-of-the-day/lila-tirando-a-violeta-dream-of-snakes-review" target="_blank">Lila TaV AotD abr 2025</a> · columna Best Latin (Maria Barrios)</td><td>Pitch interno + columna directa</td><td>3-6 sem</td></tr>
+        <tr><td><strong>Pitchfork</strong></td><td>Tirzah · Lucrecia Dalt BNM 2025</td><td><code>reviews@pitchforkmedia.com</code></td><td>6-12 sem</td></tr>
+        <tr><td><strong>The Wire</strong></td><td>Pramuk, Barbieri features</td><td><code>editor@thewire.co.uk</code></td><td>8-12 sem</td></tr>
+        <tr><td><strong>FACT Mag</strong></td><td>Helena Hauff coverage</td><td><code>editorial@factmag.com</code></td><td>2-4 sem</td></tr>
+        <tr><td><strong>Resident Advisor</strong></td><td><a href="https://ra.co/podcast/985" target="_blank">Lechuga Zafiro RA.985</a></td><td><code>press@ra.co</code></td><td>3-6 sem</td></tr>
+        <tr><td><strong>Stereogum</strong></td><td>Holly Herndon coverage</td><td><code>tips@stereogum.com</code></td><td>1-3 sem</td></tr>
+        <tr><td><strong>A Closer Listen</strong></td><td>Modern composition / ambient</td><td><code>acloserlisten@gmail.com</code></td><td>4-8 sem</td></tr>
+        <tr><td><strong>Headphone Commute</strong></td><td>Ambient + modular + neoclassical</td><td><code>mike@headphonecommute.com</code></td><td>4-6 sem</td></tr>
+        <tr><td><strong>Mixmag</strong></td><td><a href="https://mixmag.net/feature/caterina-barbieri-cover-feature-interview-analogue-modular-synths-spiritual" target="_blank">Barbieri cover 2022</a></td><td><code>features@mixmag.net</code></td><td>4-8 sem</td></tr>
+        <tr><td><strong>Loud and Quiet</strong></td><td>Holly Herndon PROTO</td><td><code>editorial@loudandquiet.com</code></td><td>3-6 sem</td></tr>
+        <tr><td><strong>Crack Magazine</strong></td><td>Tirzah, FKA twigs reviews</td><td><code>editorial@crackmagazine.net</code></td><td>4-8 sem</td></tr>
+        <tr><td><strong>BrooklynVegan</strong></td><td>Barbieri US tour 2023</td><td><code>tips@brooklynvegan.com</code></td><td>1-2 sem</td></tr>
+        <tr><td><strong>Beats Per Minute</strong></td><td>Lyra Pramuk · St. Vincent</td><td><code>editor@beatsperminute.com</code></td><td>2-4 sem</td></tr>
+        <tr><td><strong>Foxy Digitalis</strong></td><td>Experimental / cassette underground</td><td><code>submissions@foxydigitalis.zone</code></td><td>2-4 sem</td></tr>
+        </tbody>
+      </table></div>
+      <p><small><strong>Stretch targets</strong> (no realistas como pitch fan/curator externo sin track record): NPR Music, KEXP, BBC Radio 6.</small></p>
+
+      <h3>Tier 2 — castellano (Uruguay prioritario)</h3>
+      <p>
+        Helen es uruguaya — la base de mercado natural arranca en
+        Uruguay (red existente + cobertura previa) y se expande a
+        Argentina y al resto del castellano-parlante en paralelo.
+      </p>
+
+      <h4>Uruguay (mercado base)</h4>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Outlet</th><th>Cobertura</th><th>Contacto</th></tr></thead>
+        <tbody>
+        <tr><td><strong>la diaria</strong></td><td><a href="https://ladiaria.com.uy/cultura/articulo/2021/10/helen-olhausen-cuando-pasen-20-anos-las-maquinas-van-a-ser-las-nuevas-guitarras/" target="_blank">Ya te cubrió 2021</a> (Federico Medina / José Gabriel Lagos)</td><td><code>cultura@ladiaria.com.uy</code></td></tr>
+        <tr><td><strong>Radio Pedal</strong></td><td><a href="https://radiopedal.uy/romperse-desde-la-raiz/" target="_blank">Ya te cubrió 2022</a></td><td>IG / San Salvador 1510</td></tr>
+        <tr><td><strong>Latido Beat</strong></td><td><a href="https://www.latidobeat.uy/Beat/Helen-Olhausen-el-sonido-de-la-musica-experimental-y-sus-cuatro-frentes-uc818705" target="_blank">Ya te cubrió 2022</a></td><td>vía portal</td></tr>
+        <tr><td><strong>En Perspectiva / Radiomundo</strong></td><td><a href="https://enperspectiva.uy/la-musica-del-dia/la-musica-del-dia-helen-olhausen-y-su-pop-electro-melanco/" target="_blank">La Música del Día</a></td><td>vía contacto del programa</td></tr>
+        <tr><td><strong>Cooltivarte</strong></td><td>Festival Quebrada/MACA</td><td>Formulario portal</td></tr>
+        <tr><td><strong>Brecha</strong></td><td>Cultura, suplemento Días</td><td>vía web brecha.com.uy</td></tr>
+        <tr><td><strong>El Observador (Cultura)</strong></td><td>Cobertura general</td><td>vía web elobservador.com.uy</td></tr>
+        <tr><td><strong>Emisora del Sur</strong></td><td>Radio estatal, programas culturales</td><td>vía sodre.gub.uy</td></tr>
+        </tbody>
+      </table></div>
+      <p><small>Ventaja: <strong>red existente</strong> de la era Romperse. Re-pitchear a los periodistas que ya cubrieron es la jugada más corta.</small></p>
+
+      <h4>Argentina + resto castellano</h4>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Outlet</th><th>Cobertura</th><th>Contacto</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Indie Hoy</strong> (AR)</td><td>Mutek AR · Genosidra</td><td><code>contacto@indiehoy.com</code></td></tr>
+        <tr><td><strong>Página/12</strong> (AR)</td><td>Cultura experimental</td><td><code>suplementono@pagina12.com.ar</code></td></tr>
+        <tr><td><strong>Silencio</strong> (AR)</td><td>Indie / experimental</td><td>vía web silencio.com.ar</td></tr>
+        <tr><td><strong>Nacional Rock / Nacional Clásica</strong> (AR)</td><td>Radio pública</td><td>vía radionacional.com.ar</td></tr>
+        <tr><td><strong>FM La Tribu</strong> (AR)</td><td>Cultura indie BA</td><td>vía fmlatribu.com</td></tr>
+        <tr><td><strong>Sounds and Colours</strong> (UK/Latam)</td><td>Ale Hop feature</td><td><code>editor@soundsandcolours.com</code></td></tr>
+        <tr><td><strong>Remezcla</strong> (US/Latam)</td><td>Listas experimentales Latam</td><td><code>music@remezcla.com</code></td></tr>
+        <tr><td><strong>Indie Rocks!</strong> (MX)</td><td>Mabe Fratti · Bruja Prieta</td><td><code>redaccion@indierocks.mx</code></td></tr>
+        <tr><td><strong>Me hace ruido</strong> (MX)</td><td>Mabe Fratti reviews</td><td>Formulario web</td></tr>
+        <tr><td><strong>Mondo Sonoro</strong> (ES)</td><td>Sónar, Barbieri</td><td><code>prensa@mondosonoro.com</code></td></tr>
+        <tr><td><strong>El Mostrador Cultura</strong> (CL)</td><td>Tag electrónica activo</td><td><code>cultura@elmostrador.cl</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Tier 3 — blogs / Substacks de género</h3>
+      <div class="chips">
+        <span class="chip">attn:magazine</span>
+        <span class="chip">Fluid Radio</span>
+        <span class="chip">Igloo Magazine</span>
+        <span class="chip">Disquiet (Marc Weidenbaum)</span>
+        <span class="chip">Cyclic Defrost</span>
+        <span class="chip">Quietus Spool's Out</span>
+        <span class="chip">15 Questions</span>
+        <span class="chip">Brainwashed</span>
+        <span class="chip">Tone Glow (Substack)</span>
+        <span class="chip">Penny Fractions (Substack)</span>
+        <span class="chip">Flow State (Substack)</span>
+      </div>
+    </section>
+
+    <!-- ====================== PLAYLISTS ====================== -->
+    <section class="data-block" id="playlists">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>10 · Playlists</h2>
+      </div>
+
+      <h3>Spotify — modular / industrial / experimental</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Playlist</th><th>Curador</th><th>Followers</th></tr></thead>
+        <tbody>
+        <tr><td><a href="https://open.spotify.com/playlist/5XJQ9XecK5Ygg57l0BK7QM" target="_blank">Modular Synthesizer Music and Artists Discovery</a></td><td>Franck Martin</td><td>~6.400</td></tr>
+        <tr><td><a href="https://open.spotify.com/playlist/4M1XVS10ZiHeps4cU0t88Z" target="_blank">21 awesome tracks made with a modular synth</a></td><td>FACT</td><td>~940</td></tr>
+        <tr><td><a href="https://open.spotify.com/playlist/2RznO7CJbQg4yxKCl24h0Y" target="_blank">modular synth ambient</a></td><td>kyle hovey</td><td>~2.000</td></tr>
+        <tr><td><a href="https://open.spotify.com/playlist/3ygV3Sm3nEgvrsxZcRmeEW" target="_blank">Darksynth, Cyberpunk &amp; Dark Techno</a></td><td>arcticdrones</td><td>~2.000</td></tr>
+        <tr><td><a href="https://open.spotify.com/playlist/37i9dQZF1EIg9x4W1RLeNP" target="_blank">Modular Synth Mix</a></td><td>Spotify editorial</td><td>n/d</td></tr>
+        <tr><td><a href="https://open.spotify.com/playlist/37i9dQZF1EIgkrLZsH9Eav" target="_blank">Dark Instrumental Synthwave Mix</a></td><td>Spotify editorial</td><td>n/d</td></tr>
+        <tr><td><a href="https://open.spotify.com/playlist/3JIOP9ciE3hb2cXTMOzBma" target="_blank">The Sound of Experimental Synth</a></td><td>The Sounds of Spotify</td><td>~520</td></tr>
+        </tbody>
+      </table></div>
+      <p><small>Lista parcial; otras a investigar: Avant Industrial, Hypnotic Electronic, Modern Classical/Electroacoustic, RVNG Intl. label playlist, PAN, Hyperdub, Ninja Tune Adjacent, Sacred Bones.</small></p>
+
+      <h3>Apple Music — editorial relevante</h3>
+      <p>Apple Music no publica datos abiertos de followers. Targets editoriales relevantes (acceso vía Apple Music for Artists):</p>
+      <div class="chips">
+        <span class="chip">Electronic Pure</span>
+        <span class="chip">Modern Classical</span>
+        <span class="chip">Electronic Focus</span>
+        <span class="chip">New in Experimental</span>
+        <span class="chip">Avant-Garde</span>
+        <span class="chip">Industrial: New &amp; Now</span>
+        <span class="chip">Música Electrónica Latinoamericana</span>
+        <span class="chip">Música Independiente Latinoamericana</span>
+        <span class="chip">Nuevos Sonidos</span>
+      </div>
+
+      <h3>Bandcamp — sellos / curadores con fanbase similar</h3>
+      <ol>
+        <li><strong>RVNG Intl.</strong> — sello de Holly Herndon, Lucrecia Dalt, Lyra Pramuk</li>
+        <li><strong>PAN</strong> — Marina Herlop, Pan Daijing</li>
+        <li><strong>Sacred Bones</strong> — Pharmakon</li>
+        <li><strong>Light-Years</strong> — sello propio de Caterina Barbieri</li>
+        <li><strong>Editions Mego / Recollection GRM</strong> — Klara Lewis</li>
+        <li><strong>Hyperdub</strong> — Lila Tirando a Violeta, Loraine James</li>
+        <li><strong>N.A.A.F.I</strong> (MX) — Latam-club experimental</li>
+        <li><strong>Salviatek</strong> (UY) — Lechuga Zafiro y red regional</li>
+        <li><strong>Buh Records</strong> (PE) — Ale Hop</li>
+        <li><strong>Hiedrah Club de Baile</strong> (AR) — Genosidra</li>
+      </ol>
+      <p><small><strong>Anti-pattern:</strong> nunca usar servicios pagos de "playlist placement". Spotify los detecta como streams artificiales (ver sección 13).</small></p>
+    </section>
+
+    <!-- ====================== COMUNIDADES ====================== -->
+    <section class="data-block" id="communities">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>11 · Comunidades</h2>
+      </div>
+
+      <h3>Subreddits</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Sub</th><th>Subscribers</th><th>Nota</th></tr></thead>
+        <tbody>
+        <tr><td>r/experimentalmusic</td><td>~115k</td><td>Self-promo permitida con moderación</td></tr>
+        <tr><td>r/modular</td><td>~190k</td><td>Foco hardware; música con context de patch/setup</td></tr>
+        <tr><td>r/synthesizers</td><td>~530k</td><td>Posts musicales OK con conversación</td></tr>
+        <tr><td>r/IndustrialMusic</td><td>~85k</td><td><strong>Gatekeeper</strong>; necesita context industrial real</td></tr>
+        <tr><td>r/darkambient</td><td>~100k</td><td>Bandcamp-friendly</td></tr>
+        <tr><td>r/listentothis</td><td>~17M</td><td>Más mainstream, ideal para tracks puente</td></tr>
+        <tr><td>r/avantgarde</td><td>~25k</td><td>Reseñas largas valoradas</td></tr>
+        <tr><td>r/electronicmusic</td><td>~1.6M</td><td>Self-promo Saturday solamente</td></tr>
+        <tr><td>r/Uruguay</td><td>~250k</td><td>Comunidad chica; post bien hecho destacando producción UY tracciona</td></tr>
+        <tr><td>r/argentina</td><td>~1.6M</td><td>Permite contenido cultural; megathreads semanales</td></tr>
+        <tr><td>r/musicasudamericana</td><td>n/d</td><td>Nicho útil para anclar identidad regional</td></tr>
+        <tr><td>r/postrock</td><td>~280k</td><td>Si el track tiene crescendos/instrumentales largos</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Discord servers</h3>
+      <ul>
+        <li><strong>Modular Synth Discord</strong> (vía r/modular sticky)</li>
+        <li><strong>lines community</strong> (<a href="https://llllllll.co/" target="_blank">llllllll.co</a> + Discord)</li>
+        <li>Eurorack Discord (vía r/synthesizers)</li>
+        <li>Sacred Bones fan Discord</li>
+        <li>Hyperdub fan Discord (no oficial)</li>
+        <li>Latam Electronic Music Discord (N.A.A.F.I y Mutek)</li>
+      </ul>
+
+      <h3>Foros y comunidades de nicho</h3>
+      <ul>
+        <li><strong>Modwiggler</strong> — el foro modular más grande; tiene sub <a href="https://www.modwiggler.com/forum/viewforum.php?f=4" target="_blank">"Modular + vocals"</a> directamente relevante.</li>
+        <li><strong>lines.community</strong> — cultura monome/norns, posts curatoriales bienvenidos.</li>
+        <li><strong>ModularGrid forums</strong> — sección "Artists &amp; Music".</li>
+        <li><strong>Elektronauts</strong> — Digitakt/Analog Four/Octatrack.</li>
+        <li><strong>Disquiet Junto</strong> (Marc Weidenbaum) — prompts semanales construyen credibilidad.</li>
+        <li><strong>Cuckoo's Nest</strong> (Discord/Patreon de True Cuckoo) — sintetista YouTuber ~200k subs.</li>
+      </ul>
+    </section>
+
+    <!-- ====================== KPIs ====================== -->
+    <section class="data-block" id="kpis">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>12 · KPIs y benchmarks</h2>
+      </div>
+
+      <h3>Plan tentativo de crecimiento mes a mes (monthly listeners Spotify)</h3>
+
+      <div class="callout warn">
+        <strong>Cómo leer esto:</strong> NO son predicciones. Son
+        <strong>rangos de potencial</strong> donde otros releases
+        comparables del nicho (indie modular / dark electronic /
+        cantautora-experimental pivote) aterrizaron históricamente. Las
+        cifras vienen de mirar curvas públicas de Spotify de artistas
+        adyacentes (Mitski post-pivote, Lucrecia Dalt post-pivote, Helena
+        Hauff, Lyra Pramuk, Lila Tirando a Violeta) y benchmarks de
+        crecimiento indie publicados por Buffer, Chartmetric y la industria.
+        <strong>Cada escenario tiene una probabilidad muy distinta de
+        materializarse</strong> (ver tabla).
+      </div>
+
+      <h4>Probabilidad estimada por escenario</h4>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Escenario</th><th>Probabilidad</th><th>Qué tiene que pasar</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Mínimo viable</strong></td><td>~60-70%</td><td>Campaña básica activa: 2-3 reseñas en castellano + 1 outlet Tier 2/3 internacional + difusión orgánica en comunidades. Probable con esfuerzo modesto.</td></tr>
+        <tr><td><strong>Buen outcome</strong></td><td>~20-30%</td><td>Campaña pro: 1-2 placements Tier 1 (Bandcamp Daily / Quietus / A Closer Listen) + paid push (Marquee + Meta Ads ~$500-1.500) + single bien performado. Realista con foco y budget moderado.</td></tr>
+        <tr><td><strong>Breakout</strong></td><td>~3-5%</td><td>Alineación de varios factores: Pitchfork review (cualquier puntaje 7.0+) o sincronización (videojuego, película, serie). Suele requerir un golpe de suerte sobre una campaña ya buena. No se planifica, se persigue.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Tabla de rangos por mes</h4>
+      <p>
+        Hoy: <strong>358 monthly listeners</strong>. Cada celda es un rango,
+        no un número. Sirve para responder mes a mes "¿la campaña está
+        funcionando?" comparando con qué escenario calza más.
+      </p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Mes</th><th>Hito</th><th>Mínimo viable</th><th>Buen outcome</th><th>Breakout</th></tr></thead>
+        <tbody>
+        <tr><td>mayo (hoy)</td><td>T-77 baseline</td><td>358</td><td>358</td><td>358</td></tr>
+        <tr><td>junio</td><td>T-45 · soft tease</td><td>400-500</td><td>500-700</td><td>700-1.000</td></tr>
+        <tr><td>julio</td><td>T-14 · singles</td><td>500-700</td><td>800-1.500</td><td>2.000-4.000</td></tr>
+        <tr><td><strong>agosto</strong></td><td><strong>T+0 · RELEASE</strong></td><td><strong>600-900</strong></td><td><strong>1.500-3.000</strong></td><td><strong>5.000-10.000</strong></td></tr>
+        <tr><td>septiembre</td><td>T+30 · post-release</td><td>700-1.100</td><td>2.200-4.500</td><td>8.000-20.000</td></tr>
+        <tr><td>octubre</td><td>T+60</td><td>800-1.400</td><td>2.800-5.500</td><td>10.000-25.000</td></tr>
+        <tr><td>noviembre</td><td>T+90</td><td>800-1.500</td><td>3.000-6.000</td><td>12.000-30.000</td></tr>
+        <tr><td>diciembre - feb</td><td>T+120 a T+180</td><td>600-1.200 (decay)</td><td>2.500-5.000</td><td>15.000-50.000</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Qué define cada escenario — visión rápida</h3>
+      <div class="kpi-grid">
+        <div class="kpi viable">
+          <div class="label">Mínimo viable · ~65% prob</div>
+          <div class="value">358 → ~1.000 a T+90</div>
+          <div class="delta">2 reseñas castellano + 1 inglés Tier 2/3 · 50-80 unidades físicas · ~3× la base actual</div>
+        </div>
+        <div class="kpi good">
+          <div class="label">Buen outcome · ~25% prob</div>
+          <div class="value">358 → ~3.000-6.000 a T+90</div>
+          <div class="delta">Bandcamp Daily + Quietus o A Closer Listen · 150-300 vinilos · 1 festival internacional · ~10× la base</div>
+        </div>
+        <div class="kpi breakout">
+          <div class="label">Breakout · ~3-5% prob</div>
+          <div class="value">358 → 12.000-30.000 a T+90</div>
+          <div class="delta">Pitchfork review 7.0+ · editorial Spotify/Apple · booking europeo · sincronización · ~40-80× la base</div>
+        </div>
+      </div>
+
+      <h4>Por qué los rangos son tan amplios</h4>
+      <p>
+        Cada placement de prensa Tier 1 puede sumar 200-2.000 monthly
+        listeners según el outlet, momento y framing. Un Bandcamp Daily
+        Album of the Day en abril 2025 le sumó a Lila Tirando a Violeta
+        estimadamente 3-5k monthly listeners en las 4 semanas siguientes
+        (según observaciones públicas de su perfil). Pitchfork puede
+        agregar 10-50k según el puntaje. Sincronizaciones (un track en
+        una serie/videojuego) pueden disparar 100x. La varianza es
+        enorme — por eso se manejan rangos, no números puntuales.
+      </p>
+      <p>
+        <strong>Lectura honesta:</strong> apuntar a "buen outcome" como
+        target activo de campaña (rango ~3.000-6.000 a T+90 = +750%-1.700%
+        sobre baseline). El "breakout" es upside que se persigue pero no
+        se planifica.
+      </p>
+
+      <h3>Métricas ranked por importancia (2026)</h3>
+      <ol>
+        <li><strong>Ventas / wishlist Bandcamp</strong> — máxima señal/ruido. Una venta de vinilo desde España = 10× el valor de un stream.</li>
+        <li><strong>Menciones en prensa Tier 1</strong> — efecto compuesto a 12+ meses.</li>
+        <li><strong>Asistencia a shows</strong> — la rentabilidad real del modular es el directo.</li>
+        <li><strong>Suscripciones a newsletter</strong> — canal directo no algorítmico.</li>
+        <li><strong>Monthly listeners Spotify</strong> — vanity para booking, no indicador de salud artística.</li>
+        <li><strong>Followers Bandcamp</strong> — comunidad directa.</li>
+        <li><strong>Saves Spotify</strong> — predictor algorítmico.</li>
+      </ol>
+
+      <h3>Definición de éxito cuantificada</h3>
+      <div class="kpi-grid">
+        <div class="kpi viable">
+          <div class="label">Mínimo viable</div>
+          <div class="value">2 reseñas castellano + 1 inglés Tier 2/3</div>
+          <div class="delta">3× listeners actual · 50-80 unidades físicas</div>
+        </div>
+        <div class="kpi good">
+          <div class="label">Buen outcome</div>
+          <div class="value">Bandcamp Daily + Quietus / ACL</div>
+          <div class="delta">1.500-3.000 listeners · 150-300 vinilos · 1 festival</div>
+        </div>
+        <div class="kpi breakout">
+          <div class="label">Breakout</div>
+          <div class="value">Pitchfork 7.0+ review</div>
+          <div class="delta">Editorial Spotify/Apple · 10.000+ listeners · booking europeo</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== RIESGOS ====================== -->
+    <section class="data-block" id="risks">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>13 · Riesgos y anti-patterns</h2>
+      </div>
+
+      <h3>Errores comunes pitcheando a prensa modular</h3>
+      <ul>
+        <li><strong>Pitchar sin escuchar el outlet.</strong> The Quietus ≠ Stereogum. Mismo blurb a ambos = descarte.</li>
+        <li><strong>Press release genérico.</strong> El nicho modular pide especificidad técnica: qué sintes, qué setup, qué patch. <strong>La Siesta del Fauno + Ernesto Romeo + Buchla + Moog modular es la killer story</strong> — usarla.</li>
+        <li><strong>Esperar review en T+0.</strong> The Quietus tarda 4-8 sem. Pitchar T+0 = aterrizar T+45 cuando ya nadie escucha.</li>
+        <li><strong>Spammear vs research.</strong> 8 outlets bien investigados &gt; 80 spammeados.</li>
+      </ul>
+
+      <h3>Tabúes culturales</h3>
+      <ul>
+        <li><strong>Modwiggler / lines.community gatekeepean credenciales técnicas.</strong> Hablar de proceso (qué módulo, qué función) abre puertas; hablar como marketing cierra.</li>
+        <li><strong>Subreddits anglo</strong> requieren context en castellano: formato bilingüe o context inglés secundario.</li>
+        <li><strong>Comunidades industrial puras</strong> (Pharmakon-adjacent) son hostiles a presentación pop. Posicionarse de un lado u otro según el espacio.</li>
+        <li><strong>El Discord de RVNG / PAN</strong> rechaza pitches directos. Funciona presencia continua + recomendaciones a terceros.</li>
+      </ul>
+
+      <h3>Riesgos algorítmicos (críticos)</h3>
+      <div class="callout warn">
+        <strong>Spotify detecta y penaliza streams artificiales</strong>:
+        bots, granjas de plays, playlist placement pagos. Con 358 monthly
+        listeners, un spike artificial es <strong>detectable</strong> y
+        puede llevar a artist takedown o sombra algorítmica.<br><br>
+        <strong>NO hacer "stream loops"</strong> desde un mismo dispositivo.
+        <strong>NO comprar followers</strong> en Spotify — mata Discover
+        Weekly.<br><br>
+        Bandcamp tiene política activa anti-spam también.
+      </div>
+
+      <h3>Riesgo de rechazo del pivote (real)</h3>
+      <p>Casos documentados:</p>
+      <ul>
+        <li><strong>Mitski <em>Laurel Hell</em></strong>: parte de la fanbase indie-rock criticó el viraje synth-pop; pero ganó audiencia nueva — dos noches sold-out en Radio City Music Hall julio 2022.</li>
+        <li><strong>St. Vincent</strong> entre <em>MASSEDUCTION</em> y <em>Daddy's Home</em> generó división marcada de la base.</li>
+        <li><strong>FKA twigs</strong> con <em>CAPRISONGS</em>: críticos divididos.</li>
+      </ul>
+      <p><strong>Mitigaciones aplicables:</strong></p>
+      <ol>
+        <li>Bridge messaging temprano (ver sección 14).</li>
+        <li>Mantener <em>Romperse</em> visible y vigente — enmarcado como capítulo previo del recorrido, una etapa con su propio valor.</li>
+        <li>Comunicar el proceso — decisión de pasar a modular, el por qué del cambio sonoro.</li>
+        <li>Usar artistas-puente narrativos: "El recorrido es similar al de Lucrecia Dalt entre folk y <em>¡Ay!</em>".</li>
+        <li>Aceptar críticas negativas con clase. Polarización vende más que indiferencia.</li>
+      </ol>
+    </section>
+
+    <!-- ====================== BRIDGE ====================== -->
+    <section class="data-block" id="bridge">
+      <div class="block-header">
+        <span class="tag">Research</span>
+        <h2>14 · Bridge messaging — plantillas</h2>
+      </div>
+
+      <p>
+        Textos cortos calibrados por audiencia. Spiral Out los usa en
+        recomendaciones públicas; pueden tomarse también para pitch
+        propio si sirven.
+      </p>
+
+      <div class="template" data-audience="fans de Romperse (castellano)">
+        "Si te enamoraste de las texturas espaciales de tracks como [X]
+        en <em>Romperse</em>, vas a encontrar esa misma sensibilidad
+        expandida con sintes modulares en <em>Humana</em>. La guitarra
+        cede el lugar al Buchla y al Moog, pero la voz y la composición
+        siguen ahí, más expuestas."
+      </div>
+
+      <div class="template" data-audience="fans nuevos de modular (castellano)">
+        "Conocí a Helen porque grabó su nuevo álbum en La Siesta del Fauno
+        con Ernesto Romeo (Klauss), el estudio donde Bajofondo y Mueran
+        Humanos también grabaron con modular pesado. Voz en castellano +
+        Buchla + Moog modular. Línea Caterina Barbieri / Lucrecia Dalt
+        con espíritu uruguayo."
+      </div>
+
+      <div class="template" data-audience="prensa Tier 1 en inglés">
+        "Uruguayan singer-songwriter pivots to industrial/modular territory
+        recording with one of the largest analog synth collections in the
+        southern hemisphere. Spanish vocals meet Nine Inch Nails-inflected
+        dark electronic. Bridge artist between Caterina Barbieri and
+        Lucrecia Dalt territory."
+      </div>
+
+      <div class="template" data-audience="prensa Tier 2 en castellano">
+        "Helen Olhausen, cantautora uruguaya con LP <em>Romperse</em>
+        (2020), publica <em>Humana</em>: viraje completo a modular,
+        industrial, dark-electronic. The Quietus y Pitchfork ya cubrieron
+        rutas similares (Lucrecia Dalt, Lyra Pramuk). Es el momento del
+        público hispanohablante para esto."
+      </div>
+
+      <div class="callout info">
+        <strong>Hook narrativo natural:</strong> tu nota en <em>la
+        diaria</em> de octubre 2021 tiene el título <em>"Cuando pasen 20
+        años las máquinas van a ser las nuevas guitarras"</em>.
+        Pre-anunciaste el pivote sin saberlo. <strong>Esa cita es oro
+        para todo el bridge messaging</strong> — abrí press releases con
+        eso.
+      </div>
+    </section>
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer>
+      <p>
+        documento de soporte v0.1 · preparado por emiliano mettini · spiral out
+        <br>
+        17 de mayo 2026 · feedback bienvenido
+        <br>
+        próximo reporte de difusión satelital en ~3 semanas
+      </p>
+    </footer>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Show "back to top" after scrolling past the cover
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    });
+  </script>
+
+
+</body></html>
