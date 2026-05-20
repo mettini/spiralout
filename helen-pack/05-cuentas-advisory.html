@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recomendaciones de cuentas + presencia digital · Helen Olhausen</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #0a0a0c; --bg-2: #14141a; --bg-3: #1c1c24;
+      --fg: #e8e8ec; --fg-2: #a0a0a8; --muted: #6a6a74; --line: #2a2a32;
+      --accent: #8a7a90;
+      --accent-bg: rgba(138,122,144,0.08);
+      --accent-border: rgba(138,122,144,0.35);
+      --pre: #d4a84a;
+      --during: #c66060;
+      --post: #6080c0;
+      --pattern: #7a9078;
+      --skill: #a68bc3;
+      --good: #7a9078;
+      --good-bg: rgba(122,144,120,0.08);
+      --bad: #c66060;
+      --bad-bg: rgba(198,96,96,0.08);
+      --warn: #d4a84a;
+      --warn-bg: rgba(212,168,74,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    @media (max-width: 700px) { html { font-size: 16px; } }
+    html, body {
+      background: var(--bg); color: var(--fg);
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bg {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,90,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,50,80,0.10) 0%, transparent 55%),
+        var(--bg);
+    }
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+      width: 44px; height: 44px;
+      background: rgba(20,20,26,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line); border-radius: 50%;
+      color: var(--fg-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none; font-size: 1.1rem; line-height: 1;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s;
+    }
+    .back-to-top.visible { opacity: 0.85; visibility: visible; }
+    .back-to-top:hover { color: var(--fg); border-color: var(--fg-2); opacity: 1; }
+    @media print { .back-to-top { display: none; } }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem 6rem; }
+    @media (max-width: 700px) { .container { padding: 0 1rem 4rem; } }
+
+    .cover {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4rem;
+    }
+    .cover .pretitle {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.2rem;
+    }
+    .cover h1 {
+      font-size: 2.4rem; font-weight: 300; letter-spacing: 0.03em;
+      line-height: 1.2; margin-bottom: 1rem; color: var(--fg);
+    }
+    @media (max-width: 600px) { .cover h1 { font-size: 1.7rem; line-height: 1.3; } .cover { padding: 2.5rem 0 2rem; } }
+    .cover .subtitle {
+      font-size: 1.05rem; color: var(--fg-2);
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .cover .meta {
+      font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+    }
+
+    section { margin-bottom: 4rem; scroll-margin-top: 2rem; }
+    h2 {
+      font-size: 1.5rem; font-weight: 300; letter-spacing: 0.05em;
+      margin-bottom: 1.3rem; padding-bottom: 0.7rem;
+      border-bottom: 2px solid var(--accent-border);
+      color: var(--accent);
+    }
+    h3 {
+      font-size: 1.15rem; font-weight: 600; letter-spacing: 0.02em;
+      margin-top: 2.2rem; margin-bottom: 1rem; color: var(--fg);
+    }
+    h4 {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--fg-2);
+      margin-top: 1.5rem; margin-bottom: 0.7rem;
+    }
+    p { margin-bottom: 1rem; font-size: 1rem; }
+    a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 3px; word-break: break-word; }
+    a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    strong { color: var(--fg); font-weight: 500; }
+    em { color: var(--fg); font-style: italic; }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.5rem; }
+    code {
+      font-family: 'Courier New', monospace; font-size: 0.85em;
+      background: var(--bg-3); padding: 0.1em 0.4em; border-radius: 2px;
+      color: var(--fg-2);
+    }
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.5rem 0 0.5rem 1.2rem;
+      margin: 1rem 0;
+      color: var(--fg-2);
+      font-style: italic;
+    }
+
+    .toc {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.5rem 1.8rem;
+      margin-bottom: 3rem;
+    }
+    .toc h4 {
+      margin-top: 0; margin-bottom: 1rem;
+      color: var(--accent); letter-spacing: 0.18em;
+    }
+    .toc ol { padding-left: 1.5rem; }
+    .toc li { margin-bottom: 0.4rem; font-size: 0.92rem; }
+    .toc a { text-decoration: none; color: var(--fg-2); }
+    .toc a:hover { color: var(--accent); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      background: var(--accent-bg);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .card.good { border-left-color: var(--good); background: var(--good-bg); }
+    .card.bad { border-left-color: var(--bad); background: var(--bad-bg); }
+    .card.pre { border-left-color: var(--pre); background: rgba(212,168,74,0.06); }
+    .card.post { border-left-color: var(--post); background: rgba(96,128,192,0.06); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2rem 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 0.8rem 0.9rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--accent-border);
+    }
+    td { color: var(--fg-2); }
+    td strong { color: var(--fg); }
+    tr:last-child td { border-bottom: none; }
+    .status-yes { color: var(--good); font-weight: 500; }
+    .status-no { color: var(--bad); font-weight: 500; }
+    .status-warn { color: var(--warn); font-weight: 500; }
+
+    .wave {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.6rem 1.8rem;
+      margin: 1.2rem 0;
+      background: var(--bg-2);
+    }
+    .wave.wave-1 { border-top: 4px solid var(--pre); }
+    .wave.wave-2 { border-top: 4px solid var(--post); }
+    .wave-header {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 0.5rem; font-weight: 600;
+    }
+    .wave.wave-1 .wave-header { color: var(--pre); }
+    .wave.wave-2 .wave-header { color: var(--post); }
+    .wave h3 {
+      margin-top: 0; margin-bottom: 0.6rem;
+      color: var(--fg); font-size: 1.25rem;
+    }
+    .wave .timing {
+      font-size: 0.85rem; color: var(--fg-2); margin-bottom: 1rem;
+    }
+    .wave ol { margin: 0; padding-left: 1.3rem; }
+    .wave li { margin-bottom: 0.6rem; font-size: 0.95rem; }
+
+    .platform {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.3rem 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .platform-head {
+      display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+    .platform-head h3 {
+      margin: 0; font-size: 1.1rem; color: var(--fg);
+    }
+    .priority {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.15rem 0.55rem;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .priority.essential { background: rgba(198,96,96,0.18); color: var(--bad); }
+    .priority.recommended { background: rgba(212,168,74,0.18); color: var(--warn); }
+    .priority.optional { background: rgba(122,144,120,0.18); color: var(--good); }
+    .platform p { font-size: 0.92rem; color: var(--fg-2); margin-bottom: 0.6rem; }
+    .platform .why { margin-bottom: 0.5rem; }
+    .platform .action { font-size: 0.88rem; color: var(--fg-2); }
+    .platform .action strong { color: var(--fg); }
+
+    .footnote {
+      font-size: 0.85rem; color: var(--muted);
+      border-top: 1px dashed var(--line);
+      padding-top: 1rem; margin-top: 2rem;
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+    footer a { color: var(--muted); }
+
+    @media print {
+      .bg, .back-to-top { display: none; }
+      html, body { background: white; color: black; font-size: 12pt; }
+      a { color: black; text-decoration: underline; }
+      h2, h3 { color: black; page-break-after: avoid; }
+      .card, .wave, .platform, .toc { page-break-inside: avoid; border-color: #ccc; background: white; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <a href="#top" class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</a>
+
+  <div class="container" id="top">
+
+    <header class="cover">
+      <div class="pretitle">Recomendaciones · Helen Olhausen · 05/06</div>
+      <h1>Cuentas, plataformas, presencia digital y escritura</h1>
+      <p class="subtitle">
+        Mapa con prioridades y razones para ordenar la presencia digital
+        antes y durante el próximo lanzamiento. Cada ítem incluye motivo y
+        contexto; las decisiones de implementación corresponden a la
+        artista.
+      </p>
+      <div class="meta">Mayo 2026 · Documento abierto · No oficial</div>
+    </header>
+
+    <nav class="toc">
+      <h4>Contenido</h4>
+      <ol>
+        <li><a href="#contexto">Contexto</a></li>
+        <li><a href="#auditoria">Auditoría — estado actual y brechas</a></li>
+        <li><a href="#timing">Estrategia de timing — Wave 1 / Wave 2</a></li>
+        <li><a href="#resumen">Resumen 30 segundos</a></li>
+        <li><a href="#tier1">Tier 1 — lo que urge para difusión</a></li>
+        <li><a href="#tier2">Tier 2 — primer mes post-launch</a></li>
+        <li><a href="#nicho">Comunidad modular / electrónica</a></li>
+        <li><a href="#escribir">Sobre escribir / blog / newsletter</a></li>
+        <li><a href="#meta">Metadata + credibilidad</a></li>
+        <li><a href="#vivo">Circuito de vivo</a></li>
+        <li><a href="#fans">Soporte de fans</a></li>
+        <li><a href="#no-rec">Lo que NO sumaría</a></li>
+        <li><a href="#cierre">Cierre</a></li>
+      </ol>
+    </nav>
+
+    <section id="contexto">
+      <h2>Contexto</h2>
+      <p>
+        Documento de recomendaciones sobre cuentas, plataformas y
+        presencia digital para el caso Helen Olhausen. Es un mapa con
+        prioridades y razones, no un manual. Cada ítem incluye motivo y
+        oportunidad; la decisión de implementación queda en manos de la
+        artista. La lógica de fondo: no acumular cuentas por acumular —
+        cada plataforma tiene una <strong>razón estratégica</strong> y un
+        <strong>costo de mantenimiento</strong>.
+      </p>
+      <div class="card">
+        <h4>Contexto de la artista (insumo del documento)</h4>
+        <p>
+          Artista independiente con base en Salto/Montevideo, Uruguay.
+          Catálogo público: <em>Romperse</em> (2020), <em>Todo Puede
+          Romperse</em> (2022), <em>Orbita</em> (2024). Vinculada
+          históricamente a Little Butterfly Records (UY). Disco nuevo en
+          preparación con release previsto agosto 2026, con un giro
+          estético respecto del catálogo anterior.
+        </p>
+        <p style="margin-bottom: 0;">
+          <strong>Importante</strong>: a mayo 2026 el giro estético es la
+          dirección <strong>interna</strong> del próximo disco.
+          Públicamente, el sonido asociado a la artista sigue siendo el
+          del catálogo publicado — <em>"alt pop" /
+          "singer-songwriter"</em> según los tags de Last.fm. Esto
+          constituye <strong>una oportunidad editorial</strong>: el arco
+          entre lo publicado y lo que está por venir es un ángulo
+          cubrible por press internacional, y se construye contando el
+          cambio antes de que salga el disco nuevo.
+        </p>
+      </div>
+    </section>
+
+    <section id="auditoria">
+      <h2>Auditoría — estado actual y brechas (mayo 2026)</h2>
+      <p>
+        Mapa de la presencia pública de la artista a la fecha de este
+        documento, plataforma por plataforma. Base para decidir el orden
+        de las acciones siguientes.
+      </p>
+
+      <h3>Cuentas y perfiles activos</h3>
+      <table>
+        <thead>
+          <tr><th>Plataforma</th><th>Estado</th><th>Notas</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Bandcamp</strong><br/><a href="https://helenolhausen.bandcamp.com/">helenolhausen.bandcamp.com</a></td>
+            <td class="status-yes">activo</td>
+            <td>Catalog Romperse + tracks. También aparece en <a href="https://littlebutterflyrecords.bandcamp.com/album/romperse">littlebutterflyrecords.bandcamp.com</a></td>
+          </tr>
+          <tr>
+            <td><strong>Spotify</strong><br/><a href="https://open.spotify.com/artist/473NegwRWuSwoynM2mTkSe">artist/473Neg...</a></td>
+            <td class="status-warn">activo · sin verificar</td>
+            <td>1.564 followers · 364 monthly listeners · 3 albums (Romperse 2020, Todo Puede Romperse 2022, Orbita 2024) + EP Yeguón. Top "Hoy" 41k streams. <strong>Reclamar Spotify for Artists es fast win.</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Apple Music</strong><br/><a href="https://music.apple.com/us/artist/helen-olhausen/1532329637">artist/1532329637</a></td>
+            <td class="status-warn">activo · sin verificar</td>
+            <td>Activo. Reclamar Apple Music for Artists.</td>
+          </tr>
+          <tr>
+            <td><strong>TIDAL</strong><br/><a href="https://tidal.com/browse/artist/20696347">artist/20696347</a></td>
+            <td class="status-yes">activo</td>
+            <td>Distribuido</td>
+          </tr>
+          <tr>
+            <td><strong>Deezer</strong><br/><a href="https://www.deezer.com/en/artist/102359962">artist/102359962</a></td>
+            <td class="status-yes">activo</td>
+            <td>Distribuido</td>
+          </tr>
+          <tr>
+            <td><strong>YouTube</strong><br/><a href="https://www.youtube.com/channel/UCtVyvipdvE61aEjjOkKnocg">channel/UCtVyvi...</a></td>
+            <td class="status-warn">activo · falta OAC</td>
+            <td>Clips: <em>Piel</em>, <em>Fuego</em> con Ignacio de los Campos, lives Teatro Solís, Sofar Montevideo, Mirá Montevideo. Falta claim del Official Artist Channel y merge con Topic auto-generado.</td>
+          </tr>
+          <tr>
+            <td><strong>Instagram</strong><br/><a href="https://www.instagram.com/helenolhausen/">@helenolhausen</a></td>
+            <td class="status-yes">activo</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Facebook</strong><br/><a href="https://www.facebook.com/helenolhausen/">facebook.com/helenolhausen</a></td>
+            <td class="status-yes">activo</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>SoundCloud</strong><br/><a href="https://soundcloud.com/helen-olhausen">soundcloud.com/helen-olhausen</a></td>
+            <td class="status-warn">activo · branding inconsistente</td>
+            <td>Display name "Ohsn music" — convendría unificar con el resto.</td>
+          </tr>
+          <tr>
+            <td><strong>Last.fm</strong><br/><a href="https://www.last.fm/music/Helen+Olhausen">last.fm/music/Helen+Olhausen</a></td>
+            <td class="status-warn">activo · bio vacía</td>
+            <td>374 listeners · 4.874 scrobbles · tags <code>singer-songwriter</code>, <code>alt pop</code>, <code>uruguay</code>. <strong>Sin bio</strong> — gap fácil de cerrar.</td>
+          </tr>
+          <tr>
+            <td><strong>RateYourMusic</strong><br/><a href="https://rateyourmusic.com/artist/helen-olhausen">rateyourmusic.com/artist/helen-olhausen</a></td>
+            <td class="status-yes">activo</td>
+            <td>Entry existente.</td>
+          </tr>
+          <tr>
+            <td><strong>Forced Exposure (US distro)</strong><br/><a href="https://www.forcedexposure.com/Artists/OLHAUSEN.HELEN.html">forcedexposure.com/Artists/OLHAUSEN.HELEN.html</a></td>
+            <td class="status-yes">activo</td>
+            <td>Distribuido a EE.UU. vía Little Butterfly Records — <strong>leverage</strong> para pitch internacional (Bandcamp Daily, Pitchfork sección Latin/experimental, Fact, RA).</td>
+          </tr>
+          <tr>
+            <td><strong>Live circuit cubierto</strong></td>
+            <td class="status-yes">activo</td>
+            <td>Sala Zitarrosa · Teatro Solís · Sofar Montevideo · Mirá Montevideo. Cobertura La Diaria, latidobeat.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Lo que FALTA (gaps reales)</h3>
+      <table>
+        <thead>
+          <tr><th>Plataforma</th><th>Estado</th><th>Por qué importa</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MusicBrainz</strong></td>
+            <td class="status-no">sin entry</td>
+            <td>Base de metadata abierta. Su ausencia hace que Apple Music / Last.fm / LLMs tengan info inconsistente. <strong>Crear ya</strong> (manual, 30-45 min).</td>
+          </tr>
+          <tr>
+            <td><strong>Wikidata</strong></td>
+            <td class="status-no">sin item</td>
+            <td>Alimenta Google Knowledge Graph + Wikipedia + respuestas de ChatGPT/Claude/Gemini cuando alguien pregunta "quién es Helen Olhausen". <strong>Crear ya</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>Discogs</strong></td>
+            <td class="status-warn">a verificar</td>
+            <td>Crate-diggers + fuente metadata Apple Music. <strong>Verificar y crear si no está</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>Spotify for Artists</strong></td>
+            <td class="status-no">no reclamado</td>
+            <td>Otorga: pitch editorial, Canvas, stats reales, control de bio + foto. <strong>Es lo más alto retorno + más urgente</strong>. Mínimo 7 días de anticipación para pitchear el nuevo single.</td>
+          </tr>
+          <tr>
+            <td><strong>Apple Music for Artists</strong></td>
+            <td class="status-no">no reclamado</td>
+            <td>Mismo razonamiento. 1-2 semanas de validación de identidad.</td>
+          </tr>
+          <tr>
+            <td><strong>YouTube Official Artist Channel</strong></td>
+            <td class="status-no">no claim aún</td>
+            <td>El canal manual ya existe; falta el merge. Se reclama vía distribuidora; fusiona el canal manual con el Topic auto-generado.</td>
+          </tr>
+          <tr>
+            <td><strong>Last.fm bio + tags ampliados</strong></td>
+            <td class="status-no">bio vacía</td>
+            <td>Tags actuales no incluyen <code>electronic</code>, <code>experimental</code>, <code>modular</code>, <code>latin american</code>. Bio + tags ampliados ayudan al algoritmo de Last.fm. Gap fácil.</td>
+          </tr>
+          <tr>
+            <td><strong>X (Twitter)</strong></td>
+            <td class="status-no">handle libre</td>
+            <td><code>@helenolhausen</code> parece estar libre (15 chars exactos). Es donde están blogs y curators de electrónica. <strong>Conviene reclamar el handle aunque todavía no se postee.</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Bluesky</strong></td>
+            <td class="status-no">sin handle</td>
+            <td>Indie/electrónica/latam crece muy fuerte ahí. Handles disponibles: <code>helenolhausen.bsky.social</code> o <code>helenolhausen.com</code> (usando el dominio propio).</td>
+          </tr>
+          <tr>
+            <td><strong>TikTok</strong></td>
+            <td class="status-no">handle libre</td>
+            <td><code>@helenolhausen</code> parece libre (<code>@helenxto</code> es otra persona). Conviene activar solo cuando haya cadencia de posteo sostenible (post-disco nuevo). <strong>Reclamar el handle ahora, postear después.</strong></td>
+          </tr>
+          <tr>
+            <td><strong>ModularGrid</strong></td>
+            <td class="status-no">sin perfil</td>
+            <td>Comunidad modular global — necesita rack para tener sentido, esperar al disco nuevo.</td>
+          </tr>
+          <tr>
+            <td><strong>helenolhausen.com</strong></td>
+            <td class="status-no">libre</td>
+            <td>El sitio propio es donde viven los essays canónicos + landing oficial. <strong>Conviene comprar ya</strong> (USD 10-15/año) aunque no se lance todavía.</td>
+          </tr>
+          <tr>
+            <td><strong>Newsletter</strong></td>
+            <td class="status-no">no existe</td>
+            <td>Audiencia directa fuera del algoritmo. Buttondown free hasta 100 subs.</td>
+          </tr>
+          <tr>
+            <td><strong>Sitio propio en línea</strong></td>
+            <td class="status-no">no detectado</td>
+            <td>Bandcamp + Spotify funcionan como landing accidental, pero un sitio propio aporta control + SEO + canonical para essays.</td>
+          </tr>
+          <tr>
+            <td><strong>Bandsintown / Songkick</strong></td>
+            <td class="status-no">no detectado</td>
+            <td>En caso de seguir tocando en vivo (Teatro Solís, Sala Zitarrosa), un perfil notifica a fans cuando se anuncia fecha.</td>
+          </tr>
+          <tr>
+            <td><strong>Patreon / Bandcamp Subscriptions</strong></td>
+            <td class="status-no">no existe</td>
+            <td>Prematuro hoy. Apuntar cuando exista newsletter con ≥500 subs engaged.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Cosas no urgentes pero notables</h3>
+      <div class="card">
+        <ul>
+          <li>
+            <strong>Branding inconsistente</strong>: SoundCloud aparece
+            con display name "Ohsn music", el resto con "Helen Olhausen".
+            Unificar la marca en todas las plataformas (mismo nombre +
+            foto + bio) ayuda al algoritmo de identidad y a la prueba
+            social.
+          </li>
+          <li>
+            <strong>Cifras bajas pero NO cero</strong>: 364 monthly Spotify
+            · 1.564 followers Spotify · 374 Last.fm · 4.874 scrobbles. Hay
+            una base existente que ahora mismo no está siendo capitalizada.
+            Reclamar verificación + activar pitch editorial + actualizar
+            bio puede mover esos números rápido.
+          </li>
+          <li>
+            <strong>Forced Exposure</strong> mantiene distribución en EE.UU. —
+            es <strong>leverage</strong> para futuro pitch a Bandcamp Daily,
+            Pitchfork (sección Latin / experimental), Fact, Resident
+            Advisor.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="timing">
+      <h2>Estrategia de timing — ¿hacer todo el listado ahora o esperar al disco nuevo?</h2>
+
+      <div class="card">
+        <p style="margin-bottom: 0;">
+          <strong>Respuesta corta</strong>: hacerlo <strong>en dos olas</strong>.
+          Lo de identidad e infra <strong>ahora</strong> (no esperar al
+          nuevo disco). Lo de activación creativa <strong>con el
+          disco</strong> (porque necesita material nuevo para tener
+          sentido).
+        </p>
+      </div>
+
+      <p>
+        <strong>Razón general</strong>: las dos cosas dependen de cosas
+        diferentes. La <strong>infraestructura</strong> (claims, metadata,
+        handles, bio, sitio propio) mejora <strong>TODO el catálogo
+        actual</strong> y se hace una sola vez. La <strong>activación
+        creativa</strong> (TikTok, ModularGrid, essay del pivote, press kit
+        nuevo) necesita material modular y se activa con el drop.
+      </p>
+      <p>
+        Si todo se concentra en el momento del disco para hacerlo en
+        bloque, las cuentas salen sin historial → el algoritmo no las
+        empuja, se pueden perder handles que se ocupen mientras tanto, no
+        se llega a pitchear editorial (necesita 7+ días de anticipación
+        con Spotify for Artists ya reclamado), y los 374 listeners de
+        Last.fm + 1.564 de Spotify quedan sin capitalizar 4+ meses más.
+      </p>
+
+      <div class="wave wave-1">
+        <div class="wave-header">Wave 1 · AHORA</div>
+        <h3>Infraestructura + identidad</h3>
+        <div class="timing">Próximas 3-4 semanas, antes de empezar a comunicar el pivote</div>
+        <p style="font-size: 0.92rem;">
+          Todo lo que <strong>no requiere material modular nuevo</strong>.
+          Es trabajo infraestructural + identidad. Una vez hecho,
+          <strong>mejora todo el catálogo existente</strong> + queda listo
+          para el ramp-up del nuevo disco.
+        </p>
+        <ol>
+          <li>Reclamar <strong>Spotify for Artists</strong> — fast win, alta prioridad.</li>
+          <li>Reclamar <strong>Apple Music for Artists</strong> — 1-2 sem de validación.</li>
+          <li>Crear entry <strong>MusicBrainz</strong> (artist + Romperse 2020 + Todo Puede Romperse 2022 + Yeguón 2022 + Orbita 2024).</li>
+          <li>Crear item <strong>Wikidata</strong> (country UY, occupation musician, genre electronic/alt pop, instrument synthesizer, etc.).</li>
+          <li>Verificar / crear entry <strong>Discogs</strong> (artist + releases).</li>
+          <li>Setear <strong>Last.fm bio + tags ampliados</strong> (sumar <code>electronic</code>, <code>experimental</code>, <code>synth</code>, <code>latin american</code>, <code>art pop</code>).</li>
+          <li>Comprar el dominio <strong>helenolhausen.com</strong>.</li>
+          <li>Reclamar handles en <strong>X, Bluesky, TikTok</strong> aunque no se posteen todavía (evita que otra persona los ocupe).</li>
+          <li>Sitio propio mínimo en helenolhausen.com: landing con bio + links + foto (1 página, 1-2h con Astro/Ghost/Notion público).</li>
+          <li>Newsletter <strong>Buttondown</strong> abierta (free), sin enviar todavía.</li>
+          <li>Unificar branding en <strong>SoundCloud</strong> (nombre, foto, bio matching el resto).</li>
+          <li><strong>Bandsintown</strong> si hay vivos previstos entre ahora y el disco.</li>
+        </ol>
+      </div>
+
+      <div class="wave wave-2">
+        <div class="wave-header">Wave 2 · CON EL DISCO NUEVO</div>
+        <h3>Activación creativa + momentum del drop</h3>
+        <div class="timing">T-60 a T+30 del release del disco nuevo</div>
+        <p style="font-size: 0.92rem;">
+          Todo lo que <strong>necesita material modular nuevo</strong> +
+          capitaliza el momentum del drop.
+        </p>
+        <ol start="13">
+          <li>Bio + foto press refresh en todas las plataformas (reflejando el pivote).</li>
+          <li>Pitch editorial <strong>Spotify</strong> del single (T-21+, con S4A ya reclamado de Wave 1).</li>
+          <li><strong>Spotify Canvas</strong> del single nuevo.</li>
+          <li>Claim de <strong>YouTube Official Artist Channel</strong> vía distribuidora.</li>
+          <li><strong>Essay del pivote</strong> publicado en helenolhausen.com + Medium (canonical).</li>
+          <li><strong>TikTok activado</strong> con material modular (patches, takes, mini-clips visuales del rack).</li>
+          <li><strong>ModularGrid</strong> perfil con rack subido.</li>
+          <li>X / Bluesky activados posteando el arco del pivote.</li>
+          <li>Newsletter primera edición ("la historia del pivote").</li>
+          <li>Diary serial (3-5 posts) en sitio + crosspost Medium.</li>
+          <li>Patches / posts técnicos en r/modularsynth, lines (llllllll.co), Discord modular.</li>
+          <li>Mixcloud — set de presentación si hay vivo en el drop.</li>
+          <li>Submissions a <strong>AlbumOfTheYear + RateYourMusic</strong>.</li>
+          <li>Pitch a <strong>Bandcamp Daily</strong> + <strong>Fluid Radio</strong> + <strong>Norient</strong> + <strong>CDM</strong> (con press kit nuevo).</li>
+        </ol>
+      </div>
+
+      <h3>Por qué NO hacer todo junto con el disco</h3>
+      <ul>
+        <li><strong>Spotify pitch editorial</strong> requiere 7+ días de anticipación con S4A reclamado. Reclamarlo la semana del drop llega tarde.</li>
+        <li><strong>MusicBrainz / Discogs / Wikidata</strong> tienen latencia: aparecen en Apple Music + Google KG después de algunas semanas. Crear con anticipación.</li>
+        <li><strong>Apple Music for Artists</strong> demora 1-2 sem en validación de identidad.</li>
+        <li><strong>Handles</strong> son first-come-first-served. Esperar 3 meses abre la ventana a que otra persona con el mismo nombre los ocupe.</li>
+        <li><strong>Cuentas con 0 historial</strong> = algoritmos no las priorizan el día del drop.</li>
+        <li><strong>Last.fm bio vacía + Spotify bio vacía</strong> hoy = leak de fans que buscan info y no la encuentran; sucede actualmente con los 364 monthly + 374 Last.fm listeners.</li>
+      </ul>
+
+      <h3>Por qué NO hacer todo ahora</h3>
+      <ul>
+        <li><strong>TikTok sin material modular</strong> = postear contenido del catálogo viejo rompe el ángulo del pivote (el más editorialmente fuerte).</li>
+        <li><strong>ModularGrid sin rack</strong> = perfil vacío que no aporta.</li>
+        <li><strong>Essay del pivote sin contexto</strong> = pierde fuerza si todavía no hay nada que reseñar al respecto.</li>
+        <li><strong>Press kit con bio nueva</strong> sin material para acompañarlo = press lo ignora.</li>
+      </ul>
+
+      <h3>Energía / momentum — el contraargumento</h3>
+      <div class="card">
+        <p style="margin-bottom: 0;">
+          Existe un argumento legítimo para "hacer todo de una": la energía
+          viene en olas, y partir el trabajo puede hacer perder momentum.
+          <strong>Mitigación</strong>: la Wave 1 está deliberadamente
+          diseñada como <strong>trabajo infraestructural acotado</strong>
+          (3-4 semanas, mayoría tarea administrativa, no creativa). No
+          requiere la energía narrativa que sí requiere la Wave 2. Hacerla
+          ahora <strong>libera</strong> la energía creativa para
+          concentrarse 100% en la Wave 2 cuando llegue.
+        </p>
+      </div>
+    </section>
+
+    <section id="resumen">
+      <h2>Resumen 30 segundos</h2>
+      <div class="card good">
+        <p><strong>Esencial</strong> (sin esto no se mueve nada): Bandcamp · Spotify for Artists · Apple Music for Artists · Instagram · YouTube · SoundCloud.</p>
+        <p><strong>Muy recomendado</strong> (donde vive el nicho modular/electrónica): ModularGrid · Discogs · X (Twitter) · Bluesky · Mixcloud (si hay sets) · Bandsintown (si hay vivos).</p>
+        <p><strong>Para escribir</strong> (importante para el pivote): Substack o Buttondown (newsletter propia) + Medium opcional.</p>
+        <p><strong>Opcional / cuando haya bandwidth</strong>: TikTok · Mastodon (sonomu.club) · Last.fm setup · Patreon · Tumblr.</p>
+        <p style="margin-bottom: 0;"><strong>No aporta a este caso</strong>: LinkedIn · Snapchat · VK / WeChat (salvo apuntar específicamente esos mercados).</p>
+      </div>
+    </section>
+
+    <section id="tier1">
+      <h2>Tier 1 — artista, lo que urge para difusión</h2>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Bandcamp</h3><span class="priority essential">esencial</span></div>
+        <p class="why"><strong>Por qué</strong>: la única plataforma donde el fanbase paga en serio (los artistas indie modular se sostienen más con Bandcamp que con streaming). Tag-driven discovery (modular, ambient, electronic) trae nichos genuinos.</p>
+        <p class="action"><strong>Acción</strong>: ya activa. Configurar tags: <code>modular</code>, <code>electronic</code>, <code>ambient</code>, <code>experimental</code>, <code>uruguay</code>, <code>latam electronic</code> cuando salga el disco nuevo. <strong>Costo</strong>: 10% por venta — lo más fair del mercado.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Spotify for Artists</h3><span class="priority essential">esencial</span></div>
+        <p class="why"><strong>Por qué</strong>: el artist profile ya existe activo (1.564 followers, 364 monthly listeners). Reclamarlo otorga: foto, bio, links, posibilidad de <strong>pitch editorial</strong>, Canvas (video loop), estadísticas reales.</p>
+        <p class="action"><strong>Acción</strong>: claim ya. Es el fast win con mejor ratio esfuerzo/retorno del listado entero.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Apple Music for Artists</h3><span class="priority essential">esencial</span></div>
+        <p class="why"><strong>Por qué</strong>: mismo razonamiento. Estadísticas + control de bio + foto.</p>
+        <p class="action"><strong>Acción</strong>: claim. Demora 1-2 semanas validar identidad.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>YouTube Music + canal</h3><span class="priority essential">esencial</span></div>
+        <p class="why"><strong>Por qué</strong>: YouTube es buscador #2 del mundo. Un video del setup en proceso o un visualizer del track funcionan <strong>muy</strong> bien (modular es visual por naturaleza).</p>
+        <p class="action"><strong>Acción</strong>: el canal ya existe; reclamar <strong>Official Artist Channel</strong> vía distribuidora para mergear con el Topic auto-generado.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>SoundCloud</h3><span class="priority recommended">muy recomendado</span></div>
+        <p class="why"><strong>Por qué</strong>: la comunidad modular/electrónica vive ahí mucho más que en Spotify. Reposts entre productores, comments, descubrimiento. Productores modulares latam (Federico Durand, Lucrecia Dalt, Andrés Cariati) se encuentran ahí.</p>
+        <p class="action"><strong>Acción</strong>: unificar branding (hoy figura como "Ohsn music"). Tags: <code>modular</code>, <code>electronic</code>, <code>ambient</code>, <code>experimental</code>, <code>latin electronic</code>, <code>uruguayan music</code>.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Instagram</h3><span class="priority essential">esencial</span></div>
+        <p class="why"><strong>Por qué</strong>: discovery #1 para indie music + reels + storytelling visual. Para modular, los <strong>patch demos</strong> (20-30s de un patch evolucionando con visual del case) performan altísimo.</p>
+        <p class="action"><strong>Acción</strong>: <code>@helenolhausen</code> ya activa. Conectarla a una Facebook Page (Meta Business) — necesario para insights, Reels boost, y crossposting a Threads.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>X (Twitter)</h3><span class="priority recommended">muy recomendado</span></div>
+        <p class="why"><strong>Por qué</strong>: aunque baje engagement, los <strong>periodistas, blogs y curators</strong> de electrónica/modular siguen ahí (Pitchfork, Resident Advisor, Fact, The Wire, Bandcamp Daily, Indie Hoy, Resonate FM, Plan B UY). Aparecen más por ahí que por IG.</p>
+        <p class="action"><strong>Acción</strong>: handle <code>@helenolhausen</code> (15 chars max — entra justo). Bio con la pivot story en una línea.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Bluesky</h3><span class="priority recommended">muy recomendado</span></div>
+        <p class="why"><strong>Por qué</strong>: indie music + electrónica + latam migró fuerte ahí post-Twitter exodus (2024-2026). Audiencia activa, conversaciones reales, descubrimiento por feeds curados.</p>
+        <p class="action"><strong>Acción</strong>: con el dominio (helenolhausen.com, libre), se puede usar como handle: <code>helenolhausen.com</code>. Alternativa: <code>@helenolhausen.bsky.social</code>.</p>
+      </div>
+    </section>
+
+    <section id="tier2">
+      <h2>Tier 2 — sumar primer mes post-launch</h2>
+
+      <div class="platform">
+        <div class="platform-head"><h3>TikTok</h3><span class="priority optional">opcional / cadencia requerida</span></div>
+        <p class="why"><strong>Por qué esperar</strong>: requiere <strong>cadencia</strong> (2-3 posts/sem mínimo para que el algoritmo empuje). Sin cadencia sostenible las cuentas quedan muertas y restan prueba social. Conviene sumarlo cuando exista un mes con varios patches/sesiones filmadas para cortar y postear seriadamente.</p>
+        <p class="action"><strong>Por qué sí en algún momento</strong>: discovery #1 global incluso para nichos (<code>#modularsynth</code>, <code>#eurorack</code>, <code>#patchnotes</code> mueven millones de views). Para modular es <strong>especialmente potente</strong>.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Threads</h3><span class="priority optional">opcional</span></div>
+        <p class="why"><strong>Por qué</strong>: hereda de IG con un click. Crosspost desde IG, cero esfuerzo nativo. Activar después de que IG esté funcionando.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Facebook Page</h3><span class="priority optional">utilitario</span></div>
+        <p class="why"><strong>Por qué</strong>: no es para postear. Es necesaria solo si hay plan de hacer Meta ads o conectar IG a Meta Business para insights y Reels boost.</p>
+      </div>
+    </section>
+
+    <section id="nicho">
+      <h2>Comunidad modular / electrónica — donde vive el nicho</h2>
+
+      <div class="platform">
+        <div class="platform-head"><h3>ModularGrid</h3><span class="priority recommended">muy recomendado · modular</span></div>
+        <p class="why"><strong>Por qué</strong>: la red social de la comunidad modular global. Subir el rack, comentar el de otros, ver qué patches usa cada quién. Es donde un modular artist hace networking real.</p>
+        <p class="action"><strong>Acción</strong>: registrar perfil, subir el rack actual, taggear los modules más usados. Free tier alcanza. Premium (~USD 15/año) habilita más racks guardados y export.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Discogs</h3><span class="priority recommended">muy recomendado</span></div>
+        <p class="why"><strong>Por qué</strong>: catalog de releases oficial. Crate-diggers + cultura vinilo + es <strong>fuente de metadata</strong> para Apple Music, Spotify, Google Knowledge Graph. Si en algún momento hay edición física, es el lugar.</p>
+        <p class="action"><strong>Acción</strong>: crear artist entry "Helen Olhausen" + release entries para <em>Romperse</em> (2020) y <em>Orbita</em> (2024). 30-45 min total.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Mastodon (sonomu.club)</h3><span class="priority optional">opcional · modular community</span></div>
+        <p class="why"><strong>Por qué</strong>: el server <code>sonomu.club</code> está específicamente activo para músicos de sound art / modular / electrónica. Comunidad chica pero muy de nicho.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Mixcloud</h3><span class="priority recommended">muy recomendado · si hay sets</span></div>
+        <p class="why"><strong>Por qué</strong>: para sets de modular o sesiones largas (&gt;1h), Mixcloud es donde la comunidad escucha. Es el lugar donde se comparten modular live sets.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>r/modular · r/modularsynth · r/synthesizers</h3><span class="priority optional">opcional</span></div>
+        <p class="why"><strong>Por qué</strong>: comunidad activa en Reddit. Postear videos de patches o conversaciones técnicas funciona bien cuando hay algo concreto que mostrar.</p>
+        <p class="action"><strong>Cuidado</strong>: Reddit detesta self-promotion sin contexto. Regla 9:1 (9 comentarios genuinos por 1 post propio). Conviene arrancar comentando 2-3 semanas antes de postear contenido propio.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>lines (llllllll.co)</h3><span class="priority optional">opcional · alto valor</span></div>
+        <p class="why"><strong>Por qué</strong>: forum de música experimental/modular muy curado, fundado por Brian Crabtree (monome). Audiencia chica pero altísimo en calidad. No es para difusión masiva — es para encontrar pares.</p>
+      </div>
+    </section>
+
+    <section id="escribir">
+      <h2>Press, blog, y escribir</h2>
+
+      <h3>¿Aporta escribir en este caso?</h3>
+      <p>Sí — por estas razones:</p>
+      <ol>
+        <li><strong>Diferenciación frente a otros músicos modulares</strong>. La mayoría no escribe. Los que sí lo hacen (Caterina Barbieri en entrevistas, Lucy Sky Diamonds en su Substack, Hainbach en sus notas) ganan cobertura editorial sostenida porque entregan <strong>material citable</strong> a los periodistas. Cada párrafo publicado baja la fricción para entrevistas y reseñas.</li>
+        <li><strong>Construir la narrativa del pivote</strong>. Pasar de cantautora a modular es intrínsecamente interesante para press internacional — es la clase de arco que Pitchfork / Fact / RA cubren con gusto. Si no se articula desde la artista primero, el ángulo se diluye. Un essay propio (incluso uno solo, bien escrito) es <strong>la fuente</strong> que después usan los periodistas.</li>
+        <li><strong>Audiencia directa fuera del algoritmo</strong>. Una newsletter propia (200 suscriptores reales &gt; 5000 followers algorítmicos) da línea directa con el fanbase. Crucial cuando Spotify cambia el pago o IG cambia el algoritmo. Es la única audiencia que la artista <strong>posee</strong>.</li>
+        <li><strong>SEO / discoverability long-tail</strong>. Un blog post en dominio propio se indexa para siempre. Un IG post desaparece en 48h. Para un artista con 5+ años de trayectoria, esa biblioteca es activo acumulable.</li>
+        <li><strong>Documentar el proceso</strong>. Las performances modulares son efímeras. Escribir las deja registradas para futuras entrevistas, reseñas, programas académicos (CTM, Norient, festivales).</li>
+      </ol>
+
+      <h3>¿Aporta a vivir del arte?</h3>
+      <p><strong>Directamente</strong>: no. Casi nadie vive de su Substack o de Patreon como músico — los números son brutales (se necesitan 1.000-5.000 fans pagantes recurrentes, lo que toma 5-10 años construir).</p>
+      <p><strong>Indirectamente</strong>: mucho. La cadena real es:</p>
+      <blockquote>
+        Escribir bien → mejor pitch a press → cobertura editorial → más streams + más fans + más invitaciones a tocar / dar charlas / hacer residencias → más ingreso real.
+      </blockquote>
+      <p>Los músicos modulares que viven (parcialmente) de la música — Hainbach, Lookmumnocomputer, Tony Karapetyan — todos tienen una práctica de producción de contenido sostenida (videos, posts, patches compartidos). No viven de los streams: viven del <strong>ecosistema</strong> que la escritura + video + comunidad construyen.</p>
+
+      <h3>¿Qué cadencia?</h3>
+      <div class="card">
+        <p><strong>No</strong> un blog activo semanal. Eso muere en 3 meses.</p>
+        <p style="margin-bottom: 0;"><strong>Sí</strong>: 4-6 piezas largas por año + newsletter mensual ligera.</p>
+      </div>
+      <ul>
+        <li><strong>4-6 essays por año</strong>: uno por release (pre-release context, post-release look-back), uno o dos sobre proceso/setup, opcional un ensayo conceptual.</li>
+        <li><strong>Newsletter mensual</strong>: 5-10 párrafos. En qué se está trabajando, qué se está escuchando, link a algo que interesó, foto de un patch. Bajísimo esfuerzo, alto retorno en lealtad de fanbase.</li>
+      </ul>
+
+      <h3>10 ideas de essays</h3>
+      <ol>
+        <li><strong>"De Romperse al patch"</strong> — la historia del pivote, en primera persona. Es <strong>el</strong> essay que más rinde mediáticamente.</li>
+        <li><strong>"Por qué el modular cambió lo que entiendo por canción"</strong> — cómo se piensa la composición ahora vs. en la etapa cantautora.</li>
+        <li><strong>Patch notes</strong> — el setup de un track puntual del disco nuevo, explicado. Audio + foto del rack + qué hace cada cable.</li>
+        <li><strong>El rack — recorrido</strong>: qué modules forman el setup y por qué cada uno. La forma más fácil de generar contenido + es lo que la comunidad busca activamente.</li>
+        <li><strong>El paisaje modular latam</strong> — quiénes son los contemporáneos (Federico Durand, Andrés Cariati, otros UY/AR/BR/MX).</li>
+        <li><strong>Diary del disco</strong>: serie corta (3-5 posts) durante la producción, narrando decisiones. Arranque 2-3 meses antes del release.</li>
+        <li><strong>Influences explained</strong>: qué se aprendió de los referentes y cómo se aplicó al propio trabajo.</li>
+        <li><strong>Live performance del modular</strong>: cómo se prepara un set, qué pasa si un cable falla, cómo se improvisa.</li>
+        <li><strong>Re-leer Romperse hoy</strong>: si hay distancia para mirarlo, un look-back honesto.</li>
+        <li><strong>Gear-as-character</strong>: cada module tiene un "carácter" sonoro; escribir sobre el rack como ensamble de personajes hace lectura placentera incluso para quien no conoce modular.</li>
+      </ol>
+
+      <h3>¿Dónde publicar?</h3>
+      <p>Setup mínimo recomendado, en orden de importancia:</p>
+      <ol>
+        <li><strong>Sitio propio</strong> (helenolhausen.com, libre). Acá viven los essays canónicos. SEO juice acumulable, control total. Plataforma: Ghost, Astro, o Notion público + dominio custom.</li>
+        <li><strong>Newsletter propia</strong>: Substack o Buttondown. Buttondown es free hasta 100 subs, más limpio. Substack tiene más network effects pero monetiza la atención dentro de su plataforma.</li>
+        <li><strong>Medium</strong> (opcional): republicar los essays con <code>&lt;link rel="canonical"&gt;</code> apuntando al sitio propio. Medium aporta reach generalista sin penalty SEO. Útil específicamente para el essay del pivote.</li>
+      </ol>
+      <p><strong>No tiene un "dev.to para artistas"</strong> estricto. Lo más cercano que funciona para músicos:</p>
+      <ul>
+        <li><strong>Are.na</strong> — para "thinking notes" curatoriales (no posts largos, sí fragmentos + referencias)</li>
+        <li><strong>Read.cv</strong> — perfil + posts cortos para creativos</li>
+        <li><strong>Lines (llllllll.co)</strong> — para threads conceptuales en comunidad</li>
+        <li><strong>CDM, Norient, The Quietus, Bandcamp Daily</strong> — outlets a los que pitchear, no plataformas self-publish</li>
+      </ul>
+    </section>
+
+    <section id="meta">
+      <h2>Metadata + credibilidad</h2>
+
+      <div class="platform">
+        <div class="platform-head"><h3>MusicBrainz</h3><span class="priority recommended">muy recomendado</span></div>
+        <p class="why"><strong>Por qué</strong>: base de metadata abierta que alimenta Apple Music, Spotify, Last.fm, Wikipedia y muchos LLMs. Aparecer ahí mejora la consistencia de cómo aparece en todas las plataformas.</p>
+        <p class="action"><strong>Acción</strong>: artist entry "Helen Olhausen" + release entries para cada disco. 30-45 min.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Wikidata</h3><span class="priority optional">opcional pero útil</span></div>
+        <p class="why"><strong>Por qué</strong>: alimenta Google Knowledge Graph, Wikipedia, LLMs. Cuando alguien pregunta "quién es Helen Olhausen" en ChatGPT/Claude/Gemini, esto influye la respuesta.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Last.fm setup</h3><span class="priority optional">opcional · gratis</span></div>
+        <p class="why"><strong>Por qué</strong>: el artist page ya existe (374 listeners, 4.874 scrobbles) pero está sin bio. Claim del artist page + bio + tags + links es trabajo de 20 min con alto retorno.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>AlbumOfTheYear + RateYourMusic</h3><span class="priority optional">cuando salga el disco</span></div>
+        <p class="why"><strong>Por qué</strong>: submission para que el disco aparezca en agregadores de ratings. Audiencia chica pero muy involucrada.</p>
+      </div>
+    </section>
+
+    <section id="vivo">
+      <h2>Circuito de vivo</h2>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Bandsintown</h3><span class="priority recommended">muy recomendado si hay vivos</span></div>
+        <p class="why"><strong>Por qué</strong>: los fans siguen artistas en Bandsintown y reciben notificación cuando se anuncia fecha. Conecta con la sección "Artists in Your City" de Spotify.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Songkick</h3><span class="priority optional">opcional</span></div>
+        <p class="why"><strong>Por qué</strong>: similar pero menor adopción que Bandsintown. Solo si hay capacidad de mantener las dos.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Resident Advisor</h3><span class="priority optional">si hay circuito club</span></div>
+        <p class="why"><strong>Por qué</strong>: el referente para electrónica club. Para vivos en sala/teatro, menos relevante; para circuito club, el perfil ayuda al booking.</p>
+      </div>
+    </section>
+
+    <section id="fans">
+      <h2>Soporte de fans (cuando haya base)</h2>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Patreon</h3><span class="priority optional">cuando haya 500+ fans engaged</span></div>
+        <p class="why"><strong>Por qué</strong>: la única forma realista de monetización mensual recurrente para artistas indie. Modular específicamente tiene cultura Patreon fuerte: Hainbach, Lookmumnocomputer, otros.</p>
+        <p class="action"><strong>Cuándo</strong>: NO ahora. Activar cuando exista newsletter con ≥500 subs engaged + 2-3 ofertas concretas (patches mensuales, stems exclusivos, Q&amp;A, primer acceso a releases). Antes es prematuro.</p>
+      </div>
+
+      <div class="platform">
+        <div class="platform-head"><h3>Bandcamp Subscriptions</h3><span class="priority optional">cuando haya catalog amplio</span></div>
+        <p class="why"><strong>Por qué</strong>: con varios releases (singles, EPs, alt versions), Bandcamp permite que los fans paguen mensual y bajen todo. Más simple que Patreon. Apuntar a esto post 2-3 releases más.</p>
+      </div>
+    </section>
+
+    <section id="no-rec">
+      <h2>Lo que NO sumaría a este caso</h2>
+      <table>
+        <thead>
+          <tr><th>Plataforma</th><th>Por qué no</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LinkedIn</td><td>audiencia equivocada, no aporta para música indie/experimental</td></tr>
+          <tr><td>Snapchat</td><td>demografía + formato no alinea</td></tr>
+          <tr><td>VK / WeChat</td><td>solo si hay objetivo específico de esos mercados (RU, CN)</td></tr>
+          <tr><td>Telegram channels</td><td>a menos que haya contenido recurrente; preferible newsletter</td></tr>
+          <tr><td>BeReal</td><td>no aplica al caso</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="cierre">
+      <h2>Una línea de cierre</h2>
+      <div class="card">
+        <p>
+          Lo importante no es <strong>tener todas las cuentas</strong>. Es
+          <strong>tener las pocas correctas, actualizadas, linkeadas entre
+          sí, con bio + foto + descripción coherentes</strong>. Una cuenta
+          zombie (vacía, sin actualizar 6 meses) <strong>resta</strong>
+          prueba social. Mejor 6 cuentas vivas que 15 muertas.
+        </p>
+        <p style="margin-bottom: 0;">
+          Y la pieza más subestimada: <strong>la escritura</strong>
+          diferencia. No hace falta escribir mucho — sí hace falta escribir
+          <strong>bien y consistentemente</strong>, en los momentos clave.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Documento abierto · no oficial · mayo 2026</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+</body>
+</html>

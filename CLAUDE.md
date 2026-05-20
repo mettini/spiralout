@@ -159,9 +159,30 @@ Before the first commit in any new repo, verify `git config user.email` matches 
   `compose_*.py`. Keep the `compose_*.py` snapshot small and committed.
 - `.DS_Store` is in `.gitignore`; do not commit it.
 
+## Status / progreso del proyecto
+
+**Source of truth para "¿qué hay pendiente?" / "¿en qué estamos?" / "¿qué tengo yo y qué tenés vos?":**
+
+→ **`dashboard/data.json`** (servido en `dashboard/index.html`).
+
+Está estructurado por `projects` → `phases` → `tasks`. Cada task tiene `status`
+(`done` / `todo` / `blocked`), `owner` (`user` / `claude` / `both`) y a veces
+`blockedBy`, `eta`, `note`.
+
+Cuando el usuario pregunte por status, queue, pendientes, próximos pasos o
+quién hace qué, **leé `dashboard/data.json` primero** y filtrá por `owner` y
+`status` según la pregunta. NO uses `transmissions/01/PLAN.md` ni
+`docs/10_plan.md` como source of truth — esos están congelados en la fase de
+composición (que ya terminó). Sirven solo de contexto histórico.
+
+Cuando algo cambia de estado (terminás una task, el usuario te dice que algo
+está hecho), **actualizá `dashboard/data.json`** y movemé `meta.updated` a la
+fecha de hoy. Si una task estaba `blocked` por algo que ahora está `done`,
+desbloqueala (`blocked` → `todo` y remové `blockedBy`).
+
 ## When in doubt
 
-- Read the closest `CLAUDE.md` first (`site/`, `framework/`, `transmissions/`).
-- Check `docs/10_plan.md` for the active execution plan.
-- Check `transmissions/01/PLAN.md` for what's pending on the active release.
-- Check `memory/MEMORY.md` for accumulated feedback.
+- Status / pendientes → `dashboard/data.json` (ver arriba).
+- Convenciones de subdir → `CLAUDE.md` del subdir (`site/`, `framework/`, `transmissions/`).
+- Feedback acumulado / antipatrones → `memory/MEMORY.md`.
+- Contexto histórico de composición (ya no source of truth) → `transmissions/01/PLAN.md`, `docs/10_plan.md`.
