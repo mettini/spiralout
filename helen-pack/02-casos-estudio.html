@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casos de estudio · 5 artistas + pivots · Helen Olhausen</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #0a0a0c; --bg-2: #14141a; --bg-3: #1c1c24;
+      --fg: #e8e8ec; --fg-2: #a0a0a8; --muted: #6a6a74; --line: #2a2a32;
+      --accent: #7a9078;        /* verde data */
+      --accent-bg: rgba(122,144,120,0.08);
+      --accent-border: rgba(122,144,120,0.35);
+      --pre: #d4a84a;
+      --warn: #c66060;
+      --warn-bg: rgba(198,96,96,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    @media (max-width: 700px) { html { font-size: 16px; } }
+    html, body {
+      background: var(--bg); color: var(--fg);
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bg {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,90,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,50,80,0.10) 0%, transparent 55%),
+        var(--bg);
+    }
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+      width: 44px; height: 44px;
+      background: rgba(20,20,26,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line); border-radius: 50%;
+      color: var(--fg-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none; font-size: 1.1rem; line-height: 1;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s, color 0.2s, border-color 0.2s;
+    }
+    .back-to-top.visible { opacity: 0.85; visibility: visible; }
+    .back-to-top:hover { color: var(--fg); border-color: var(--fg-2); opacity: 1; }
+    @media print { .back-to-top { display: none; } }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem 6rem; }
+    @media (max-width: 700px) { .container { padding: 0 1rem 4rem; } }
+
+    .cover {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4rem;
+    }
+    .cover .pretitle {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.2rem;
+    }
+    .cover h1 {
+      font-size: 2.2rem; font-weight: 300; letter-spacing: 0.03em;
+      line-height: 1.25; margin-bottom: 1rem; color: var(--fg);
+    }
+    @media (max-width: 600px) { .cover h1 { font-size: 1.6rem; line-height: 1.3; } .cover { padding: 2.5rem 0 2rem; } }
+    .cover .subtitle {
+      font-size: 1rem; color: var(--fg-2); font-style: italic;
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .cover .meta {
+      font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+    }
+    .index {
+      margin-top: 2.5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .index h3 {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem; margin-top: 0;
+    }
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.4rem 1.5rem;
+    }
+    .index-grid a {
+      display: flex; align-items: baseline; gap: 0.7rem;
+      font-size: 0.85rem; color: var(--fg-2); text-decoration: none;
+      padding: 0.3rem 0; border-bottom: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .index-grid a:hover { color: var(--fg); border-bottom-color: var(--line); }
+    .index-grid a .num {
+      font-size: 0.72rem; color: var(--accent); font-variant-numeric: tabular-nums;
+      min-width: 1.4em; letter-spacing: 0.05em;
+    }
+
+    section { margin-bottom: 4rem; scroll-margin-top: 5rem; }
+    h2 {
+      font-size: 1.5rem; font-weight: 300; letter-spacing: 0.05em;
+      margin-bottom: 1.3rem; padding-bottom: 0.7rem;
+      border-bottom: 2px solid var(--accent-border);
+      color: var(--accent);
+    }
+    h3 {
+      font-size: 1.15rem; font-weight: 600; letter-spacing: 0.02em;
+      margin-top: 2.2rem; margin-bottom: 1rem; color: var(--fg);
+    }
+    h4 {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--fg-2);
+      margin-top: 1.5rem; margin-bottom: 0.7rem;
+    }
+    p { margin-bottom: 1rem; font-size: 1rem; }
+    a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 3px; }
+    a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    strong { color: var(--fg); font-weight: 500; }
+    em { color: var(--fg); font-style: italic; }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.5rem; }
+    code {
+      font-family: 'Courier New', monospace; font-size: 0.85em;
+      background: var(--bg-3); padding: 0.1em 0.4em; border-radius: 2px;
+      color: var(--fg-2);
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      background: var(--accent-bg);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card.intro { background: var(--bg-3); border-left-color: var(--fg-2); }
+
+    .pivot-box {
+      background: rgba(212, 168, 74, 0.07);
+      border: 1px solid rgba(212, 168, 74, 0.3);
+      border-left: 3px solid var(--pre);
+      border-radius: 4px;
+      padding: 1.2rem 1.4rem;
+      margin: 1.2rem 0;
+    }
+    .pivot-box h4 {
+      color: var(--pre); margin-top: 0;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-size: 0.92rem;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    th {
+      text-align: left; padding: 0.7rem 0.9rem;
+      font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.68rem; color: var(--fg-2);
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--line);
+    }
+    td {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top; color: var(--fg);
+    }
+    tr:last-child td { border-bottom: 0; }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    .callout {
+      margin: 1.3rem 0; padding: 1rem 1.2rem;
+      border-radius: 3px; font-size: 0.9rem;
+    }
+    .callout.warn { background: var(--warn-bg); border-left: 3px solid var(--warn); color: var(--fg); }
+    .callout.note { background: var(--bg-2); border-left: 3px solid var(--fg-2); color: var(--fg-2); }
+    .callout strong { color: var(--fg); }
+
+    .artist-header {
+      display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 0.4rem;
+    }
+    .artist-header h2 {
+      border: 0; padding: 0; margin: 0; color: var(--fg); font-size: 1.6rem;
+    }
+    .artist-header .country {
+      font-size: 0.75rem; color: var(--accent);
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      border-radius: 2px;
+    }
+    .artist-subtitle {
+      font-size: 0.95rem; color: var(--fg-2); font-style: italic;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem; border-bottom: 1px solid var(--line);
+    }
+
+    .sources {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 2rem; font-size: 0.85rem;
+    }
+    .sources h4 {
+      color: var(--accent); margin-top: 0;
+      letter-spacing: 0.18em; font-size: 0.75rem;
+    }
+    .sources ul {
+      padding-left: 1.2rem; margin-bottom: 0;
+    }
+    .sources li {
+      margin-bottom: 0.35rem; color: var(--fg-2);
+    }
+    .sources li a { color: var(--fg-2); }
+    .sources li a:hover { color: var(--accent); }
+
+    footer {
+      margin-top: 5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.08em; text-align: center; line-height: 2;
+    }
+    @media print {
+      body { background: white; color: black; }
+      .bg, .back-to-top { display: none; }
+      .container { max-width: 100%; padding: 1rem; }
+      .card, .pivot-box, table, .callout, .sources {
+        background: white !important; color: black !important; border-color: #999 !important;
+      }
+      a { color: black; text-decoration-color: #666; }
+      h2, h3, h4, strong { color: black !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <a href="#cover" class="back-to-top" id="backToTop" aria-label="volver al inicio">↑</a>
+
+  <div class="container">
+    <section class="cover" id="cover">
+      <div class="pretitle">paquete helen · doc 02 · v0.1 · 18 may 2026</div>
+      <h1>Casos de estudio · 5 artistas + sus pivots</h1>
+      <p class="subtitle">
+        Análisis profundo de cinco artistas que recorrieron caminos
+        adyacentes al de Helen Olhausen. Para cada una: trayectoria,
+        el evento o decisión que cambió su escala (el <em>pivot</em>),
+        cómo se sostienen económicamente hoy y qué patrones son
+        reproducibles. Cada claim está sourceado con URL inline; la
+        bibliografía completa al final.
+      </p>
+      <div class="meta">5 casos · 5 patrones cruzados · ~6.000 palabras · fuentes citadas</div>
+
+      <div class="index">
+        <h3>Índice</h3>
+        <div class="index-grid">
+          <a href="#juana"><span class="num">1</span>Juana Aguirre · AR</a>
+          <a href="#ela"><span class="num">2</span>Ela Minus · CO/US</a>
+          <a href="#marie"><span class="num">3</span>Marie Davidson · CA</a>
+          <a href="#lila"><span class="num">4</span>Lila Tirando a Violeta · UY/IE</a>
+          <a href="#lucrecia"><span class="num">5</span>Lucrecia Dalt · CO/DE</a>
+          <a href="#patrones"><span class="num">6</span>Patrones transversales</a>
+          <a href="#bibliografia"><span class="num">7</span>Bibliografía completa</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card intro">
+        <p>
+          <strong>Cómo leer este documento.</strong> Cada caso de
+          estudio tiene la misma estructura: trayectoria — el pivot —
+          ecosistema económico — equipo — lessons aplicables.
+        </p>
+        <p>
+          El bloque <em>"el pivot"</em> está destacado en cada artista —
+          es el corazón del caso: el evento o decisión que cambió la
+          escala del proyecto. La pregunta que el documento intenta
+          responder es: <strong>¿qué hizo cada una para llegar adonde
+          está?</strong>
+        </p>
+        <p>
+          Al final, un cruce con los patrones que se repiten entre las 5
+          y son aplicables al proyecto de Helen.
+        </p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Corrección de premisa inicial:</strong> el brief original
+        asumía que Marie Davidson estuvo en el dúo Pelada. <strong>Es
+        incorrecto</strong> — Pelada es Chris Vargas + Tobias Rochman,
+        proyecto separado de Davidson. Davidson fue parte de Essaie Pas
+        y Les Momies de Palerme. Se mantiene como caso de estudio igual
+        porque la escena montrealense y los pivots son comparables.
+        Fuente: <a href="https://en.wikipedia.org/wiki/Pelada" target="_blank">Wikipedia — Pelada</a>.
+      </div>
+    </section>
+
+    <!-- ====== JUANA AGUIRRE ====== -->
+    <section id="juana">
+      <div class="artist-header">
+        <h2>1 · Juana Aguirre</h2>
+        <span class="country">Argentina</span>
+      </div>
+      <p class="artist-subtitle">
+        El caso central. La más reproducible para un proyecto indie sin
+        sello, con equipo chico y trabajo paralelo en diseño gráfico.
+      </p>
+
+      <h3>Trayectoria</h3>
+      <p>
+        Nacida en Buenos Aires, pasó la primera mitad de su vida entre
+        Nueva Zelanda y Bolivia antes de volver a Argentina
+        (<a href="https://www.ibermusicas.org/index.php/la-cantante-y-compositora-argentina-juana-aguirre-sera-parte-del-foro-indie-rocks-de-mexico/" target="_blank">Ibermúsicas</a>).
+        Es <strong>diseñadora gráfica egresada de la UBA</strong> y
+        declara explícitamente que la práctica de diseño le formó la
+        cabeza productora — la "traducción de ideas conceptuales a un
+        plano gráfico" es análoga a producir una canción
+        (<a href="https://www.zibilia.com/revista/juana-aguirre-en-mi-musica-hay-decisiones-que-son-mas-emocionales-que-correctas" target="_blank">Zibilia Revista</a>).
+      </p>
+      <ul>
+        <li><strong>2009</strong>: co-funda <strong>Churupaca</strong> con Fefo Selleles. Folk fusión rioplatense + latinoamericana + balcánica + klezmer. ~10 años de giras. <a href="https://www.filo.news/musica/Juana-Aguirre-de-Churupaca-Siento-que-murio-un-poco-la-cancion-20190509-0067.html" target="_blank">Filo News</a>.</li>
+        <li><strong>2021</strong>: Churupaca entra en pausa. Se refugia en el sur de Argentina, monta estudio casero. <a href="https://sunderbeats.com/juana-aguirre-estrena-su-disco-debut-claroscuro" target="_blank">Sunderbeats</a>.</li>
+        <li><strong>11 nov 2021</strong>: lanza <strong>"Claroscuro"</strong> de forma <strong>independiente</strong> (no firma con sello). Producciones de Ignacio Cruz (Pommez Internacional), Juan Stewart, Dylan Lerner. Colabs: Matías Cella, <strong>Santiago Motorizado</strong> (en "El gigante"), Lola Parda. <a href="https://indiehoy.com/descubrir/juana-aguirre-fusiona-folk-acustico-y-texturas-electronicas-en-su-disco-debut-claroscuro/" target="_blank">Indie Hoy</a>.</li>
+        <li><strong>Dic 2022</strong>: presenta Claroscuro en Teatro Margarita Xirgu (San Telmo). <a href="https://elplanetaurbano.com/2022/12/juana-aguirre-presenta-su-album-debut-en-el-mitico-teatro-margarita-xirgu/" target="_blank">EPU</a>.</li>
+        <li><strong>2024</strong>: gira a Córdoba. Obtiene apoyo de <strong>Ibermúsicas — línea "Apoyo a la circulación de profesionales de la música", convocatoria 2024</strong>. <a href="https://www.ibermusicas.org/index.php/la-cantante-y-compositora-argentina-juana-aguirre-sera-parte-del-foro-indie-rocks-de-mexico/" target="_blank">Ibermúsicas</a>.</li>
+        <li><strong>22 jul 2025</strong>: lanza <strong>"Anónimo"</strong>, segundo álbum, autoproducido. Manager confirmada en créditos: <strong>Macs Abente Gaydou</strong>. <a href="https://juanaaguirre.bandcamp.com/album/an-nimo" target="_blank">Bandcamp Anónimo</a>.</li>
+        <li><strong>Mar 2025</strong>: aparece en <strong>Lollapalooza Argentina</strong>. <a href="https://x.com/indiehoy/status/1903516259439772075" target="_blank">Indie Hoy</a>.</li>
+        <li><strong>5 jun 2025</strong>: showcase en <strong>Primavera Pro Barcelona</strong>. <a href="https://jenesaispop.com/2025/06/09/500924/primavera-pro-cronica/" target="_blank">JeNeSaisPop</a>.</li>
+        <li><strong>Oct 2025</strong>: presenta Anónimo en <strong>Foro Indie Rocks México</strong> (financiado por Ibermúsicas). <a href="https://digger.mx/2025/juana-aguirre-anonimo-foro-indie-rocks/" target="_blank">Digger.mx</a>.</li>
+        <li><strong>May 2026</strong>: gira europea <strong>"Los Pilares Tour"</strong> — Madrid, Tenerife, Gran Canaria, Barcelona, Lisboa, Montpellier, Berlín, Londres, Copenhague. <a href="https://berlincafe.es/programa/juana-aguirre-europa-tour/" target="_blank">Café Berlín</a>.</li>
+        <li><strong>Nov 2026</strong>: confirmada para <strong>Primavera Sound Buenos Aires</strong>.</li>
+      </ul>
+
+      <div class="pivot-box">
+        <h4>El pivot — secuencia compuesta, no evento único</h4>
+        <p>
+          A diferencia de Lucrecia Dalt o Ela Minus (pivots claros =
+          firma con sello internacional), <strong>Juana Aguirre no tuvo
+          un pivot único de "firma con sello". El pivot fue una secuencia
+          compuesta</strong> — y esto la hace el caso más reproducible
+          para un proyecto uruguayo indie:
+        </p>
+        <ol>
+          <li><strong>Pivot artístico</strong>: la decisión, en 2021, de pausar Churupaca y refugiarse en Patagonia para producir sola un disco profundamente personal.</li>
+          <li><strong>Pivot relacional</strong>: la colaboración con <strong>Santiago Motorizado en "El gigante"</strong> (Claroscuro, 2021). En entrevistas declara que "decidió que tenía que ser él y pudo contactarlo" — un cold-outreach a una figura de altísima validación local que abrió puertas en prensa argentina.</li>
+          <li><strong>Pivot institucional / de circulación internacional</strong>: la beca <strong>Ibermúsicas 2024</strong> que financió su salida a México (Foro Indie Rocks 2025). Este es el pivot estructural que muchos artistas indie latinoamericanos subestiman.</li>
+          <li><strong>Pivot de reconocimiento crítico</strong>: <strong>Rolling Stone En Español ubica "Anónimo" en el puesto 10 de los 50 mejores discos latinoamericanos de 2025</strong>, y la incluye entre los 8 argentinos del ranking. <a href="https://indiehoy.com/noticias/8-argentinos-entre-los-50-mejores-discos-latinos-del-2025-segun-rolling-stone/" target="_blank">Indie Hoy</a>.</li>
+          <li><strong>Pivot de booking europeo</strong>: el showcase en <strong>Primavera Pro junio 2025</strong> + la gira "Los Pilares Tour" de mayo 2026.</li>
+        </ol>
+        <p>
+          <strong>Si hay que escoger UN evento puntual</strong>: la
+          combinación <em>Primavera Pro 2025 + beca Ibermúsicas 2024</em>
+          es lo que la sacó del circuito puramente argentino-latinoamericano
+          hacia tracción europea.
+        </p>
+      </div>
+
+      <h3>Ecosistema económico actual</h3>
+      <ul>
+        <li><strong>Sigue trabajando como diseñadora gráfica.</strong> Declarado en <a href="https://www.indierocks.mx/musica/entrevistas/entrevista-con-juana-aguirre/" target="_blank">Indie Rocks México</a> y <a href="https://www.zibilia.com/revista/juana-aguirre-en-mi-musica-hay-decisiones-que-son-mas-emocionales-que-correctas" target="_blank">Zibilia</a>.</li>
+        <li><strong>No firmó con sello.</strong> Ambos discos son lanzamientos independientes en <a href="https://juanaaguirre.bandcamp.com/" target="_blank">Bandcamp + DSPs</a>. Retiene 100% del master.</li>
+        <li><strong>Composición de ingresos inferible</strong> (no hay entrevista pública con porcentajes):
+          <ul>
+            <li><strong>Diseño gráfico</strong>: ingreso paralelo todavía activo</li>
+            <li><strong>Shows en vivo</strong>: principal driver musical — festivales grandes (Lollapalooza AR, Primavera Sound, Quilmes Rock, Buena Vibra) + gira europea de 9 fechas</li>
+            <li><strong>Bandcamp</strong>: tienda activa con vinilos de Anónimo</li>
+            <li><strong>Financiamiento público / becas</strong>: Ibermúsicas 2024 financió circulación a México. Ingreso "indirecto" pero crítico</li>
+            <li><strong>Streaming</strong>: presente en DSPs pero NO es el driver principal — los discos no fueron diseñados para playlisteo algorítmico</li>
+            <li><strong>Sync / comisiones</strong>: no hay evidencia pública</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Estructura de equipo — chico y articulado</h3>
+      <ul>
+        <li><strong>Manager + productora ejecutiva</strong>: Macs Abente Gaydou (confirmado en créditos de Anónimo en Bandcamp)</li>
+        <li><strong>Sello</strong>: ninguno — autoeditada</li>
+        <li><strong>Booking</strong>: no identificado públicamente — probablemente gestionado por Macs + promotores locales (en España, Café Berlín opera como sala+promoción)</li>
+        <li><strong>Productores asociados</strong>: Ignacio Cruz, Juan Stewart, Dylan Lerner, Ezequiel Kronenberg</li>
+        <li><strong>Dirección visual</strong>: Fede Maks en todo el proyecto. <a href="https://www.zibilia.com/revista/juana-aguirre-en-mi-musica-hay-decisiones-que-son-mas-emocionales-que-correctas" target="_blank">Zibilia</a></li>
+      </ul>
+      <p><strong>Modelo "diseñadora-productora + manager + colaborador visual estable".</strong> El match más cercano al perfil de Helen.</p>
+
+      <h3>Lessons aplicables</h3>
+      <ol>
+        <li><strong>No esperés a "firmar con un sello" para crecer.</strong> Juana tiene 0 sellos y está en los 50 mejores discos latinos de Rolling Stone. La autoedición + buen rollout + un sí estratégico (colab con Santiago Motorizado) puede tener más palanca que una firma indie regular.</li>
+        <li><strong>Las becas estatales son infraestructura, no caridad.</strong> Ibermúsicas pagó la circulación a México que pagó la prensa que pagó la validación internacional. Helen, como uruguaya, puede aplicar a <strong>Ibermúsicas, FONAM (que ya conoce), FEFCA</strong> — esa es la palanca antes que un manager europeo.</li>
+        <li><strong>El equipo chico funciona si los roles están definidos.</strong> Macs Abente (manager + productora ejecutiva) + Fede Maks (dirección visual): 3 personas pueden mover un proyecto a Primavera Pro si el rollout está bien armado.</li>
+        <li><strong>Tener trabajo paralelo es ventaja, no debilidad.</strong> El diseño gráfico le da a Juana independencia para decir que no a giras malas, control sobre el branding, y un colchón en pandemias.</li>
+      </ol>
+    </section>
+
+    <!-- ====== ELA MINUS ====== -->
+    <section id="ela">
+      <div class="artist-header">
+        <h2>2 · Ela Minus</h2>
+        <span class="country">Colombia / Brooklyn</span>
+      </div>
+      <p class="artist-subtitle">
+        Pivot clásico de "firma con sello internacional". Primera latina
+        en Domino. Modelo grande, menos reproducible directamente.
+      </p>
+
+      <h3>Trayectoria</h3>
+      <ul>
+        <li><strong>11 feb 1990</strong>: nace en Bogotá como Gabriela Jimeno Caldas. <a href="https://en.wikipedia.org/wiki/Ela_Minus" target="_blank">Wikipedia</a>.</li>
+        <li><strong>2001-2008 (11-18 años)</strong>: baterista de <strong>Ratón Pérez</strong>, banda hardcore-rock colombiana.</li>
+        <li><strong>2009</strong>: emigra a EE.UU. a estudiar en <strong>Berklee College of Music</strong> (Boston), doble major en jazz drumming y music synthesis.</li>
+        <li><strong>Post-Berklee</strong>: escribe a <strong>Critter & Guitari</strong> (Brooklyn) agradeciendo por un sinte, le ofrecen trabajo. ~2 años: año 1 ensamblando Pocket Pianos, año 2 co-diseñando el <strong>Organelle</strong>. <a href="https://sonicstate.com/news/2025/10/23/synth-history-ela-minus/" target="_blank">Sonic State</a>.</li>
+        <li><strong>2015</strong>: lanza primeros EPs como Ela Minus.</li>
+        <li><strong>2019</strong>: firma con <strong>Domino Recording Company</strong> — <strong>primera artista latinoamericana firmada al sello</strong>. <a href="https://www.sopitas.com/musica/ela-minus-productora-colombiana-techno-pop-disco-acts-of-rebellion-domino-records/" target="_blank">Sopitas</a>.</li>
+        <li><strong>23 oct 2020</strong>: lanza <strong>"Acts of Rebellion"</strong>. Metacritic 86/100 ("universal acclaim").</li>
+        <li><strong>17 ene 2025</strong>: lanza <strong>"DÍA"</strong>, segundo álbum en Domino. <a href="https://www.npr.org/2025/01/30/nx-s1-5213901/ela-minus-dia-album-colombia" target="_blank">NPR</a>.</li>
+        <li><strong>2025</strong>: nominada a <strong>Latin Grammy 2025</strong>. Gira con Caribou en UK. <a href="https://northerntransmissions.com/ela-mius-gets-2025-latin-grammy-nomination/" target="_blank">Northern Transmissions</a>.</li>
+      </ul>
+
+      <div class="pivot-box">
+        <h4>El pivot — firma con Domino (2019)</h4>
+        <p>
+          <strong>Pivot clarísimo y unitario: la firma con Domino en
+          2019</strong>, gestionada vía el track "Jamaica" que subió a
+          internet sin expectativas y la llevó a tocar un festival en
+          Colombia, generando viralidad que llegó a A&Rs
+          (<a href="https://www.nme.com/blogs/nme-radar/ela-minus-interview-acts-of-rebellion-2650078" target="_blank">NME</a>).
+          Ser la <strong>primera artista latinoamericana en Domino</strong>
+          le dio una narrativa de prensa irrepetible en 2019-2020.
+        </p>
+        <p>
+          <strong>Sub-pivot filosófico</strong>: Ela explícitamente dijo
+          en MusicTech que <em>"I never wanted to be signed to a label;
+          I never wanted to play big festivals"</em>
+          (<a href="https://musictech.com/features/interviews/ela-minus-interview-dia/" target="_blank">MusicTech</a>).
+          Su pivot fue resistirse al modelo industrial estándar y
+          aun así ser invitada por Domino bajo sus términos.
+        </p>
+      </div>
+
+      <h3>Ecosistema económico actual</h3>
+      <ul>
+        <li><strong>Vive 100% de la música desde ~2020</strong> (dejó Critter & Guitari).</li>
+        <li><strong>Streams en Domino</strong>: el sello retiene parte significativa, pero le da distribución global, sync y PR.</li>
+        <li><strong>Touring intensivo</strong>: Coachella, Primavera Sound, Caribou tour UK.</li>
+        <li><strong>Brand work declarado</strong>: colaboraciones con <strong>Chanel y Prada</strong>. <a href="https://en.wikipedia.org/wiki/Ela_Minus" target="_blank">Wikipedia</a>.</li>
+        <li><strong>Vinilo en Domino Mart</strong>: limited editions, exclusive LPs, CDs, downloads.</li>
+        <li><strong>Sobre la economía del touring</strong>, declaró que las ofertas de festivales suelen ser <em>"literally impossible to make it work financially without losing a lot of money"</em>. Su política es <strong>decir no más seguido</strong>. <a href="https://musictech.com/features/interviews/ela-minus-interview-dia/" target="_blank">MusicTech</a>.</li>
+      </ul>
+
+      <h3>Estructura de equipo</h3>
+      <ul>
+        <li><strong>Manager</strong>: Ben Turner. <a href="https://bookingagentinfo.com/celebrity/ela-minus/" target="_blank">Booking Agent Info</a></li>
+        <li><strong>Sello</strong>: Domino Recording Company (global)</li>
+        <li><strong>Booking</strong>: Primary Talent International (Europa/UK); Avery M. para Norteamérica/Sudamérica</li>
+        <li><strong>PR</strong>: Pitch Perfect PR (USA). <a href="https://www.pitchperfectpr.com/ela-minus/" target="_blank">Pitch Perfect</a></li>
+      </ul>
+      <p><strong>Equipo grande, modelo agencia-sello clásico de indie internacional.</strong></p>
+
+      <h3>Lessons aplicables</h3>
+      <ol>
+        <li><strong>Tu lado técnico no es opuesto al arte, es palanca.</strong> Trabajar en Critter & Guitari le dio a Ela credibilidad técnica que la prensa amplificó (la "synth builder" narrative). Helen, con su pivot a síntesis, tiene ese capital narrativo disponible si lo trabaja.</li>
+        <li><strong>Una canción subida sin expectativa puede ser el sí inesperado.</strong> "Jamaica" subida a internet → festival en Colombia → A&Rs. No hay que sobre-curar el primer release.</li>
+        <li><strong>Decir que no preserva el ecosistema.</strong> Aceptar ofertas malas de festival quema runway. Ela hace explícito que su filtro económico es no perder dinero.</li>
+      </ol>
+    </section>
+
+    <!-- ====== MARIE DAVIDSON ====== -->
+    <section id="marie">
+      <div class="artist-header">
+        <h2>3 · Marie Davidson</h2>
+        <span class="country">Québec, Canadá</span>
+      </div>
+      <p class="artist-subtitle">
+        El pivot acá NO fue el álbum — fue el remix correcto al momento
+        correcto. Insight contraintuitivo.
+      </p>
+
+      <h3>Trayectoria</h3>
+      <ul>
+        <li><strong>Nacida 1987</strong> en Quebec. <a href="https://en.wikipedia.org/wiki/Marie_Davidson" target="_blank">Wikipedia</a>.</li>
+        <li><strong>2010</strong>: dúo <strong>Les Momies de Palerme</strong> con Xarah Dion; <em>Brûlez ce coeur</em> en Constellation Records.</li>
+        <li><strong>2011-presente</strong>: dúo <strong>Essaie Pas</strong> con pareja Pierre Guerineau (DFA Records). Long-listed Polaris 2016 por <em>Demain est une autre nuit</em>.</li>
+        <li><strong>2014</strong>: <em>Perte d'identité</em> (Weyrd Son) — debut solista.</li>
+        <li><strong>2016</strong>: <em>Adieux Au Dancefloor</em> (Cititrax) — incluido en "20 Best Electronic Albums of 2016" de Pitchfork.</li>
+        <li><strong>5 oct 2018</strong>: <strong>"Working Class Woman"</strong> (Ninja Tune) — Metacritic 85, AllMusic 4/5, top-listas año Now Magazine #3, Bleep #8, Mixmag #10. <a href="https://en.wikipedia.org/wiki/Working_Class_Woman" target="_blank">Wikipedia</a>.</li>
+        <li><strong>3 abr 2019</strong>: lanza <strong>"Work It (Soulwax Remix)"</strong>. <a href="https://www.decodedmagazine.com/marie-davidson-announces-work-it-soulwax-remix-ninja-tune/" target="_blank">Decoded Magazine</a>. New York Times lo llama <em>"a minor anthem [from] one of the best dance records of the year"</em>.</li>
+        <li><strong>25 sep 2020</strong>: <em>Renegade Breakdown</em> (con L'Œil Nu, Ninja Tune).</li>
+        <li><strong>28 feb 2025</strong>: <strong>"City of Clowns"</strong> producido con Soulwax + Pierre Guerineau. Pitchfork 81, RA review positivo, <strong>shortlisted Polaris Music Prize 2025</strong>. <a href="https://en.wikipedia.org/wiki/City_of_Clowns" target="_blank">Wikipedia City of Clowns</a>.</li>
+      </ul>
+
+      <div class="pivot-box">
+        <h4>El pivot — remix de Soulwax (abril 2019)</h4>
+        <p>
+          <strong>Pivot identificable: el remix de "Work It" por Soulwax,
+          lanzado 3 abril 2019.</strong> Lo que el álbum Working Class
+          Woman (2018) sembró como crítica de prensa, el remix de Soulwax
+          lo convirtió en éxito de pista. Anuncio en NYT, "Hottest Record
+          in the World" de Annie Mac en BBC, Mixmag's 38 Best Tracks of
+          2019. <strong>Dominó la temporada de festivales del verano
+          2019</strong>
+          (<a href="https://www.nme.com/features/marie-davidson-loeil-nu-interview-2760574" target="_blank">NME</a>).
+        </p>
+        <p>
+          <strong>Sub-pivot anterior</strong>: <strong>firmar con Ninja
+          Tune en 2018</strong>
+          (<a href="https://www.tinymixtapes.com/news/marie-davidson-joins-ninja-tune-announces-new-album-working-class-woman" target="_blank">Tiny Mix Tapes</a>)
+          — pasar de Cititrax/Holodeck (sellos especializados) a un sello
+          con infraestructura global de PR y booking.
+        </p>
+      </div>
+
+      <h3>Ecosistema económico</h3>
+      <ul>
+        <li><strong>Vive de la música.</strong> No hay trabajo paralelo conocido públicamente.</li>
+        <li><strong>Sello mayor (Ninja Tune)</strong>: streaming + vinilo + sync. Working Class Woman tiene gran longevidad en playlists electrónicas.</li>
+        <li><strong>Touring premium</strong> (clubes y festivales como Sónar, Dekmantel, Primavera, MUTEK).</li>
+        <li><strong>DJ sets</strong>: ingreso paralelo significativo para artistas de electrónica.</li>
+        <li><strong>Comisiones / colaboraciones</strong>: producción con Soulwax en City of Clowns sugiere relaciones de coproducción que generan splits.</li>
+        <li><strong>Polaris shortlist 2025</strong> trae prestigio + canadian CanCon funding tangencial.</li>
+      </ul>
+
+      <h3>Estructura de equipo</h3>
+      <ul>
+        <li><strong>Sello</strong>: Ninja Tune (label, distribución global, PR principal).</li>
+        <li><strong>Booking</strong>: no confirmado específicamente. Bonsound (Montreal) la manejó históricamente — no hay confirmación pública 2025 actual.</li>
+        <li><strong>Producción</strong>: Pierre Guerineau (pareja, productor recurrente), Soulwax (City of Clowns).</li>
+      </ul>
+
+      <h3>Lessons aplicables</h3>
+      <ol>
+        <li><strong>El remix correcto puede valer más que el álbum.</strong> "Work It" como track existió en 2018 sin gran impacto. El remix de Soulwax en 2019 lo convirtió en himno. Encontrar el productor remixer con conexiones de DJ-circuit puede ser más eficiente que sacar otro álbum.</li>
+        <li><strong>Tener una banda paralela mantiene la pulsión creativa.</strong> Essaie Pas (con Guerineau) coexiste con la carrera solista. Es ingreso, validación y laboratorio.</li>
+        <li><strong>Premios shortlist (Polaris) son moneda de prensa.</strong> No hace falta ganar — el shortlist por sí solo da rondas de press.</li>
+      </ol>
+    </section>
+
+    <!-- ====== LILA TIRANDO A VIOLETA ====== -->
+    <section id="lila">
+      <div class="artist-header">
+        <h2>4 · Lila Tirando a Violeta</h2>
+        <span class="country">Uruguay / Waterford</span>
+      </div>
+      <p class="artist-subtitle">
+        Referente local más directo. Modelo "free agent" rotativo entre
+        sellos curados. Salto en escalera, no firma única.
+      </p>
+
+      <h3>Trayectoria</h3>
+      <p>
+        Camila Domínguez. Nacida en <strong>Montevideo</strong>,
+        actualmente vive en <strong>Waterford, Irlanda</strong>.
+        <a href="https://daily.bandcamp.com/album-of-the-day/lila-tirando-a-violeta-dream-of-snakes-review" target="_blank">Bandcamp Daily</a>.
+      </p>
+      <ul>
+        <li><strong>Pre-2018</strong>: lanza música vaporwave en sellos como <strong>Illuminated Paths, Dream Catalogue, Aescape Sounds</strong>. Más de 20 EPs/álbumes. <a href="https://yeoja-mag.com/lila-tirando-a-violeta/" target="_blank">YEOJA Mag</a>.</li>
+        <li><strong>21 ago 2020</strong>: debut álbum <strong>"Limerencia"</strong> en <strong>N.A.A.F.I</strong> (Ciudad de México). <a href="https://mixmag.net/read/lila-tirando-a-violeta-album-limerencia-naafi-news" target="_blank">Mixmag</a>.</li>
+        <li><strong>8 abr 2022</strong>: <strong>"Desire Path"</strong> (N.A.A.F.I). Cobertura en Pitchfork, NYT, DJ Mag, Bandcamp. <a href="https://crackmagazine.net/article/album-reviews/lila-tirando-a-violeta-desire-path-review/" target="_blank">Crack Magazine</a>.</li>
+        <li><strong>13 oct 2023</strong>: <strong>"Accela"</strong> colaboración con Sin Maldita en <strong>Hyperdub</strong>. <a href="https://djmag.com/news/lila-tirando-violeta-sin-maldita-announce-hyperdub-album-accela-share-single-listen" target="_blank">DJ Mag</a>.</li>
+        <li><strong>25 abr 2025</strong>: <strong>"Dream of Snakes"</strong> en <strong>Unguarded</strong> (sello berlinés). <a href="https://lilatirandoavioleta.bandcamp.com/album/dream-of-snakes" target="_blank">Bandcamp</a>.</li>
+        <li><strong>30 abr 2025</strong>: <strong>Bandcamp Daily Album of the Day</strong>. Joe Muggs llama el disco <em>"masterpiece"</em>. <a href="https://daily.bandcamp.com/album-of-the-day/lila-tirando-a-violeta-dream-of-snakes-review" target="_blank">Bandcamp Daily</a>.</li>
+        <li><strong>2025</strong>: gira con MUTEK Montreal, MUTEK México, MUTEK Argentina, MUTEK Tokyo, LEV Festival Gijón. <a href="https://levfestival.com/25-gijon/en/lev-gijon/lila-tirando-a-violeta-_uy/" target="_blank">LEV Festival</a>.</li>
+      </ul>
+
+      <div class="pivot-box">
+        <h4>El pivot — escalera doble (N.A.A.F.I → Hyperdub)</h4>
+        <ol>
+          <li><strong>Firma con N.A.A.F.I (Limerencia, 2020)</strong> — la sacó del nicho vaporwave para entrar en el circuito de club music latinoamericano "deconstruido". N.A.A.F.I es el sello más influyente de la región para esa estética.</li>
+          <li><strong>Firma con Hyperdub (Accela, 2023)</strong> — la promovió globalmente al canon de electrónica seria (Burial, Kode9, Laurel Halo). Es el pivot crítico que la pone en la conversación europea.</li>
+        </ol>
+        <p>
+          El <strong>Bandcamp Daily AotD de Dream of Snakes (30 abril
+          2025)</strong> funciona como pivot de <strong>consagración
+          mediática post-Hyperdub</strong>.
+        </p>
+      </div>
+
+      <h3>Ecosistema económico</h3>
+      <ul>
+        <li><strong>Vive de la música</strong> pero a través de un modelo distinto al pop.</li>
+        <li><strong>Royalties de Hyperdub / N.A.A.F.I / Unguarded</strong> (vinilo + digital, vinilos en Boomkat y Bandcamp).</li>
+        <li><strong>DJ sets / live AV sets</strong>: MUTEK, Boiler Room, Unsound, Primavera, Rewire, She Makes Noise.</li>
+        <li><strong>Comisiones de instalaciones</strong>: "Pulsar Etéreo" con Manuela Vilanova (AV installation).</li>
+        <li><strong>NTS / FACT mixes</strong> — exposure amplificador de bookings.</li>
+      </ul>
+
+      <h3>Estructura de equipo</h3>
+      <ul>
+        <li><strong>Sellos rotativos</strong>: N.A.A.F.I (México), Hyperdub (Londres), Unguarded (Berlín). <strong>No firma exclusiva, opera como artista "free agent" entre sellos curados.</strong></li>
+        <li><strong>Manager / booking público</strong>: no identificado en búsquedas. Probablemente gestionado por los sellos + agencia electrónica europea (no confirmado).</li>
+        <li><strong>Colaboradoras</strong>: Sin Maldita (frecuente), Lighght, Manuela Vilanova (AV).</li>
+      </ul>
+      <p><strong>Equipo distribuido por sello, no centralizado.</strong> Modelo "artista internacional de club".</p>
+
+      <h3>Lessons aplicables</h3>
+      <ol>
+        <li><strong>Saltos de sello escalonados.</strong> Vaporwave → N.A.A.F.I → Hyperdub → Unguarded. Cada sello la valida hacia una audiencia más ancha. <strong>No firmes con tu mejor sello aspiracional en el primer movimiento.</strong> Construí escalera.</li>
+        <li><strong>Vivir en periferia europea es estrategia, no pérdida.</strong> Waterford no es Berlín pero permite tour barato a Europa.</li>
+        <li><strong>El AV live set es el SKU premium.</strong> Lila se diferencia con instalaciones audiovisuales. Para Helen, integrar visual + voz + síntesis es no solo arte, es producto vendible a festivales y museos a precio distinto.</li>
+      </ol>
+    </section>
+
+    <!-- ====== LUCRECIA DALT ====== -->
+    <section id="lucrecia">
+      <div class="artist-header">
+        <h2>5 · Lucrecia Dalt</h2>
+        <span class="country">Colombia / Berlín</span>
+      </div>
+      <p class="artist-subtitle">
+        El caso más sofisticado. Pivot múltiple en cascada. El insight
+        más útil: el scoring de cine/TV cambió su economía.
+      </p>
+
+      <h3>Trayectoria</h3>
+      <ul>
+        <li><strong>20 dic 1980</strong>: nace en Pereira, Colombia. <a href="https://en.wikipedia.org/wiki/Lucrecia_Dalt" target="_blank">Wikipedia</a>.</li>
+        <li><strong>Pre-música</strong>: civil/ingeniería geotécnica, 2 años en empresa de Medellín. Descubre producción digital ahí mismo.</li>
+        <li><strong>2005</strong>: debut <strong>"Acerca"</strong> en Series Media Collective (Medellín).</li>
+        <li><strong>2012</strong>: <strong>"Commotus"</strong> en <strong>Human Ear Music (Berlín)</strong> — primer release internacional.</li>
+        <li><strong>2014</strong>: mudanza a <strong>Berlín</strong>.</li>
+        <li><strong>4 may 2018</strong>: <strong>"Anticlines"</strong> — primer álbum en <strong>RVNG Intl.</strong> Sexto álbum global, primer pivot crítico de gran escala. <a href="https://lucreciadalt.bandcamp.com/album/anticlines" target="_blank">Bandcamp Anticlines</a>.</li>
+        <li><strong>2020</strong>: <em>No era sólida</em> (RVNG Intl.).</li>
+        <li><strong>11 mar 2022</strong>: <strong>"The Seed" Original Score</strong> (Invada Records / RVNG) — primer score de cine, sci-fi horror.</li>
+        <li><strong>9 may 2022</strong>: <strong>"The Baby" Original Score</strong> (HBO series) — segundo score de TV. <a href="https://composer.spitfireaudio.com/en/articles/lucrecia-dalt-talks-loud-scores-sound-installations-and-hbos-the-baby" target="_blank">Spitfire Audio</a>.</li>
+        <li><strong>14 oct 2022</strong>: <strong>"¡Ay!"</strong> (RVNG Intl.). <strong>The Wire álbum del año</strong>, top 10 en Pitchfork, NYT, NPR. <a href="https://www.treblezine.com/lucrecia-dalt-ay-review/" target="_blank">Treble</a>.</li>
+        <li><strong>2025</strong>: <strong>Sundance ASCAP Composer Spotlight</strong>. <a href="https://www.ascap.com/news-events/Events/2025/Sundance/composer-spotlight-bios/Dalt_Lucrecia" target="_blank">ASCAP</a>.</li>
+        <li><strong>5 sep 2025</strong>: <strong>"A Danger to Ourselves"</strong> (RVNG Intl.), co-producido con <strong>David Sylvian</strong>. <a href="https://www.davidsylvian.com/news/2509_adangertoourselves.html" target="_blank">davidsylvian.com</a>.</li>
+        <li><strong>Sep 2025</strong>: <strong>Pitchfork Best New Music</strong>.</li>
+        <li><strong>2026</strong>: ensemble show en <strong>Barbican (Londres)</strong>. <a href="https://www.barbican.org.uk/whats-on/2026/event/lucrecia-dalt-with-her-ensemble" target="_blank">Barbican</a>.</li>
+      </ul>
+
+      <div class="pivot-box">
+        <h4>El pivot — cascada de 5 momentos</h4>
+        <ol>
+          <li><strong>2014: mudarse a Berlín.</strong> Acceso a Human Ear Music, Sónar, CTM, el ecosistema experimental europeo.</li>
+          <li><strong>2018: firmar con RVNG Intl.</strong> RVNG es el sello experimental USA con la mayor curación crítica (Holly Herndon, Visible Cloaks). Anticlines reposicionó toda su discografía previa.</li>
+          <li><strong>2021-2022: pivot a film/TV scoring</strong> con The Seed (2021) y The Baby (HBO, 2022). <strong>Esto le abrió la fuente de ingreso más rentable: comisiones audiovisuales pagadas en flat fees + royalties trasera de la serie.</strong></li>
+          <li><strong>2022: "¡Ay!" como reposicionamiento conceptual.</strong> Pasa de electrónica abstracta a "bolero sci-fi" — un nicho propio. The Wire álbum del año + top-10 Pitchfork.</li>
+          <li><strong>2025: colaboración con David Sylvian + Pitchfork Best New Music.</strong> Sylvian la valida hacia la audiencia post-rock/art-pop más allá del nicho experimental.</li>
+        </ol>
+        <p>
+          <strong>El pivot más reproducible para Helen es #3: entrar al
+          mundo de scoring de cine/TV/series</strong>, porque es el que
+          más cambió la sostenibilidad económica de Dalt.
+        </p>
+      </div>
+
+      <h3>Ecosistema económico</h3>
+      <p><strong>Vive de la música y de comisiones audiovisuales.</strong></p>
+      <ul>
+        <li><strong>Scoring de cine/TV/series</strong>: probablemente >40% del ingreso. The Seed, The Baby, Catábasis, trabajo Sundance. Series HBO pagan fees + royalties.</li>
+        <li><strong>Discos en RVNG</strong>: vinilo + digital, pero RVNG es boutique — no es ingreso masivo.</li>
+        <li><strong>Touring de ensemble</strong>: nivel sala mediana (Barbican, Kings Place, Volksbühne).</li>
+        <li><strong>Comisiones de arte / instalaciones</strong>: Sónar (Pavilion Mies van der Rohe), CTM, Berlin Botanical Garden.</li>
+        <li><strong>Residencias</strong>: Pioneer Works NY, Musicboard Berlin — financiación creativa.</li>
+      </ul>
+
+      <h3>Estructura de equipo</h3>
+      <ul>
+        <li><strong>Manager</strong>: Matt Werth — fundador de RVNG Intl. <strong>Su manager es su sello</strong> — modelo integrado.</li>
+        <li><strong>Booking worldwide</strong>: Meri Bonastre, <strong>Futura Artists</strong> (Barcelona). <a href="https://futura-artists.com/lucrecia-dalt/" target="_blank">Futura Artists</a>.</li>
+        <li><strong>Score / sync</strong>: Pete Saville, Carbon Logic.</li>
+        <li><strong>Sello</strong>: RVNG Intl. (USA), Invada Records (UK, soundtracks).</li>
+      </ul>
+      <p><strong>Equipo mediano, especializado por vertical (música vs. score).</strong></p>
+
+      <h3>Lessons aplicables</h3>
+      <ol>
+        <li><strong>El film/TV scoring es la pista oculta.</strong> Es donde Dalt monetiza más estable. Para una artista de voz + síntesis como Helen, los scores de cine indie latinoamericano, documentales, museos y series son match perfecto. <strong>Apply a programas como Sundance, Berlinale Talents, Cinéfondation.</strong></li>
+        <li><strong>El sello como manager elimina fricción.</strong> RVNG + Matt Werth = un solo punto de decisión estratégica. Para artistas de catálogo lento (1 disco cada 3-4 años), este modelo integrado funciona mejor que sello + manager separados.</li>
+        <li><strong>La colaboración con figura validadora es atajo de mercado.</strong> Sylvian en A Danger to Ourselves le abrió audiencia art-rock que 7 discos previos no habían tocado.</li>
+        <li><strong>Reposicionar conceptualmente cada álbum.</strong> ¡Ay! (bolero sci-fi) no fue continuación de Anticlines — fue ruptura curatorial. Cada álbum como evento de prensa propio.</li>
+      </ol>
+    </section>
+
+    <!-- ====== PATRONES ====== -->
+    <section id="patrones">
+      <h2>6 · Patrones transversales — lo que se repite</h2>
+
+      <p>
+        Cruzando los 5 casos, aparecen <strong>5 patrones transversales</strong>
+        con evidencia suficientemente fuerte como para considerarlos
+        recurrentes. Cuatro están documentados en 4-5 de los 5 casos;
+        el quinto (trabajo paralelo) está documentado en 3 de 5 pero se
+        incluye porque <strong>es realidad estructural para artistas
+        latinoamericanos</strong> y aparece como decisión consciente, no
+        como fracaso transicional.
+      </p>
+
+      <div class="card">
+        <h4 style="margin-top:0">1 — Múltiples fuentes de ingreso en paralelo (5/5)</h4>
+        <p>
+          Ninguna de las 5 depende de una sola fuente. Las combinaciones
+          típicas: shows + sello + Bandcamp + brand work (Ela); sellos
+          rotativos + AV sets + festivales (Lila); shows + Bandcamp +
+          diseño gráfico + becas + colabs (Juana); sello + DJ sets +
+          tour + producción (Marie); scoring + sello + ensemble + comisiones
+          (Lucrecia). <strong>El ecosistema sostenible es plural por
+          definición.</strong>
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">2 — Showcase / circuito internacional (5/5)</h4>
+        <p>
+          Primavera Pro (Juana), MUTEK ×3 (Lila), Berlín como base
+          (Lucrecia, Marie en circuito), Domino-Brooklyn (Ela). El
+          contacto físico con esa infraestructura aparece en los 5
+          casos. <strong>Showcase europeo no es lujo — es input
+          recurrente.</strong>
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">3 — Sello (algún modelo) como infraestructura (4/5)</h4>
+        <p>
+          <strong>Sello único</strong>: Ela (Domino), Marie (Ninja Tune),
+          Lucrecia (RVNG). <strong>Sello rotativo</strong>: Lila (N.A.A.F.I →
+          Hyperdub → Unguarded). <strong>Sin sello</strong>: Juana
+          (autoeditada). 4 de 5 usan algún sello como capa de
+          infraestructura. La decisión sobre qué modelo es estructural y
+          conviene tomarla consciente antes de pitchear.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">4 — La validación crítica top como palanca de prensa (4/5)</h4>
+        <p>
+          Pitchfork Best New Music (Lucrecia 2022 ¡Ay! + 2025 A Danger to
+          Ourselves), Bandcamp Daily AotD (Lila 2025), Rolling Stone En
+          Español Top 10 latinos (Juana 2025), Polaris shortlist + Pitchfork 81
+          (Marie 2025), Pitchfork "Best Electronic 2016" (Marie Adieux). No es
+          controlable directamente pero se gestiona con: rollout 6 meses
+          antes, PR especializada (Pitch Perfect, Force Field),
+          pre-releases curados y al menos una colab que dispare interés.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">5 — Trabajo paralelo estratégico (3/5 documentado · relevante en contexto latam)</h4>
+        <p>
+          <strong>No es transversal a los 5 casos</strong> — solo está
+          documentado en Juana (sigue como diseñadora gráfica), Ela
+          (construyó sintes en Critter & Guitari ~2 años) y Lucrecia
+          (ingeniera ~10 años antes de Berlín). Marie y Lila no tienen
+          trabajo paralelo no-musical documentado.
+        </p>
+        <p>
+          Pero <strong>tiene relevancia particular en contexto
+          latinoamericano</strong>, donde la infraestructura para vivir
+          100% de la música indie es más escasa que en EU/UK/US y el
+          trabajo paralelo es realidad estructural, no transición. La
+          autonomía financiera que aporta permite decir que no a giras
+          deficitarias, mantener control sobre branding, y sostener
+          ciclos vacíos sin presión.
+        </p>
+      </div>
+
+      <h3>Observaciones para Helen</h3>
+      <p>
+        No son pasos prescriptos — son observaciones que se desprenden
+        de cruzar los 5 casos con el perfil de Helen. La secuencia y la
+        intensidad de cada una son decisión propia.
+      </p>
+      <ul>
+        <li>Los 5 casos combinan <strong>4-8 fuentes de ingreso</strong> en paralelo. Ninguna depende de una sola.</li>
+        <li>El <strong>showcase europeo</strong> aparece en los 5 — Primavera Pro, MUTEK, Berlín, Brooklyn. Tocar suelo europeo es input recurrente.</li>
+        <li>La <strong>decisión sobre sello</strong> (firmar exclusivo, rotar entre varios, autoeditar) es estructural y conviene tomarla consciente antes de pitchear.</li>
+        <li>La <strong>validación crítica top</strong> (Pitchfork, Bandcamp Daily, The Wire, Rolling Stone) aparece en 4 de los 5 como palanca de prensa fuerte. Se gestiona con rollout, PR especializada y colabs estratégicas.</li>
+        <li>El <strong>perfil voz + síntesis en castellano</strong> tiene match con varios streams del mapa de fuentes (ver doc 03 para profundizar).</li>
+      </ul>
+    </section>
+
+    <!-- ====== BIBLIOGRAFÍA ====== -->
+    <section id="bibliografia">
+      <h2>7 · Bibliografía completa</h2>
+
+      <div class="sources">
+        <h4>JUANA AGUIRRE</h4>
+        <ul>
+          <li><a href="https://www.ibermusicas.org/index.php/la-cantante-y-compositora-argentina-juana-aguirre-sera-parte-del-foro-indie-rocks-de-mexico/" target="_blank">Ibermúsicas — beca 2024</a></li>
+          <li><a href="https://www.zibilia.com/revista/juana-aguirre-en-mi-musica-hay-decisiones-que-son-mas-emocionales-que-correctas" target="_blank">Zibilia Revista — entrevista</a></li>
+          <li><a href="https://www.filo.news/musica/Juana-Aguirre-de-Churupaca-Siento-que-murio-un-poco-la-cancion-20190509-0067.html" target="_blank">Filo News — Churupaca</a></li>
+          <li><a href="https://sunderbeats.com/juana-aguirre-estrena-su-disco-debut-claroscuro" target="_blank">Sunderbeats — Claroscuro debut</a></li>
+          <li><a href="https://indiehoy.com/descubrir/juana-aguirre-fusiona-folk-acustico-y-texturas-electronicas-en-su-disco-debut-claroscuro/" target="_blank">Indie Hoy — Claroscuro</a></li>
+          <li><a href="https://juanaaguirre.bandcamp.com/album/an-nimo" target="_blank">Bandcamp — Anónimo (créditos)</a></li>
+          <li><a href="https://jenesaispop.com/2025/06/09/500924/primavera-pro-cronica/" target="_blank">JeNeSaisPop — Primavera Pro 2025</a></li>
+          <li><a href="https://digger.mx/2025/juana-aguirre-anonimo-foro-indie-rocks/" target="_blank">Digger.mx — Foro Indie Rocks México 2025</a></li>
+          <li><a href="https://berlincafe.es/programa/juana-aguirre-europa-tour/" target="_blank">Café Berlín — Los Pilares Tour 2026</a></li>
+          <li><a href="https://indiehoy.com/noticias/8-argentinos-entre-los-50-mejores-discos-latinos-del-2025-segun-rolling-stone/" target="_blank">Indie Hoy — Rolling Stone Top 50</a></li>
+          <li><a href="https://indiehoy.com/discos/critica-de-anonimo-juana-aguirre-compone-un-mapa-emocional-con-herramientas-del-futuro/" target="_blank">Indie Hoy — crítica Anónimo</a></li>
+          <li><a href="https://www.eluniversal.com.mx/cultura/confabulario/hacer-canciones-es-un-misterioentrevista-a-juana-aguirre/" target="_blank">El Universal México — entrevista</a></li>
+          <li><a href="https://www.eldiario.es/canariasahora/cultura/juana-aguirre-trae-sonido-cambiante-experimental-canarias-pilares-tour_1_13224006.html" target="_blank">eldiario.es Canarias — Pilares Tour</a></li>
+        </ul>
+
+        <h4>ELA MINUS</h4>
+        <ul>
+          <li><a href="https://en.wikipedia.org/wiki/Ela_Minus" target="_blank">Wikipedia — Ela Minus</a></li>
+          <li><a href="https://www.sopitas.com/musica/ela-minus-productora-colombiana-techno-pop-disco-acts-of-rebellion-domino-records/" target="_blank">Sopitas — firma con Domino</a></li>
+          <li><a href="https://sonicstate.com/news/2025/10/23/synth-history-ela-minus/" target="_blank">Sonic State — synth history</a></li>
+          <li><a href="https://www.nme.com/blogs/nme-radar/ela-minus-interview-acts-of-rebellion-2650078" target="_blank">NME — Acts of Rebellion</a></li>
+          <li><a href="https://www.npr.org/2025/01/30/nx-s1-5213901/ela-minus-dia-album-colombia" target="_blank">NPR — DÍA 2025</a></li>
+          <li><a href="https://musictech.com/features/interviews/ela-minus-interview-dia/" target="_blank">MusicTech — DÍA interview</a></li>
+          <li><a href="https://northerntransmissions.com/ela-mius-gets-2025-latin-grammy-nomination/" target="_blank">Northern Transmissions — Latin Grammy</a></li>
+          <li><a href="https://bookingagentinfo.com/celebrity/ela-minus/" target="_blank">Booking Agent Info</a></li>
+          <li><a href="https://www.pitchperfectpr.com/ela-minus/" target="_blank">Pitch Perfect PR</a></li>
+        </ul>
+
+        <h4>MARIE DAVIDSON</h4>
+        <ul>
+          <li><a href="https://en.wikipedia.org/wiki/Marie_Davidson" target="_blank">Wikipedia — Marie Davidson</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Working_Class_Woman" target="_blank">Wikipedia — Working Class Woman</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/City_of_Clowns" target="_blank">Wikipedia — City of Clowns</a></li>
+          <li><a href="https://www.decodedmagazine.com/marie-davidson-announces-work-it-soulwax-remix-ninja-tune/" target="_blank">Decoded Magazine — Soulwax remix</a></li>
+          <li><a href="https://www.tinymixtapes.com/news/marie-davidson-joins-ninja-tune-announces-new-album-working-class-woman" target="_blank">Tiny Mix Tapes — firma Ninja Tune</a></li>
+          <li><a href="https://www.nme.com/features/marie-davidson-loeil-nu-interview-2760574" target="_blank">NME — Renegade Breakdown</a></li>
+          <li><a href="https://www.vice.com/en/article/marie-davidson-working-class-woman-interview-ninja-tune-2018/" target="_blank">Vice — Working Class Woman 2018</a></li>
+          <li><a href="https://ra.co/reviews/36245" target="_blank">Resident Advisor — City of Clowns review</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Pelada" target="_blank">Wikipedia — Pelada (corrección)</a></li>
+        </ul>
+
+        <h4>LILA TIRANDO A VIOLETA</h4>
+        <ul>
+          <li><a href="https://daily.bandcamp.com/album-of-the-day/lila-tirando-a-violeta-dream-of-snakes-review" target="_blank">Bandcamp Daily — AotD abril 2025</a></li>
+          <li><a href="https://yeoja-mag.com/lila-tirando-a-violeta/" target="_blank">YEOJA Mag — perfil</a></li>
+          <li><a href="https://mixmag.net/read/lila-tirando-a-violeta-album-limerencia-naafi-news" target="_blank">Mixmag — Limerencia en N.A.A.F.I</a></li>
+          <li><a href="https://crackmagazine.net/article/album-reviews/lila-tirando-a-violeta-desire-path-review/" target="_blank">Crack Magazine — Desire Path</a></li>
+          <li><a href="https://djmag.com/news/lila-tirando-violeta-sin-maldita-announce-hyperdub-album-accela-share-single-listen" target="_blank">DJ Mag — Accela Hyperdub</a></li>
+          <li><a href="https://lilatirandoavioleta.bandcamp.com/album/dream-of-snakes" target="_blank">Bandcamp — Dream of Snakes</a></li>
+          <li><a href="https://levfestival.com/25-gijon/en/lev-gijon/lila-tirando-a-violeta-_uy/" target="_blank">LEV Festival Gijón 2025</a></li>
+          <li><a href="https://acloserlisten.com/2025/04/22/lila-tirando-a-violeta-dream-of-snakes/" target="_blank">A Closer Listen — Dream of Snakes</a></li>
+        </ul>
+
+        <h4>LUCRECIA DALT</h4>
+        <ul>
+          <li><a href="https://en.wikipedia.org/wiki/Lucrecia_Dalt" target="_blank">Wikipedia — Lucrecia Dalt</a></li>
+          <li><a href="https://lucreciadalt.bandcamp.com/album/anticlines" target="_blank">Bandcamp — Anticlines (RVNG release)</a></li>
+          <li><a href="https://www.treblezine.com/lucrecia-dalt-ay-review/" target="_blank">Treble — ¡Ay! review</a></li>
+          <li><a href="https://www.npr.org/2022/10/10/1124985529/lucrecia-dalt-ay-album-profile" target="_blank">NPR — ¡Ay! 2022</a></li>
+          <li><a href="https://composer.spitfireaudio.com/en/articles/lucrecia-dalt-talks-loud-scores-sound-installations-and-hbos-the-baby" target="_blank">Spitfire Audio — HBO The Baby</a></li>
+          <li><a href="https://www.thevinylfactory.com/news/lucrecia-dalt-new-film-score-the-baby-vinyl/" target="_blank">Vinyl Factory — The Baby</a></li>
+          <li><a href="https://www.ascap.com/news-events/Events/2025/Sundance/composer-spotlight-bios/Dalt_Lucrecia" target="_blank">ASCAP — Sundance 2025</a></li>
+          <li><a href="https://www.davidsylvian.com/news/2509_adangertoourselves.html" target="_blank">davidsylvian.com — A Danger to Ourselves</a></li>
+          <li><a href="https://www.stereogum.com/2309644/lucrecia-dalt-announces-new-album-a-danger-to-ourselves-co-produced-by-david-sylvain-hear-divina/music/" target="_blank">Stereogum — anuncio A Danger</a></li>
+          <li><a href="https://thequietus.com/quietus-reviews/lucrecia-dalt-a-danger-to-ourselves-review/" target="_blank">The Quietus — A Danger review</a></li>
+          <li><a href="https://ra.co/features/3261" target="_blank">RA — feature 2018</a></li>
+          <li><a href="https://futura-artists.com/lucrecia-dalt/" target="_blank">Futura Artists — booking</a></li>
+          <li><a href="https://www.barbican.org.uk/whats-on/2026/event/lucrecia-dalt-with-her-ensemble" target="_blank">Barbican 2026 — ensemble show</a></li>
+        </ul>
+
+        <h4>OTRAS</h4>
+        <ul>
+          <li><a href="https://salazitarrosa.montevideo.gub.uy/espectaculo/capsulas-electronicas-helen-olhausen/" target="_blank">Sala Zitarrosa — Helen Olhausen (calibración del caso receptor)</a></li>
+          <li><a href="https://helenolhausen.bandcamp.com/" target="_blank">Bandcamp — Helen Olhausen</a></li>
+        </ul>
+      </div>
+
+      <div class="callout note" style="margin-top: 2rem">
+        <strong>Caveats explícitos:</strong> No se encontró entrevista
+        pública donde alguna de las 5 artistas declare porcentajes
+        exactos de composición de ingresos. Las composiciones por fuente
+        son <em>inferencias razonadas</em> sobre catálogo público, no
+        datos verificados. Para Juana Aguirre y Lila Tirando a Violeta
+        tampoco se identificó booking agent específico actual con
+        certeza — son piezas que podrían cerrarse con un email directo
+        a sus equipos.
+      </div>
+    </section>
+
+    <footer>
+      paquete helen · doc 02 · casos de estudio
+      <br>
+      preparado por emiliano mettini / spiral out · 18 de mayo 2026
+      <br>
+      research base: deep research consolidada del 18 de mayo 2026
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>

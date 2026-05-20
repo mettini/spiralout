@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Directoras creativas · método y 7 patrones · Helen Olhausen</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #0a0a0c; --bg-2: #14141a; --bg-3: #1c1c24;
+      --fg: #e8e8ec; --fg-2: #a0a0a8; --muted: #6a6a74; --line: #2a2a32;
+      --accent: #a68bc3;        /* mauve / morado creativo */
+      --accent-bg: rgba(166,139,195,0.08);
+      --accent-border: rgba(166,139,195,0.35);
+      --pre: #d4a84a;
+      --warn: #c66060;
+      --warn-bg: rgba(198,96,96,0.08);
+      --pattern: #7a9078;
+      --pattern-bg: rgba(122,144,120,0.10);
+      --pattern-border: rgba(122,144,120,0.4);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    @media (max-width: 700px) { html { font-size: 16px; } }
+    html, body {
+      background: var(--bg); color: var(--fg);
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bg {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,90,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,50,80,0.10) 0%, transparent 55%),
+        var(--bg);
+    }
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+      width: 44px; height: 44px;
+      background: rgba(20,20,26,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line); border-radius: 50%;
+      color: var(--fg-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none; font-size: 1.1rem; line-height: 1;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s, color 0.2s, border-color 0.2s;
+    }
+    .back-to-top.visible { opacity: 0.85; visibility: visible; }
+    .back-to-top:hover { color: var(--fg); border-color: var(--fg-2); opacity: 1; }
+    @media print { .back-to-top { display: none; } }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem 6rem; }
+    @media (max-width: 700px) { .container { padding: 0 1rem 4rem; } }
+
+    .cover {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4rem;
+    }
+    .cover .pretitle {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.2rem;
+    }
+    .cover h1 {
+      font-size: 2.2rem; font-weight: 300; letter-spacing: 0.03em;
+      line-height: 1.25; margin-bottom: 1rem; color: var(--fg);
+    }
+    @media (max-width: 600px) { .cover h1 { font-size: 1.6rem; line-height: 1.3; } .cover { padding: 2.5rem 0 2rem; } }
+    .cover .subtitle {
+      font-size: 1rem; color: var(--fg-2); font-style: italic;
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .cover .meta {
+      font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+    }
+    .index {
+      margin-top: 2.5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .index h3 {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem; margin-top: 0;
+    }
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.4rem 1.5rem;
+    }
+    .index-grid a {
+      display: flex; align-items: baseline; gap: 0.7rem;
+      font-size: 0.85rem; color: var(--fg-2); text-decoration: none;
+      padding: 0.3rem 0; border-bottom: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .index-grid a:hover { color: var(--fg); border-bottom-color: var(--line); }
+    .index-grid a .num {
+      font-size: 0.72rem; color: var(--accent); font-variant-numeric: tabular-nums;
+      min-width: 1.4em; letter-spacing: 0.05em;
+    }
+    .index-grid a.highlight .num { color: var(--pattern); }
+
+    section { margin-bottom: 4rem; scroll-margin-top: 5rem; }
+    h2 {
+      font-size: 1.5rem; font-weight: 300; letter-spacing: 0.05em;
+      margin-bottom: 1.3rem; padding-bottom: 0.7rem;
+      border-bottom: 2px solid var(--accent-border);
+      color: var(--accent);
+    }
+    h3 {
+      font-size: 1.15rem; font-weight: 600; letter-spacing: 0.02em;
+      margin-top: 2.2rem; margin-bottom: 1rem; color: var(--fg);
+    }
+    h4 {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--fg-2);
+      margin-top: 1.5rem; margin-bottom: 0.7rem;
+    }
+    p { margin-bottom: 1rem; font-size: 1rem; }
+    a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 3px; }
+    a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    strong { color: var(--fg); font-weight: 500; }
+    em { color: var(--fg); font-style: italic; }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.5rem; }
+    code {
+      font-family: 'Courier New', monospace; font-size: 0.85em;
+      background: var(--bg-3); padding: 0.1em 0.4em; border-radius: 2px;
+      color: var(--fg-2);
+    }
+    blockquote {
+      margin: 1rem 0 1.5rem;
+      padding: 0.7rem 1.2rem;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-bg);
+      font-style: italic; color: var(--fg-2);
+      font-size: 0.92rem;
+    }
+    blockquote .author {
+      display: block;
+      font-style: normal; color: var(--muted);
+      font-size: 0.78rem; letter-spacing: 0.1em;
+      margin-top: 0.5rem; text-transform: uppercase;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      background: var(--accent-bg);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card.intro { background: var(--bg-3); border-left-color: var(--fg-2); }
+
+    .director-header {
+      display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 0.4rem;
+    }
+    .director-header h2 {
+      border: 0; padding: 0; margin: 0; color: var(--fg); font-size: 1.6rem;
+    }
+    .director-header .indie {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+    .indie.si      { color: var(--pattern);  background: var(--pattern-bg);  border: 1px solid var(--pattern-border); }
+    .indie.hibrido { color: var(--pre);  background: rgba(212,168,74,0.08);  border: 1px solid rgba(212,168,74,0.35); }
+    .indie.no      { color: var(--warn); background: var(--warn-bg);         border: 1px solid var(--warn); }
+    .director-subtitle {
+      font-size: 0.95rem; color: var(--fg-2); font-style: italic;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem; border-bottom: 1px solid var(--line);
+    }
+
+    /* The 7 patterns are central — give them their own visual */
+    .pattern-box {
+      background: var(--pattern-bg);
+      border: 1px solid var(--pattern-border);
+      border-left: 4px solid var(--pattern);
+      border-radius: 4px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1.2rem;
+    }
+    .pattern-box .pattern-num {
+      display: inline-block;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--pattern); font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--pattern-border);
+      border-radius: 2px;
+      margin-bottom: 0.6rem;
+    }
+    .pattern-box h3 {
+      color: var(--pattern); margin-top: 0; margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+    }
+    .pattern-box p:last-child { margin-bottom: 0; }
+    .pattern-box .implication {
+      margin-top: 0.8rem; padding-top: 0.8rem;
+      border-top: 1px dashed var(--pattern-border);
+      font-size: 0.92rem; color: var(--fg-2);
+    }
+    .pattern-box .implication strong { color: var(--fg); }
+
+    .callout {
+      margin: 1.3rem 0; padding: 1rem 1.2rem;
+      border-radius: 3px; font-size: 0.9rem;
+    }
+    .callout.warn { background: var(--warn-bg); border-left: 3px solid var(--warn); color: var(--fg); }
+    .callout.note { background: var(--bg-2); border-left: 3px solid var(--fg-2); color: var(--fg-2); }
+    .callout.info { background: var(--accent-bg); border-left: 3px solid var(--accent); color: var(--fg); }
+    .callout strong { color: var(--fg); }
+
+    .sources {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 2rem; font-size: 0.85rem;
+    }
+    .sources h4 {
+      color: var(--accent); margin-top: 0;
+      letter-spacing: 0.18em; font-size: 0.75rem;
+    }
+    .sources ul {
+      padding-left: 1.2rem; margin-bottom: 0;
+    }
+    .sources li {
+      margin-bottom: 0.35rem; color: var(--fg-2);
+    }
+    .sources li a { color: var(--fg-2); }
+    .sources li a:hover { color: var(--accent); }
+
+    .skill-box {
+      background: linear-gradient(135deg, rgba(166,139,195,0.10), rgba(122,144,120,0.08));
+      border: 1px solid var(--accent-border);
+      border-radius: 6px;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+    }
+    .skill-box h3 { margin-top: 0; color: var(--accent); }
+    .skill-box code {
+      background: var(--bg); color: var(--accent);
+      padding: 0.2em 0.5em; border-radius: 3px;
+    }
+
+    footer {
+      margin-top: 5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.08em; text-align: center; line-height: 2;
+    }
+    @media print {
+      body { background: white; color: black; }
+      .bg, .back-to-top { display: none; }
+      .container { max-width: 100%; padding: 1rem; }
+      .card, .pattern-box, .callout, .sources, .skill-box, blockquote {
+        background: white !important; color: black !important; border-color: #999 !important;
+      }
+      a { color: black; text-decoration-color: #666; }
+      h2, h3, h4, strong { color: black !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <a href="#cover" class="back-to-top" id="backToTop" aria-label="volver al inicio">↑</a>
+
+  <div class="container">
+    <section class="cover" id="cover">
+      <div class="pretitle">paquete helen · doc 04 · v0.1 · 18 may 2026</div>
+      <h1>Directoras creativas · método y 7 patrones</h1>
+      <p class="subtitle">
+        Análisis del método de cinco referentes que dirigieron la
+        identidad visual de proyectos musicales con autoría visible.
+        Para cada una: background, criterio indie aplicado, método de
+        conexión visual ↔ sonoro, caso puntual del trabajo clave, y
+        material accesible. Al final, los <strong>7 patrones que se
+        repiten entre todas</strong> — la base sobre la que se construyó
+        la skill <code>creative-direction</code>.
+      </p>
+      <div class="meta">5 referentes · 7 patrones · skill source · bibliografía completa</div>
+
+      <div class="index">
+        <h3>Índice</h3>
+        <div class="index-grid">
+          <a href="#calibracion"><span class="num">0</span>Calibración inicial</a>
+          <a href="#vieira"><span class="num">1</span>Rui Vieira · PT</a>
+          <a href="#dominguez"><span class="num">2</span>Ana Domínguez · ES</a>
+          <a href="#querida"><span class="num">3</span>Querida · ES</a>
+          <a href="#hanneke"><span class="num">4</span>Elsa Hanneke · US/global</a>
+          <a href="#romagosa"><span class="num">5</span>Studio Albert Romagosa · ES</a>
+          <a href="#lemonade"><span class="num">6</span>Lemonade — modelo</a>
+          <a href="#patrones" class="highlight"><span class="num">7</span>7 patrones cruzados</a>
+          <a href="#skill"><span class="num">8</span>Cómo se construyó la skill</a>
+          <a href="#bibliografia"><span class="num">9</span>Bibliografía completa</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CALIBRACIÓN ====== -->
+    <section id="calibracion">
+      <h2>0 · Calibración inicial</h2>
+
+      <div class="card intro">
+        <p>
+          Antes de entrar en los referentes, tres aclaraciones que
+          surgieron de la investigación y conviene tener presentes:
+        </p>
+        <ul>
+          <li><strong>Elsa Hanneke no trabajó en el proyecto <em>DIA</em> de Ela Minus.</strong> Querida diseñó el <em>sitio portafolio</em> de Hanneke (elsa.works), pero Hanneke es directora creativa independiente trabajando para producciones en vivo de gran escala (Travis Scott, Rosalía Motomami World Tour, Missy Elliott, Eminem). El cruce entre ambas es el sitio web, no el álbum. Fuentes: <a href="https://querida.si/elsa-hanneke/" target="_blank">Querida</a>, <a href="https://elsa.works/" target="_blank">elsa.works</a>, <a href="https://www.commarts.com/webpicks/elsa-hanneke" target="_blank">Communication Arts</a>.</li>
+          <li><strong>El álbum <em>DÍA</em> de Ela Minus es de enero 2025</strong>, no 2020. El de 2020 fue <em>Acts of Rebellion</em> (diseño de Dr. Me, no Querida). La identidad visual de <em>DÍA</em> sí es de Querida + creative direction de <strong>Mañana</strong> + fotografía de Álvaro Arisó. Fuente: <a href="https://elaminus.bandcamp.com/album/d-a" target="_blank">Bandcamp DÍA</a>.</li>
+          <li><strong>Querida es un estudio de Barcelona</strong>, no esloveno. El dominio <code>.si</code> engaña. Fundadores: <strong>Marc Sancho y Albert Estruch</strong> (2014). En 2020 los mismos fundadores se asociaron con Martí Torrebadella y Tania Gárriz para fundar <strong>Mañana</strong> (productora) y existe <strong>13 1 13 4</strong> como casa de producción. Fuentes: <a href="https://www.itsnicethat.com/articles/querida" target="_blank">It's Nice That</a>, <a href="https://www.behance.net/querida" target="_blank">Behance</a>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Criterio "indie" aplicado</h4>
+        <p>
+          Para evaluar a cada referente uso una <strong>definición amplia
+          validada por la comunidad de industria creativa</strong>:
+        </p>
+        <blockquote>
+          <strong>Directora creativa indie</strong> = freelance, estudio
+          chico (&lt;15 personas), o agencia boutique. Trabaja proyecto
+          por proyecto, mantiene autoría visible, no es parte de holding
+          publicitario grande (WPP, Omnicom, Publicis, IPG).
+        </blockquote>
+        <p>
+          Para cada referente marco <strong>SÍ / HÍBRIDO / NO</strong>
+          con una oración de justificación. Mantengo en el análisis a
+          quienes no encajan estrictamente, con disclaimer — su método
+          puede ser igual de útil para Helen.
+        </p>
+      </div>
+    </section>
+
+    <!-- ====== RUI VIEIRA ====== -->
+    <section id="vieira">
+      <div class="director-header">
+        <h2>1 · Rui Vieira</h2>
+        <span class="indie hibrido">indie híbrido</span>
+      </div>
+      <p class="director-subtitle">Portugal · creative director devenido director de cine y fotografía. Trabajo clave: <em>Canção à Ausente</em> de Carminho (2025).</p>
+
+      <h3>Background</h3>
+      <ul>
+        <li>Nacido en la isla de Faial, Azores. Estudió <strong>Design de Comunicação en Belas-Artes</strong>, Universidade de Lisboa. <a href="https://www.ruivieira.net/pages/bio" target="_blank">Bio oficial</a>.</li>
+        <li>Trayectoria como creative director en agencias: <strong>Fullsix</strong> (Lisboa y NY), <strong>AKQA</strong> (Amsterdam), <strong>O Escritório</strong> (Lisboa).</li>
+        <li>Co-produjo el <strong>festival OFFF Portugal en 2008–2009</strong>.</li>
+        <li>En <strong>2014 hace el switch a dirección de cine y fotografía full-time</strong>. Actualmente es socio y director creativo en <strong>Playground</strong>, productora de Lisboa. <a href="https://theplayground.pt/rui-vieira" target="_blank">Playground</a>.</li>
+        <li>Reconocimientos: Director del Año 2018 + Fotógrafo del Año 2020 del Clube da Criatividade de Portugal; jurado del Méliès d'Argent 2024; Film Craft Jury en Eurobest 2025.</li>
+        <li>Desarrollando su primer largometraje, <em>No Sangue</em>. Base entre Amsterdam y Lisboa.</li>
+      </ul>
+
+      <h3>Criterio indie</h3>
+      <p>
+        <strong>SÍ (HÍBRIDO en pasado).</strong> Hoy es director en
+        Playground, productora boutique portuguesa, y firma con autoría
+        visible bajo su propio nombre. Hizo carrera previa en agencias
+        grandes (AKQA es parte de WPP), pero su práctica actual como
+        director es freelance/asociada a estudio chico con identidad
+        propia.
+      </p>
+
+      <h3>Método — cómo piensa el cruce visual/sonoro</h3>
+      <p>
+        Información profunda en entrevistas es <strong>limitada en lo
+        público</strong> (trabaja en commercials y fado, dos zonas con
+        poca cobertura crítica internacional). Lo que sí se documenta:
+      </p>
+      <ul>
+        <li><strong>Privilegia atmósfera emocional sobre narrativa lineal.</strong> En la cobertura de <em>Canção à Ausente</em> la palabra repetida es <em>"atmosfera que reforça a profundidade emocional da canção"</em>. Fuentes: <a href="https://fluxmedia.pt/carminho-lanca-hoje-o-novo-single-cancao-a-ausente/" target="_blank">fluxmedia.pt</a>, <a href="https://glam-magazine.pt/carminho-lanca-novo-single-cancao-a-ausente/" target="_blank">glam-magazine</a>.</li>
+        <li><strong>Viene del diseño, no del cine puro</strong> — trae la grilla y el system thinking a la imagen-movimiento.</li>
+        <li><strong>Cinematógrafo de confianza</strong>: Leandro Ferrão. Pareja director ↔ DP estable. El "look" se construye en complicidad sostenida, no casteo proyecto a proyecto.</li>
+        <li><strong>Influencias declaradas</strong>: no hay entrevistas largas donde Vieira las exponga directamente. Sí aparecen rastros: dirige los carteles/films de <strong>MOTELX</strong> (Festival Internacional de Cinema de Terror de Lisboa) 2020 y 2024 — afinidad con la imaginería del cine de género/horror y el grain analógico.</li>
+      </ul>
+
+      <h3>Caso puntual: Carminho — <em>Canção à Ausente</em> (octubre 2025)</h3>
+      <ul>
+        <li>Single lanzado una semana antes del álbum <em>Eu Vou Morrer de Amor ou Resistir</em>.</li>
+        <li>La canción se basa en un poema homónimo de <strong>Pedro Homem de Mello (1939)</strong>: tensión entre esperanza amorosa y frustración de la ausencia.</li>
+        <li><strong>Instrumentación heterodoxa para fado</strong>: además de guitarra portuguesa, viola de fado y contrabajo, incorpora <strong>crystal baschet, ondas martenot y vocoder</strong>.</li>
+        <li>Decisiones visuales del videoclip dirigido por Vieira con DP Leandro Ferrão: privilegio del registro emocional íntimo. La prensa coincide en describir la dirección como "intensa dimensão visual" que sostiene el peso del poema. <a href="https://infocul.pt/carminho-lanca-novo-single-cancao-a-ausente/" target="_blank">infocul.pt</a>.</li>
+      </ul>
+
+      <blockquote>
+        "Vejo o fado como instrumento na busca de respostas às minhas
+        próprias inquietações e aos enigmas que me propõe. Este álbum é
+        uma continuação desse caminho, onde passado e presente dialogam
+        constantemente na perseguição da emoção."
+        <span class="author">Carminho · sobre el álbum</span>
+      </blockquote>
+
+      <p>
+        <strong>Lectura metodológica</strong>: Vieira está sirviendo una
+        visión ya articulada por la artista. No la inventa. Esta es una
+        decisión metodológica explícita — el director creativo es
+        traductor, no autor.
+      </p>
+
+      <div class="sources">
+        <h4>Material accesible</h4>
+        <ul>
+          <li><a href="https://www.ruivieira.net" target="_blank">ruivieira.net</a> / <a href="https://www.ruivieira.net/film" target="_blank">/film</a> / <a href="https://www.ruivieira.net/pages/bio" target="_blank">/bio</a></li>
+          <li><a href="https://theplayground.pt/rui-vieira" target="_blank">Playground productora</a></li>
+          <li><a href="https://www.linkedin.com/in/ruifvieira/" target="_blank">LinkedIn</a> / <a href="https://www.imdb.com/name/nm4268363/" target="_blank">IMDb</a></li>
+          <li>Videoclip Canção à Ausente: <a href="https://www.youtube.com/watch?v=CEcXvJh3ChY" target="_blank">YouTube</a> · in-studio: <a href="https://www.youtube.com/watch?v=AetaIwnUMyI" target="_blank">YouTube</a></li>
+          <li><strong>Limitación:</strong> no se encontraron entrevistas largas en texto ni podcast appearances con suficiente profundidad metodológica. Su método tiene que inferirse de obra + bio + declaraciones de Carminho.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== ANA DOMÍNGUEZ ====== -->
+    <section id="dominguez">
+      <div class="director-header">
+        <h2>2 · Ana Domínguez</h2>
+        <span class="indie si">indie sí</span>
+      </div>
+      <p class="director-subtitle">Barcelona · estudio propio desde 2011. Trabajo clave: Amanda Mur — <em>Neu Om</em> (La Castanya, 2025).</p>
+
+      <h3>Background</h3>
+      <ul>
+        <li>Barcelona. Graduada de <strong>EINA en 2005</strong>.</li>
+        <li>Antes de su estudio propio trabajó en los estudios <strong>Astrid Stavro</strong> y <strong>Bisdixit</strong>. <a href="https://www.macba.cat/en/ana-dominguez-2/" target="_blank">MACBA</a>.</li>
+        <li>Funda <strong>Ana Domínguez Studio en 2011</strong>. Bruc 49, Ático, 08009 Barcelona. <a href="https://anadominguez.es/about/" target="_blank">about</a>.</li>
+        <li><strong>Colaboración formativa estable con Apartamento Magazine desde 2008</strong> (junto a Omar Sosa y Nacho Alegre): es ahí donde calibra su lenguaje de still life conceptual. <a href="https://www.ignant.com/2018/11/01/the-art-of-balance-a-conversation-with-ana-dominguez-on-graphic-design-and-absurdity/" target="_blank">Ignant</a>.</li>
+      </ul>
+
+      <h3>Criterio indie</h3>
+      <p>
+        <strong>SÍ.</strong> Estudio propio bajo su nombre, equipo pequeño,
+        freelance/boutique, sin afiliación a holding publicitario. Trabajo
+        proyecto a proyecto con autoría visible y co-firmada.
+      </p>
+
+      <h3>Método</h3>
+      <ul>
+        <li><strong>Definición propia del proceso</strong> (de su own site): <em>"Funciona un poco como una cocina"</em> — un sistema de pensamiento visual donde códigos, imágenes y elementos combinados o superpuestos "resultan, casi espontáneamente, en una idea-en-imagen".</li>
+      </ul>
+
+      <blockquote>
+        "I feel comfortable in the absurd by making foolish
+        interpretations out of something regarded as solemn."
+        <span class="author">Ana Domínguez · Ignant 2018</span>
+      </blockquote>
+
+      <h4>Decisiones recurrentes</h4>
+      <ul>
+        <li><strong>Empieza desde perspectiva gráfica primero, no fotográfica</strong> — incluso cuando el output final es fotográfico.</li>
+        <li><strong>Trabaja por layering</strong>: objetos, color, composición se apilan hasta encontrar equilibrio.</li>
+        <li><strong>Busca "harmony and imbalance"</strong>: balance que no es estable, está al borde.</li>
+        <li><em>"Anything can be a graphic element or a still life depending on the point of view."</em> Decisión metodológica: cualquier cosa del cotidiano puede ser elevada a elemento compositivo.</li>
+        <li><strong>Patrón emergente</strong>: still lifes con humanos vivos. Trata personas como objetos compositivos sin despersonalizarlas.</li>
+      </ul>
+
+      <h4>Influencias declaradas</h4>
+      <p>
+        <strong>Picasso, Dalí, Fischli & Weiss</strong> (la serie
+        <em>Equilibres / Quiet Afternoon</em> de 1984), <strong>Irving
+        Penn</strong> (sobre todo su food photography). <a href="https://www.ignant.com/2018/11/01/the-art-of-balance-a-conversation-with-ana-dominguez-on-graphic-design-and-absurdity/" target="_blank">Ignant</a>, <a href="https://www.macba.cat/en/ana-dominguez-2/" target="_blank">MACBA</a>.
+      </p>
+
+      <h4>Modus operandi</h4>
+      <p>
+        El origen del estudio fue un "juego" con Sosa y Alegre:
+        <em>"mezclamos una idea con un material y encontrábamos formas
+        de jugar con eso"</em>. <strong>El juego como protocolo de
+        exploración no es retórica: es el método declarado.</strong>
+      </p>
+
+      <h3>Caso puntual: Amanda Mur — <em>Neu Om</em> (La Castanya, 2025)</h3>
+      <ul>
+        <li>Amanda Mur es cantante cántabra, formada en composición y canto lírico. Su disco debut cruza música contemporánea clásica, sacra, folklore y pop experimental. <a href="https://www.rockdelux.com/en/discos/amanda-mur-neu-om" target="_blank">Rockdelux</a>, <a href="https://metalmagazine.eu/en/post/amanda-mur" target="_blank">Metal Magazine</a>.</li>
+        <li>El proyecto figura confirmado en el portafolio de Ana Domínguez Studio (7 imágenes en su sección Works). <a href="https://anadominguez.es/works/" target="_blank">anadominguez.es/works</a>.</li>
+        <li>La crítica describe la portada del álbum como de <strong>calidad arácnida</strong> que refuerza la atmósfera gótica y austera; evoca <em>Dragnet</em> (1979) de The Fall y se conecta con la idea del álbum como <em>"codex creado entre lo sagrado y profano, antiguo y moderno, rural y urbano, imaginario y real"</em>. <a href="https://www.rockdelux.com/en/discos/amanda-mur-neu-om" target="_blank">Rockdelux</a>.</li>
+      </ul>
+
+      <div class="callout warn">
+        <strong>Caveat de fuente:</strong> NO se encontró una nota /
+        entrevista pública donde Ana Domínguez verbalice las decisiones
+        específicas del proyecto Amanda Mur. La conexión visual-sonora
+        hay que leerla cruzando la lógica habitual del estudio (still
+        life conceptual, codificación gráfica como sistema) con la
+        lectura crítica del disco. Recomendación: pedir el case study
+        directo al estudio o consultar <a href="https://www.instagram.com/anadominguezstudio/" target="_blank">@anadominguezstudio</a> para imágenes del proceso.
+      </div>
+
+      <p>
+        <strong>Importante para el modelo "creative direction
+        distribuida"</strong>: el videoclip <em>"Mutante"</em> de Amanda
+        Mur fue dirigido por Lucía Toral y G. Hernandez (no por Ana
+        Domínguez). Estética blanco y negro, 4:3, ARRI, vintage lenses,
+        doble exposición. En el universo Amanda Mur conviven
+        <strong>identidad gráfica de Ana Domínguez + dirección
+        audiovisual de Toral/Hernandez</strong>, divididas claramente.
+      </p>
+
+      <div class="sources">
+        <h4>Material accesible</h4>
+        <ul>
+          <li><a href="https://anadominguez.es" target="_blank">anadominguez.es</a> / <a href="https://anadominguez.es/works/" target="_blank">/works</a> / <a href="https://anadominguez.es/about/" target="_blank">/about</a></li>
+          <li><strong>Entrevista profunda Ignant 2018</strong> (principal fuente metodológica): <a href="https://www.ignant.com/2018/11/01/the-art-of-balance-a-conversation-with-ana-dominguez-on-graphic-design-and-absurdity/" target="_blank">ignant.com</a></li>
+          <li><a href="https://www.macba.cat/en/ana-dominguez-2/" target="_blank">Perfil MACBA</a></li>
+          <li><a href="https://peopleofprint.com/photography/ana-dominguez/" target="_blank">People of Print</a></li>
+          <li><a href="https://www.instagram.com/anadominguezstudio/" target="_blank">Instagram @anadominguezstudio</a></li>
+          <li><strong>Limitación:</strong> no se encontraron charlas en YouTube ni podcast appearances en su nombre. Cruzar con material de Apartamento (Sosa, Alegre) — el lenguaje del estudio se entiende mejor desde el ecosistema de la revista.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== QUERIDA ====== -->
+    <section id="querida">
+      <div class="director-header">
+        <h2>3 · Querida</h2>
+        <span class="indie hibrido">indie híbrido en escala</span>
+      </div>
+      <p class="director-subtitle">Barcelona · Marc Sancho + Albert Estruch (2014). Trabajo clave: Ela Minus — <em>DÍA</em> (Domino, enero 2025).</p>
+
+      <h3>Background</h3>
+      <ul>
+        <li><strong>Aclaración importante</strong>: el dominio <code>querida.si</code> es engañoso. <strong>Querida es un estudio de Barcelona</strong>, no esloveno. El .si fue una opción de dominio. <a href="https://www.itsnicethat.com/articles/querida" target="_blank">It's Nice That</a>, <a href="https://www.behance.net/querida" target="_blank">Behance</a>.</li>
+        <li><strong>Fundadores</strong>: Marc Sancho y Albert Estruch. <strong>Fundado en 2014</strong>. Sede: Eixample, Barcelona.</li>
+        <li><strong>Estructura híbrida</strong>: Querida es la consultoría creativa y estratégica. En 2020 los mismos fundadores se asociaron con Martí Torrebadella y Tania Gárriz para fundar <strong>Mañana</strong> (productora dedicada al trabajo motion y still), y existe <strong>13 1 13 4</strong> como casa de producción / art buying. Esa arquitectura — consultoría + productora propia — explica por qué pueden controlar visual-de-marca y ejecución audiovisual sin tercerizar.</li>
+      </ul>
+
+      <h3>Criterio indie</h3>
+      <p>
+        <strong>SÍ (HÍBRIDO en escala).</strong> Estudio boutique en
+        propiedad de sus fundadores, autoría visible en cada proyecto,
+        sin parte de holding publicitario. Pero opera con clientes
+        globales muy grandes (Capitol Records, Bad Bunny, Rosalía, Nike,
+        Zara) y tiene productora propia. Es el modelo más "escalado" de
+        los referentes indie: <strong>indie en estructura, mainstream en
+        clientes</strong>.
+      </p>
+
+      <h3>Método</h3>
+
+      <blockquote>
+        "We are working on the kind of projects that we always wanted
+        to, and most importantly, the way we always wanted to."
+        <span class="author">Albert Estruch · It's Nice That 2020</span>
+      </blockquote>
+
+      <p>
+        Sobre estilo: el lenguaje se construyó <em>"in a very unconscious
+        way, as a group of people who share the same sensibility and
+        aesthetic taste"</em> — Estruch y Sancho en <a href="https://www.theartl-ne.com/interview-albert-estruch-marc-sancho-of-querida/" target="_blank">The Artline</a>.
+      </p>
+
+      <h4>Decisiones recurrentes</h4>
+      <ul>
+        <li><strong>No tienen miedo del error</strong>. Cita textual:
+          <em>"We're not afraid of making mistakes, and we're aware of
+          the importance of the errors that could finally lead you to
+          the right answer."</em>
+          <a href="https://www.itsnicethat.com/articles/querida" target="_blank">It's Nice That</a>.</li>
+        <li><strong>Trabajan 2–3 conceptos antes de refinar</strong>.</li>
+        <li>Preferencia por <strong>papel y lápiz antes que digital</strong>.</li>
+        <li><strong>Empatía con cliente como pre-requisito</strong>.</li>
+        <li><strong>Descostrucción de tropos</strong>: en el proyecto María José Llergo, Querida tomó la iconografía de la estatua ecuestre clásica (hombre poderoso a caballo) y la invirtió para poner a la flamenca contemporánea frente a un meteorito junto a un caballo blanco. <a href="https://www.itsnicethat.com/articles/querida-bound-mj-llergo-graphic-design-270320" target="_blank">It's Nice That 2020</a>.</li>
+      </ul>
+
+      <blockquote>
+        "When you are presented with great content, you don't have to
+        do much."
+        <span class="author">Albert Estruch · rediseño Bound (declaración anti-decorativa)</span>
+      </blockquote>
+
+      <h4>Patrón</h4>
+      <p>
+        Cruzan <strong>referencias del universo / iconografía planetaria /
+        oro / meteoritos</strong> en proyectos musicales. Aparece en María
+        José Llergo (meteorito), en Ela Minus DÍA (tiempo como dimensión,
+        sol/luz). Hay un imaginario cósmico recurrente.
+      </p>
+
+      <h3>Caso puntual: Ela Minus — <em>DÍA</em> (Domino, enero 2025)</h3>
+      <ul>
+        <li>Créditos confirmados: <strong>Graphic design: Querida. Creative direction: Mañana. Photography: Álvaro Arisó.</strong> <a href="https://elaminus.bandcamp.com/album/d-a" target="_blank">Bandcamp</a>.</li>
+      </ul>
+
+      <blockquote>
+        "DÍA is a period of time defined by the presence of light – that
+        is what DÍA is to me. The entire visual concept of the record is
+        'time'. It's very subtle, but the video for the first single
+        COMBAT also starts with a timer that goes by."
+        <span class="author">Ela Minus · The Blank Mag</span>
+      </blockquote>
+
+      <h4>Materializaciones del concepto "tiempo"</h4>
+      <ul>
+        <li>El <strong>reloj en el video de "BROKEN"</strong> marca <strong>el tiempo real de la canción dentro del álbum</strong> (es decir, el minutaje en el LP).</li>
+        <li>La <strong>portada del álbum lleva la tracklist con el timing exacto de inicio de cada tema</strong>. El soporte visual es funcionalmente el playback del disco.</li>
+        <li>Las visuals de vivo (también desarrolladas por Querida) traducen "tiempo pasando" al cuerpo del show. <a href="https://querida.si/ela-minus-visuals/" target="_blank">querida.si/ela-minus-visuals</a>.</li>
+      </ul>
+
+      <p>
+        <strong>Lectura metodológica</strong>: se elige <strong>un
+        concepto conceptual abstracto que funciona como constraint
+        absoluto</strong> y atraviesa cover, videos, vivo, identidad.
+        Una sola variable (el tiempo), aplicada en cada superficie con
+        consistencia. Es exactamente el modelo "concepto único multiplicado".
+      </p>
+
+      <p>
+        <strong>Conexión visual ↔ sonoro</strong>: el sonido es electrónico
+        hardware (Ela Minus es synth purist); el tiempo es la materia
+        prima del audio (BPM, duración, secuencia). La identidad visual
+        NO ilustra al sonido — <em>comparte su misma materia prima</em>.
+        Eso es el cruce.
+      </p>
+
+      <div class="sources">
+        <h4>Material accesible</h4>
+        <ul>
+          <li>Sitio: <a href="https://querida.si" target="_blank">querida.si</a> / <a href="https://querida.si/home/" target="_blank">/home</a></li>
+          <li>Proyecto Ela Minus DÍA: <a href="https://querida.si/ela-minus-dia/" target="_blank">querida.si/ela-minus-dia</a> · live visuals: <a href="https://querida.si/ela-minus-visuals/" target="_blank">querida.si/ela-minus-visuals</a></li>
+          <li><a href="https://www.behance.net/querida" target="_blank">Behance</a> · <a href="https://www.instagram.com/queridastudio/" target="_blank">IG @queridastudio</a> · <a href="https://casabonay.com/hotel/creators/querida/" target="_blank">Casa Bonay</a></li>
+          <li><strong>Entrevistas clave</strong>:
+            <ul>
+              <li><a href="https://www.itsnicethat.com/articles/querida-graphic-design-030517" target="_blank">It's Nice That 2017</a></li>
+              <li><a href="https://www.itsnicethat.com/articles/querida-bound-mj-llergo-graphic-design-270320" target="_blank">It's Nice That 2020 (Bound + Llergo)</a></li>
+              <li><a href="https://www.itsnicethat.com/articles/querida" target="_blank">It's Nice That (Introducing)</a></li>
+              <li><a href="https://www.theartl-ne.com/interview-albert-estruch-marc-sancho-of-querida/" target="_blank">The Artline — 10 años Querida</a></li>
+            </ul>
+          </li>
+          <li>Entrevista Ela Minus que enmarca DÍA: <a href="https://www.theblankmag.com/interviews/ela-minus-dia" target="_blank">The Blank Mag</a>, <a href="https://www.npr.org/2025/01/30/nx-s1-5213901/ela-minus-dia-album-colombia" target="_blank">NPR</a>, <a href="https://www.rollingstone.com/music/music-latin/ela-minus-interview-dia-album-1235236848/" target="_blank">Rolling Stone</a>, <a href="https://musictech.com/features/interviews/ela-minus-interview-dia/" target="_blank">MusicTech</a></li>
+          <li><strong>Limitación:</strong> no se encontraron talks en YouTube de Querida (OFFF, Adobe MAX, Behance). Las mejores fuentes son entrevistas escritas de It's Nice That + Artline.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== ELSA HANNEKE ====== -->
+    <section id="hanneke">
+      <div class="director-header">
+        <h2>4 · Elsa Hanneke</h2>
+        <span class="indie hibrido">indie híbrido</span>
+      </div>
+      <p class="director-subtitle">USA / global · directora creativa de experiencias en vivo (touring + show design). NO trabajó en <em>DIA</em> de Ela Minus — eso fue Querida.</p>
+
+      <h3>Background</h3>
+      <ul>
+        <li><strong>Artista y directora interdisciplinar</strong> que trabaja en experiencias en vivo, instalaciones, film y performance visuals. Foco: industrias musical y de moda. Su práctica es como <strong>directora de touring + show design + spatial design</strong>, no como diseñadora gráfica.</li>
+        <li>Su portafolio fue construido por Querida — de ahí la confusión inicial. <a href="https://elsa.works/" target="_blank">elsa.works</a>, <a href="https://www.commarts.com/webpicks/elsa-hanneke" target="_blank">Communication Arts</a>.</li>
+        <li>No se encontró información pública sobre formación, ciudad base ni año de inicio. Es una práctica con clientes muy grandes pero firma sostenida personal.</li>
+      </ul>
+
+      <h3>Criterio indie</h3>
+      <p>
+        <strong>HÍBRIDO.</strong> Practitioner individual con firma propia
+        (autoría visible) pero trabaja en producciones masivas (giras
+        estadio Travis Scott, Rosalía Motomami World Tour, Victoria's
+        Secret Fashion Show 2025, Grammy Awards, Jimmy Fallon). El
+        trabajo es freelance / directora invitada, no parte de agencia,
+        pero la escala de cada proyecto es industria pesada. <strong>Indie
+        en estructura, no en escala.</strong>
+      </p>
+
+      <h3>Método</h3>
+      <ul>
+        <li><strong>Áreas declaradas en portafolio</strong>: Creative Direction · Visual and Motion Direction · Stage and Spatial Design · Art Direction · Installation and Experiences.</li>
+        <li><strong>Patrón curatorial</strong>: su web prioriza imagen sobre texto. Querida lo describe: <em>"the site uses these inputs to establish a strong visual language with very few elements while still expressing a layered identity"</em>. <a href="https://www.commarts.com/webpicks/elsa-hanneke" target="_blank">Comm Arts</a>.</li>
+        <li><strong>Decisión recurrente</strong>: piensa en <strong>escenografía y experiencia espacial como matriz</strong> del concepto, no como puesta-en-escena de un imaginario gráfico previo. Esto la distingue de Querida, Ana Domínguez o Romagosa, que parten de la imagen impresa/fija.</li>
+        <li><strong>Influencias declaradas</strong>: no documentadas públicamente en entrevistas indexables.</li>
+      </ul>
+
+      <h3>Caso(s) puntual(es)</h3>
+      <ul>
+        <li><strong>Rosalía – Motomami World Tour 2022</strong>: rol de stage / visual direction.</li>
+        <li><strong>Travis Scott – Circus Maximus Stadium/Arena Tours, festival shows 2023</strong>.</li>
+        <li><strong>Missy Elliott – Out Of This World Tour 2024</strong>, Victoria's Secret Fashion Show 2025.</li>
+        <li><strong>Eminem – Death Of Slim Shady Live Shows 2024</strong>.</li>
+        <li><strong>Lorde, Doechii, Kali Uchis, Keshi, Shakira, Kim Petras</strong>: televisivos (Grammys, Fallon, Kimmel), fashion (Puma NYFW 2022), brand (Jordan All-Star 2025).</li>
+      </ul>
+
+      <div class="callout info">
+        <strong>Útil para Helen</strong>: Hanneke es referente para
+        pensar el <strong>escenario en vivo como medio creativo
+        principal</strong> — no como derivación del disco. Si Helen va a
+        hacer un proyecto voz + síntesis con componente performance, su
+        modelo es estudiable.
+      </div>
+
+      <div class="sources">
+        <h4>Material accesible</h4>
+        <ul>
+          <li><a href="https://elsa.works/" target="_blank">elsa.works</a></li>
+          <li><a href="https://www.commarts.com/webpicks/elsa-hanneke" target="_blank">Communication Arts</a></li>
+          <li><a href="https://www.cssdesignawards.com/sites/elsa-hanneke/48653/" target="_blank">CSS Design Awards</a></li>
+          <li><a href="https://querida.si/elsa-hanneke/" target="_blank">Querida sobre el proyecto del sitio</a></li>
+          <li><strong>Limitación crítica:</strong> NO se encontraron entrevistas en texto largas, podcast appearances ni talks en YouTube bajo su nombre. Es la referente con menos material discursivo público.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== ROMAGOSA ====== -->
+    <section id="romagosa">
+      <div class="director-header">
+        <h2>5 · Studio Albert Romagosa</h2>
+        <span class="indie si">indie sí</span>
+      </div>
+      <p class="director-subtitle">Barcelona · estudio de 2 personas desde 2014. Trabajo clave: Maria Arnal i Marcel Bagés — <em>Clamor</em> (Fina Estampa, 2021).</p>
+
+      <h3>Background</h3>
+      <ul>
+        <li><strong>Albert Romagosa</strong>, graduado en Comunicación y Diseño Gráfico de <strong>Elisava</strong>.</li>
+        <li>Funda <strong>Studio Albert Romagosa (SAR / antes Albert Romagosa Design Cabinet) en 2014, en Barcelona</strong>.</li>
+        <li>Equipo actual: estudio chico de 2 personas (Albert Romagosa + un colaborador permanente).</li>
+        <li><strong>Otros roles</strong>: co-fundador de la revista bianual <strong>Andròmina</strong> (antes Melancolía); uno de los tres fundadores de la editorial independiente <strong>Entiendo</strong>; miembro del consejo de <strong>ADG-FAD</strong>. Docente en IED, IDEP, Massana y Elisava. <a href="https://www.fernandoespeso.info/albertromagosa/information/" target="_blank">fernandoespeso.info</a>.</li>
+        <li>Múltiples Laus Awards (Gold/Silver/Bronze), Club de Creatividad, MIN.</li>
+      </ul>
+
+      <h3>Criterio indie</h3>
+      <p>
+        <strong>SÍ.</strong> Estudio boutique, dos personas, freelance
+        proyecto por proyecto, autoría firmada bajo el nombre del fundador.
+        Sin afiliación a holding.
+      </p>
+
+      <h3>Método</h3>
+
+      <blockquote>
+        Su práctica se basa en "un entendimiento profundo del encargo y
+        su contexto para generar propuestas con sentido en lo conceptual
+        y lo visual."
+        <span class="author">paráfrasis recurrente del estudio</span>
+      </blockquote>
+
+      <h4>Filosofía declarada</h4>
+      <p>
+        <strong>"Intelligibility and coherence".</strong> El diseño tiene
+        que ser <strong>elegante y sin complicar</strong>, <strong>cómodo
+        y legible</strong>, sin imponer su propio tema sobre el contenido.
+        <a href="https://www.itsnicethat.com/articles/studio-albert-romagosa-publication-design-graphic-design-131218" target="_blank">It's Nice That 2018</a>.
+      </p>
+
+      <h4>Patrón</h4>
+      <p>
+        Equilibrio entre <strong>imaginería audaz + tipografía contenida</strong>.
+      </p>
+
+      <h4>Methodology declarada</h4>
+      <p>
+        <em>"Involucramiento total en cada encargo"</em>, buscando que
+        cada proyecto tenga una <strong>"personalidad única e
+        intransferible"</strong>. Anti-fórmula explícita.
+      </p>
+
+      <blockquote>
+        Sobre la revista Melancolía (proyecto propio): "a quiet magazine
+        that works as a catalyst for thoughts."
+        <span class="author">Albert Romagosa — el silencio como categoría operativa</span>
+      </blockquote>
+
+      <h4>Influencias declaradas</h4>
+      <p>
+        Predilección por las culturas alemana y suiza (escuela de diseño
+        post-Bauhaus / Swiss style) — declarado en su perfil en
+        <a href="https://www.fernandoespeso.info/albertromagosa/information/" target="_blank">fernandoespeso.info</a>.
+      </p>
+
+      <h4>Patrón visible cruzando trabajos</h4>
+      <ul>
+        <li>Usa <strong>color como estructura</strong> (no como ornamento)</li>
+        <li><strong>White space como respiración</strong></li>
+        <li><strong>Bilingüismo tipográfico</strong> cuando el contenido lo requiere</li>
+        <li><strong>Decisiones de papel/relieve/tinta como portadoras de significado</strong>, no decisiones de producción</li>
+      </ul>
+
+      <h3>Caso puntual: Maria Arnal i Marcel Bagés — <em>Clamor</em> (Fina Estampa, 2021)</h3>
+      <ul>
+        <li>Dirección de arte: <strong>Albert Romagosa + José Luis de Vicente</strong> (co-firma). Romagosa hizo el artwork completo del álbum. <a href="https://www.discogs.com/release/17699782-Maria-Arnal-i-Marcel-Bag%C3%A9s-Clamor" target="_blank">Discogs</a>.</li>
+        <li><strong>Concepto del álbum</strong>: el "clamor" (eco del concepto de Derrida: "toque de campanas a un muerto"). Maria Arnal y Marcel Bagés se hacen portavoces de algo mayor que ellos; referencias literarias a Donna Haraway, Ted Chiang, Timothy Morton. Colaboración con la IA vocal de Holly Herndon. Es un álbum sobre <strong>mutación, evolución y extinción</strong>. <a href="https://mussica.info/discos/clamor-de-maria-arnal-i-marcel-bages/" target="_blank">Mússica</a>, <a href="https://www.binaural.es/critica-disco/recomendacion-disco/maria-arnal-i-marcel-bages-clamor/" target="_blank">Binaural</a>.</li>
+        <li><strong>Decisión visual clave</strong>: la portada del álbum trabaja desde un <strong>minimalismo material</strong> deliberado — ausencia de imaginería ilustrativa que traduce el concepto del álbum (memoria, lo invisible, huella) a una decisión de producción gráfica. <a href="https://www.discogs.com/release/17699782-Maria-Arnal-i-Marcel-Bag%C3%A9s-Clamor" target="_blank">Discogs</a>.</li>
+        <li>La imagen del cover muestra a la <strong>especie humana contemplando su propia extinción autocausada</strong>.</li>
+      </ul>
+
+      <p>
+        <strong>Lectura metodológica</strong>: Romagosa traduce contenido
+        conceptual abstracto (un álbum-coral sobre la decadencia del
+        sujeto individual, lo post-humano) a una decisión
+        <strong>material</strong> — minimalismo de imprenta, ausencia
+        deliberada de imaginería. La portada actúa como
+        <strong>objeto-fósil</strong>, no como ilustración del tema.
+        Es exactamente lo opuesto a "literalismo gráfico".
+      </p>
+
+      <div class="sources">
+        <h4>Material accesible</h4>
+        <ul>
+          <li>Portafolio: <a href="https://albertromagosa.com" target="_blank">albertromagosa.com</a></li>
+          <li>Mirror con info: <a href="https://www.fernandoespeso.info/albertromagosa/" target="_blank">fernandoespeso.info/albertromagosa</a> / <a href="https://www.fernandoespeso.info/albertromagosa/information/" target="_blank">/information</a></li>
+          <li><strong>Entrevistas clave</strong>:
+            <ul>
+              <li>5 Cosas #4 ADG-FAD: <a href="https://adg-fad.org/noticia/5-cosas-4-albert-romagosa/" target="_blank">adg-fad.org</a></li>
+              <li>It's Nice That 2018: <a href="https://www.itsnicethat.com/articles/studio-albert-romagosa-publication-design-graphic-design-131218" target="_blank">itsnicethat.com</a></li>
+            </ul>
+          </li>
+          <li>IED Barcelona: <a href="https://management.iedbarcelona.org/profiles/albert-romagosa/" target="_blank">profile</a></li>
+          <li><strong>Limitación:</strong> NO se encontraron charlas YouTube ni podcast appearances localizables.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== LEMONADE ====== -->
+    <section id="lemonade">
+      <div class="director-header">
+        <h2>6 · <em>Lemonade</em> (Beyoncé, 2016)</h2>
+        <span class="indie no">indie no</span>
+      </div>
+      <p class="director-subtitle">Referencia metaestructural: cómo se construye un universo audiovisual unificado con múltiples directores trabajando bajo una visión central.</p>
+
+      <h3>Background y reparto</h3>
+      <ul>
+        <li><strong>Beyoncé Knowles-Carter</strong> — co-directora general + visión.</li>
+        <li><strong>Todd Tourso</strong> — creative director de Beyoncé desde 2013. Antes founder de Plain Gravy (2006). ArtCenter College of Design (Pasadena). Lo introdujo Pharrell. <a href="https://www.wmagazine.com/story/the-secret-to-being-a-modern-pop-star-a-creative-director" target="_blank">W Magazine</a>.</li>
+        <li><strong>Kahlil Joseph</strong> — co-director del film. Antes director del <em>m.A.A.d</em> de Kendrick Lamar y <em>Until the Quiet Comes</em> de Flying Lotus. <a href="https://www.dazeddigital.com/artsandculture/article/36945/1/kahlil-joseph-the-elusive-director-working-with-beyonce-kendrick-sampha" target="_blank">Dazed</a>.</li>
+        <li><strong>Melina Matsoukas</strong> — dirigió "Formation". NYU + AFI. <a href="https://www.hollywoodreporter.com/music/music-news/beyonces-lemonade-directors-cinematographer-behind-887337/" target="_blank">Hollywood Reporter</a>.</li>
+        <li><strong>Mark Romanek</strong> — dirigió "Sandcastles" (capítulo "Forgiveness").</li>
+        <li><strong>Jonas Åkerlund</strong>, <strong>Dikayl Rimmasch</strong> — colaboraciones previas con Beyoncé.</li>
+        <li><strong>Warsan Shire</strong> — poeta somalí-británica, hizo "film adaptation and poetry" entre canciones.</li>
+        <li><strong>Cinematógrafos</strong>: Chayse Irvin, Khalik Allah, Par Ekberg, Santiago Gonzalez, Malik Sayeed, Reed Morano.</li>
+      </ul>
+
+      <h3>Criterio indie</h3>
+      <p>
+        <strong>NO (HÍBRIDO con tendencia NO).</strong> Aunque cada
+        director es freelance/autor visible, el proyecto está produced
+        by Parkwood Entertainment (la empresa de Beyoncé) y distribuido
+        por una major. El modelo es <strong>artist-driven, no
+        agency-driven</strong>, pero a escala industria.
+      </p>
+
+      <h3>Método unificador</h3>
+      <ul>
+        <li><strong>Estructura como columna vertebral</strong>: el álbum se organiza sobre las <strong>etapas Kübler-Ross del duelo</strong>. Tourso lo confirma: <em>"Bey thought about placing it in the context of a generational relationship, and then in conversations, we got to talking about African-American generational struggles."</em> <a href="https://www.wmagazine.com/story/the-secret-to-being-a-modern-pop-star-a-creative-director" target="_blank">W Magazine</a>.</li>
+        <li><strong>Trabajo en "vacío creativo"</strong>: <em>"Our entire team was completely consumed by this project and lived in a creative vacuum for six months"</em> — Tourso. <strong>Decisión metodológica: aislamiento.</strong></li>
+        <li><strong>El rol del creative director</strong>: Tourso lo describe como <em>"one person with a visual vocabulary to be the sole liaison"</em> — <strong>una sola persona</strong> traduce las ideas efímeras del artista en realidad visualmente forward-thinking. <strong>La dirección creativa centralizada NO es la imposición de un estilo, es la traducción.</strong></li>
+        <li><strong>Beyoncé envía YouTube videos y mood boards</strong> que ella misma arma. Es ella quien lidera la curaduría visual. Tourso filtra y materializa.</li>
+        <li><strong>Referencias declaradas para <em>Lemonade</em></strong>: voodoo de Luisiana, Southern Gothic, German Expressionism, imágenes de madres de víctimas Black de violencia policial.</li>
+      </ul>
+
+      <blockquote>
+        "I don't think it goes past writing ideas down on napkins...
+        Words are so limited. The editing, that's how you tell the
+        story. That's how you paint the subject."
+        <span class="author">Kahlil Joseph · Dazed</span>
+      </blockquote>
+
+      <p>
+        <strong>Melina Matsoukas sobre Formation</strong>: investigó
+        <strong>Toni Morrison, Maya Angelou, Octavia Butler</strong>
+        antes de escribir el treatment. Lo escribió a las 2am. Beyoncé
+        respondió de inmediato. <a href="https://www.stylist.co.uk/people/queen-slim-melina-matsoukas-director-interview-music-police-brutality-beyonce/348225" target="_blank">Stylist</a>.
+      </p>
+
+      <div class="sources">
+        <h4>Material accesible (clave para skill)</h4>
+        <ul>
+          <li><a href="https://www.thefader.com/2017/02/27/beyonce-paid-lemonade-visuals" target="_blank">The FADER — Matsoukas</a></li>
+          <li><a href="https://time.com/4687680/beyonce-melina-matsoukas-emails/" target="_blank">TIME — Matsoukas behind scenes</a></li>
+          <li><a href="https://www.hollywoodreporter.com/music/music-news/beyonces-lemonade-directors-cinematographer-behind-887337/" target="_blank">Hollywood Reporter — directores y cinematógrafos</a></li>
+          <li><a href="https://www.billboard.com/music/music-news/beyonce-lemonade-directors-cinematographers-7341810/" target="_blank">Billboard</a></li>
+          <li><a href="https://www.indiewire.com/features/general/who-directed-lemonade-the-7-filmmakers-behind-beyonces-visual-album-289339/" target="_blank">IndieWire 7 directores</a></li>
+          <li><a href="https://www.wmagazine.com/story/the-secret-to-being-a-modern-pop-star-a-creative-director" target="_blank">W Magazine — Tourso retrato</a></li>
+          <li><a href="https://www.dazeddigital.com/artsandculture/article/36945/1/kahlil-joseph-the-elusive-director-working-with-beyonce-kendrick-sampha" target="_blank">Dazed — Kahlil Joseph perfil largo</a></li>
+          <li><a href="https://www.surfacemag.com/articles/kahlil-joseph-challenging-black-life/" target="_blank">Surface — Kahlil Joseph</a></li>
+          <li><a href="https://reverseshot.org/interviews/entry/3400/Kahlil_Joseph" target="_blank">Reverse Shot — entrevista Joseph</a></li>
+          <li><a href="https://library.highline.edu/lemonade/collaborators" target="_blank">Highline College — Lemonade collaborators</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Lemonade_(album)" target="_blank">Wikipedia — Lemonade álbum</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== 7 PATRONES (CORE) ====== -->
+    <section id="patrones">
+      <h2>7 · Los 7 patrones cruzados</h2>
+
+      <p>
+        Cruzando las prácticas (Rui Vieira, Ana Domínguez, Querida, Studio
+        Albert Romagosa, Elsa Hanneke) + el modelo Lemonade, aparecen
+        siete patrones repetidos en cómo se conecta lo visual con lo
+        sonoro. <strong>Esta es la columna metodológica que alimenta la
+        skill <code>creative-direction</code></strong>.
+      </p>
+
+      <div class="pattern-box">
+        <div class="pattern-num">Patrón 1</div>
+        <h3>Un concepto / constraint único atraviesa cada superficie</h3>
+        <p>
+          Todos los proyectos exitosos eligen <strong>una sola variable
+          conceptual</strong> que opera como ley en cada output del
+          universo audiovisual.
+        </p>
+        <ul>
+          <li><strong><em>DÍA</em></strong>: la variable es <strong>tiempo</strong> (cover, video, vivo, tracklist).</li>
+          <li><strong><em>Clamor</em></strong>: la variable es <strong>ausencia / huella / desaparición</strong> (materializada en una portada minimalista que rehúsa la imaginería ilustrativa).</li>
+          <li><strong><em>Lemonade</em></strong>: la variable es <strong>duelo Kübler-Ross + memoria generacional negra</strong>.</li>
+          <li><strong><em>Canção à Ausente</em></strong>: la variable es <strong>tensión esperanza/ausencia</strong>.</li>
+          <li><strong><em>Neu Om</em></strong> (Mur / Domínguez): la variable es <strong>códice entre lo sagrado y lo profano</strong>.</li>
+        </ul>
+        <div class="implication">
+          <strong>Implicación para Helen</strong>: antes de tomar decisiones
+          visuales, definir UNA palabra que sea la variable. Todo lo que no
+          la sirva, se descarta. La variable funciona como constraint que
+          protege contra el ornamento.
+        </div>
+      </div>
+
+      <div class="pattern-box">
+        <div class="pattern-num">Patrón 2</div>
+        <h3>La identidad visual NO ilustra al sonido — comparte su materia prima</h3>
+        <p>
+          El patrón anti-decorativo de Querida (<em>"when you are
+          presented with great content, you don't have to do much"</em>)
+          se ve en todos los referentes:
+        </p>
+        <ul>
+          <li>Querida no "dibuja" la música electrónica de Ela Minus; usa <strong>el tiempo</strong> que ya está en el código del audio.</li>
+          <li>Romagosa no "dibuja" la extinción del álbum <em>Clamor</em>; usa la <strong>ausencia material</strong> (sin tinta).</li>
+          <li>Ana Domínguez no "dibuja" lo sagrado-profano de Amanda Mur; usa <strong>codificación gráfica de objetos</strong> como sistema-codex.</li>
+        </ul>
+        <div class="implication">
+          <strong>Implicación</strong>: la pregunta no es "¿cómo se ve
+          este sonido?" sino <strong>"¿cuál es la materia prima compartida
+          entre sonido y visual?"</strong>. Eso es el cruce.
+        </div>
+      </div>
+
+      <div class="pattern-box">
+        <div class="pattern-num">Patrón 3</div>
+        <h3>Decisiones materiales antes que decisiones representacionales</h3>
+        <p>
+          El <strong>papel, la textura, el formato físico</strong>
+          son portadores de significado equivalentes al imaginario.
+          Romagosa lo lleva al extremo con <em>Clamor</em>; Querida lo
+          trabaja en formato editorial; Ana Domínguez en still life con
+          materiales cotidianos.
+        </p>
+        <div class="implication">
+          <strong>Implicación</strong>: en la fase de pensamiento creativo,
+          las <strong>decisiones de soporte</strong> (tipo de papel,
+          formato físico, modo de circulación, lo táctil) no son
+          detalles de producción — son parte del concepto.
+        </div>
+      </div>
+
+      <div class="pattern-box">
+        <div class="pattern-num">Patrón 4</div>
+        <h3>El creative director centraliza pero NO impone — traduce</h3>
+        <p>
+          Tourso lo dice explícito: la persona que dirige creativamente
+          la obra de un artista es un <strong>traductor</strong> entre
+          las ideas efímeras del artista y su materialización. Es lo
+          que separa el modelo Tourso del modelo "agencia llave en mano".
+        </p>
+        <div class="implication">
+          <strong>Implicación para Helen</strong>: en el rol de directora
+          creativa de tu propio disco, estás haciendo doble función — la
+          del <strong>artista</strong> que envía mood boards (Beyoncé) y
+          la del <strong>traductor</strong> (Tourso). Conviene separar
+          conscientemente estos dos roles internos. Útil: hacer mood
+          boards primero <em>como artista</em> y traducirlos formalmente
+          <em>como directora</em> en otra sesión.
+        </div>
+      </div>
+
+      <div class="pattern-box">
+        <div class="pattern-num">Patrón 5</div>
+        <h3>Decostrucción de tropos heredados de género</h3>
+        <p>
+          Querida con la estatua ecuestre invertida para Llergo; Romagosa
+          rompiendo la portada-ilustrativa para hacer una portada-fósil;
+          Matsoukas hundiendo el patrullero policial en agua.
+          <strong>Todos toman un símbolo cultural conocido y lo doblan</strong>.
+        </p>
+        <div class="implication">
+          <strong>Implicación</strong>: identificar de antemano qué tropos
+          visuales suelen acompañar al género o nicho del proyecto musical
+          y decidir conscientemente cuál se va a <strong>invertir o citar
+          al revés</strong>. La inversión consciente es la firma autoral.
+        </div>
+      </div>
+
+      <div class="pattern-box">
+        <div class="pattern-num">Patrón 6</div>
+        <h3>Estabilidad del equipo creativo a través del tiempo</h3>
+        <ul>
+          <li>Rui Vieira ↔ Leandro Ferrão (DP)</li>
+          <li>Querida ↔ Mañana ↔ Álvaro Arisó (fotógrafo) ↔ Ela Minus</li>
+          <li>Ana Domínguez ↔ Omar Sosa ↔ Nacho Alegre (desde 2008 en Apartamento)</li>
+          <li>Tourso ↔ Beyoncé (desde 2013)</li>
+          <li>Romagosa ↔ José Luis de Vicente</li>
+        </ul>
+        <p>
+          <strong>Ningún proyecto significativo se construye con
+          colaboradores rotativos.</strong> La fidelidad sostenida es el
+          motor que permite que el lenguaje se profundice.
+        </p>
+        <div class="implication">
+          <strong>Implicación</strong>: identificar dos o tres colaboradores
+          estables (un fotógrafo, una DP, una diseñadora) y comprometerse
+          a varios proyectos en serie con ellos, no uno por uno.
+        </div>
+      </div>
+
+      <div class="pattern-box">
+        <div class="pattern-num">Patrón 7</div>
+        <h3>Investigación literaria/curatorial antes que visual</h3>
+        <ul>
+          <li>Romagosa lee <strong>Haraway, Chiang, Morton</strong> antes de pensar la portada de <em>Clamor</em>.</li>
+          <li>Matsoukas lee <strong>Toni Morrison, Maya Angelou, Octavia Butler</strong> antes de escribir el treatment de Formation.</li>
+          <li>Tourso y Beyoncé trabajan desde <strong>Kübler-Ross</strong>.</li>
+          <li>Ana Domínguez declara <strong>Fischli & Weiss / Irving Penn</strong> como influencias estructurales.</li>
+        </ul>
+        <div class="implication">
+          <strong>Implicación</strong>: la fase 1 de cualquier proyecto
+          <strong>NO es Pinterest</strong>. Es <strong>lectura</strong>.
+          Un libro, dos autoras, una teoría. La imagen emerge de un
+          sistema de pensamiento. Pinterest viene <em>después</em>, como
+          confirmador, no como generador.
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SKILL ====== -->
+    <section id="skill">
+      <h2>8 · Cómo se construyó la skill <code>creative-direction</code></h2>
+
+      <div class="skill-box">
+        <h3>Qué es la skill</h3>
+        <p>
+          Un archivo <code>SKILL.md</code> que se carga en Claude (Claude
+          Code o claude.ai) y le agrega comportamiento específico cuando
+          se la consulta sobre decisiones de dirección creativa para una
+          obra musical.
+        </p>
+        <p>
+          Cuando Helen le pasa una decisión sobre su disco (una idea de
+          videoclip, un boceto de tapa, un planteo escénico), el Claude
+          con la skill cargada responde <strong>chequeando contra los 7
+          patrones</strong> y ofreciendo retroalimentación específica
+          basada en el método de los 5 referentes.
+        </p>
+      </div>
+
+      <h3>De dónde sale el contenido — fuentes</h3>
+      <p>
+        La skill se construye sobre tres capas:
+      </p>
+      <ol>
+        <li><strong>Los 7 patrones cruzados</strong> (sección 7 de este doc) — son los principios operativos.</li>
+        <li><strong>El método específico de cada referente</strong> (secciones 1-6 de este doc) — quotes, decisiones recurrentes, ejemplos.</li>
+        <li><strong>El material accesible bibliográfico</strong> (sección 9 de este doc) — el corpus completo de entrevistas y artículos.</li>
+      </ol>
+
+      <p>
+        Para auditar el origen exhaustivamente, hay un archivo
+        <code>SOURCES.md</code> en la carpeta del skill que lista cada
+        fuente que alimentó cada patrón. Helen puede leerlo si quiere
+        verificar de dónde sale cada afirmación o profundizar en algún
+        referente.
+      </p>
+
+      <h3>Cómo usarla</h3>
+      <p>
+        Helen tiene dos formas de cargar la skill en su Claude:
+      </p>
+      <ul>
+        <li><strong>Claude Code (local)</strong>: copiar la carpeta <code>creative-direction/</code> a su propio <code>.claude/skills/</code> en cualquier proyecto. Ya queda disponible.</li>
+        <li><strong>claude.ai (web)</strong>: copiar el contenido de <code>SKILL.md</code> y pegarlo como instrucciones de sistema en una conversación nueva. (Si claude.ai ya soporta skills oficialmente cuando reciba esto, usar la opción nativa.)</li>
+      </ul>
+
+      <p>
+        Una vez cargada, la skill se activa con frases como:
+      </p>
+      <ul>
+        <li>"Estoy pensando este concepto para el cover, qué decís"</li>
+        <li>"Quiero hacer un videoclip con [X], cómo lo encarás"</li>
+        <li>"Validá esta decisión visual contra los patrones"</li>
+        <li>"Si fueras Querida / Romagosa / Tourso, qué cambiarías"</li>
+      </ul>
+
+      <div class="callout info">
+        <strong>Limitación honesta sobre la skill</strong>: tiene los
+        patrones y las fuentes, pero <strong>no simula juicio humano</strong>.
+        Funciona mejor como <em>tablero de chequeo</em> ("¿tu decisión
+        sirve a la variable única?", "¿qué tropo estás citando o
+        invirtiendo?") que como dictamen creativo. Es una segunda lectura,
+        no la primera.
+      </div>
+    </section>
+
+    <!-- ====== BIBLIOGRAFÍA ====== -->
+    <section id="bibliografia">
+      <h2>9 · Bibliografía completa</h2>
+
+      <div class="sources">
+        <h4>RUI VIEIRA</h4>
+        <ul>
+          <li><a href="https://www.ruivieira.net" target="_blank">ruivieira.net</a> + <a href="https://www.ruivieira.net/pages/bio" target="_blank">bio</a> + <a href="https://www.ruivieira.net/film" target="_blank">film</a></li>
+          <li><a href="https://theplayground.pt/rui-vieira" target="_blank">Playground productora</a></li>
+          <li><a href="https://www.linkedin.com/in/ruifvieira/" target="_blank">LinkedIn</a> · <a href="https://www.imdb.com/name/nm4268363/" target="_blank">IMDb</a></li>
+          <li><a href="https://fluxmedia.pt/carminho-lanca-hoje-o-novo-single-cancao-a-ausente/" target="_blank">fluxmedia.pt — Canção à Ausente</a></li>
+          <li><a href="https://glam-magazine.pt/carminho-lanca-novo-single-cancao-a-ausente/" target="_blank">Glam Magazine</a></li>
+          <li><a href="https://infocul.pt/carminho-lanca-novo-single-cancao-a-ausente/" target="_blank">infocul.pt</a></li>
+          <li>Videoclip: <a href="https://www.youtube.com/watch?v=CEcXvJh3ChY" target="_blank">YouTube</a> · in-studio: <a href="https://www.youtube.com/watch?v=AetaIwnUMyI" target="_blank">YouTube</a></li>
+        </ul>
+
+        <h4>ANA DOMÍNGUEZ</h4>
+        <ul>
+          <li><a href="https://anadominguez.es" target="_blank">anadominguez.es</a> + <a href="https://anadominguez.es/works/" target="_blank">works</a> + <a href="https://anadominguez.es/about/" target="_blank">about</a></li>
+          <li><a href="https://www.ignant.com/2018/11/01/the-art-of-balance-a-conversation-with-ana-dominguez-on-graphic-design-and-absurdity/" target="_blank">Ignant 2018 (fuente metodológica principal)</a></li>
+          <li><a href="https://www.macba.cat/en/ana-dominguez-2/" target="_blank">MACBA</a></li>
+          <li><a href="https://peopleofprint.com/photography/ana-dominguez/" target="_blank">People of Print</a></li>
+          <li><a href="https://www.instagram.com/anadominguezstudio/" target="_blank">IG @anadominguezstudio</a></li>
+          <li><a href="https://www.rockdelux.com/en/discos/amanda-mur-neu-om" target="_blank">Rockdelux — Amanda Mur Neu Om</a></li>
+          <li><a href="https://metalmagazine.eu/en/post/amanda-mur" target="_blank">Metal Magazine — Amanda Mur</a></li>
+        </ul>
+
+        <h4>QUERIDA</h4>
+        <ul>
+          <li><a href="https://querida.si" target="_blank">querida.si</a> + <a href="https://querida.si/home/" target="_blank">home</a></li>
+          <li>Proyecto DÍA: <a href="https://querida.si/ela-minus-dia/" target="_blank">querida.si/ela-minus-dia</a></li>
+          <li>Live Visuals: <a href="https://querida.si/ela-minus-visuals/" target="_blank">querida.si/ela-minus-visuals</a></li>
+          <li><a href="https://www.behance.net/querida" target="_blank">Behance</a> · <a href="https://www.instagram.com/queridastudio/" target="_blank">IG @queridastudio</a></li>
+          <li><a href="https://casabonay.com/hotel/creators/querida/" target="_blank">Casa Bonay</a></li>
+          <li><a href="https://www.itsnicethat.com/articles/querida-graphic-design-030517" target="_blank">It's Nice That 2017</a></li>
+          <li><a href="https://www.itsnicethat.com/articles/querida-bound-mj-llergo-graphic-design-270320" target="_blank">It's Nice That 2020 — Bound + Llergo</a></li>
+          <li><a href="https://www.itsnicethat.com/articles/querida" target="_blank">It's Nice That — Introducing</a></li>
+          <li><a href="https://www.theartl-ne.com/interview-albert-estruch-marc-sancho-of-querida/" target="_blank">The Artline — 10 años Querida</a></li>
+          <li><a href="https://elaminus.bandcamp.com/album/d-a" target="_blank">Bandcamp — DÍA créditos</a></li>
+          <li><a href="https://www.theblankmag.com/interviews/ela-minus-dia" target="_blank">The Blank Mag — Ela Minus DÍA</a></li>
+          <li><a href="https://www.npr.org/2025/01/30/nx-s1-5213901/ela-minus-dia-album-colombia" target="_blank">NPR — Ela Minus DÍA</a></li>
+          <li><a href="https://www.rollingstone.com/music/music-latin/ela-minus-interview-dia-album-1235236848/" target="_blank">Rolling Stone — Ela Minus DÍA</a></li>
+          <li><a href="https://musictech.com/features/interviews/ela-minus-interview-dia/" target="_blank">MusicTech — Ela Minus DÍA</a></li>
+        </ul>
+
+        <h4>ELSA HANNEKE</h4>
+        <ul>
+          <li><a href="https://elsa.works/" target="_blank">elsa.works</a></li>
+          <li><a href="https://www.commarts.com/webpicks/elsa-hanneke" target="_blank">Communication Arts</a></li>
+          <li><a href="https://www.cssdesignawards.com/sites/elsa-hanneke/48653/" target="_blank">CSS Design Awards</a></li>
+          <li><a href="https://querida.si/elsa-hanneke/" target="_blank">Querida sobre proyecto del sitio</a></li>
+        </ul>
+
+        <h4>STUDIO ALBERT ROMAGOSA</h4>
+        <ul>
+          <li><a href="https://albertromagosa.com" target="_blank">albertromagosa.com</a></li>
+          <li><a href="https://www.fernandoespeso.info/albertromagosa/" target="_blank">fernandoespeso.info mirror</a> + <a href="https://www.fernandoespeso.info/albertromagosa/information/" target="_blank">information</a></li>
+          <li><a href="https://www.linkedin.com/in/albertromagosa/" target="_blank">LinkedIn</a></li>
+          <li><a href="https://adg-fad.org/noticia/5-cosas-4-albert-romagosa/" target="_blank">ADG-FAD — 5 Cosas</a></li>
+          <li><a href="https://www.itsnicethat.com/articles/studio-albert-romagosa-publication-design-graphic-design-131218" target="_blank">It's Nice That 2018</a></li>
+          <li><a href="https://management.iedbarcelona.org/profiles/albert-romagosa/" target="_blank">IED Barcelona profile</a></li>
+          <li><a href="https://www.discogs.com/release/17699782-Maria-Arnal-i-Marcel-Bag%C3%A9s-Clamor" target="_blank">Discogs — Clamor</a></li>
+          <li><a href="https://mussica.info/discos/clamor-de-maria-arnal-i-marcel-bages/" target="_blank">Mússica — Clamor review</a></li>
+          <li><a href="https://www.binaural.es/critica-disco/recomendacion-disco/maria-arnal-i-marcel-bages-clamor/" target="_blank">Binaural — Clamor</a></li>
+        </ul>
+
+        <h4>LEMONADE</h4>
+        <ul>
+          <li><a href="https://www.thefader.com/2017/02/27/beyonce-paid-lemonade-visuals" target="_blank">The FADER — Matsoukas</a></li>
+          <li><a href="https://time.com/4687680/beyonce-melina-matsoukas-emails/" target="_blank">TIME — Matsoukas behind scenes</a></li>
+          <li><a href="https://www.hollywoodreporter.com/music/music-news/beyonces-lemonade-directors-cinematographer-behind-887337/" target="_blank">Hollywood Reporter</a></li>
+          <li><a href="https://www.billboard.com/music/music-news/beyonce-lemonade-directors-cinematographers-7341810/" target="_blank">Billboard</a></li>
+          <li><a href="https://www.indiewire.com/features/general/who-directed-lemonade-the-7-filmmakers-behind-beyonces-visual-album-289339/" target="_blank">IndieWire</a></li>
+          <li><a href="https://www.wmagazine.com/story/the-secret-to-being-a-modern-pop-star-a-creative-director" target="_blank">W Magazine — Tourso</a></li>
+          <li><a href="https://www.dazeddigital.com/artsandculture/article/36945/1/kahlil-joseph-the-elusive-director-working-with-beyonce-kendrick-sampha" target="_blank">Dazed — Kahlil Joseph</a></li>
+          <li><a href="https://www.surfacemag.com/articles/kahlil-joseph-challenging-black-life/" target="_blank">Surface — Kahlil Joseph</a></li>
+          <li><a href="https://reverseshot.org/interviews/entry/3400/Kahlil_Joseph" target="_blank">Reverse Shot</a></li>
+          <li><a href="https://www.stylist.co.uk/people/queen-slim-melina-matsoukas-director-interview-music-police-brutality-beyonce/348225" target="_blank">Stylist — Matsoukas</a></li>
+          <li><a href="https://library.highline.edu/lemonade/collaborators" target="_blank">Highline College — Lemonade collaborators</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Lemonade_(album)" target="_blank">Wikipedia — Lemonade</a></li>
+          <li><a href="https://www.vice.com/en/article/d7bg77/khalil-joseph-sampha-process-music-short-films" target="_blank">Vice — Khalil Joseph + Sampha "Process"</a></li>
+        </ul>
+      </div>
+
+      <div class="callout note" style="margin-top: 2rem">
+        <strong>Limitaciones honestas de la investigación:</strong>
+        material en YouTube/podcast es escaso para todos los referentes
+        excepto Lemonade. Querida, Romagosa y Ana Domínguez tienen
+        presencia fuerte en texto pero baja en audio/video largo. Si se
+        quiere profundizar con transcripts, las fuentes primarias son
+        las entrevistas escritas ya linkeadas. El proyecto Amanda Mur
+        no tiene case study público de Ana Domínguez — convendría
+        contactarla directamente. Rui Vieira es el referente con menos
+        discurso público sobre método. Elsa Hanneke está sub-documentada
+        en cuanto a método propio.
+      </div>
+    </section>
+
+    <footer>
+      paquete helen · doc 04 · directoras creativas + 7 patrones
+      <br>
+      preparado por emiliano mettini / spiral out · 18 de mayo 2026
+      <br>
+      research base: deep research consolidada del 18 de mayo 2026
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>

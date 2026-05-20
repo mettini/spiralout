@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paquete Helen · índice y marco editorial</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #0a0a0c; --bg-2: #14141a; --bg-3: #1c1c24;
+      --fg: #e8e8ec; --fg-2: #a0a0a8; --muted: #6a6a74; --line: #2a2a32;
+      --accent: #8a7a90;        /* purple/spiral home color */
+      --accent-bg: rgba(138,122,144,0.08);
+      --accent-border: rgba(138,122,144,0.35);
+      --pre: #d4a84a;            /* pre-launch yellow */
+      --during: #c66060;         /* during coral */
+      --post: #6080c0;           /* post-launch blue */
+      --pattern: #7a9078;        /* data green */
+      --skill: #a68bc3;          /* mauve creative */
+      --warn: #c66060;
+      --warn-bg: rgba(198,96,96,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    @media (max-width: 700px) { html { font-size: 16px; } }
+    html, body {
+      background: var(--bg); color: var(--fg);
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bg {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,90,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,50,80,0.10) 0%, transparent 55%),
+        var(--bg);
+    }
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+      width: 44px; height: 44px;
+      background: rgba(20,20,26,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line); border-radius: 50%;
+      color: var(--fg-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none; font-size: 1.1rem; line-height: 1;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s, color 0.2s, border-color 0.2s;
+    }
+    .back-to-top.visible { opacity: 0.85; visibility: visible; }
+    .back-to-top:hover { color: var(--fg); border-color: var(--fg-2); opacity: 1; }
+    @media print { .back-to-top { display: none; } }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem 6rem; }
+    @media (max-width: 700px) { .container { padding: 0 1rem 4rem; } }
+
+    .cover {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4rem;
+    }
+    .cover .pretitle {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.2rem;
+    }
+    .cover h1 {
+      font-size: 2.4rem; font-weight: 300; letter-spacing: 0.03em;
+      line-height: 1.2; margin-bottom: 1rem; color: var(--fg);
+    }
+    @media (max-width: 600px) { .cover h1 { font-size: 1.7rem; line-height: 1.3; } .cover { padding: 2.5rem 0 2rem; } }
+    .cover .subtitle {
+      font-size: 1.05rem; color: var(--fg-2);
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .cover .meta {
+      font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+    }
+
+    section { margin-bottom: 4rem; scroll-margin-top: 5rem; }
+    h2 {
+      font-size: 1.5rem; font-weight: 300; letter-spacing: 0.05em;
+      margin-bottom: 1.3rem; padding-bottom: 0.7rem;
+      border-bottom: 2px solid var(--accent-border);
+      color: var(--accent);
+    }
+    h3 {
+      font-size: 1.15rem; font-weight: 600; letter-spacing: 0.02em;
+      margin-top: 2.2rem; margin-bottom: 1rem; color: var(--fg);
+    }
+    h4 {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--fg-2);
+      margin-top: 1.5rem; margin-bottom: 0.7rem;
+    }
+    p { margin-bottom: 1rem; font-size: 1rem; }
+    a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 3px; }
+    a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    strong { color: var(--fg); font-weight: 500; }
+    em { color: var(--fg); font-style: italic; }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.5rem; }
+    code {
+      font-family: 'Courier New', monospace; font-size: 0.85em;
+      background: var(--bg-3); padding: 0.1em 0.4em; border-radius: 2px;
+      color: var(--fg-2);
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      background: var(--accent-bg);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Doc cards in the map */
+    .doc-grid {
+      display: flex; flex-direction: column;
+      gap: 1rem; margin: 1.5rem 0;
+    }
+    .doc-card {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      padding: 1.4rem 1.6rem;
+    }
+    .doc-card.pre    { border-left-color: var(--pre); }
+    .doc-card.during { border-left-color: var(--during); }
+    .doc-card.post   { border-left-color: var(--post); }
+    .doc-card.data   { border-left-color: var(--pattern); }
+    .doc-card.skill  { border-left-color: var(--skill); }
+
+    .doc-card-header {
+      display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 0.7rem;
+    }
+    .doc-card-header .num {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      background: var(--bg-3);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .doc-card.pre    .num { color: var(--pre); }
+    .doc-card.during .num { color: var(--during); }
+    .doc-card.post   .num { color: var(--post); }
+    .doc-card.data   .num { color: var(--pattern); }
+    .doc-card.skill  .num { color: var(--skill); }
+
+    .doc-card h3 {
+      margin: 0; color: var(--fg); font-size: 1.1rem;
+      flex: 1; min-width: 200px;
+    }
+    .doc-card .path {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem; color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+    .doc-card .desc {
+      color: var(--fg-2); font-size: 0.95rem; line-height: 1.7;
+    }
+    .doc-card .when {
+      margin-top: 0.7rem; padding-top: 0.7rem;
+      border-top: 1px dashed var(--line);
+      font-size: 0.85rem; color: var(--fg-2);
+    }
+    .doc-card .when strong { color: var(--fg); }
+
+    /* Editorial framework — tab-style sections */
+    .framework {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .framework-block {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.3rem 1.5rem;
+    }
+    .framework-block h4 {
+      margin-top: 0; color: var(--accent);
+      letter-spacing: 0.1em; text-transform: none; font-size: 0.95rem;
+    }
+    .framework-block ul { margin-bottom: 0; }
+    .framework-block li { font-size: 0.92rem; }
+
+    .callout {
+      margin: 1.3rem 0; padding: 1rem 1.2rem;
+      border-radius: 3px; font-size: 0.9rem;
+    }
+    .callout.warn { background: var(--warn-bg); border-left: 3px solid var(--warn); color: var(--fg); }
+    .callout.note { background: var(--bg-2); border-left: 3px solid var(--fg-2); color: var(--fg-2); }
+    .callout.info { background: var(--accent-bg); border-left: 3px solid var(--accent); color: var(--fg); }
+    .callout strong { color: var(--fg); }
+
+    .reading-order {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.5rem 1.7rem;
+      margin: 1.5rem 0;
+    }
+    .reading-order ol {
+      padding-left: 1.5rem;
+      margin-bottom: 0;
+    }
+    .reading-order li {
+      font-size: 0.92rem;
+      margin-bottom: 0.7rem;
+    }
+    .reading-order .label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem; color: var(--muted);
+      margin-right: 0.5rem;
+    }
+
+    /* Rigor table */
+    .rigor-table {
+      width: 100%; border-collapse: collapse;
+      margin: 1.2rem 0 1.5rem;
+      font-size: 0.92rem;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .rigor-table th {
+      text-align: left; padding: 0.7rem 0.9rem;
+      font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.68rem; color: var(--fg-2);
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--line);
+    }
+    .rigor-table td {
+      padding: 0.75rem 0.9rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top; color: var(--fg);
+    }
+    .rigor-table tr:last-child td { border-bottom: 0; }
+    .confidence {
+      display: inline-block;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem; border-radius: 2px;
+      white-space: nowrap; font-weight: 500;
+    }
+    .confidence.high {
+      color: var(--pattern); background: rgba(122,144,120,0.10);
+      border: 1px solid rgba(122,144,120,0.4);
+    }
+    .confidence.mid {
+      color: var(--pre); background: rgba(212,168,74,0.08);
+      border: 1px solid rgba(212,168,74,0.35);
+    }
+    .confidence.low {
+      color: var(--warn); background: var(--warn-bg);
+      border: 1px solid var(--warn);
+    }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    footer {
+      margin-top: 5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.08em; text-align: center; line-height: 2;
+    }
+    @media print {
+      body { background: white; color: black; }
+      .bg, .back-to-top { display: none; }
+      .container { max-width: 100%; padding: 1rem; }
+      .card, .doc-card, .framework-block, .callout, .reading-order {
+        background: white !important; color: black !important; border-color: #999 !important;
+      }
+      a { color: black; text-decoration-color: #666; }
+      h2, h3, h4, strong { color: black !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <a href="#cover" class="back-to-top" id="backToTop" aria-label="volver al inicio">↑</a>
+
+  <div class="container">
+
+    <section class="cover" id="cover">
+      <div class="pretitle">paquete helen · doc 00 · v0.1 · 18 may 2026</div>
+      <h1>Paquete Helen · índice y marco editorial</h1>
+      <p class="subtitle">
+        Este documento abre el paquete. Explica qué hay en cada uno de
+        los 5 docs (más una skill ejecutable), bajo qué marco editorial
+        fueron construidos, y en qué orden conviene leerlos según el
+        tipo de necesidad. Tres minutos de lectura.
+      </p>
+      <div class="meta">5 docs HTML + 1 skill · standalone · mobile-friendly · 18 may 2026</div>
+    </section>
+
+    <!-- ====== QUÉ ES ESTE PAQUETE ====== -->
+    <section id="que-es">
+      <h2>0 · Qué es este paquete</h2>
+
+      <div class="card">
+        <p>
+          Un set de cinco documentos HTML autocontenidos más una skill
+          ejecutable de IA, armados como soporte para el lanzamiento del
+          disco nuevo de Helen Olhausen (<em>Humana</em>, agosto 2026) y
+          para la dirección creativa del proyecto.
+        </p>
+        <p>
+          Cada doc es un archivo único que abre con doble click en
+          cualquier navegador (Chrome, Safari, Firefox), sin conexión a
+          internet, en desktop o mobile. Se pueden compartir por mail,
+          WhatsApp o Drive como archivos sueltos.
+        </p>
+        <p>
+          La skill es un archivo de texto (<code>SKILL.md</code>) que se
+          carga en Claude (web o local) para tener un asistente que
+          chequea decisiones de dirección creativa contra patrones
+          validados. Viene con su archivo de fuentes auditables.
+        </p>
+      </div>
+    </section>
+
+    <!-- ====== MARCO EDITORIAL ====== -->
+    <section id="marco">
+      <h2>1 · Marco editorial · cómo se armó este paquete</h2>
+
+      <p>
+        El paquete está construido bajo cuatro grupos de directrices
+        explícitas <strong>provistas por Emi (Emiliano Mettini)</strong>
+        durante la construcción del paquete. Quedan documentadas acá
+        para que la lectura sea verificable.
+      </p>
+
+      <div class="framework">
+        <div class="framework-block">
+          <h4>Contenido y framing</h4>
+          <ul>
+            <li>Voz + síntesis como eje del disco, no modular industrial</li>
+            <li>El disco se llama <em>Humana</em>, release agosto 2026</li>
+            <li>Asume que el armado del disco (master, tapa, distribución) está siendo manejado por Helen — el paquete cubre solo difusión y soporte estratégico</li>
+          </ul>
+        </div>
+
+        <div class="framework-block">
+          <h4>Estructura del paquete</h4>
+          <ul>
+            <li>5 docs HTML standalone + 1 skill ejecutable</li>
+            <li>El deck de difusión tiene tres bloques visualmente diferenciados (pre-lanzamiento, durante el lanzamiento, post-lanzamiento)</li>
+            <li>Cada doc lleva bibliografía completa + fuentes auditables inline</li>
+            <li>HTML standalone: abre con doble click, sin servidor</li>
+            <li>Mobile-friendly + print-friendly</li>
+            <li>Tono profesional pero cercano</li>
+          </ul>
+        </div>
+
+        <div class="framework-block">
+          <h4>Rigor</h4>
+          <ul>
+            <li>Sustento auditable en todo lo que se afirma — validación de fuentes con URL inline</li>
+            <li>Honestidad sobre probabilidades — escenarios con % explícito cuando aplica</li>
+            <li>Caveats explícitos cuando falta data</li>
+            <li>Correcciones declaradas (Marie Davidson ≠ Pelada, Elsa Hanneke ≠ <em>DIA</em>, Querida no es de Eslovenia, <em>DÍA</em> es 2025 no 2020)</li>
+            <li>Casos de estudio con estructura repetida: trayectoria + pivot + ecosistema + equipo + lessons</li>
+            <li>La skill funciona como tablero de chequeo, no como dictamen creativo</li>
+          </ul>
+        </div>
+
+        <div class="framework-block">
+          <h4>Lo que NO es scope del paquete</h4>
+          <ul>
+            <li>Independencia económica como norte de carrera vital → tratada en doc 03 como marco estratégico de fondo, no como roadmap</li>
+            <li>Composición musical, lyrics, mezcla, mastering → no aborda</li>
+            <li>Estrategia de marketing pagado → mención solo, no profundización</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== MAPA DE DOCS ====== -->
+    <section id="mapa">
+      <h2>2 · Mapa de los documentos</h2>
+
+      <p>
+        Cinco docs HTML + una skill. Cada uno tiene un rol específico.
+      </p>
+
+      <div class="doc-grid">
+
+        <div class="doc-card pre">
+          <div class="doc-card-header">
+            <span class="num">01 · deck</span>
+            <h3>Deck de difusión del lanzamiento</h3>
+          </div>
+          <div class="path">helen-pack/01-deck-difusion.html</div>
+          <p class="desc">
+            Plan de ejecución para el release de agosto. Tres bloques
+            diferenciados: <strong>pre-lanzamiento</strong> (decisiones
+            de release + pitches críticos a prensa + reactivación del
+            catálogo), <strong>durante el lanzamiento</strong> (drop
+            coordinado, ventana de reviews), <strong>post-lanzamiento</strong>
+            (mantener calor + cola larga). Plus: research del contexto
+            (artistas similares, prensa por tier, playlists, comunidades,
+            KPIs con probabilidades, riesgos, bridge messaging). Cierra
+            con una sección sobre la difusión satelital paralela.
+          </p>
+          <div class="when"><strong>Cuándo abrirlo</strong>: planificando acciones del release, mirando contactos de prensa, buscando KPIs realistas, o revisando bridge messaging.</div>
+        </div>
+
+        <div class="doc-card data">
+          <div class="doc-card-header">
+            <span class="num">02 · casos</span>
+            <h3>Casos de estudio · 5 artistas + sus pivots</h3>
+          </div>
+          <div class="path">helen-pack/02-casos-estudio.html</div>
+          <p class="desc">
+            Análisis profundo de cinco artistas que recorrieron caminos
+            adyacentes: <strong>Juana Aguirre</strong> (caso central),
+            <strong>Ela Minus</strong>, <strong>Marie Davidson</strong>,
+            <strong>Lila Tirando a Violeta</strong>, <strong>Lucrecia
+            Dalt</strong>. Para cada una: trayectoria, <em>el pivot</em>
+            que cambió la escala, ecosistema económico actual, equipo,
+            lessons aplicables. Al final, cinco patrones transversales
+            con cobertura honesta de evidencia.
+          </p>
+          <div class="when"><strong>Cuándo abrirlo</strong>: cuando aparezca la pregunta "¿qué hicieron las que llegaron?", para mirar trayectorias comparables sin idealizar.</div>
+        </div>
+
+        <div class="doc-card data">
+          <div class="doc-card-header">
+            <span class="num">03 · economía</span>
+            <h3>Camino a la independencia económica indie</h3>
+          </div>
+          <div class="path">helen-pack/03-independencia.html</div>
+          <p class="desc">
+            Síntesis macro sobre cómo se construye un ecosistema
+            económico sostenible para un artista indie. Mapea las nueve
+            fuentes de ingreso reales, cuánto pesa cada una típicamente,
+            qué hicieron los cinco casos para articularlas, y cinco
+            decisiones estratégicas estructurales (sello, base geográfica,
+            frecuencia de releases, tipo de show, transición del trabajo
+            paralelo). Marco de pensamiento, no roadmap.
+          </p>
+          <div class="when"><strong>Cuándo abrirlo</strong>: cuando aparezca la pregunta "¿cómo se sostiene esto a 5-10 años?", para tener marco macro sin confundirlo con plan de acción del release.</div>
+        </div>
+
+        <div class="doc-card skill">
+          <div class="doc-card-header">
+            <span class="num">04 · directoras</span>
+            <h3>Directoras creativas · método y 7 patrones</h3>
+          </div>
+          <div class="path">helen-pack/04-directoras.html</div>
+          <p class="desc">
+            Análisis del método de cinco referentes que dirigieron la
+            identidad visual de proyectos musicales con autoría visible:
+            <strong>Rui Vieira</strong>, <strong>Ana Domínguez</strong>,
+            <strong>Querida</strong>, <strong>Elsa Hanneke</strong>,
+            <strong>Studio Albert Romagosa</strong> + el modelo
+            <em>Lemonade</em>. Para cada una: background, criterio indie
+            aplicado, método de conexión visual ↔ sonoro, caso puntual.
+            Al final, los <strong>7 patrones cruzados</strong> que son
+            la base de la skill <code>creative-direction</code>.
+          </p>
+          <div class="when"><strong>Cuándo abrirlo</strong>: para reuniones con audiovisualistas, decisiones sobre tapa o videoclip, briefear colaboradoras visuales, o pensar el show en vivo.</div>
+        </div>
+
+        <div class="doc-card data">
+          <div class="doc-card-header">
+            <span class="num">05 · cuentas advisory</span>
+            <h3>Cuentas, plataformas y presencia digital · advisory completo</h3>
+          </div>
+          <div class="path">helen-pack/05-cuentas-advisory.html</div>
+          <p class="desc">
+            Auditoría plataforma por plataforma de la presencia digital
+            actual de Helen (Spotify 1.564 followers, Last.fm 374 listeners,
+            etc.) + lo que falta (Spotify for Artists sin reclamar,
+            MusicBrainz/Wikidata vacíos, handles X/Bluesky/TikTok libres,
+            <code>helenolhausen.com</code> libre). Estrategia de timing en
+            <strong>dos olas</strong>: Wave 1 (infraestructura + identidad,
+            ahora) y Wave 2 (activación creativa, con el disco nuevo). Doc
+            cubre tier por tier cada plataforma, sección dedicada a si vale
+            la pena escribir/blog/newsletter + 10 ideas de essays.
+          </p>
+          <div class="when"><strong>Cuándo abrirlo</strong>: ahora — antes de empezar a operar la presencia digital. La auditoría es de mayo 2026.</div>
+        </div>
+
+        <div class="doc-card skill">
+          <div class="doc-card-header">
+            <span class="num">skill</span>
+            <h3>Skill <code>creative-direction</code> (ejecutable en Claude)</h3>
+          </div>
+          <div class="path">.claude/skills/creative-direction/ — SKILL.md + SOURCES.md</div>
+          <p class="desc">
+            Una skill que se carga en Claude (web o local) y le agrega
+            comportamiento de chequeo creativo. Cuando se le consulta una
+            decisión visual sobre el disco, responde validando contra los
+            7 patrones del doc 04 (variable única, materia prima
+            compartida, decisión material, doble rol artista/traductora,
+            inversión de tropos, equipo estable, lectura antes que
+            Pinterest). Tablero de chequeo, no dictamen creativo. Viene
+            con <code>SOURCES.md</code> que documenta cada afirmación con URL.
+          </p>
+          <div class="when"><strong>Cuándo usarla</strong>: cuando hay una decisión visual sobre la mesa (cover, video, performance) y se busca una segunda lectura estructurada. Se invoca con frases como "validá esta decisión", "qué haría Querida con esto", "estoy armando el mood board".</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====== ORDEN DE LECTURA ====== -->
+    <section id="orden">
+      <h2>3 · Orden de lectura sugerido</h2>
+
+      <p>
+        No hay que leerlos todos seguidos. Cada uno responde a una
+        necesidad distinta — abrirlos cuando esa necesidad aparezca.
+        Pero si querés un primer recorrido completo, este es el orden
+        que tiene más sentido:
+      </p>
+
+      <div class="reading-order">
+        <ol>
+          <li><span class="label">1.</span> <strong>Este doc (00)</strong> — marco editorial y mapa. Ya estás acá.</li>
+          <li><span class="label">2.</span> <strong>Deck de difusión (01)</strong> — porque tiene la temporalidad inmediata: agosto está cerca y muchas decisiones de pre-lanzamiento tienen ventanas cerrándose.</li>
+          <li><span class="label">3.</span> <strong>Directoras creativas (04)</strong> — porque mañana hay reuniones con audiovisualistas y los 7 patrones sirven YA, antes de cerrar decisiones visuales.</li>
+          <li><span class="label">4.</span> <strong>Skill <code>creative-direction</code></strong> — cargarla en Claude para usarla cuando aparezca cualquier decisión creativa que necesite segunda lectura.</li>
+          <li><span class="label">5.</span> <strong>Casos de estudio (02)</strong> — cuando haya energía para mirar trayectorias completas. Más denso, más largo, no urgente.</li>
+          <li><span class="label">6.</span> <strong>Independencia económica (03)</strong> — cuando aparezca la pregunta "¿cómo sostengo esto a largo plazo?". Marco macro, no para el día a día del release.</li>
+        </ol>
+      </div>
+
+      <div class="callout note">
+        <strong>Si tenés poco tiempo</strong>: los <strong>docs 01 y 04</strong>
+        son los más operativos. El primero da el plan del release
+        inmediato; el segundo da los patrones para las decisiones
+        visuales que están en juego mañana. Los demás profundizan
+        contexto.
+      </div>
+    </section>
+
+    <!-- ====== RIGOR Y SOLIDEZ ====== -->
+    <section id="rigor">
+      <h2>4 · Rigor y solidez de la información</h2>
+
+      <p>
+        No todo lo que está en el paquete tiene el mismo nivel de
+        confianza. Algunas afirmaciones son hechos verificables con un
+        click; otras son inferencias razonadas marcadas como tales. La
+        tabla que sigue mapea cada tipo de afirmación con su nivel de
+        confianza y por qué.
+      </p>
+
+      <p>
+        Las afirmaciones de <strong>baja confianza</strong> están
+        declaradas como inferencia o caveat dentro de cada doc — no se
+        presentan como certezas. Las de <strong>alta confianza</strong>
+        tienen URL inline verificable en su lugar.
+      </p>
+
+      <div class="table-scroll">
+        <table class="rigor-table">
+          <thead>
+            <tr>
+              <th>Tipo de afirmación</th>
+              <th>Confianza</th>
+              <th>Por qué</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>URLs citadas + facts directos (fechas, sellos, releases)</td>
+              <td><span class="confidence high">alta</span></td>
+              <td>Verificables con un click. Cada claim factual tiene fuente.</td>
+            </tr>
+            <tr>
+              <td>Quotes textuales de entrevistas</td>
+              <td><span class="confidence high">alta</span></td>
+              <td>Citables literalmente con fuente. Reproducibles.</td>
+            </tr>
+            <tr>
+              <td>Trayectorias y pivots de cada artista</td>
+              <td><span class="confidence mid">media-alta</span></td>
+              <td>Cruzadas entre múltiples fuentes. Interpretación del peso relativo es nuestra.</td>
+            </tr>
+            <tr>
+              <td>Ecosistema económico (porcentajes por fuente)</td>
+              <td><span class="confidence low">baja-media</span></td>
+              <td>Inferencias razonadas sobre catálogo público, no contabilidad verificada. Declarado como tal en cada caso.</td>
+            </tr>
+            <tr>
+              <td>Rangos de fees / stipends de industria</td>
+              <td><span class="confidence mid">media</span></td>
+              <td>Datos de industria 2024-2025 (Variety, Hollywood Reporter, Soundcharts). Pueden estar desactualizados o variar por mercado.</td>
+            </tr>
+            <tr>
+              <td>Patrones transversales (5 de casos + 7 de directoras)</td>
+              <td><span class="confidence mid">media</span></td>
+              <td>Interpretaciones derivadas del research. No validadas por terceros del sector. Cobertura declarada (X/5).</td>
+            </tr>
+            <tr>
+              <td>Probabilidades de escenarios de growth (65% / 25% / 3-5%)</td>
+              <td><span class="confidence low">baja</span></td>
+              <td>Estimaciones basadas en casos comparables. No son estadística — son rangos para medir si la campaña está rindiendo.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout note">
+        <strong>Cómo se puede aumentar la solidez</strong>: validación
+        externa (revisión por gente del sector — managers, periodistas,
+        productores), tracking temporal contra escenarios planteados, y
+        cruce con feedback de Helen sobre lo que conoce de primera mano.
+        Esa capa se puede armar después si interesa.
+      </div>
+    </section>
+
+
+    <footer>
+      paquete helen · doc 00 · índice y marco editorial
+      <br>
+      preparado por emiliano mettini / spiral out · 18 de mayo 2026
+      <br>
+      versión 0.1 · feedback bienvenido
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>

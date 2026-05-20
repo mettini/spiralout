@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camino a la independencia económica indie · Helen Olhausen</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #0a0a0c; --bg-2: #14141a; --bg-3: #1c1c24;
+      --fg: #e8e8ec; --fg-2: #a0a0a8; --muted: #6a6a74; --line: #2a2a32;
+      --accent: #6080c0;        /* azul calmo */
+      --accent-bg: rgba(96,128,192,0.08);
+      --accent-border: rgba(96,128,192,0.35);
+      --pre: #d4a84a;
+      --warn: #c66060;
+      --warn-bg: rgba(198,96,96,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    @media (max-width: 700px) { html { font-size: 16px; } }
+    html, body {
+      background: var(--bg); color: var(--fg);
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bg {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,90,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,50,80,0.10) 0%, transparent 55%),
+        var(--bg);
+    }
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+      width: 44px; height: 44px;
+      background: rgba(20,20,26,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line); border-radius: 50%;
+      color: var(--fg-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none; font-size: 1.1rem; line-height: 1;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s, color 0.2s, border-color 0.2s;
+    }
+    .back-to-top.visible { opacity: 0.85; visibility: visible; }
+    .back-to-top:hover { color: var(--fg); border-color: var(--fg-2); opacity: 1; }
+    @media print { .back-to-top { display: none; } }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem 6rem; }
+    @media (max-width: 700px) { .container { padding: 0 1rem 4rem; } }
+
+    .cover {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4rem;
+    }
+    .cover .pretitle {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.2rem;
+    }
+    .cover h1 {
+      font-size: 2.2rem; font-weight: 300; letter-spacing: 0.03em;
+      line-height: 1.25; margin-bottom: 1rem; color: var(--fg);
+    }
+    @media (max-width: 600px) { .cover h1 { font-size: 1.6rem; line-height: 1.3; } .cover { padding: 2.5rem 0 2rem; } }
+    .cover .subtitle {
+      font-size: 1rem; color: var(--fg-2); font-style: italic;
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .cover .meta {
+      font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+    }
+    .index {
+      margin-top: 2.5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .index h3 {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem; margin-top: 0;
+    }
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.4rem 1.5rem;
+    }
+    .index-grid a {
+      display: flex; align-items: baseline; gap: 0.7rem;
+      font-size: 0.85rem; color: var(--fg-2); text-decoration: none;
+      padding: 0.3rem 0; border-bottom: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .index-grid a:hover { color: var(--fg); border-bottom-color: var(--line); }
+    .index-grid a .num {
+      font-size: 0.72rem; color: var(--accent); font-variant-numeric: tabular-nums;
+      min-width: 1.4em; letter-spacing: 0.05em;
+    }
+
+    section { margin-bottom: 4rem; scroll-margin-top: 5rem; }
+    h2 {
+      font-size: 1.5rem; font-weight: 300; letter-spacing: 0.05em;
+      margin-bottom: 1.3rem; padding-bottom: 0.7rem;
+      border-bottom: 2px solid var(--accent-border);
+      color: var(--accent);
+    }
+    h3 {
+      font-size: 1.15rem; font-weight: 600; letter-spacing: 0.02em;
+      margin-top: 2.2rem; margin-bottom: 1rem; color: var(--fg);
+    }
+    h4 {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--fg-2);
+      margin-top: 1.5rem; margin-bottom: 0.7rem;
+    }
+    p { margin-bottom: 1rem; font-size: 1rem; }
+    a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 3px; }
+    a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    strong { color: var(--fg); font-weight: 500; }
+    em { color: var(--fg); font-style: italic; }
+    code {
+      font-family: 'Courier New', monospace; font-size: 0.85em;
+      background: var(--bg-3); padding: 0.1em 0.4em; border-radius: 2px;
+      color: var(--fg-2);
+    }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.5rem; }
+
+    .card {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      background: var(--accent-bg);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card.intro { background: var(--bg-3); border-left-color: var(--fg-2); }
+
+    /* Income stream cards */
+    .stream {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.5rem 1.6rem;
+      margin-bottom: 1.2rem;
+      background: var(--bg-2);
+    }
+    .stream-header {
+      display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap;
+      margin-bottom: 1rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .stream-header h3 {
+      margin: 0; color: var(--accent); font-size: 1.1rem; flex: 1;
+    }
+    .stream-header .weight {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .stream .who {
+      font-size: 0.85rem; color: var(--fg-2);
+      padding: 0.6rem 0.8rem;
+      background: var(--bg-3); border-radius: 3px;
+      margin-top: 0.8rem;
+    }
+    .stream .who strong { color: var(--fg); }
+
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-size: 0.92rem;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    th {
+      text-align: left; padding: 0.7rem 0.9rem;
+      font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.68rem; color: var(--fg-2);
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--line);
+    }
+    td {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top; color: var(--fg);
+    }
+    tr:last-child td { border-bottom: 0; }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    .callout {
+      margin: 1.3rem 0; padding: 1rem 1.2rem;
+      border-radius: 3px; font-size: 0.9rem;
+    }
+    .callout.warn { background: var(--warn-bg); border-left: 3px solid var(--warn); color: var(--fg); }
+    .callout.note { background: var(--bg-2); border-left: 3px solid var(--fg-2); color: var(--fg-2); }
+    .callout.info { background: var(--accent-bg); border-left: 3px solid var(--accent); color: var(--fg); }
+    .callout strong { color: var(--fg); }
+
+    .sources {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 2rem; font-size: 0.85rem;
+    }
+    .sources h4 {
+      color: var(--accent); margin-top: 0;
+      letter-spacing: 0.18em; font-size: 0.75rem;
+    }
+    .sources ul { padding-left: 1.2rem; margin-bottom: 0; }
+    .sources li { margin-bottom: 0.35rem; color: var(--fg-2); }
+    .sources li a { color: var(--fg-2); }
+    .sources li a:hover { color: var(--accent); }
+
+    footer {
+      margin-top: 5rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.08em; text-align: center; line-height: 2;
+    }
+    @media print {
+      body { background: white; color: black; }
+      .bg, .back-to-top { display: none; }
+      .container { max-width: 100%; padding: 1rem; }
+      .card, .stream, table, .callout, .sources {
+        background: white !important; color: black !important; border-color: #999 !important;
+      }
+      a { color: black; text-decoration-color: #666; }
+      h2, h3, h4, strong { color: black !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <a href="#cover" class="back-to-top" id="backToTop" aria-label="volver al inicio">↑</a>
+
+  <div class="container">
+    <section class="cover" id="cover">
+      <div class="pretitle">paquete helen · doc 03 · v0.1 · 18 may 2026</div>
+      <h1>Camino a la independencia económica indie</h1>
+      <p class="subtitle">
+        Síntesis macro sobre cómo un artista indie construye un
+        ecosistema económico sostenible cuando la música es el centro
+        del proyecto. Mapea las fuentes de ingreso reales, cuánto pesa
+        cada una, y qué hicieron las 5 artistas del doc 02 para
+        articularlas. Marco de pensamiento, no plan de ejecución.
+      </p>
+      <div class="meta">~5.000 palabras · basado en research del doc 02 · fuentes auditables</div>
+
+      <div class="index">
+        <h3>Índice</h3>
+        <div class="index-grid">
+          <a href="#alcance"><span class="num">0</span>Alcance del documento</a>
+          <a href="#mapa"><span class="num">1</span>Mapa de fuentes de ingreso</a>
+          <a href="#streams"><span class="num">2</span>Análisis por stream</a>
+          <a href="#sync"><span class="num">3</span>Sync audiovisual</a>
+          <a href="#financiamiento"><span class="num">4</span>Financiamiento público</a>
+          <a href="#equipo"><span class="num">5</span>Equipo y costos fijos</a>
+          <a href="#decisiones"><span class="num">6</span>Decisiones estratégicas</a>
+          <a href="#aplicable"><span class="num">7</span>Lo aplicable a Helen</a>
+          <a href="#bibliografia"><span class="num">8</span>Bibliografía</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== ALCANCE ====== -->
+    <section id="alcance">
+      <h2>0 · Alcance del documento</h2>
+
+      <div class="card intro">
+        <p>
+          Este documento es <strong>marco de pensamiento estratégico, no
+          plan de ejecución</strong>. La pregunta que intenta responder:
+          <em>"¿cómo se sostiene económicamente un artista indie cuando
+          la música es el centro de su vida laboral?"</em>
+        </p>
+        <p>
+          Está basado en evidencia documentada de los 5 casos del
+          documento 02 (Juana Aguirre, Ela Minus, Marie Davidson, Lila
+          Tirando a Violeta, Lucrecia Dalt) más datos públicos de la
+          industria. No reemplaza al deck de difusión (doc 01) ni a los
+          casos individuales (doc 02) — es la capa de arriba.
+        </p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Caveat importante</strong>: ninguna de las 5 artistas
+        del doc 02 declaró públicamente porcentajes exactos de
+        composición de ingresos. Lo que sigue son <strong>inferencias
+        razonadas sobre catálogo público + entrevistas</strong>, no
+        contabilidad verificada. Las cifras de stipend y fees son rangos
+        de industria documentados, no garantías individuales.
+      </div>
+
+    </section>
+
+    <!-- ====== MAPA ====== -->
+    <section id="mapa">
+      <h2>1 · Mapa de fuentes de ingreso</h2>
+
+      <p>
+        Un artista indie sostenible típicamente combina entre <strong>4
+        y 8 fuentes de ingreso simultáneas</strong>. Ninguna sola
+        alcanza. El error común es esperar que el streaming pague la
+        vida — eso es realidad para 1% del catalog global.
+      </p>
+
+      <h3>Las 9 fuentes posibles, ranked por peso típico</h3>
+
+      <div class="table-scroll"><table>
+        <thead><tr><th>#</th><th>Fuente</th><th>Peso típico</th><th>Predictibilidad</th></tr></thead>
+        <tbody>
+        <tr><td>1</td><td><strong>Shows en vivo / giras</strong></td><td>Alto (20-50%)</td><td>Media (depende temporada)</td></tr>
+        <tr><td>2</td><td><strong>Sync audiovisual</strong> (cine, TV, ads, videojuegos)</td><td>Alto cuando aparece (10-50%)</td><td>Baja (no recurrente)</td></tr>
+        <tr><td>3</td><td><strong>Ventas físicas + Bandcamp</strong> (vinilo, cassette, merch)</td><td>Medio (10-25%)</td><td>Media</td></tr>
+        <tr><td>4</td><td><strong>Comisiones</strong> (cine, teatro, museos, instalaciones)</td><td>Medio (5-30%)</td><td>Baja (project-by-project)</td></tr>
+        <tr><td>5</td><td><strong>DJ sets / live AV sets</strong></td><td>Medio (5-25%, alto para electrónica)</td><td>Alta (mercado activo)</td></tr>
+        <tr><td>6</td><td><strong>Becas / financiamiento público</strong></td><td>Variable (5-30% cuando se gana)</td><td>Baja (cíclica)</td></tr>
+        <tr><td>7</td><td><strong>Streaming royalties</strong></td><td>Bajo (5-15% típicamente)</td><td>Media (predecible pero chico)</td></tr>
+        <tr><td>8</td><td><strong>Trabajo paralelo</strong> (diseño, ingeniería, docencia, etc.)</td><td>Crítico para muchos (10-60%)</td><td>Alta</td></tr>
+        <tr><td>9</td><td><strong>Brand work / colaboraciones de marca</strong></td><td>Variable (0-20% para artistas con tracción)</td><td>Baja</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout info">
+        <strong>Lo que se ve cuando se cruzan los 5 casos del doc 02</strong>:
+        ninguna depende de una sola fuente. Lucrecia Dalt es la más
+        diversificada (scoring + sello + ensemble + residencias +
+        comisiones). Ela Minus depende fuerte de Domino (sello) +
+        touring + brand. Juana Aguirre combina diseño paralelo + shows
+        + becas. Marie Davidson combina sello + DJ + tour. Lila Tirando
+        a Violeta combina sellos rotativos + festivales + AV
+        installations.
+      </div>
+    </section>
+
+    <!-- ====== STREAMS ====== -->
+    <section id="streams">
+      <h2>2 · Análisis por stream de ingreso</h2>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Shows en vivo y giras</h3>
+          <span class="weight">peso 20-50% · driver principal para electrónica</span>
+        </div>
+        <p>
+          Para artistas de electrónica experimental / voz + síntesis, los
+          shows en vivo son históricamente <strong>el driver económico
+          mayor</strong> — tanto por fee directo como por exposure que
+          alimenta otras fuentes.
+        </p>
+        <p>
+          <strong>Lo no obvio</strong>: muchas ofertas de festival son
+          deficitarias. Ela Minus declaró que las ofertas suelen ser
+          <em>"literally impossible to make it work financially without
+          losing a lot of money"</em>. Su política es <strong>decir no
+          más seguido</strong>.
+          <a href="https://musictech.com/features/interviews/ela-minus-interview-dia/" target="_blank">MusicTech</a>.
+        </p>
+        <p>
+          <strong>Lo aplicable</strong>: aceptar fees deficitarios solo
+          si hay outcome estratégico (exposure a otra audiencia, primer
+          mercado europeo, oportunidad de colaboración). Si es solo
+          "tocar por tocar", quema runway.
+        </p>
+        <div class="who">
+          <strong>Qué hacen los 5 casos</strong>: Juana Aguirre (Lollapalooza AR, Primavera Sound, Primavera Pro, Foro Indie Rocks México, gira europea 2026). Ela Minus (Coachella, Primavera Sound, gira Caribou UK). Marie Davidson (Sónar, Dekmantel, MUTEK). Lila Tirando a Violeta (MUTEK ×3, LEV Festival). Lucrecia Dalt (Barbican, Kings Place, Volksbühne, salas medianas).
+        </div>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Sync audiovisual</h3>
+          <span class="weight">peso 10-50% cuando aparece · sección dedicada abajo (3)</span>
+        </div>
+        <p>
+          Cuando un track entra en una serie / película / publicidad /
+          videojuego, los fees son significativos: típicamente
+          <strong>$3.000-50.000 USD por placement</strong> para indie de
+          nivel medio. Para cine grande / serie premium puede ser
+          $50.000-250.000.
+        </p>
+        <p>
+          Lucrecia Dalt pivotó a scoring de cine/TV con <em>The Seed</em>
+          (2021) + <em>The Baby</em> (HBO, 2022) — la fuente que más
+          cambió su sostenibilidad económica. Ver sección 3 para detalle.
+        </p>
+        <div class="who">
+          <strong>De los 5 casos, solo Lucrecia tiene scoring/sync documentado fuerte.</strong> Las otras 4 probablemente tienen algunos placements pero no como pilar económico.
+        </div>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Ventas físicas + Bandcamp</h3>
+          <span class="weight">peso 10-25% · alta señal/ruido</span>
+        </div>
+        <p>
+          Una venta de vinilo desde Europa = ~10× el valor de un stream
+          en Spotify. Bandcamp retiene 15% (compras directas) o 10%
+          (merch). El resto va al artista — modelo radicalmente más
+          favorable que cualquier DSP.
+        </p>
+        <p>
+          <strong>Ediciones limitadas</strong> de vinilo (200-500 copias)
+          son norma en este nicho. Permiten precios premium ($35-50 USD)
+          y crean colectibles que se revalorizan en mercado secundario.
+        </p>
+        <p>
+          <strong>Merch</strong>: t-shirts, posters, libros de arte
+          acompañando releases. Helen, dado su pivote a voz+síntesis con
+          fuerte componente conceptual, tiene oportunidad de merch que
+          sea pieza de arte (no solo logo) — modelo de Caterina Barbieri,
+          Holly Herndon.
+        </p>
+        <div class="who">
+          <strong>Modelo Bandcamp activo</strong>: Juana Aguirre (tienda con vinilo de Anónimo), Lila Tirando a Violeta (vinilos limitados via Boomkat + Bandcamp), Lucrecia Dalt (RVNG vende todo el catálogo + vinilo), Ela Minus (Domino Mart con limited editions). Helen ya tiene Bandcamp activo desde 2020.
+        </div>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Comisiones — cine, teatro, museos, instalaciones</h3>
+          <span class="weight">peso 5-30% · alta gratificación, baja recurrencia</span>
+        </div>
+        <p>
+          Composición por encargo para piezas específicas. Fee típico
+          (rango muy amplio):
+        </p>
+        <ul>
+          <li><strong>Score de documental indie</strong>: $5.000-15.000</li>
+          <li><strong>Score de cine indie (long feature)</strong>: $15.000-50.000</li>
+          <li><strong>Música para obra de teatro</strong>: $3.000-12.000</li>
+          <li><strong>Instalación sonora para museo / festival</strong>: $5.000-30.000 (con producción)</li>
+        </ul>
+        <p>
+          Helen mencionó interés explícito en cine y teatro como
+          dirección de expansión. Es alineado con el momentum de
+          Lucrecia Dalt y con el nicho voz+síntesis (los directores
+          buscan ese tipo de sonido para escenas íntimas o atmosféricas).
+        </p>
+        <div class="who">
+          <strong>De los 5</strong>: Lucrecia Dalt es la más documentada en comisiones (The Seed cine, The Baby HBO, instalaciones Sónar, Berlin Botanical Garden, Pioneer Works, CTM). Lila Tirando a Violeta tiene instalaciones AV (Pulsar Etéreo con Manuela Vilanova). Las otras 3 sin evidencia pública de comisiones recurrentes.
+        </div>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>DJ sets / live AV sets</h3>
+          <span class="weight">peso 5-25% · alto para club electronic</span>
+        </div>
+        <p>
+          Para artistas con material que funciona en pista, los DJ sets
+          son ingreso paralelo significativo. Fees típicos: $500-2.000
+          local, $1.500-8.000 internacional para club electrónico
+          mid-tier.
+        </p>
+        <p>
+          <strong>Live AV sets</strong> (no DJ, pero performance
+          electrónica + visuals integrados) cobran más: $2.000-10.000
+          típicamente. Lila Tirando a Violeta opera en este modelo.
+        </p>
+        <p>
+          Para Helen, los DJ sets pueden no ser el mejor fit (depende
+          del proyecto vivo). Live AV sí — es exactamente lo que el
+          patrón #5 de la skill creative-direction sugiere como SKU
+          premium para festivales y museos.
+        </p>
+        <div class="who">
+          <strong>Modelo activo</strong>: Marie Davidson (DJ sets en MUTEK, Dekmantel, Primavera), Lila Tirando a Violeta (live AV sets como producto principal). Las otras 3 sin evidencia fuerte de este stream.
+        </div>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Becas y financiamiento público</h3>
+          <span class="weight">peso variable · sección dedicada abajo (4)</span>
+        </div>
+        <p>
+          Aceleradores reales, no plan B. Ibermúsicas (Juana usó la
+          beca de movilidad en 2024 para circular a México), FONAM
+          (Helen ya lo usó para Romperse), CanCon Canadá (Marie
+          Davidson). Ver sección 4 para detalle.
+        </p>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Streaming royalties</h3>
+          <span class="weight">peso 5-15% · base, no top</span>
+        </div>
+        <p>
+          Spotify paga ~$0.003-0.005 por stream (varía por país y plan
+          del oyente). Apple Music ~$0.007-0.010. Para llegar a $1.000
+          USD/mes en Spotify necesitás <strong>~250.000 streams/mes</strong>.
+          Ese es el nivel de un buen artista con 50.000 monthly
+          listeners constantes.
+        </p>
+        <p>
+          <strong>Implicación</strong>: el streaming como driver
+          económico requiere escala (10K+ monthly listeners) que no
+          aparece sin trabajo previo en las otras fuentes. Para los
+          primeros 1-3 años de un artista indie, el streaming es
+          <em>indicador</em> (mide tracción) más que <em>ingreso</em>.
+        </p>
+        <p>
+          <strong>Bandcamp y vinilo pesan más que streaming</strong>
+          para el nicho experimental, hasta llegar a 10K+ monthly. La
+          relación se invierte recién en escala grande.
+        </p>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Trabajo paralelo</h3>
+          <span class="weight">peso 10-60% · estratégico, no debilidad</span>
+        </div>
+        <p>
+          <strong>El "trabajo paralelo" mantenido conscientemente es
+          ventaja, no debilidad</strong>. Permite decir no a giras malas,
+          control sobre branding, colchón en pandemias o ciclos vacíos.
+        </p>
+        <p>
+          <strong>Lo importante</strong>: que sea trabajo paralelo
+          <em>estratégico</em>, no trabajo que devora la energía creativa.
+          Idealmente: freelance / part-time / con horario flexible / con
+          ingreso por proyecto.
+        </p>
+        <div class="who">
+          <strong>De los 5</strong>: <strong>Juana Aguirre sigue trabajando como diseñadora gráfica</strong> (UBA grad), declarado explícitamente en entrevistas. <a href="https://www.indierocks.mx/musica/entrevistas/entrevista-con-juana-aguirre/" target="_blank">Indie Rocks México</a>. Ela Minus trabajó full-time en Critter & Guitari (Brooklyn) ~2 años antes de dejarlo. Lucrecia Dalt fue ingeniera civil/geotécnica ~10 años antes de la mudanza a Berlín. Helen actualmente tiene "OSE — Operación de Sostén Económico" (ingeniería). El patrón "transición gradual del trabajo paralelo, no salto" se repite.
+        </div>
+      </div>
+
+      <div class="stream">
+        <div class="stream-header">
+          <h3>Brand work / colaboraciones de marca</h3>
+          <span class="weight">peso variable · 0% al inicio, hasta 20% con tracción</span>
+        </div>
+        <p>
+          Marcas (moda, tecnología, automotor) pagan a artistas con
+          tracción cultural para colaboraciones: música original para
+          campaña, presencia en evento, capsule colection.
+        </p>
+        <p>
+          Fees típicos para artista indie con 50K+ monthly listeners +
+          coverage crítico: <strong>$5.000-50.000 USD por colaboración</strong>.
+          Para artistas mainstream (FKA twigs, Rosalía) los fees suben
+          a 6-7 dígitos.
+        </p>
+        <p>
+          <strong>Riesgo</strong>: brand work mal elegido puede dañar
+          credibilidad. Buscar marcas con afinidad estética / posicionamiento
+          ya establecido en la cultura.
+        </p>
+        <div class="who">
+          <strong>Modelo activo</strong>: Ela Minus tiene colaboraciones declaradas con <strong>Chanel y Prada</strong>. <a href="https://en.wikipedia.org/wiki/Ela_Minus" target="_blank">Wikipedia</a>. Las otras 4 sin evidencia pública de brand work significativo.
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SYNC ====== -->
+    <section id="sync">
+      <h2>3 · Sync audiovisual — la pista oculta</h2>
+
+      <div class="card">
+        <p>
+          <strong>Helen mencionó explícitamente</strong> el sync
+          audiovisual como pieza del ecosistema que quiere construir.
+          Es coherente con su sonido (voz + síntesis es match perfecto
+          para escenas íntimas, atmosféricas, sci-fi suave) y con el
+          momentum del nicho — Lucrecia Dalt es la prueba de que ese
+          pivote funciona.
+        </p>
+      </div>
+
+      <h3>Tipos de sync, ordenados por rentabilidad</h3>
+
+      <div class="table-scroll"><table>
+        <thead><tr><th>Tipo</th><th>Fee típico (USD)</th><th>Frecuencia</th></tr></thead>
+        <tbody>
+        <tr><td>Score completo de cine grande</td><td>$50.000 – $250.000</td><td>1 por película (proyecto largo)</td></tr>
+        <tr><td>Score completo de serie premium (HBO, A24, Netflix)</td><td>$30.000 – $150.000 + royalties</td><td>1 por temporada</td></tr>
+        <tr><td>Score de cine indie / documental</td><td>$5.000 – $30.000</td><td>2-4 por año si hay reputación</td></tr>
+        <tr><td>Sync de track existente en serie/peli grande</td><td>$10.000 – $50.000</td><td>Ocasional</td></tr>
+        <tr><td>Sync de track existente en publicidad grande</td><td>$15.000 – $100.000</td><td>Ocasional</td></tr>
+        <tr><td>Sync en videojuego AAA</td><td>$5.000 – $25.000 por track</td><td>Ocasional</td></tr>
+        <tr><td>Sync indie / publicidad chica / corto</td><td>$500 – $5.000</td><td>Frecuente si hay supervisor</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Cómo se entra al circuito sync</h3>
+
+      <ol>
+        <li><strong>Music supervisors</strong> son los gatekeepers. Buscan música para cada proyecto. Hay agencias dedicadas (Bang On, Format Productions, Search Party Music, Pusher, Big Sync Music) que representan catálogos completos al supervisor.</li>
+        <li><strong>Sign deal con agencia sync</strong> (típicamente 30-50% split). El catálogo del artista entra a sus librerías de búsqueda interna. El supervisor escucha cuando necesita "voz femenina en castellano sobre electrónica atmosférica".</li>
+        <li><strong>Programas formativos</strong>: Sundance Composer Lab, Berlinale Talents, Cinéfondation. Aplicación competitiva pero abren la red. Lucrecia Dalt pasó por Sundance ASCAP Composer Spotlight 2025. <a href="https://www.ascap.com/news-events/Events/2025/Sundance/composer-spotlight-bios/Dalt_Lucrecia" target="_blank">ASCAP</a>.</li>
+        <li><strong>Networking directo con directores indie</strong> de tu región. Cine uruguayo + argentino tiene supervisor pool relativamente accesible.</li>
+      </ol>
+
+      <div class="callout note">
+        <strong>Sync para Helen — observación específica</strong>: el
+        cine indie latinoamericano + iberoamericano está en buen momento
+        crítico (festivales, premios, distribución internacional). Voz
+        en castellano + electrónica de cámara es match natural para
+        producciones que buscan "no sonar a Hollywood". El path realista:
+        empezar con 1-2 docs / cortos / pelis chicas, construir reel,
+        pasar a la siguiente escala.
+      </div>
+    </section>
+
+    <!-- ====== FINANCIAMIENTO PUBLICO ====== -->
+    <section id="financiamiento">
+      <h2>4 · Financiamiento público — los aceleradores subutilizados</h2>
+
+      <div class="card">
+        <p>
+          Las becas estatales y los programas de financiamiento cultural
+          son <strong>infraestructura, no caridad</strong>. Los artistas
+          que las usan sistemáticamente se aceleran significativamente
+          frente a los que no.
+        </p>
+        <p>
+          La lectura de "no quiero depender de becas" suele ser un error
+          táctico — la beca no compite con la carrera, la financia.
+        </p>
+      </div>
+
+      <h3>Programas relevantes para Helen (uruguaya)</h3>
+
+      <h4>Iberoamericanos / regionales</h4>
+      <ul>
+        <li><strong>Ibermúsicas</strong> — múltiples líneas: apoyo a movilidad (circulación de profesionales), residencias, festivales, formación. Convocatorias anuales. <a href="https://www.ibermusicas.org" target="_blank">ibermusicas.org</a>. <em>Juana Aguirre la usó en 2024 para financiar su salida a México</em>.</li>
+        <li><strong>Iberescena</strong> — para teatro + artes escénicas con componente musical. Si Helen colabora con teatro o danza, aplica.</li>
+        <li><strong>SEGIB / Espacio Cultural Iberoamericano</strong> — programas de cooperación cultural.</li>
+      </ul>
+
+      <h4>Uruguayos</h4>
+      <ul>
+        <li><strong>FONAM</strong> (Fondo Nacional de Música, Ministerio de Educación y Cultura) — Helen ya lo usó para Romperse. Aplicar a nueva edición para Humana o próximo proyecto.</li>
+        <li><strong>Fondos Concursables Cultura</strong> (Departamento de Cultura, Intendencia Montevideo).</li>
+        <li><strong>FEFCA</strong> (Fondo de Fomento Cinematográfico y Audiovisual) — si Helen sale a sync / score de cine, aplica como compositora.</li>
+        <li><strong>Comisión del Patrimonio Cultural</strong> — para proyectos con componente patrimonial.</li>
+      </ul>
+
+      <h4>Internacionales (más competitivos)</h4>
+      <ul>
+        <li><strong>Sundance Composer Lab</strong> — formación intensiva para compositoras de cine emergentes. Todo cubierto.</li>
+        <li><strong>Berlinale Talents</strong> — programa formativo internacional con foco audiovisual.</li>
+        <li><strong>Goethe-Institut</strong> — programas varios por país.</li>
+        <li><strong>Pro Helvetia</strong> (Suiza), <strong>DAAD</strong> (Alemania) — para perfiles ya internacionalizados.</li>
+      </ul>
+
+      <p>
+        <strong>Lead time típico</strong> en convocatorias internacionales:
+        4-8 meses entre application y start. Lo que se aplica en marzo
+        empieza octubre/noviembre como mínimo.
+      </p>
+    </section>
+
+    <!-- ====== EQUIPO ====== -->
+    <section id="equipo">
+      <h2>5 · Equipo y costos fijos</h2>
+
+      <p>
+        El equipo es costo + apalancamiento. Demasiado grande temprano
+        quema runway; demasiado chico tarde frena oportunidades.
+      </p>
+
+      <h3>Roles típicos y cuándo aparecen</h3>
+
+      <div class="table-scroll"><table>
+        <thead><tr><th>Rol</th><th>Cuándo entra</th><th>Costo / split típico</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Manager</strong></td><td>Cuando hay >€2-5K/mes en bookings + decisiones complejas</td><td>15-20% de ingresos brutos</td></tr>
+        <tr><td><strong>Booking agent (regional)</strong></td><td>Cuando hay >5-10 shows/año fuera de la ciudad base</td><td>10-15% del fee del show</td></tr>
+        <tr><td><strong>Booking agent (internacional)</strong></td><td>Cuando hay base europea + showcase confirmados</td><td>10-15% del fee internacional</td></tr>
+        <tr><td><strong>PR especializado</strong> (release campaign)</td><td>Por release (3-6 meses contrato)</td><td>$2.000-10.000 USD por campaña</td></tr>
+        <tr><td><strong>Sello (firma)</strong></td><td>Cuando hay catálogo + tracción + decisión consciente</td><td>50/50 al 70/30 master ownership</td></tr>
+        <tr><td><strong>Diseñadora gráfica</strong></td><td>Desde el primer release serio</td><td>$500-3.000 por proyecto</td></tr>
+        <tr><td><strong>Fotógrafa</strong></td><td>Por sesión (press kit + releases)</td><td>$300-2.000 por sesión</td></tr>
+        <tr><td><strong>Sync agent</strong></td><td>Cuando hay catálogo apto + decisión de entrar al circuito</td><td>30-50% del fee de sync</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Modelos vistos en los 5 casos</h3>
+
+      <div class="card">
+        <h4 style="margin-top:0">Modelo "equipo chico articulado" — Juana Aguirre</h4>
+        <p>
+          Manager + productora ejecutiva (Macs Abente Gaydou, mismo
+          rol consolidado) + dirección visual estable (Fede Maks) +
+          productores rotativos por proyecto. <strong>3 personas core</strong>
+          mueven un proyecto a Primavera Pro 2025 + gira europea 2026.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Modelo "agencia-sello clásico" — Ela Minus</h4>
+        <p>
+          Manager (Ben Turner) + sello (Domino, global) + booking agent
+          (Primary Talent Internacional EU/UK + Avery M. NA/SA) + PR
+          (Pitch Perfect PR). <strong>4 puntos de contacto</strong> con
+          partners de industria. Equipo grande, pero apalancado por la
+          escala global del sello.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Modelo "sello como manager" — Lucrecia Dalt</h4>
+        <p>
+          Manager + sello en mismo punto: <strong>Matt Werth (fundador
+          de RVNG)</strong>. Sume booking (Futura Artists, Barcelona) +
+          score/sync (Pete Saville, Carbon Logic) + sello secundario
+          para soundtracks (Invada Records). <strong>3-4 verticales
+          especializados</strong> pero integrados. Modelo ideal para
+          artistas de catálogo lento.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Modelo "free agent rotativo" — Lila Tirando a Violeta</h4>
+        <p>
+          <strong>Sin sello exclusivo</strong>: N.A.A.F.I + Hyperdub +
+          Unguarded en rotación. Cada release con un partner distinto.
+          Manager / booking no identificado públicamente — probablemente
+          gestionado por los sellos individuales. <strong>Equipo
+          distribuido por sello, no centralizado.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- ====== DECISIONES ====== -->
+    <section id="decisiones">
+      <h2>6 · Decisiones estratégicas que definen el modelo</h2>
+
+      <p>
+        Algunas decisiones <strong>determinan</strong> qué streams van a
+        pesar más en la carrera. Tomarlas conscientemente, no por
+        default.
+      </p>
+
+      <div class="card">
+        <h4 style="margin-top:0">Decisión 1 — Sello único vs. sellos rotativos</h4>
+        <p>
+          <strong>Sello único</strong> (Domino para Ela, Ninja Tune para
+          Marie, RVNG para Lucrecia, Domino para Tirzah): mejor para
+          artistas con catálogo de touring + producción consistente. El
+          sello invierte en PR + booking + distribución.
+        </p>
+        <p>
+          <strong>Sellos rotativos</strong> (modelo Lila Tirando a
+          Violeta): mejor para artistas conceptuales con catálogo lento
+          y múltiples proyectos paralelos. Cada release encuentra el
+          sello-curador adecuado.
+        </p>
+        <p>
+          <strong>Sin sello (Juana Aguirre)</strong>: viable para
+          artistas con manager fuerte + autoría visible + capacidad
+          de gestión propia. 100% retención de master pero requiere
+          construir cada release sin infraestructura.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Decisión 2 — Base geográfica</h4>
+        <p>
+          Berlín (Lucrecia, Marie en circuito), Brooklyn (Ela), Waterford
+          / Irlanda (Lila), Buenos Aires (Juana), Montevideo (Helen).
+          La base define costo de vida, acceso a infraestructura
+          (showcase europeo, sellos, estudios), y oportunidades de
+          touring.
+        </p>
+        <p>
+          <strong>No siempre hace falta mudarse</strong>. Lila vive en
+          Waterford (periferia europea barata) y toura. Juana vive en
+          Argentina y exporta. Helen puede operar desde Montevideo si
+          hay infraestructura de circulación (becas + showcase + sellos
+          internacionales).
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Decisión 3 — Frecuencia de releases</h4>
+        <p>
+          <strong>Catálogo rápido</strong> (1-2 releases/año): mantiene
+          algoritmo + presencia en redes + apto para playlist pitching.
+          Mejor para sello único con tour intensivo.
+        </p>
+        <p>
+          <strong>Catálogo lento</strong> (1 release cada 2-4 años):
+          permite construcción conceptual + reposicionamiento crítico
+          en cada álbum. Mejor para artistas con scoring / comisiones /
+          residencias en paralelo. Lucrecia Dalt opera así.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Decisión 4 — Tipo de show en vivo</h4>
+        <p>
+          <strong>Solo</strong>: máxima rentabilidad por show (sin
+          dividir fees). Modelo Ela Minus, modelo Lila Tirando a
+          Violeta (live AV).
+        </p>
+        <p>
+          <strong>Ensemble / banda</strong>: experiencia más rica pero
+          fees divididos. Modelo Lucrecia Dalt (ensemble Barbican),
+          modelo Juana Aguirre (banda en vivo).
+        </p>
+        <p>
+          <strong>Híbrido</strong>: ensemble para shows grandes / festival
+          shows, solo para shows chicos. Ofrece flexibilidad pero
+          requiere preparar dos modos.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0">Decisión 5 — Cuándo (y si) dejar el trabajo paralelo</h4>
+        <p>
+          La transición típica no es salto. Es:
+        </p>
+        <ol>
+          <li>Trabajo paralelo full-time + música 20% tiempo</li>
+          <li>Trabajo paralelo 60-80% + música cubriendo ya parte de gastos</li>
+          <li>Trabajo paralelo 30-50% + música cubre mayoría de gastos</li>
+          <li>Trabajo paralelo eliminado o reducido a "ocasional / freelance ocasional"</li>
+        </ol>
+        <p>
+          Ela Minus tardó ~6 años en pasar de paso 1 a paso 4 (Berklee
+          2009 → dejar Critter & Guitari ~2019). Lucrecia Dalt tardó
+          ~10 años. Juana Aguirre <strong>nunca terminó de dejar</strong>
+          el diseño gráfico — y eso es decisión consciente, no fracaso.
+        </p>
+      </div>
+    </section>
+
+    <!-- ====== APLICABLE ====== -->
+    <section id="aplicable">
+      <h2>7 · Marco de posibilidades</h2>
+
+      <div class="card intro">
+        <p>
+          Este documento NO propone un camino. La decisión sobre qué
+          fuentes priorizar, en qué orden, con qué intensidad, depende
+          de timing personal, energía disponible y prioridades de vida
+          que solo Helen conoce.
+        </p>
+        <p>
+          Lo que sigue son las <strong>fuentes que la evidencia muestra
+          como recurrentes</strong> en los casos del doc 02 — un mapa de
+          opciones, no un plan secuencial.
+        </p>
+      </div>
+
+      <h3>Fuentes recurrentes en los 5 casos</h3>
+      <ul>
+        <li><strong>Shows en vivo</strong> como driver mayor (4 de 5)</li>
+        <li><strong>Ventas físicas + Bandcamp</strong> como segundo pilar (5 de 5)</li>
+        <li><strong>Becas / financiamiento público</strong> como acelerador (3 de 5 documentadas)</li>
+        <li><strong>Trabajo paralelo</strong> estratégico (3 de 5 lo mantienen o lo mantuvieron por años)</li>
+        <li><strong>Sello</strong> (sea único o rotativo) como infraestructura (4 de 5)</li>
+        <li><strong>Sync / scoring</strong> como pivote económico (1 de 5: Lucrecia)</li>
+        <li><strong>Brand work</strong> con tracción crítica (1 de 5: Ela)</li>
+        <li><strong>Live AV sets</strong> como producto premium (1 de 5: Lila)</li>
+      </ul>
+
+      <h3>Qué se desprende del caso Helen específicamente</h3>
+      <ul>
+        <li>El perfil voz + síntesis en castellano es match natural con varios de estos streams (sync para cine indie iberoamericano, live AV, ediciones físicas conceptuales).</li>
+        <li>El trabajo paralelo de ingeniería puede ser estructura, no problema — como en el caso Juana Aguirre con el diseño gráfico.</li>
+        <li>Helen ya tiene infraestructura inicial: Bandcamp activo desde 2020, FONAM ya usado, red de press uruguaya, MUTEK BA programación previa.</li>
+        <li>El interés explícito en teatro y cine que Helen ya mencionó es una puerta abierta — el caso Lucrecia muestra que ese pivote es viable.</li>
+      </ul>
+
+      <div class="callout note">
+        Este documento se complementa con el doc 01 (deck de difusión)
+        para el corto plazo (release agosto) y con el doc 04 + skill
+        creative-direction para las decisiones creativas del proyecto.
+        Lo que va acá es la capa estratégica de fondo, no el plan
+        operativo.
+      </div>
+    </section>
+
+    <!-- ====== BIBLIOGRAFÍA ====== -->
+    <section id="bibliografia">
+      <h2>8 · Bibliografía</h2>
+
+      <div class="sources">
+        <h4>BASE DEL DOCUMENTO</h4>
+        <ul>
+          <li>Doc 02 del paquete Helen (<code>02-casos-estudio.html</code>) — research consolidada de las 5 artistas. Bibliografía exhaustiva al final de ese doc.</li>
+        </ul>
+
+        <h4>FUENTES ESPECÍFICAS CITADAS ACÁ</h4>
+        <ul>
+          <li><a href="https://musictech.com/features/interviews/ela-minus-interview-dia/" target="_blank">MusicTech — Ela Minus sobre festivales deficitarios</a></li>
+          <li><a href="https://www.indierocks.mx/musica/entrevistas/entrevista-con-juana-aguirre/" target="_blank">Indie Rocks México — Juana Aguirre sobre diseño gráfico paralelo</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Ela_Minus" target="_blank">Wikipedia — Ela Minus (brand work Chanel + Prada)</a></li>
+          <li><a href="https://composer.spitfireaudio.com/en/articles/lucrecia-dalt-talks-loud-scores-sound-installations-and-hbos-the-baby" target="_blank">Spitfire Audio — Lucrecia Dalt sobre HBO The Baby</a></li>
+          <li><a href="https://www.ascap.com/news-events/Events/2025/Sundance/composer-spotlight-bios/Dalt_Lucrecia" target="_blank">ASCAP — Sundance Composer Spotlight 2025 (Lucrecia Dalt)</a></li>
+        </ul>
+
+        <h4>PROGRAMAS DE FINANCIAMIENTO</h4>
+        <ul>
+          <li><a href="https://www.ibermusicas.org" target="_blank">Ibermúsicas — multi-línea iberoamericano</a></li>
+          <li><a href="https://www.musicboard-berlin.de" target="_blank">Musicboard Berlin</a></li>
+          <li>FONAM Uruguay — Ministerio de Educación y Cultura</li>
+          <li>FEFCA Uruguay — Fondo Audiovisual</li>
+          <li>DAAD Berlin Künstlerprogramm</li>
+          <li>Pioneer Works Brooklyn — Artist Residency</li>
+          <li>Pro Helvetia (Suiza)</li>
+          <li>Sundance Composer Lab</li>
+          <li>Berlinale Talents</li>
+        </ul>
+
+        <h4>RANGOS DE FEES SYNC / SCORING</h4>
+        <ul>
+          <li>Datos de industria documentados públicamente en publicaciones especializadas (Variety, Hollywood Reporter, Sync Resource, ASCAP) — promediados como rangos amplios. NO son cifras garantizadas.</li>
+        </ul>
+
+        <h4>STREAMING RATES</h4>
+        <ul>
+          <li>Spotify per-stream payouts documentados en <a href="https://soundcharts.com/blog/music-streaming-rates-payouts" target="_blank">Soundcharts</a> y reportes anuales de la industria. Varían por país y tipo de plan del oyente.</li>
+        </ul>
+      </div>
+
+      <div class="callout warn" style="margin-top: 2rem">
+        <strong>Caveats finales</strong>: las cifras de fees y porcentajes
+        son <strong>rangos de industria</strong>, no garantías. Los
+        casos de las 5 artistas son <strong>inferencias razonadas</strong>
+        sobre catálogo público + entrevistas, no contabilidad verificada.
+        Este documento se actualiza cuando aparece data nueva o cuando
+        cambian las condiciones de mercado.
+      </div>
+    </section>
+
+    <footer>
+      paquete helen · doc 03 · independencia económica indie
+      <br>
+      preparado por emiliano mettini / spiral out · 18 de mayo 2026
+      <br>
+      basado en research del doc 02 + datos públicos de industria
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>
