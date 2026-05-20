@@ -58,32 +58,52 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- Schema.org MusicAlbum -->
+  <!-- Schema.org — Person (ÆM) + MusicAlbum, linked via @graph -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "MusicAlbum",
-    "name": "Heliopause / Transmission 01",
-    "byArtist": {
-      "@type": "MusicGroup",
-      "name": "ÆM",
-      "description": "ÆM (AI + EM) — the meeting point between human composition and artificial intelligence.",
-      "url": "https://spiralout.space/aem/"
-    },
-    "numTracks": 3,
-    "genre": ["Ambient", "Dark Ambient", "Experimental", "Drone"],
-    "image": "https://spiralout.space/aem/og-image.jpg",
-    "url": "https://spiralout.space/aem/",
-    "datePublished": "2026",
-    "recordLabel": {
-      "@type": "Organization",
-      "name": "Spiral Out",
-      "url": "https://spiralout.space"
-    },
-    "track": [
-      {"@type": "MusicRecording", "name": "Outbound", "duration": "PT8M"},
-      {"@type": "MusicRecording", "name": "Crossing", "duration": "PT13M"},
-      {"@type": "MusicRecording", "name": "Recursion", "duration": "PT3M"}
+    "@graph": [
+      {
+        "@type": ["Person", "MusicGroup"],
+        "@id": "https://spiralout.space/aem/#aem",
+        "name": "ÆM",
+        "alternateName": ["AEM", "AÆM"],
+        "description": "ÆM (AI + EM) — the meeting point between human composition and artificial intelligence. A deep space ambient project.",
+        "url": "https://spiralout.space/aem/",
+        "image": "https://spiralout.space/aem/og-image.jpg",
+        "genre": ["Ambient", "Dark Ambient", "Experimental", "Drone"],
+        "jobTitle": "Music composer and producer",
+        "knowsAbout": ["Ambient music", "Dark ambient", "Generative music", "AI-assisted composition", "Deep space ambient"],
+        "memberOf": {
+          "@type": "Organization",
+          "name": "Spiral Out",
+          "url": "https://spiralout.space"
+        },
+        "sameAs": [
+          "https://aemtransmissions.bandcamp.com"
+        ]
+      },
+      {
+        "@type": "MusicAlbum",
+        "@id": "https://spiralout.space/aem/#heliopause",
+        "name": "Heliopause / Transmission 01",
+        "byArtist": { "@id": "https://spiralout.space/aem/#aem" },
+        "numTracks": 3,
+        "genre": ["Ambient", "Dark Ambient", "Experimental", "Drone"],
+        "image": "https://spiralout.space/aem/og-image.jpg",
+        "url": "https://spiralout.space/aem/",
+        "datePublished": "2026",
+        "recordLabel": {
+          "@type": "Organization",
+          "name": "Spiral Out",
+          "url": "https://spiralout.space"
+        },
+        "track": [
+          {"@type": "MusicRecording", "name": "Outbound", "duration": "PT8M", "byArtist": { "@id": "https://spiralout.space/aem/#aem" }},
+          {"@type": "MusicRecording", "name": "Crossing", "duration": "PT13M", "byArtist": { "@id": "https://spiralout.space/aem/#aem" }},
+          {"@type": "MusicRecording", "name": "Recursion", "duration": "PT3M", "byArtist": { "@id": "https://spiralout.space/aem/#aem" }}
+        ]
+      }
     ]
   }
   </script>

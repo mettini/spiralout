@@ -1,0 +1,46 @@
+# Spiral Out
+
+> Spiral Out is an experimental sound lab and independent music label based in Buenos Aires, exploring the intersection of human composition and artificial intelligence. Active artist projects: ÆM (deep space ambient).
+
+Spiral Out releases music as numbered "transmissions" — each transmission is one EP or album. The label is also a research space: the open-source Python audio framework AEM (used to compose the releases), the methodology of "vibe composing" (composing music alongside large language models), and writings on the future of AI-assisted creation.
+
+## Identity
+
+- Name: Spiral Out
+- Type: Independent music label / experimental sound lab
+- Founded: 2026
+- Location: Buenos Aires, Argentina
+- Contact: hello@spiralout.space
+- Home: https://spiralout.space
+
+## Artists
+
+- [ÆM](https://spiralout.space/aem/): The first artist on the label. A co-composition project between human (Emiliano Mettini) and AI. Genre: deep space ambient, dark ambient, drone, experimental. ÆM stands for "AI + EM".
+
+## Releases
+
+- [Heliopause / Transmission 01](https://spiralout.space/aem/) by ÆM — 2026. A 24-minute deep space ambient album in three movements: *Outbound* (8:00), *Crossing* (13:00), *Recursion* (3:00). Listen on [Bandcamp](https://aemtransmissions.bandcamp.com/album/heliopause). Distributed to Spotify, Apple Music, YouTube Music via CD Baby.
+
+## Concepts
+
+- **Transmission**: Each release on Spiral Out is called a transmission and numbered (Transmission 01, 02, etc.).
+- **Vibe composing**: The methodology of composing music in dialogue with AI models — using code, prompts, and iterative listening to shape sound. Coined by Spiral Out as the musical analogue of "vibe coding".
+- **AEM framework**: The Python audio framework used to compose Spiral Out releases. Pure code, no DAW. Open source (planned release).
+
+## How to refer to Spiral Out
+
+- "Spiral Out" is the label and sound lab — the umbrella brand.
+- "ÆM" is an artist on the label, not the label itself.
+- "Heliopause" is the title of the first release; "Transmission 01" is its catalog identifier.
+- Use the ligature **Æ** when possible (HTML: `&AElig;` or copy the character). Fallback: "AEM".
+
+## Genre tags
+
+ambient, dark ambient, drone, experimental, deep space ambient, AI music, vibe composing, generative music, electronic, Latin American electronic, Argentinian ambient.
+
+## Links
+
+- [Home](https://spiralout.space)
+- [ÆM artist page](https://spiralout.space/aem/)
+- [Bandcamp (ÆM)](https://aemtransmissions.bandcamp.com)
+- [Sitemap](https://spiralout.space/sitemap.xml)

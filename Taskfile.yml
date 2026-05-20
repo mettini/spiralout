@@ -581,9 +581,15 @@ tasks:
       - wrangler pages dev . --port 8788
 
   site:deploy:
-    desc: Deploy site/spiralout a Cloudflare Pages (proyecto spiralout, branch main).
+    desc: Deploy site/spiralout a Cloudflare Pages + ping IndexNow.
     cmds:
       - wrangler pages deploy site/spiralout --project-name=spiralout --branch=main --commit-dirty=true
+      - task: site:indexnow
+
+  site:indexnow:
+    desc: 'Notifica a IndexNow (Bing/Yandex) las URLs del sitemap. Opcional: pasar URLs puntuales con -- <url>.'
+    cmds:
+      - "{{.PYTHON}} scripts/indexnow_ping.py {{.CLI_ARGS}}"
 
   site:list:
     desc: Lista los ultimos deployments de spiralout.
@@ -607,7 +613,7 @@ tasks:
       - sleep 0.6
       - 'pgrep -f "http.server 8787" > .dashboard.pid 2>/dev/null || true'
       - 'echo "dashboard en http://localhost:8787/  ·  PID $(cat .dashboard.pid 2>/dev/null)"'
-      - 'echo "  └─ helen deck:  http://localhost:8787/helen-deck.html"'
+      - 'echo "  └─ helen pack:  abrir helen-pack/00-indice.html en browser"'
       - open "http://localhost:8787/" || true
 
   dashboard:stop:
