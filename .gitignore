@@ -80,3 +80,15 @@ Thumbs.db
 samples/raw/
 samples/voyager_golden_record/
 samples/cmb_recordings/
+
+# --- Video: outputs pesados / regenerables (se rehacen desde los scripts) ---
+transmissions/*/video/out/*.mp4
+transmissions/*/video/**/final_4k*.mp4
+transmissions/*/video/**/*.mp4
+transmissions/*/video/**/*.log
+transmissions/*/video/**/*_frames/
+transmissions/*/video/**/__pycache__/
+transmissions/*/video/.venv_detect/
+
+# textos/metadata de release SI se versionan
+!transmissions/*/release/youtube_*.md

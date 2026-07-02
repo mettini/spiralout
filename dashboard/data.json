@@ -1,9 +1,9 @@
 {
   "meta": {
-    "updated": "2026-05-20",
-    "next_review": "2026-05-27",
-    "version": "0.3",
-    "focus": "Orden de prioridad (definido 2026-05-20): 1) difusión + cuentas, 2) SEO/GEO, 3) visuales (canvas/motion/yt-visualizer), 4) blog AL FINAL. No escribir blog hasta cerrar el setup de cuentas."
+    "updated": "2026-07-02",
+    "next_review": "2026-06-21",
+    "version": "0.5",
+    "focus": "Orden de prioridad (vigente 2026-06-16): 1) difusión + cuentas (Tier 1 SO+ÆM cerradas; Tier 2/3 descartados), 2) SEO/GEO (MusicBrainz + Wikidata pendientes), 3) visuales DONE (yt-visualizer cerrado, Crossing definitivo cerrado via Hydra + build_13min), 4) blog (post setup). Audio: release:check pasado implícito (CDB aceptó + streaming live). Promo continua post-release (no día único). Backlog largo (Em+H, Rescue 100, framework público, R2) en 'ideas-futuras'."
   },
   "projects": [
     {
@@ -16,64 +16,237 @@
           "id": "site",
           "title": "Sitio + Branding",
           "tasks": [
-            {"id": "site-deploy", "title": "Site live en spiralout.space (Cloudflare Pages)", "status": "done", "owner": "user"},
-            {"id": "site-share-images", "title": "OG/share images home + /aem (todas las redes)", "status": "done", "owner": "claude"},
-            {"id": "site-favicon", "title": "Favicon family + manifest + theme color", "status": "done", "owner": "claude"},
-            {"id": "site-blog", "title": "Sección /blog/ con scaffolding estático", "status": "todo", "owner": "claude", "blockedBy": "blog-first-post"}
+            {
+              "id": "site-deploy",
+              "title": "Site live en spiralout.space (Cloudflare Pages)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "site-share-images",
+              "title": "OG/share images home + /aem (todas las redes)",
+              "status": "done",
+              "owner": "claude"
+            },
+            {
+              "id": "site-favicon",
+              "title": "Favicon family + manifest + theme color",
+              "status": "done",
+              "owner": "claude"
+            },
+            {
+              "id": "site-blog",
+              "title": "Sección /blog/ con scaffolding estático",
+              "status": "todo",
+              "owner": "claude",
+              "blockedBy": "blog-first-post"
+            }
           ]
         },
         {
           "id": "seo-geo",
           "title": "SEO + GEO + Indexing",
           "tasks": [
-            {"id": "gsc", "title": "Google Search Console verificado + sitemap submitted + indexing pedido", "status": "done", "owner": "user"},
-            {"id": "ga4", "title": "Google Analytics 4 instalado (G-4VMFWJJE14) en home + /aem", "status": "done", "owner": "both"},
-            {"id": "ga4-internal-filter", "title": "Filtrar tu IP de GA4 (no contar tus visitas)", "status": "todo", "owner": "user"},
-            {"id": "bing", "title": "Bing Webmaster Tools (import desde GSC)", "status": "done", "owner": "user", "note": "Importado desde GSC + sitemap submitted + site scan. IndexNow panel tarda 24-48h en poblar."},
-            {"id": "indexnow", "title": "IndexNow setup + integración con task site:deploy", "status": "done", "owner": "claude", "note": "Key 5502d857... en site root + scripts/indexnow_ping.py + task site:indexnow (corre auto post-deploy)."},
-            {"id": "llms-txt", "title": "site/spiralout/llms.txt (GEO básico)", "status": "done", "owner": "claude"},
-            {"id": "schema-person", "title": "Schema.org Person para ÆM en /aem/index.html", "status": "done", "owner": "claude", "note": "@graph con Person+MusicGroup (ÆM) linkeado a MusicAlbum (Heliopause) via @id."},
-            {"id": "musicbrainz", "title": "MusicBrainz entries (ÆM + Heliopause + label Spiral Out)", "status": "todo", "owner": "user", "eta": "30 min"},
-            {"id": "wikidata", "title": "Wikidata items (ÆM + Heliopause + Spiral Out)", "status": "todo", "owner": "user", "eta": "45 min"}
+            {
+              "id": "gsc",
+              "title": "Google Search Console verificado + sitemap submitted + indexing pedido",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "ga4",
+              "title": "Google Analytics 4 instalado (G-4VMFWJJE14) en home + /aem",
+              "status": "done",
+              "owner": "both"
+            },
+            {
+              "id": "bing",
+              "title": "Bing Webmaster Tools (import desde GSC)",
+              "status": "done",
+              "owner": "user",
+              "note": "Importado desde GSC + sitemap submitted + site scan. IndexNow panel tarda 24-48h en poblar."
+            },
+            {
+              "id": "indexnow",
+              "title": "IndexNow setup + integración con task site:deploy",
+              "status": "done",
+              "owner": "claude",
+              "note": "Key 5502d857... en site root + scripts/indexnow_ping.py + task site:indexnow (corre auto post-deploy)."
+            },
+            {
+              "id": "llms-txt",
+              "title": "site/spiralout/llms.txt (GEO básico)",
+              "status": "done",
+              "owner": "claude"
+            },
+            {
+              "id": "schema-person",
+              "title": "Schema.org Person para ÆM en /aem/index.html",
+              "status": "done",
+              "owner": "claude",
+              "note": "@graph con Person+MusicGroup (ÆM) linkeado a MusicAlbum (Heliopause) via @id."
+            },
+            {
+              "id": "musicbrainz",
+              "title": "MusicBrainz entries (ÆM + Heliopause + label Spiral Out)",
+              "status": "todo",
+              "owner": "user",
+              "eta": "30 min"
+            },
+            {
+              "id": "wikidata",
+              "title": "Wikidata items (ÆM + Heliopause + Spiral Out)",
+              "status": "todo",
+              "owner": "user",
+              "eta": "45 min"
+            }
           ]
         },
         {
           "id": "storage",
           "title": "Storage + GitHub",
           "tasks": [
-            {"id": "github-push", "title": "Repo subido a github.com/mettini/spiralout", "status": "done", "owner": "both"},
-            {"id": "github-public", "title": "Decidir y aplicar public/private del repo", "status": "todo", "owner": "user"},
-            {"id": "audio-archive", "title": "Carpeta local de masters/distribution lista (1.6 GB)", "status": "done", "owner": "claude", "note": "~/Documents/Spiral Out — Archive/01_Heliopause/"},
-            {"id": "drive-upload", "title": "Subir audio archive a Google Drive", "status": "todo", "owner": "user"},
-            {"id": "r2-bucket", "title": "Cloudflare R2 bucket spiral-out creado + token", "status": "todo", "owner": "user"},
-            {"id": "r2-tasks", "title": "Tareas task r2:sync:* / r2:pull:* en Taskfile", "status": "blocked", "blockedBy": "r2-bucket", "owner": "claude"},
-            {"id": "r2-sync", "title": "Sync inicial de los 18 GB a R2", "status": "blocked", "blockedBy": "r2-tasks", "owner": "user"}
+            {
+              "id": "github-push",
+              "title": "Repo subido a github.com/mettini/spiralout",
+              "status": "done",
+              "owner": "both"
+            },
+            {
+              "id": "audio-archive",
+              "title": "Carpeta local de masters/distribution lista (1.6 GB)",
+              "status": "done",
+              "owner": "claude",
+              "note": "~/Documents/Spiral Out — Archive/01_Heliopause/"
+            },
+            {
+              "id": "drive-upload",
+              "title": "Subir audio archive a Google Drive",
+              "status": "done",
+              "owner": "user"
+            }
           ]
         },
         {
           "id": "accounts-spiralout",
           "title": "Cuentas Spiral Out (label paraguas) — ver docs/15_brand_accounts.md",
           "tasks": [
-            {"id": "so-ig", "title": "Instagram @spiralout.space (Tier 1)", "status": "todo", "owner": "user"},
-            {"id": "so-x", "title": "X @spiraloutspace (Tier 1)", "status": "todo", "owner": "user"},
-            {"id": "so-bluesky", "title": "Bluesky usando dominio (spiralout.space) — Tier 1", "status": "todo", "owner": "user"},
-            {"id": "so-soundcloud", "title": "SoundCloud spiralout — playlists curatoriales (Tier 1)", "status": "todo", "owner": "user"},
-            {"id": "so-youtube", "title": "Canal YouTube @spiraloutspace (Tier 1, vacío por ahora)", "status": "todo", "owner": "user"},
-            {"id": "so-bandcamp-label", "title": "Bandcamp label page (opcional)", "status": "todo", "owner": "user"},
-            {"id": "so-tiktok", "title": "TikTok @spiraloutspace (Tier 2 — cuando haya cadencia de video)", "status": "todo", "owner": "user"},
-            {"id": "so-threads", "title": "Threads (hereda de IG, crosspost) — Tier 2", "status": "todo", "owner": "user"},
-            {"id": "so-facebook", "title": "Facebook Page Spiral Out (utility — Meta Business) — Tier 2", "status": "todo", "owner": "user"},
-            {"id": "so-mastodon", "title": "Mastodon sonomu.club (Tier 3 — nicho)", "status": "todo", "owner": "user"}
+            {
+              "id": "so-ig",
+              "title": "Instagram @spiralout.space (Tier 1)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "so-x",
+              "title": "X @spiralout_space (Tier 1)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "so-bluesky",
+              "title": "Bluesky @spiraloutspace.bsky.social (Tier 1)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "so-soundcloud",
+              "title": "SoundCloud spiraloutspace — playlists curatoriales (Tier 1)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "so-youtube",
+              "title": "Canal YouTube @spiraloutspace (Tier 1)",
+              "status": "done",
+              "owner": "user"
+            }
           ]
         },
         {
           "id": "blog",
           "title": "Spiral Out blog (firmado Emiliano Mettini / ÆM según post)",
           "tasks": [
-            {"id": "blog-scaffold", "title": "Estructura /blog/ + template post + author bylines", "status": "todo", "owner": "claude"},
-            {"id": "blog-first-post", "title": "Primer post: 'Vibe composing — composing music with AI'", "status": "todo", "owner": "user", "note": "Borrador user, polish claude"},
-            {"id": "blog-second-post", "title": "Post: DIY zero-to-hero release pipeline", "status": "todo", "owner": "user"},
-            {"id": "blog-framework-post", "title": "Post: el framework AEM open source (para r/Python + HN)", "status": "todo", "owner": "user"}
+            {
+              "id": "blog-scaffold",
+              "title": "Estructura /blog/ + template post + author bylines",
+              "status": "todo",
+              "owner": "claude"
+            },
+            {
+              "id": "blog-vibe-composing",
+              "title": "Serie: 'Vibe composing' — definir el término, capítulos múltiples",
+              "status": "todo",
+              "owner": "user",
+              "note": "Term coining oficial — user lo acuña en este blog. Borrador user, polish claude."
+            },
+            {
+              "id": "blog-vibe-recording",
+              "title": "Serie companion: 'Vibe recording' — workflow autónomo iterativo (sat-watch + execute)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Term acuñado 2026-05-25 en sesión Spiral Out"
+            },
+            {
+              "id": "blog-game-of-life-series",
+              "title": "Serie nerdy: Game of Life + Síntesis Modular (cruce CA/musical generativa)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Research base en docs/22_game_of_life_sintes_modulares.md. Posibles posts: (1) Romeo y la tesis 'sintes = espejo de la naturaleza', (2) GoL técnicamente + emergencia, (3) Quién ya lo hizo (Nervous Squirrel, vtol, CAMUS), (4) El problema del mapeo discreto, (5) Lenia y autómatas continuos, (6) La pregunta filosófica: naturaleza simulando naturaleza"
+            },
+            {
+              "id": "blog-second-post",
+              "title": "Post: DIY zero-to-hero release pipeline",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "blog-framework-post",
+              "title": "Post: el framework AEM open source (para r/Python + HN)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "blog-ai-video-models-2026",
+              "title": "Post: AI video generation models 2026 — qué modelo para qué (mapa pragmático para músicos/artistas)",
+              "status": "todo",
+              "owner": "claude",
+              "note": "Base en docs/video/09_ai_video_models_2026.md. Cubrir: SDXL Turbo / AnimateDiff / LTX-Video / CogVideoX / SVD / Veo 3 / Sora 2 + decision matrix + licencia para comercial. Ángulo: aprendizaje desde el delirio Heliopause."
+            }
+          ]
+        },
+        {
+          "id": "video-ai-research",
+          "title": "Video AI — modelos + experimentos",
+          "tasks": [
+            {
+              "id": "video-ai-spec-doc",
+              "title": "Spec doc: AI video models 2026 (knowledge base interna)",
+              "status": "done",
+              "owner": "claude",
+              "note": "docs/video/09_ai_video_models_2026.md — mapa de modelos local + commercial, decision matrix, licencia, pipeline propuesto."
+            },
+            {
+              "id": "crossing-assembly-v1-status",
+              "title": "crossing_assembly_v1.mp4 — Option B / B-roll (PIL programmatic 13min)",
+              "status": "done",
+              "owner": "claude",
+              "note": "out/maquetas/picks/crossing_assembly/crossing_assembly_v1.mp4 · 98 MB · feedback user 2026-05-26: aceptable, lejos de final, sirve como gráfica alternativa / fragmentos para visuals B-roll."
+            },
+            {
+              "id": "crossing-metal-v1-status",
+              "title": "crossing_metal_v1.mp4 — Option B / B-roll (SDXL Turbo nordic black metal 13min)",
+              "status": "done",
+              "owner": "claude",
+              "note": "ai/out/crossing_metal_v1.mp4 · 392 MB · feedback user 2026-05-26: lindo pero NO crossing definitivo. Muestra planos planos tipo recursion, humans, planet surfaces, no sigue narrativa, abusa de mandalas. Minuto 9 (cielo) gusta. Guardar como gráfica alt / fragmentos B-roll."
+            },
+            {
+              "id": "crossing-13min-build",
+              "title": "Crossing video definitivo (Hydra audio-reactivo + build_13min.sh pipeline)",
+              "status": "done",
+              "owner": "claude",
+              "note": "Resuelto via Hydra fósforo-verde + boomerang loops + xfade + onset accents + 4K lanczos. Deliverables: FINAL_4k + v12_720. Sustituye los PoCs Veo3/LTX/SVD (innecesarios)."
+            }
           ]
         }
       ]
@@ -88,97 +261,414 @@
           "id": "production",
           "title": "Producción",
           "tasks": [
-            {"id": "master-v2", "title": "Master chain v2 mergeado (mayo 2026)", "status": "done", "owner": "both"},
-            {"id": "tracks-final", "title": "3 tracks finalizados (Outbound 8:00, Crossing 13:00, Recursion 3:00)", "status": "done", "owner": "both"},
-            {"id": "ep-assembly", "title": "EP continuous 24:00 ensamblado", "status": "done", "owner": "both"},
-            {"id": "export-formats", "title": "Export WAV 16/FLAC/MP3 320 listos", "status": "done", "owner": "claude"},
-            {"id": "qa-spectral", "title": "QA espectral + voyager regression pasado", "status": "done", "owner": "claude"},
-            {"id": "release-check", "title": "task release:check (LUFS, true peak, stereo correlation)", "status": "todo", "owner": "user"}
+            {
+              "id": "master-v2",
+              "title": "Master chain v2 mergeado (mayo 2026)",
+              "status": "done",
+              "owner": "both"
+            },
+            {
+              "id": "tracks-final",
+              "title": "3 tracks finalizados (Outbound 8:00, Crossing 13:00, Recursion 3:00)",
+              "status": "done",
+              "owner": "both"
+            },
+            {
+              "id": "ep-assembly",
+              "title": "EP continuous 24:00 ensamblado",
+              "status": "done",
+              "owner": "both"
+            },
+            {
+              "id": "export-formats",
+              "title": "Export WAV 16/FLAC/MP3 320 listos",
+              "status": "done",
+              "owner": "claude"
+            },
+            {
+              "id": "qa-spectral",
+              "title": "QA espectral + voyager regression pasado",
+              "status": "done",
+              "owner": "claude"
+            },
+            {
+              "id": "release-check",
+              "title": "task release:check (LUFS, true peak, stereo correlation)",
+              "status": "done",
+              "owner": "user",
+              "note": "Pasado implícito: CDB aceptó WAVs + distribución live en streaming, Bandcamp live."
+            }
           ]
         },
         {
           "id": "artwork",
           "title": "Arte + identidad visual",
           "tasks": [
-            {"id": "cover-master", "title": "Cover 3000×3000 (master PNG + streaming JPG + 1500 backup)", "status": "done", "owner": "user"},
-            {"id": "hero-image", "title": "/aem hero background (hero.png)", "status": "done", "owner": "user"},
-            {"id": "press-photo", "title": "Foto press ÆM (cuadrada + horizontal + vertical)", "status": "todo", "owner": "user"},
-            {"id": "canvas-video", "title": "Spotify Canvas (MP4 1080×1920, 3-8s loop) — SVG-based", "status": "todo", "owner": "claude"},
-            {"id": "motion-cover", "title": "Apple Motion Album Cover (loop MP4)", "status": "todo", "owner": "claude"},
-            {"id": "yt-visualizer", "title": "YouTube full-album visualizer (3 tracks + continuous)", "status": "todo", "owner": "claude"}
+            {
+              "id": "cover-master",
+              "title": "Cover 3000×3000 (master PNG + streaming JPG + 1500 backup)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "hero-image",
+              "title": "/aem hero background (hero.png)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "press-photo",
+              "title": "Foto press ÆM (cuadrada + horizontal + vertical)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "canvas-video",
+              "title": "Spotify Canvas (MP4 1080×1920, 3-8s loop) — SVG-based",
+              "status": "todo",
+              "owner": "claude"
+            },
+            {
+              "id": "motion-cover",
+              "title": "Apple Motion Album Cover (loop MP4)",
+              "status": "todo",
+              "owner": "claude"
+            },
+            {
+              "id": "yt-visualizer",
+              "title": "YouTube full-album visualizer (3 tracks + continuous)",
+              "status": "done",
+              "owner": "claude",
+              "note": "Cierre formal 2026-06-16. Crossing v4 + Recursion + Outbound v22 entregados (out/*_yt.mp4). Iteración menor posible (ej. fade Julia 7:30) pero no bloquea."
+            }
           ]
         },
         {
           "id": "cuentas-aem",
           "title": "Cuentas ÆM — ver docs/15_brand_accounts.md (Tier 1 = sí o sí esta semana)",
           "tasks": [
-            {"id": "aem-bandcamp", "title": "Bandcamp aemtransmissions.bandcamp.com", "status": "done", "owner": "user"},
-            {"id": "aem-ig", "title": "Instagram @aem.transmissions (Tier 1)", "status": "todo", "owner": "user"},
-            {"id": "aem-yt", "title": "YouTube @aemtransmissions (Tier 1 — canal listo para visualizers)", "status": "todo", "owner": "user"},
-            {"id": "aem-soundcloud", "title": "SoundCloud aem-transmissions + subir 3 tracks Heliopause (Tier 1)", "status": "todo", "owner": "user"},
-            {"id": "aem-x", "title": "X @aemtransmiss (Tier 1 — donde están blogs/curators)", "status": "todo", "owner": "user"},
-            {"id": "aem-bluesky", "title": "Bluesky aem.spiralout.space (subdominio, Tier 1)", "status": "todo", "owner": "user"},
-            {"id": "aem-lastfm-setup", "title": "Last.fm ÆM artist page: bio + tags + links (Tier 1, requiere scrobbles iniciales)", "status": "todo", "owner": "user"},
-            {"id": "aem-discogs", "title": "Discogs ÆM artist + Heliopause release entry (Tier 1)", "status": "todo", "owner": "user"},
-            {"id": "em-medium", "title": "Medium @emilianomettini (personal, NO ÆM) — para 'Vibe composing' post + procesos", "status": "todo", "owner": "user", "note": "Canonical apunta a spiralout.space/blog/ cuando exista el scaffold"},
-            {"id": "aem-tiktok", "title": "TikTok @aem.transmissions (Tier 2 — esperar cadencia de video)", "status": "todo", "owner": "user"},
-            {"id": "aem-threads", "title": "Threads (hereda IG, crosspost) — Tier 2", "status": "todo", "owner": "user"},
-            {"id": "aem-facebook", "title": "Facebook Page ÆM (utility, Meta Business) — Tier 2", "status": "todo", "owner": "user"},
-            {"id": "aem-mastodon", "title": "Mastodon sonomu.club (Tier 3 — nicho)", "status": "todo", "owner": "user"}
+            {
+              "id": "aem-bandcamp",
+              "title": "Bandcamp aemtransmissions.bandcamp.com",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "aem-ig",
+              "title": "Instagram @aem.transmissions (Tier 1)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "aem-ig-creator",
+              "title": "IG ÆM — completar setup Creator (categoría, contacto) + evaluar Meta Verified",
+              "status": "todo",
+              "owner": "user",
+              "note": "Meta Verified es pago (~USD12-15/mes) y OPCIONAL — se puede saltear, no es requisito. Decidir más adelante; no urgente para artista nuevo."
+            },
+            {
+              "id": "aem-yt",
+              "title": "YouTube @aem.transmissions (Tier 1 — Brand Account, canal listo para visualizers)",
+              "status": "done",
+              "owner": "user",
+              "note": "Canal: youtube.com/channel/UCWKO7nkS-AJaY6P1ofUJrww"
+            },
+            {
+              "id": "aem-soundcloud",
+              "title": "SoundCloud @aemtransmissions + álbum Heliopause subido (Tier 1)",
+              "status": "done",
+              "owner": "user",
+              "note": "soundcloud.com/aemtransmissions/sets/heliopause · linkeado en landing + sameAs."
+            },
+            {
+              "id": "aem-x",
+              "title": "X @aem_space (Tier 1 — fallback, aemtransmission no estaba)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "aem-bluesky",
+              "title": "Bluesky @aemtransmissions.bsky.social (Tier 1)",
+              "status": "done",
+              "owner": "user",
+              "note": "Opción a futuro: cambiar a aem.spiralout.space (handle con dominio propio)."
+            },
+            {
+              "id": "aem-lastfm-setup",
+              "title": "Last.fm ÆM artist page: bio + tags + links (Tier 3 — prematuro hasta streaming live + MusicBrainz)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Diferido: scrobbles vienen de Spotify/Apple (aún no live). Se nutre de MusicBrainz (va antes). Lo real es la campaña lastfm-scrobble en release week."
+            },
+            {
+              "id": "em-medium",
+              "title": "Medium @emilianomettini (personal, NO ÆM) — para 'Vibe composing' post + procesos",
+              "status": "todo",
+              "owner": "user",
+              "note": "Canonical apunta a spiralout.space/blog/ cuando exista el scaffold"
+            }
           ]
         },
         {
           "id": "distribucion",
           "title": "Distribución + plataformas",
           "tasks": [
-            {"id": "cdb-account", "title": "CD Baby account creado (mettini@gmail.com)", "status": "done", "owner": "user"},
-            {"id": "cdb-upload", "title": "Subir Heliopause a CD Baby (3 tracks + metadata + cover)", "status": "done", "owner": "user"},
-            {"id": "cdb-release-date", "title": "Fijar release date en CDB", "status": "done", "owner": "user"},
-            {"id": "cdb-distribution-live", "title": "Distribución live en Spotify / Apple / YT Music (CDB confirma)", "status": "todo", "owner": "user", "note": "Esperar confirmación de CDB; típicamente 1-2 semanas post-upload."},
-            {"id": "toneden", "title": "ToneDen free tier setup + pre-save link", "status": "todo", "owner": "user"},
-            {"id": "s4a-claim", "title": "Reclamar Spotify for Artists (post-distribución)", "status": "todo", "owner": "user", "blockedBy": "cdb-distribution-live"},
-            {"id": "am4a-claim", "title": "Reclamar Apple Music for Artists", "status": "todo", "owner": "user", "blockedBy": "cdb-distribution-live"},
-            {"id": "yt-oac", "title": "YouTube Official Artist Channel claim via CDB", "status": "todo", "owner": "user", "blockedBy": "cdb-distribution-live"},
-            {"id": "bandcamp-release-live", "title": "Bandcamp release live (aemtransmissions.bandcamp.com)", "status": "done", "owner": "user"}
+            {
+              "id": "cdb-account",
+              "title": "CD Baby account creado (mettini@gmail.com)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "cdb-upload",
+              "title": "Subir Heliopause a CD Baby (3 tracks + metadata + cover)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "cdb-release-date",
+              "title": "Fijar release date en CDB",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "cdb-distribution-live",
+              "title": "Distribución live en Spotify / Apple / YT Music (CDB confirma)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "s4a-claim",
+              "title": "Reclamar Spotify for Artists (post-distribución)",
+              "status": "done",
+              "owner": "user",
+              "note": "HECHO 2026-06-16."
+            },
+            {
+              "id": "am4a-claim",
+              "title": "Reclamar Apple Music for Artists",
+              "status": "done",
+              "owner": "user",
+              "note": "Request enviado 2026-06-16 vía artists.apple.com (CD Baby distribuidor). Apple revisa típicamente 2-5 días hábiles."
+            },
+            {
+              "id": "yt-oac",
+              "title": "YouTube Official Artist Channel (OAC) — DESCARTADO por ahora",
+              "status": "done",
+              "owner": "user",
+              "note": "DESCARTADO 2026-06-16: el user decide NO perseguir el OAC por ahora. Motivo: catch-22 sin vía — YouTube (help oficial) no acepta pedidos directos (solo vía distribuidor/Music Service Partner) y CD Baby cerró el claim de OAC en marzo 2025. No bloquea nada: la música ya está en YT Music vía canal auto 'ÆM - Topic' y los visualizers van al canal propio aem.transmissions igual. Si en el futuro se quiere retomar: ticket a CDB (¿reabrieron?) o Music Service Partner, y dejar nombre de canal EXACTO = ÆM + ≥1 upload manual (release ya entregado ✓). Ver guía sección 3."
+            },
+            {
+              "id": "bandcamp-release-live",
+              "title": "Bandcamp release live (aemtransmissions.bandcamp.com)",
+              "status": "done",
+              "owner": "user"
+            }
           ]
         },
         {
           "id": "promo",
           "title": "Promo + press",
           "tasks": [
-            {"id": "press-kit", "title": "Press kit: bio 50/150 palabras + fotos + cover + one-sheet", "status": "todo", "owner": "user"},
-            {"id": "pitch-spotify", "title": "Spotify for Artists → Pitch to Editorial (T-21+, mínimo 7 días)", "status": "blocked", "blockedBy": "s4a-claim", "owner": "user"},
-            {"id": "pitch-blogs-tier1", "title": "Pitch a blogs Tier 1 (Fluid Radio, Headphone Commute, Stationary Travels, ACL)", "status": "todo", "owner": "user"},
-            {"id": "pitch-bandcamp-daily", "title": "Pitch a Bandcamp Daily (formulario)", "status": "todo", "owner": "user"},
-            {"id": "submithub", "title": "SubmitHub paid round (~$30-80 credits)", "status": "todo", "owner": "user"},
-            {"id": "single-1", "title": "Single 1 drop (T-30) — track con visualizer YouTube", "status": "todo", "owner": "both"},
-            {"id": "single-2", "title": "Single 2 drop (T-14)", "status": "todo", "owner": "both"}
+            {
+              "id": "press-kit",
+              "title": "Press kit: bio 50/150 palabras + fotos + cover + one-sheet",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "pitch-spotify",
+              "title": "Spotify for Artists → Pitch to Editorial (T-21+, mínimo 7 días)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Desbloqueado 2026-06-16 (s4a-claim done)."
+            },
+            {
+              "id": "pitch-blogs-tier1",
+              "title": "Pitch a blogs Tier 1 (Fluid Radio, Headphone Commute, Stationary Travels, ACL)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "pitch-bandcamp-daily",
+              "title": "Pitch a Bandcamp Daily (formulario)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "submithub",
+              "title": "SubmitHub paid round (~$30-80 credits)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "single-1",
+              "title": "Single 1 drop (T-30) — track con visualizer YouTube",
+              "status": "todo",
+              "owner": "both"
+            },
+            {
+              "id": "single-2",
+              "title": "Single 2 drop (T-14)",
+              "status": "todo",
+              "owner": "both"
+            }
           ]
         },
         {
           "id": "no-convencional",
           "title": "Campañas no convencionales",
           "tasks": [
-            {"id": "reddit-recon", "title": "Reconocimiento r/ambientmusic, r/darkambient, r/SpaceMusic (comentar 9:1)", "status": "todo", "owner": "user"},
-            {"id": "reddit-launch", "title": "Post de lanzamiento en r/ambientmusic + r/listentothis (T-7)", "status": "todo", "owner": "user"},
-            {"id": "reddit-ifyoulike", "title": "Post r/ifyoulikeblank: 'If you like Lustmord/Roach you'll like ÆM'", "status": "todo", "owner": "user"},
-            {"id": "reddit-ads", "title": "Reddit Ads pilot (~$20-50, 2-3 subs, post-release T+7)", "status": "todo", "owner": "user"},
-            {"id": "lastfm-scrobble", "title": "Pedir 20-30 fans/amigos que scrobblean el album semana 1", "status": "todo", "owner": "user"},
-            {"id": "discord-recon", "title": "Discord Ambient Music / Drone & Dark Ambient (2 sem de chusmeo antes de promo)", "status": "todo", "owner": "user"},
-            {"id": "bandcamp-tags", "title": "Setear tags Bandcamp correctos (ambient, dark ambient, drone, AI, deep space, buenos aires)", "status": "todo", "owner": "user"},
-            {"id": "youtube-comments", "title": "Engagement genuino en videos de artistas similares", "status": "todo", "owner": "user"}
+            {
+              "id": "reddit-recon",
+              "title": "Reconocimiento r/ambientmusic, r/darkambient, r/SpaceMusic (comentar 9:1)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "reddit-launch",
+              "title": "Post de lanzamiento en r/ambientmusic + r/listentothis (T-7)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "reddit-ifyoulike",
+              "title": "Post r/ifyoulikeblank: 'If you like Lustmord/Roach you'll like ÆM'",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "reddit-ads",
+              "title": "Reddit Ads pilot (~$20-50, 2-3 subs, post-release T+7)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "lastfm-scrobble",
+              "title": "Pedir 20-30 fans/amigos que scrobblean el album semana 1",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "discord-recon",
+              "title": "Discord Ambient Music / Drone & Dark Ambient (2 sem de chusmeo antes de promo)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "bandcamp-tags",
+              "title": "Setear tags Bandcamp correctos (ambient, dark ambient, drone, AI, deep space, buenos aires)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "youtube-comments",
+              "title": "Engagement genuino en videos de artistas similares",
+              "status": "todo",
+              "owner": "user"
+            }
           ]
         },
         {
-          "id": "release-day",
-          "title": "Release day + post",
+          "id": "post-release",
+          "title": "Post-release — comunicación + promo continua",
+          "subtitle": "El disco ya está live (Bandcamp + en cola streaming). Esto es promoción gradual, no un single drop day.",
           "tasks": [
-            {"id": "release-day-posts", "title": "Drop coordinado en todas las redes", "status": "todo", "owner": "user"},
-            {"id": "yt-full", "title": "YouTube full album upload + lyric/visualizers", "status": "todo", "owner": "both"},
-            {"id": "newsletter-blast", "title": "Newsletter blast (Buttondown free)", "status": "todo", "owner": "user"},
-            {"id": "aoty-submit", "title": "Submit a AlbumOfTheYear + RateYourMusic", "status": "todo", "owner": "user"},
-            {"id": "marquee-eval", "title": "Spotify Marquee evaluation (T+7, $250-500 si hay tracción)", "status": "todo", "owner": "user"},
-            {"id": "metrics-pull", "title": "Pull métricas T+7 / T+30 / T+90", "status": "todo", "owner": "user"}
+            {
+              "id": "release-day-posts",
+              "title": "Anuncios coordinados (IG + X + Bluesky) cuando estén las cuentas live — empezar de a poco",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "yt-full",
+              "title": "YouTube — subir 3 visualizers (outbound/crossing/recursion) al canal personal + crear playlist Heliopause",
+              "status": "done",
+              "owner": "user",
+              "note": "Videos masters listos en transmissions/01/video/out/ (4K 51-68 Mbps). Thumbnails en transmissions/01/artwork/youtube_thumbnails/. Textos/descripciones en transmissions/01/release/textos.md (sección 5). En curso al 2026-06-04: outbound + crossing + recursion subidos, pending procesamiento + trim a 8:00/13:00/3:00 vía YouTube Editor (suma = 24, hexagrama 24 復). | Publicado 2026-07-02 en @aem.transmissions + playlist"
+            },
+            {
+              "id": "newsletter-blast",
+              "title": "Newsletter blast (Buttondown free)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "aoty-submit",
+              "title": "Submit a AlbumOfTheYear + RateYourMusic",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "marquee-eval",
+              "title": "Spotify Marquee evaluation (T+7 streaming, $250-500 si hay tracción)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "metrics-pull",
+              "title": "Pull métricas mensuales (T+30 / T+60 / T+90 streaming)",
+              "status": "todo",
+              "owner": "user"
+            }
+          ]
+        },
+        {
+          "id": "cdb-claims",
+          "title": "CD Baby — claim de perfiles + fix metadata",
+          "subtitle": "Trámites en CD Baby Dashboard. Guía operativa paso a paso en transmissions/01/release/cdbaby_claims_guide.md.",
+          "tasks": [
+            {
+              "id": "cdb-spotify-claim",
+              "title": "Claim Spotify for Artists vía CD Baby (Tools and Promotion → Request Access)",
+              "status": "done",
+              "owner": "user",
+              "note": "HECHO 2026-06-16 por el user. Ver guía sección 1. Da streams, demographics, playlist pitches, customización profile."
+            },
+            {
+              "id": "cdb-apple-claim",
+              "title": "Claim Apple Music for Artists (directo en artists.apple.com, NO desde panel CD Baby)",
+              "status": "done",
+              "owner": "user",
+              "eta": "2-5 días acceso",
+              "note": "Request enviado 2026-06-16 vía artists.apple.com con CD Baby distribuidor. Apple revisa 2-5 días — esperar mail de confirmación."
+            },
+            {
+              "id": "cdb-amazon-claim",
+              "title": "Claim Amazon Music for Artists (artists.amazonmusic.com)",
+              "status": "todo",
+              "owner": "user",
+              "eta": "instantáneo con login CD Baby",
+              "note": "2026-06-16: EN CURSO. Claim en artists.amazonmusic.com → autenticar con login CD Baby = acceso instantáneo. Ver guía sección 5."
+            },
+            {
+              "id": "cdb-tidal-claim",
+              "title": "Claim Tidal Artist Home (artists.tidal.com)",
+              "status": "done",
+              "owner": "user",
+              "note": "Claim hecho 2026-06-16 (user dentro de Tidal Artist Home). La guía sección 5 decía 'sin for-artists propio' — desactualizado, ahora existe artists.tidal.com."
+            },
+            {
+              "id": "cdb-fix-ep-single",
+              "title": "Heliopause clasificado como Single en Spotify — RESUELTO (no-fix, queda Single)",
+              "status": "done",
+              "owner": "user",
+              "note": "RESUELTO 2026-06-16 (no-fix). CD Baby confirmó por ticket: Spotify clasifica SOLO por nº de tracks + duración total (≤3 tracks y <30 min = Single) y NO mira la duración por track — la regla del track >10 min es de Apple/iTunes, no de Spotify. CD Baby no puede forzar la reclasificación vía metadata. Único camino = rearmar a 4-6 tracks y cancelar+resubir (rompería URL/links de Spotify + perdería momentum + adulteraría el tracklist). DECISIÓN del user: queda Single en Spotify, EP en Apple/Qobuz/Tidal/Bandcamp. ISRCs ya registrados en metadata_proposal.md. Ver guía sección 6."
+            },
+            {
+              "id": "cdb-youtube-noop",
+              "title": "YouTube Social Video Monetization — NO TOCAR (dejar opt-in en CD Baby, NO disputar claims de tus uploads)",
+              "status": "done",
+              "owner": "user",
+              "note": "Decisión 2026-06-04: dejar el flujo automático. CD Baby clamea los visualizers (claims son inofensivos — sin strike, sin restricción visibility), monetiza vía Content ID, paga al artist en payout. Ver guía sección 3."
+            },
+            {
+              "id": "cdb-username-anotar",
+              "title": "Anotar login CD Baby en transmissions/01/release/cdbaby_claims_guide.md",
+              "status": "done",
+              "owner": "claude",
+              "note": "Anotado em@spiralout.space en línea 6 + checklist marcado 2026-06-16. CD Baby usa email-as-login, no hay handle público separado."
+            }
           ]
         }
       ]
@@ -193,49 +683,122 @@
           "id": "helen-ground-rules",
           "title": "Acuerdo previo con Helen — DONE",
           "tasks": [
-            {"id": "helen-ok-difusion", "title": "Helen OK con difusión guerrilla + recibir reportes", "status": "done", "owner": "user"},
-            {"id": "helen-vetos", "title": "Helen sin vetos — exploramos libremente", "status": "done", "owner": "user"},
-            {"id": "helen-direction-confirm", "title": "Dirección sonora confirmada: NIN / Thom Yorke / modular (Siesta del Fauno) — Romperse fue cantautora estilo Juana Aguirre", "status": "done", "owner": "user"}
+            {
+              "id": "helen-ok-difusion",
+              "title": "Helen OK con difusión guerrilla + recibir reportes",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "helen-vetos",
+              "title": "Helen sin vetos — exploramos libremente",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "helen-direction-confirm",
+              "title": "Dirección sonora confirmada: NIN / Thom Yorke / modular (Siesta del Fauno) — Romperse fue cantautora estilo Juana Aguirre",
+              "status": "done",
+              "owner": "user"
+            }
           ]
         },
         {
           "id": "helen-advisory",
           "title": "Advisory entregada — DONE",
           "tasks": [
-            {"id": "helen-deep-research", "title": "Deep research sobre Helen (perfil, brechas, posicionamiento)", "status": "done", "owner": "user"},
-            {"id": "helen-advisory-doc", "title": "Advisory de cuentas + escritura (docs/21_helen_accounts_advisory.md)", "status": "done", "owner": "claude", "note": "Pasable directo a Helen. Cubre: cuentas por tier, por qué cada una, sección sobre escribir/blog."},
-            {"id": "helen-deck-send", "title": "Pasarle el advisory a Helen + abrir canal de reportes cada 2-3 sem", "status": "done", "owner": "user"}
-          ]
-        },
-        {
-          "id": "helen-curatorial-content",
-          "title": "Contenido curatorial (en spiralout.space/blog)",
-          "tasks": [
-            {"id": "helen-blog-post", "title": "Post monográfico firmado Emiliano Mettini: 'Helen Olhausen y el viaje al modular'", "status": "todo", "owner": "user", "note": "voz fan/curator personal, NO copy de label"},
-            {"id": "helen-blog-recommendations", "title": "Post 'Recomendaciones desde el borde — modular latinoamericano' incluyendo a Helen + 4-5 adyacentes", "status": "todo", "owner": "user"},
-            {"id": "helen-blog-update-release", "title": "Cuando salga el disco nuevo: nota corta de recomendación", "status": "todo", "owner": "user"}
+            {
+              "id": "helen-deep-research",
+              "title": "Deep research sobre Helen (perfil, brechas, posicionamiento)",
+              "status": "done",
+              "owner": "user"
+            },
+            {
+              "id": "helen-advisory-doc",
+              "title": "Advisory de cuentas + escritura (docs/21_helen_accounts_advisory.md)",
+              "status": "done",
+              "owner": "claude",
+              "note": "Pasable directo a Helen. Cubre: cuentas por tier, por qué cada una, sección sobre escribir/blog."
+            },
+            {
+              "id": "helen-deck-send",
+              "title": "Pasarle el advisory a Helen + abrir canal de reportes cada 2-3 sem",
+              "status": "done",
+              "owner": "user"
+            }
           ]
         },
         {
           "id": "helen-community",
           "title": "Community recommendation (Reddit / Discord / Bluesky)",
           "tasks": [
-            {"id": "helen-reddit-ifyoulike", "title": "r/ifyoulikeblank: 'if you like [Ciani / Barbieri / Barwick] you'll like Helen Olhausen'", "status": "todo", "owner": "user"},
-            {"id": "helen-reddit-modular", "title": "r/modularsynth, r/SynthGenerators — recomendar cuando relevante", "status": "todo", "owner": "user"},
-            {"id": "helen-reddit-uy-ar", "title": "r/Uruguay, r/argentina, r/musicasudamericana — audiencia hispano natural", "status": "todo", "owner": "user"},
-            {"id": "helen-reddit-ambient", "title": "r/ambientmusic — si el nuevo disco encaja en el sub", "status": "blocked", "blockedBy": "helen-direction-confirm", "owner": "user"},
-            {"id": "helen-discord-recs", "title": "Discord servers (Modular Grid, Ambient Music, Latin Electronic) — mencionar genuinamente", "status": "todo", "owner": "user"},
-            {"id": "helen-bluesky-share", "title": "Bluesky: compartir tu personal cuenta cuando saque single/disco nuevo", "status": "todo", "owner": "user"}
+            {
+              "id": "helen-reddit-ifyoulike",
+              "title": "r/ifyoulikeblank: 'if you like [Ciani / Barbieri / Barwick] you'll like Helen Olhausen'",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "helen-reddit-modular",
+              "title": "r/modularsynth, r/SynthGenerators — recomendar cuando relevante",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "helen-reddit-uy-ar",
+              "title": "r/Uruguay, r/argentina, r/musicasudamericana — audiencia hispano natural",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "helen-reddit-ambient",
+              "title": "r/ambientmusic — si el nuevo disco encaja en el sub",
+              "status": "blocked",
+              "blockedBy": "helen-direction-confirm",
+              "owner": "user"
+            },
+            {
+              "id": "helen-discord-recs",
+              "title": "Discord servers (Modular Grid, Ambient Music, Latin Electronic) — mencionar genuinamente",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "helen-bluesky-share",
+              "title": "Bluesky: compartir tu personal cuenta cuando saque single/disco nuevo",
+              "status": "todo",
+              "owner": "user"
+            }
           ]
         },
         {
           "id": "helen-amplification",
           "title": "Amplificación pasiva",
           "tasks": [
-            {"id": "helen-lastfm-scrobble", "title": "Scrobblear su catalog en last.fm (suma a sus números reales)", "status": "todo", "owner": "user"},
-            {"id": "helen-lastfm-tags", "title": "Sumar tags útiles a sus tracks en last.fm (modular, uruguayan, latin ambient)", "status": "todo", "owner": "user"},
-            {"id": "helen-playlists", "title": "Crear playlists públicas (Spotify/Apple/Bandcamp) que la incluyan + adyacentes", "status": "todo", "owner": "user"},
-            {"id": "helen-1to1-recs", "title": "Recomendación 1-to-1 a contactos del nicho (productores, periodistas amigos)", "status": "todo", "owner": "user"}
+            {
+              "id": "helen-lastfm-scrobble",
+              "title": "Scrobblear su catalog en last.fm (suma a sus números reales)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "helen-lastfm-tags",
+              "title": "Sumar tags útiles a sus tracks en last.fm (modular, uruguayan, latin ambient)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "helen-playlists",
+              "title": "Crear playlists públicas (Spotify/Apple/Bandcamp) que la incluyan + adyacentes",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "helen-1to1-recs",
+              "title": "Recomendación 1-to-1 a contactos del nicho (productores, periodistas amigos)",
+              "status": "todo",
+              "owner": "user"
+            }
           ]
         }
       ]
@@ -250,20 +813,137 @@
           "id": "mvp",
           "title": "MVP",
           "tasks": [
-            {"id": "res-mb-crawler", "title": "MusicBrainz crawler", "status": "todo", "owner": "user"},
-            {"id": "res-bandcamp-crawler", "title": "Bandcamp crawler", "status": "todo", "owner": "user"},
-            {"id": "res-claude-extract", "title": "Claude extraction de 9 variables", "status": "todo", "owner": "user"},
-            {"id": "res-similar-api", "title": "Endpoint /similar (top-N por score+coverage)", "status": "todo", "owner": "user"},
-            {"id": "res-export", "title": "Export CSV/markdown para pitch planning", "status": "todo", "owner": "user"}
+            {
+              "id": "res-mb-crawler",
+              "title": "MusicBrainz crawler",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "res-bandcamp-crawler",
+              "title": "Bandcamp crawler",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "res-claude-extract",
+              "title": "Claude extraction de 9 variables",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "res-similar-api",
+              "title": "Endpoint /similar (top-N por score+coverage)",
+              "status": "todo",
+              "owner": "user"
+            },
+            {
+              "id": "res-export",
+              "title": "Export CSV/markdown para pitch planning",
+              "status": "todo",
+              "owner": "user"
+            }
           ]
         },
         {
           "id": "integration",
           "title": "Integración con Spiral Out",
           "tasks": [
-            {"id": "res-aem-input", "title": "Correr Resonance con ÆM Heliopause como input → similar artists", "status": "blocked", "blockedBy": "res-similar-api", "owner": "user"},
-            {"id": "res-helen-input", "title": "Idem con Helen", "status": "blocked", "blockedBy": "res-similar-api", "owner": "user"},
-            {"id": "res-feedback-loop", "title": "Feedback loop: pitch outcomes → entrenar V9", "status": "todo", "owner": "user"}
+            {
+              "id": "res-aem-input",
+              "title": "Correr Resonance con ÆM Heliopause como input → similar artists",
+              "status": "blocked",
+              "blockedBy": "res-similar-api",
+              "owner": "user"
+            },
+            {
+              "id": "res-helen-input",
+              "title": "Idem con Helen",
+              "status": "blocked",
+              "blockedBy": "res-similar-api",
+              "owner": "user"
+            },
+            {
+              "id": "res-feedback-loop",
+              "title": "Feedback loop: pitch outcomes → entrenar V9",
+              "status": "todo",
+              "owner": "user"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ideas-futuras",
+      "title": "Ideas futuras / backlog largo",
+      "subtitle": "Cosas que sí pero no urgente. Cuando cierre lo de hoy (difusión Heliopause + cuentas), volver acá.",
+      "color": "#3a2a4a",
+      "phases": [
+        {
+          "id": "futuras-transmissions",
+          "title": "Próximas transmissions",
+          "tasks": [
+            {
+              "id": "tx-02-em-h",
+              "title": "Transmission 02: 'Em+H' — sobre el amor",
+              "status": "todo",
+              "owner": "user",
+              "note": "Idea propuesta 2026-05-31. Sin scope todavía: tracklist, duración, tema central a definir."
+            },
+            {
+              "id": "tx-03-rescue-100",
+              "title": "Transmission 03: 'Rescue 100' — operación de rescate en un planeta con flores y plantas",
+              "status": "todo",
+              "owner": "user",
+              "note": "Idea propuesta 2026-05-31. Narrativa sci-fi/botánica. Sin scope todavía."
+            }
+          ]
+        },
+        {
+          "id": "futuras-framework",
+          "title": "Framework + apertura del repo",
+          "tasks": [
+            {
+              "id": "framework-trabajar",
+              "title": "Trabajar más en el framework aem (modules, docs, examples)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Prerequisito implícito de github-public — el framework hoy no está en estado público-friendly."
+            },
+            {
+              "id": "github-public",
+              "title": "Decidir y aplicar public/private del repo (cuando framework esté presentable)",
+              "status": "blocked",
+              "blockedBy": "framework-trabajar",
+              "owner": "user",
+              "note": "Movido desde storage 2026-05-31. No urgente: prio actual es difusión + redes, no Hacker News / OSS audience."
+            }
+          ]
+        },
+        {
+          "id": "futuras-storage",
+          "title": "Storage público (CDN)",
+          "tasks": [
+            {
+              "id": "r2-bucket",
+              "title": "Cloudflare R2 bucket spiral-out + token (solo si decidimos servir descargas/audio/video desde spiralout.space)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Movido a futuras 2026-05-31. Hoy no aplica: archive personal vive en Drive, Bandcamp sirve las descargas. R2 entraría si hospedamos waveforms/audio HD/video desde el dominio propio."
+            }
+          ]
+        },
+        {
+          "id": "futuras-social-pipeline",
+          "title": "Experimento — pipeline social multi-plataforma automatizado",
+          "tasks": [
+            {
+              "id": "social-pipeline-experiment",
+              "title": "Social pipeline experiment (Postiz + posters custom + métricas) — 60-90 días, automatizado",
+              "status": "todo",
+              "owner": "claude",
+              "note": "Doc completo en docs/23_social_pipeline_experiment.md. Stack: Postiz self-hosted + Bluesky/X/Mastodon API directa + métricas daily pull. Diseñado para 'mano cero' del user (Claude Desktop Computer Use cubre OAuth). NO avanzar hasta: cuentas Tier 1 cerradas (✓) + videos aprobados visualmente (⏳) + decisión explícita del user de arrancar."
+            }
           ]
         }
       ]
