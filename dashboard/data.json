@@ -479,9 +479,10 @@
             {
               "id": "pitch-spotify",
               "title": "Spotify for Artists → Pitch to Editorial (T-21+, mínimo 7 días)",
-              "status": "todo",
+              "status": "blocked",
               "owner": "user",
-              "note": "Desbloqueado 2026-06-16 (s4a-claim done)."
+              "note": "MOOT para Heliopause (Spotify solo pitchea música NO publicada). Guardar para Transmission 02: pitchear 3-4 sem ANTES de publicar.",
+              "blockedBy": "requiere release futura sin publicar"
             },
             {
               "id": "pitch-blogs-tier1",
@@ -498,20 +499,10 @@
             {
               "id": "submithub",
               "title": "SubmitHub paid round (~$30-80 credits)",
-              "status": "todo",
-              "owner": "user"
-            },
-            {
-              "id": "single-1",
-              "title": "Single 1 drop (T-30) — track con visualizer YouTube",
-              "status": "todo",
-              "owner": "both"
-            },
-            {
-              "id": "single-2",
-              "title": "Single 2 drop (T-14)",
-              "status": "todo",
-              "owner": "both"
+              "status": "blocked",
+              "owner": "user",
+              "note": "Descartado (pago por submission, valor mediocre en ambient). Preferir YouTube discovery ads + IG boost.",
+              "blockedBy": "descartado por costo/valor"
             }
           ]
         },
@@ -544,12 +535,6 @@
               "owner": "user"
             },
             {
-              "id": "lastfm-scrobble",
-              "title": "Pedir 20-30 fans/amigos que scrobblean el album semana 1",
-              "status": "todo",
-              "owner": "user"
-            },
-            {
               "id": "discord-recon",
               "title": "Discord Ambient Music / Drone & Dark Ambient (2 sem de chusmeo antes de promo)",
               "status": "todo",
@@ -566,6 +551,18 @@
               "title": "Engagement genuino en videos de artistas similares",
               "status": "todo",
               "owner": "user"
+            },
+            {
+              "title": "YouTube discovery/in-feed ads — targetear audiencias de artistas similares con los 3 visualizers (pilot $20-50)",
+              "status": "todo",
+              "owner": "both",
+              "note": "Alineado: ya tenemos los visualizers. Claude arma targeting + copy; user paga/corre en Google Ads."
+            },
+            {
+              "title": "IG story/reel boost — cuando haya clips (pilot $20-40)",
+              "status": "todo",
+              "owner": "both",
+              "note": "Requiere clips verticales (Claude los arma del visualizer)."
             }
           ]
         },
