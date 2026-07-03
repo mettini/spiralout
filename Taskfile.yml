@@ -578,7 +578,9 @@ tasks:
     desc: Preview local del site en http://localhost:8788
     dir: site/spiralout
     cmds:
-      - wrangler pages dev . --port 8788
+      # --compatibility-date fijada: sin el flag, wrangler usa la fecha de hoy y
+      # el runtime workerd del wrangler instalado puede no soportarla todavia.
+      - wrangler pages dev . --port 8788 --compatibility-date=2026-05-22
 
   site:deploy:
     desc: Deploy site/spiralout a Cloudflare Pages + ping IndexNow.
