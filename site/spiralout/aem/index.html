@@ -80,7 +80,8 @@
           "url": "https://spiralout.space"
         },
         "sameAs": [
-          "https://aemtransmissions.bandcamp.com"
+          "https://aemtransmissions.bandcamp.com",
+          "https://soundcloud.com/aemtransmissions"
         ]
       },
       {
@@ -93,6 +94,16 @@
         "image": "https://spiralout.space/aem/og-image.jpg",
         "url": "https://spiralout.space/aem/",
         "datePublished": "2026",
+        "sameAs": [
+          "https://aemtransmissions.bandcamp.com/album/heliopause",
+          "https://open.spotify.com/album/5omJDu1rZwe9YFeAWONY6x",
+          "https://music.apple.com/album/heliopause-ep/6773985527",
+          "https://music.youtube.com/playlist?list=OLAK5uy_kJZJP4n5YQfW1XupmKEK5qQJ-YQzLZ198",
+          "https://tidal.com/album/528526670",
+          "https://music.amazon.com/albums/B0H34YZ4ZK",
+          "https://www.qobuz.com/album/heliopause-aem/eotey7erxe23d",
+          "https://soundcloud.com/aemtransmissions/sets/heliopause"
+        ],
         "recordLabel": {
           "@type": "Organization",
           "name": "Spiral Out",
@@ -118,7 +129,7 @@
   </script>
 
   <style>
-    :root { --bg:#0a0a0c; --fg:#cfcfd2; --muted:#555560; --accent:#8a7a90; }
+    :root { --bg:#0a0a0c; --fg:#cfcfd2; --muted:#74747e; --accent:#8a7a90; }
     * { margin:0; padding:0; box-sizing:border-box; }
     html { min-height:100%; background:var(--bg); }
     body { min-height:100vh; color:var(--fg); font-family:'Courier New',ui-monospace,monospace; font-weight:300; letter-spacing:0.02em; position:relative; overflow-x:hidden; background:transparent; }
@@ -145,6 +156,17 @@
     footer a { color:var(--muted); text-decoration:none; transition:color 0.3s; }
     footer a:hover { color:var(--fg); }
     footer .sep { opacity:0.4; }
+    .visualizers { max-width:34em; margin:0 auto 3rem; text-align:center; padding-top:3rem; border-top:1px solid #1f1f24; }
+    .visualizers h2 { font-size:0.8rem; letter-spacing:0.4em; text-transform:lowercase; color:var(--muted); font-weight:300; margin-bottom:2rem; }
+    .viz-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
+    .viz-grid a { text-decoration:none; color:var(--fg); display:block; }
+    .viz-grid img { width:100%; height:auto; display:block; border:1px solid #1f1f24; opacity:0.9; transition:border-color 0.3s, opacity 0.3s; }
+    .viz-grid a:hover img { border-color:var(--accent); opacity:1; }
+    .viz-grid span { display:block; font-size:0.72rem; letter-spacing:0.25em; text-transform:lowercase; margin-top:0.6rem; color:var(--fg); }
+    .viz-grid a:hover span { color:var(--accent); }
+    .viz-channel { display:inline-block; color:var(--fg); text-decoration:none; font-size:0.78rem; letter-spacing:0.25em; text-transform:lowercase; transition:color 0.3s; }
+    .viz-channel:hover { color:var(--accent); }
+    @media (max-width:520px) { .viz-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -163,10 +185,14 @@
 
     <nav class="platforms" aria-label="Listen on">
       <a href="https://aemtransmissions.bandcamp.com/album/heliopause" target="_blank" rel="me external noopener">bandcamp</a>
-      <a href="#" class="disabled">spotify</a>
-      <a href="#" class="disabled">apple music</a>
-      <a href="#" class="disabled">soundcloud</a>
-      <a href="#" class="disabled">youtube</a>
+      <a href="https://open.spotify.com/album/5omJDu1rZwe9YFeAWONY6x" target="_blank" rel="me external noopener">spotify</a>
+      <a href="https://music.apple.com/album/heliopause-ep/6773985527" target="_blank" rel="me external noopener">apple music</a>
+      <a href="https://music.youtube.com/playlist?list=OLAK5uy_kJZJP4n5YQfW1XupmKEK5qQJ-YQzLZ198" target="_blank" rel="me external noopener">youtube music</a>
+      <a href="https://tidal.com/album/528526670" target="_blank" rel="me external noopener">tidal</a>
+      <a href="https://music.amazon.com/albums/B0H34YZ4ZK" target="_blank" rel="me external noopener">amazon music</a>
+      <a href="https://www.qobuz.com/album/heliopause-aem/eotey7erxe23d" target="_blank" rel="me external noopener">qobuz</a>
+      <a href="https://soundcloud.com/aemtransmissions/sets/heliopause" target="_blank" rel="me external noopener">soundcloud</a>
+      <a href="https://www.youtube.com/@aem.transmissions" target="_blank" rel="me external noopener">youtube</a>
     </nav>
 
     <p class="description">
@@ -174,6 +200,25 @@
       three transmissions from the edge of the solar system<br/>
       where light bends and time stretches.
     </p>
+
+    <section class="visualizers">
+      <h2>visualizers</h2>
+      <div class="viz-grid">
+        <a href="https://www.youtube.com/watch?v=Lbwz5F4xfrI" target="_blank" rel="external noopener">
+          <img src="viz/outbound.jpg" alt="Outbound visualizer" width="480" height="270" loading="lazy" />
+          <span>outbound</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=psmgqIGOtrs" target="_blank" rel="external noopener">
+          <img src="viz/crossing.jpg" alt="Crossing visualizer" width="480" height="270" loading="lazy" />
+          <span>crossing</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=OxGGs1hOO5U" target="_blank" rel="external noopener">
+          <img src="viz/recursion.jpg" alt="Recursion visualizer" width="480" height="270" loading="lazy" />
+          <span>recursion</span>
+        </a>
+      </div>
+      <a class="viz-channel" href="https://www.youtube.com/playlist?list=PLmefLWsXYwXYM1AOKLVWOLIlxntLWOCYt" target="_blank" rel="external noopener">full playlist ↗</a>
+    </section>
 
     <section class="about">
       <h2>about</h2>
