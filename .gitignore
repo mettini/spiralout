@@ -92,3 +92,8 @@ transmissions/*/video/.venv_detect/
 
 # textos/metadata de release SI se versionan
 !transmissions/*/release/youtube_*.md
+transmissions/*/video/**/*.mov
+transmissions/*/video/**/*.png
+transmissions/*/video/**/*.pyc
+transmissions/*/video/**/__pycache__/
+**/.DS_Store
