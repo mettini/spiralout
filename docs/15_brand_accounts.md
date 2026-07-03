@@ -27,9 +27,9 @@ Lo que sí o sí necesitás para que la difusión funcione:
 | # | Plataforma | Spiral Out | ÆM | Por qué urge |
 |---|---|---|---|---|
 | 1 | **Instagram** | @spiralout.space | @aem.transmissions | discovery + reels + dónde linkea press kit |
-| 2 | **YouTube** | @spiraloutspace | @aemtransmissions | hosting de visualizers/canvas; canal vacío activa YT Topic |
-| 3 | **SoundCloud** | spiralout | aem-transmissions | tracks completos a la comunidad ambient nativa |
-| 4 | **X (Twitter)** | @spiraloutspace | @aemtransmiss | curators/blogs/journalists viven ahí |
+| 2 | **YouTube** | @spiraloutspace | @aem.transmissions | hosting de visualizers/canvas; canal vacío activa YT Topic |
+| 3 | **SoundCloud** | spiraloutspace | aem-transmissions | tracks completos a la comunidad ambient nativa |
+| 4 | **X (Twitter)** | @spiraloutspace | @aemtransmission | curators/blogs/journalists viven ahí (máx 15 chars) |
 | 5 | **Bluesky** | spiralout.space | aem.spiralout.space | indie/electrónica creció post-exodus, ÆM encaja fuerte |
 | 6 | **Medium** (personal Emiliano) | — | — | blog posts del proceso, canonical apunta a tu blog propio |
 | 7 | **Last.fm** (setup artist page) | — | ÆM artist page | scrobbling-driven, music credibility |
@@ -98,30 +98,41 @@ spiralout.space** (canonical). Más adelante, si querés agregar:
 
 ## Convenciones de handles
 
-**Spiral Out** (orden de preferencia):
+**Principio: máxima consistencia.** Usar el handle canónico idéntico en
+todas las plataformas, y desviarse SOLO donde una regla de la plataforma
+lo obliga (no acepta punto, límite de caracteres, formato dominio). Esto
+ayuda a que la gente te encuentre y a la reconciliación de entidad en
+buscadores/KG.
 
-1. `spiralout.space` (cuando la plataforma acepta dominios — Bluesky)
-2. `spiraloutspace`
-3. `spiralout`
-4. `spiral.out` (donde acepte punto)
-5. `spiraloutlab`
-6. `spiraloutmusic`
-7. `spiral_out`
+### ÆM — canónico: `aem.transmissions`
 
-**ÆM** (orden de preferencia — Æ no es válido en handles, fallback a `aem`):
+(Æ no es válido en handles → fallback a `aem`.)
 
-1. `aem.transmissions` (donde acepte punto)
-2. `aemtransmissions`
-3. `aem.music`
-4. `aem.space`
-5. `aem.sound`
-6. `aem_transmissions`
-7. `aemmusic` / `aemspace`
-8. `transmission01`
+| Dónde | Handle | Por qué |
+|---|---|---|
+| Spotify, Instagram, YouTube, TikTok | `aem.transmissions` | aceptan punto → forma canónica clavada |
+| Bandcamp | `aemtransmissions` | subdominio: solo letras/números (sin punto ni guión). Ya reclamado |
+| SoundCloud | `aem-transmissions` (o `aemtransmissions`) | no acepta punto → guión, o junto para matchear Bandcamp |
+| X (Twitter) | `aemtransmission` | máx 15 chars + sin punto. `aem.transmissions` (17) y `aemtransmissions` (16) no entran; `aemtransmission` (15, sin "s" final) sí |
+| Bluesky | `aem.spiralout.space` | formato dominio (subdominio del dominio propio) · fallback `aemtransmissions.bsky.social` |
 
-**Importante**: cuando un handle base esté ocupado por una cuenta dormida,
-intentá con el mismo + sufijo (`.official`, `.audio`, `.fm`) **antes** de
-cambiar de palabra. Mantené la palabra clave.
+Fallbacks de palabra (si `aem.transmissions` está ocupado en una plataforma):
+`aem.music`, `aem.space`, `aem.sound`, `transmission01`.
+
+### Spiral Out — canónico: `spiralout.space` / `spiraloutspace`
+
+| Dónde | Handle | Por qué |
+|---|---|---|
+| Bluesky | `spiralout.space` | usa el dominio propio como handle (verificación de facto) |
+| Instagram, TikTok | `spiralout.space` | aceptan punto |
+| X, YouTube, SoundCloud | `spiraloutspace` | sin punto (X: 14 chars, entra). Forma compacta |
+| Bandcamp (label) | `spiralout` | subdominio compacto |
+
+Fallbacks: `spiralout`, `spiraloutlab`, `spiraloutmusic`, `spiral_out`.
+
+**Si un handle está ocupado por una cuenta dormida**: probá el mismo +
+sufijo (`.official`, `.audio`, `.fm`) **antes** de cambiar de palabra.
+Mantené la palabra clave.
 
 ---
 
@@ -147,10 +158,12 @@ menciones.
 | Marca | Handle | Fallbacks |
 |---|---|---|
 | Spiral Out | `@spiraloutspace` | `@spiral_out`, `@spiraloutlab`, `@spiraloutmusic` |
-| ÆM | `@aemtransmissions` | `@aem_music`, `@aem_space`, `@aem_sound`, `@aemtransmiss` |
+| ÆM | `@aemtransmission` | `@aem_music`, `@aem_space`, `@aem_sound` |
 
-X tiene límite de 15 caracteres. `@aemtransmissions` son 17 — **no entra**.
-Mejor: `@aemtransmiss` (13), `@aem_music` (9), `@aem_space` (9).
+X tiene límite de **15 caracteres** y no acepta puntos. `aem.transmissions`
+(17) y `aemtransmissions` (16) no entran. La forma más fiel que entra es
+`@aemtransmission` (15, sin la "s" final). Alternativas cortas:
+`@aem_music` (9), `@aem_space` (9). Spiral Out `@spiraloutspace` (14) entra bien.
 
 ### 3. Bluesky
 **Por qué**: indie music / electrónica / AI art tienen comunidad creciendo
@@ -174,8 +187,11 @@ para compra/coleccionar, SC es para escucha social).
 
 | Marca | Handle | Fallbacks |
 |---|---|---|
-| Spiral Out | `spiralout` | `spiraloutspace`, `spiral-out`, `spiraloutlab` |
-| ÆM | `aem-transmissions` | `aem-music`, `aem-space`, `aem` |
+| Spiral Out | `spiraloutspace` | `spiralout`, `spiral-out`, `spiraloutlab` |
+| ÆM | `aem-transmissions` | `aemtransmissions`, `aem-music`, `aem-space` |
+
+SoundCloud no acepta punto → `aem-transmissions` (guión) o `aemtransmissions`
+(junto, matchea Bandcamp).
 
 Contenido inicial:
 - ÆM: los 3 tracks de Heliopause (full length, no preview — SoundCloud
@@ -192,10 +208,15 @@ fuente de YT Music + YT Music Topic auto-generado post CDB.
 | Marca | Handle | Fallbacks |
 |---|---|---|
 | Spiral Out | `@spiraloutspace` | `@spiralout`, `@spiraloutlab` |
-| ÆM | `@aemtransmissions` | `@aem.transmissions` (si acepta punto), `@aemmusic`, `@aemspace` |
+| ÆM | `@aem.transmissions` | `@aemtransmissions`, `@aemmusic`, `@aemspace` |
 
-**Acción tuya**: crear los canales con foto de perfil + banner + bio + link
-al sitio. Vacíos por ahora — yo armo los videos cuando definamos conceptos.
+YouTube **sí acepta punto** en el handle, así que va la forma canónica.
+
+**Acción tuya**: crear el canal como **Brand Account** (no canal personal):
+YouTube → Settings → "Add or manage your channel(s)" → Create a channel →
+"Use a custom name". Foto de perfil (hexagrama) + banner + bio + link al
+sitio. Vacío por ahora — los videos los armo cuando definamos conceptos.
+Ese canal es el que después se fusiona con el "ÆM - Topic" al reclamar el OAC.
 
 Post-distribución CDB: claim **YouTube Official Artist Channel** para ÆM
 (mergea tu canal manual con el Topic auto-generado).
@@ -397,11 +418,11 @@ sección "URLs canónicas" cuando se vayan reclamando.
 ### Spiral Out
 - Sitio: https://spiralout.space ✓
 - Bandcamp (label): _pendiente_
-- Instagram: _pendiente_
-- X: _pendiente_
-- Bluesky: _pendiente_
-- SoundCloud: _pendiente_
-- YouTube: _pendiente_
+- Instagram: https://instagram.com/spiralout.space ✓
+- X: https://x.com/spiralout_space ✓
+- Bluesky: https://bsky.app/profile/spiraloutspace.bsky.social ✓ (opción a futuro: cambiar a spiralout.space con TXT en Cloudflare)
+- SoundCloud: https://soundcloud.com/spiraloutspace ✓
+- YouTube: https://youtube.com/@spiraloutspace ✓
 - TikTok: _pendiente_
 - Threads: _pendiente_
 - Facebook: _pendiente_
@@ -410,11 +431,11 @@ sección "URLs canónicas" cuando se vayan reclamando.
 ### ÆM
 - Site: https://spiralout.space/aem ✓
 - Bandcamp: https://aemtransmissions.bandcamp.com ✓
-- Instagram: _pendiente_
-- X: _pendiente_
-- Bluesky: _pendiente_
-- SoundCloud: _pendiente_
-- YouTube: _pendiente_
+- SoundCloud: https://soundcloud.com/aemtransmissions ✓ (álbum: /sets/heliopause)
+- Instagram: https://instagram.com/aem.transmissions ✓
+- YouTube: https://youtube.com/@aem.transmissions ✓ (canal: youtube.com/channel/UCWKO7nkS-AJaY6P1ofUJrww)
+- X: https://x.com/aem_space ✓ (fallback — aemtransmission no estaba)
+- Bluesky: https://bsky.app/profile/aemtransmissions.bsky.social ✓ (opción a futuro: cambiar a aem.spiralout.space con TXT en Cloudflare)
 - TikTok: _pendiente_
 - Threads: _pendiente_
 - Facebook: _pendiente_
