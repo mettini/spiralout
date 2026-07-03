@@ -36,6 +36,34 @@ area. This file is the entry point.
 - **Transmission** — each release is called a transmission, numbered. Future
   releases live in `transmissions/02/`, `03/`, etc.
 
+## Voz de marca + material YA EXISTENTE (LEER antes de escribir textos / artwork / video)
+
+**No re-authorees prosa, bios, artwork ni conceptos: casi todo ya está escrito.**
+Levantá de estas fuentes y referencialas — no dupliques:
+
+- **Voz pública / textos cifrados** → `transmissions/01/release/textos.md`.
+  Es la **biblia de voz**: bios, taglines, textos por track, 13 frases
+  sociales (ES+EN) y el playbook de posteo (3 modos: anotación marginal /
+  fragmento de transmisión / ficha técnica).
+- **Metadata + prosa larga + ISRCs** → `transmissions/01/release/metadata_proposal.md`.
+- **Cuento (fuente de los fragmentos)** → `docs/10_cuento.md` / `docs/10_cuento_en.md`.
+- **Press kit operativo** (hechos, assets, links, pitch how-to) → `docs/25_press_kit.md`.
+- **MusicBrainz / Wikidata** (campos para pegar) → `docs/26_musicbrainz_wikidata.md`.
+- **Artwork a rolete** → `transmissions/01/artwork/` (cover, `hexagram/` = logo
+  ÆM, `generated/00_artist_photo/` = imagen de artista faceless, `generated/
+  01_hero_background_painterly/`, `generated/02_spotify_canvas/`) y `redes/`
+  (avatares, banners, posts, OGs por red para ÆM y Spiral Out).
+- **Visualizers** (fuente de clips) → `transmissions/01/video/out/*_60fps.mp4`
+  (Outbound/Crossing/Recursion, 4K/60fps). Para clips: detectar los mejores
+  momentos con los control tracks `transmissions/01/video/control/*.npz`.
+
+**Regla de voz (no romper):** MISTERIO SIEMPRE, nada de explicar. ÆM es
+**faceless** (sin cara, tipo deadmau5). Lo público = fragmentos del cuento
+plantados solos, sin contexto. Sin "out now", sin agradecimientos, sin
+responder "quién es ÆM". El objetivo es que la gente diga "qué es esta fumada".
+La bio explicativa (prosa plana) es SOLO fallback para un formulario que la
+exija; el default público es la voz cifrada.
+
 ## How the user works
 
 - Iterates with feedback loops: `task render:* → listen → adjust compose_*.py

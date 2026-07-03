@@ -1,0 +1,123 @@
+# 26 — MusicBrainz + Wikidata · planillas para pegar
+
+> Campos exactos para cargar ÆM / Heliopause / Spiral Out. Vos creás las
+> cuentas y pegás; yo dejo los valores. Datos canónicos =
+> `transmissions/01/release/metadata_proposal.md`.
+
+## ⚠️ Orden importa (por el tema notability)
+
+1. **MusicBrainz primero.** No tiene barrera de notability — cualquiera puede
+   agregar un artista/release. Hacelo ahora (~30 min).
+2. **Wikidata DESPUÉS, y con cuidado.** Wikidata **sí** exige notability +
+   fuentes independientes. Un proyecto debut sin prensa puede ser **borrado**
+   por los editores. **Recomiendo esperar** a tener 1-2 reseñas de blogs
+   (las del pitch) para citar como fuentes. Si igual querés cargarlo ya,
+   dejá el MusicBrainz ID como identificador (P434) — ayuda a sostenerlo.
+
+MusicBrainz también es lo que alimenta a Last.fm, ListenBrainz, Roon, etc. →
+más ROI inmediato que Wikidata.
+
+---
+
+## A · MusicBrainz
+
+Cuenta: https://musicbrainz.org/register → "Add" desde el editor.
+
+### A1 · Artist
+| Campo | Valor |
+|---|---|
+| Name | `ÆM` |
+| Sort name | `�æm` |
+| Type | **Other** (proyecto/persona faceless — no es persona real ni banda) |
+| Area | *(dejar vacío — el proyecto es sin origen declarado)* |
+| Disambiguation | `deep space ambient project on Spiral Out` |
+| URLs (relationships) | homepage `https://spiralout.space/aem` · Bandcamp *(URL final)* · YouTube `https://www.youtube.com/@aem.transmissions` · Spotify *(URL final)* |
+
+### A2 · Label
+| Campo | Valor |
+|---|---|
+| Name | `Spiral Out` |
+| Type | **Imprint** |
+| Area | *(vacío)* |
+| Disambiguation | `experimental sound lab / label (spiralout.space)` |
+| URL | `https://spiralout.space` |
+
+### A3 · Release Group
+| Campo | Valor |
+|---|---|
+| Title | `Heliopause` |
+| Artist | `ÆM` |
+| Primary type | **Album** *(3 tracks/24 min es borde EP; Album es defendible y es lo que dice la metadata. Si preferís, EP también sirve.)* |
+| Secondary type | *(ninguno)* |
+
+### A4 · Release (la edición concreta)
+| Campo | Valor |
+|---|---|
+| Title | `Heliopause` |
+| Release group | `Heliopause` (el de arriba) |
+| Artist | `ÆM` |
+| Date | `2026` + **día exacto ⚠️ del panel CD Baby** |
+| Country | `[Worldwide]` (XW) |
+| Label | `Spiral Out` · Catalog# **⚠️ CD Baby (si asignó)** |
+| Barcode (UPC) | **⚠️ del panel CD Baby** |
+| Status | `Official` |
+| Packaging | `None` (digital) |
+| Language | `[No lyrics]` · Script `Latin` |
+| Format | `Digital Media` |
+
+### A5 · Tracklist (recordings)
+| # | Title | Length | ISRC |
+|---|---|---|---|
+| 1 | `Outbound` | `8:00` | `USHM82659668` |
+| 2 | `Crossing` | `13:00` | `USHM82659669` |
+| 3 | `Recursion` | `3:00` | `USHM82659670` |
+
+> El ISRC se carga en cada **recording** (Edit → ISRCs). Formato sin guiones.
+
+Al terminar, anotá acá los MBIDs generados (los necesita Wikidata):
+- Artist MBID: `__________`
+- Release Group MBID: `__________`
+- Label MBID: `__________`
+
+---
+
+## B · Wikidata (después de MusicBrainz + idealmente ≥1 fuente)
+
+Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad → Valor`.
+
+### B1 · Item ÆM (artista)
+- **Label (en):** `ÆM` · **(es):** `ÆM`
+- **Description (en):** `faceless ambient music project` · **(es):** `proyecto de música ambient sin rostro`
+- **Also known as:** `AEM`
+- Statements:
+  - `instance of (P31)` → `musical project` (Q107458278) *(o `musical group` Q215380 si P31 no acepta)*
+  - `genre (P136)` → `ambient music` (Q189201); `dark ambient` (Q1057598); `drone music` (Q574983)
+  - `record label (P264)` → `Spiral Out` *(linkear al item B3 una vez creado)*
+  - `official website (P856)` → `https://spiralout.space/aem`
+  - `MusicBrainz artist ID (P434)` → *(el Artist MBID de A5)*
+  - `country of origin (P495)` → *(opcional — dejar vacío para mantener faceless)*
+
+### B2 · Item Heliopause (álbum)
+- **Label (en):** `Heliopause` · **Description (en):** `2026 album by ÆM`
+- **Description (es):** `álbum de 2026 de ÆM`
+- Statements:
+  - `instance of (P31)` → `album` (Q482994)
+  - `performer (P175)` → `ÆM` (item B1)
+  - `publication date (P577)` → `2026` (afinar al día exacto)
+  - `record label (P264)` → `Spiral Out` (item B3)
+  - `genre (P136)` → `ambient music` (Q189201)
+  - `number of parts of this work (P2635)` → `3`
+  - `MusicBrainz release group ID (P436)` → *(Release Group MBID de A3)*
+
+### B3 · Item Spiral Out (sello)
+- **Label (en):** `Spiral Out` · **Description (en):** `experimental music label and sound lab`
+- **Description (es):** `sello y laboratorio de sonido experimental`
+- Statements:
+  - `instance of (P31)` → `record label` (Q18127)
+  - `official website (P856)` → `https://spiralout.space`
+  - `MusicBrainz label ID (P966)` → *(Label MBID de A2)*
+
+> Si un editor pone "notability" en duda: las fuentes válidas son reseñas de
+> blogs independientes (no el propio sitio). Por eso conviene Wikidata
+> **después** del pitch. Sin fuentes, dejá al menos los P434/P436/P966
+> (MusicBrainz IDs) que dan verificabilidad.
