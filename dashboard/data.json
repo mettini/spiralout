@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-07-03",
+    "updated": "2026-07-04",
     "next_review": "2026-06-21",
     "version": "0.5",
     "focus": "Orden de prioridad (vigente 2026-06-16): 1) difusión + cuentas (Tier 1 SO+ÆM cerradas; Tier 2/3 descartados), 2) SEO/GEO (MusicBrainz + Wikidata pendientes), 3) visuales DONE (yt-visualizer cerrado, Crossing definitivo cerrado via Hydra + build_13min), 4) blog (post setup). Audio: release:check pasado implícito (CDB aceptó + streaming live). Promo continua post-release (no día único). Backlog largo (Em+H, Rescue 100, framework público, R2) en 'ideas-futuras'."
@@ -940,6 +940,23 @@
               "status": "todo",
               "owner": "claude",
               "note": "Doc completo en docs/23_social_pipeline_experiment.md. Stack: Postiz self-hosted + Bluesky/X/Mastodon API directa + métricas daily pull. Diseñado para 'mano cero' del user (Claude Desktop Computer Use cubre OAuth). NO avanzar hasta: cuentas Tier 1 cerradas (✓) + videos aprobados visualmente (⏳) + decisión explícita del user de arrancar."
+            }
+          ]
+        },
+        {
+          "name": "Experimentos de estudio (ver docs/27_lab_experiments_and_references.md)",
+          "tasks": [
+            {
+              "title": "'Silicon' — synth desde tripas de la máquina (bytebeat + psutil→aem + EMF/coil)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Hilo A en docs/27. MVP: bytebeat + script psutil que modula una voz aem."
+            },
+            {
+              "title": "Dark ambient por deformación digital línea Lustmord (Volt 276 + Ableton Warp + PaulXStretch + convolution)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Hilo B en docs/27. Lustmord = todo deformación de grabaciones, NO modular (corroborado)."
             }
           ]
         }
