@@ -56,6 +56,11 @@ Levantá de estas fuentes y referencialas — no dupliques:
 - **Visualizers** (fuente de clips) → `transmissions/01/video/out/*_60fps.mp4`
   (Outbound/Crossing/Recursion, 4K/60fps). Para clips: detectar los mejores
   momentos con los control tracks `transmissions/01/video/control/*.npz`.
+- **Experimentos futuros / próximos tracks** → `docs/27_lab_experiments_and_references.md`
+  (synth "Silicon" desde la máquina + deformación digital línea Lustmord; indexa
+  `docs/22` CA+modular y el backlog TX02/TX03).
+- **Sonic neighbors (difusión / similar artists para targeting)** → `docs/28_sonic_neighbors_aem.md`
+  (lista viva; método Reddit en `docs/18`, motor Resonance en `docs/19`).
 
 **Regla de voz (no romper):** MISTERIO SIEMPRE, nada de explicar. ÆM es
 **faceless** (sin cara, tipo deadmau5). Lo público = fragmentos del cuento

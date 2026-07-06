@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-07-04",
+    "updated": "2026-07-06",
     "next_review": "2026-06-21",
     "version": "0.5",
     "focus": "Orden de prioridad (vigente 2026-06-16): 1) difusión + cuentas (Tier 1 SO+ÆM cerradas; Tier 2/3 descartados), 2) SEO/GEO (MusicBrainz + Wikidata pendientes), 3) visuales DONE (yt-visualizer cerrado, Crossing definitivo cerrado via Hydra + build_13min), 4) blog (post setup). Audio: release:check pasado implícito (CDB aceptó + streaming live). Promo continua post-release (no día único). Backlog largo (Em+H, Rescue 100, framework público, R2) en 'ideas-futuras'."
@@ -510,6 +510,12 @@
           "id": "no-convencional",
           "title": "Campañas no convencionales",
           "tasks": [
+            {
+              "title": "Sembrar + validar lista de sonic neighbors (docs/28) → alimenta r/ifyoulikeblank + ads",
+              "status": "todo",
+              "owner": "both",
+              "note": "Semilla: AMIANGELIKA & 1100 (user-flagged, pendiente análisis). User tira candidatos, Claude corrobora, user valida."
+            },
             {
               "id": "reddit-recon",
               "title": "Reconocimiento r/ambientmusic, r/darkambient, r/SpaceMusic (comentar 9:1)",
