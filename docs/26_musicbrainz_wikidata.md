@@ -39,7 +39,7 @@ linkear el label y el artista existentes).
 | Type | **Other** (proyecto/persona faceless — no es persona real ni banda) |
 | Area | *(dejar vacío — el proyecto es sin origen declarado)* |
 | Disambiguation | `project on the Spiral Out label` — neutra, distingue de los otros mil AEM SIN encasillar en un género (no es descripción de estilo, solo lo distingue). |
-| URLs (relationships) | homepage `https://spiralout.space/aem` · Bandcamp *(URL final)* · YouTube `https://www.youtube.com/@aem.transmissions` · Spotify *(URL final)* |
+| URLs (relationships) | homepage `https://spiralout.space/aem/` · Bandcamp `https://aemtransmissions.bandcamp.com` · SoundCloud `https://soundcloud.com/aemtransmissions` · YouTube `https://www.youtube.com/@aem.transmissions` · *(Spotify/Apple de ARTISTA: entrar al álbum y clickear el nombre "ÆM" — el site solo tiene URLs de álbum)* |
 
 ### A2 · Label
 | Campo | Valor |
@@ -72,6 +72,16 @@ linkear el label y el artista existentes).
 | Packaging | `None` (digital) |
 | Language | `[No lyrics]` · Script `Latin` |
 | Format | `Digital Media` |
+
+**URLs de la release (pegar como relationships del Release — todas reales):**
+- Bandcamp: `https://aemtransmissions.bandcamp.com/album/heliopause`
+- Spotify: `https://open.spotify.com/album/5omJDu1rZwe9YFeAWONY6x`
+- Apple Music: `https://music.apple.com/album/heliopause-ep/6773985527`
+- Tidal: `https://tidal.com/album/528526670`
+- Amazon Music: `https://music.amazon.com/albums/B0H34YZ4ZK`
+- Qobuz: `https://www.qobuz.com/album/heliopause-aem/eotey7erxe23d`
+- YouTube Music: `https://music.youtube.com/playlist?list=OLAK5uy_kJZJP4n5YQfW1XupmKEK5qQJ-YQzLZ198`
+- SoundCloud: `https://soundcloud.com/aemtransmissions/sets/heliopause`
 
 ### A5 · Tracklist (recordings)
 | # | Title | Length | ISRC |

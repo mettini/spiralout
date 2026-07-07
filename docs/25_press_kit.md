@@ -78,9 +78,12 @@ Para posts hay 3 modos ya definidos en `textos.md §6`: **A** anotación margina
 
 ## Links
 
-- Web: https://spiralout.space/aem · YouTube: https://www.youtube.com/@aem.transmissions
-- Playlist: https://www.youtube.com/playlist?list=PLmefLWsXYwXYM1AOKLVWOLIlxntLWOCYt
-- Bandcamp / Spotify / Apple: ⚠️ COMPLETAR URLs finales · Contacto: emiliano@42i.co
+- Web: https://spiralout.space/aem · Contacto: emiliano@42i.co
+- Bandcamp: https://aemtransmissions.bandcamp.com/album/heliopause
+- Spotify: https://open.spotify.com/album/5omJDu1rZwe9YFeAWONY6x
+- Apple Music: https://music.apple.com/album/heliopause-ep/6773985527
+- Tidal: https://tidal.com/album/528526670 · Amazon: https://music.amazon.com/albums/B0H34YZ4ZK · Qobuz: https://www.qobuz.com/album/heliopause-aem/eotey7erxe23d
+- YouTube: https://www.youtube.com/@aem.transmissions · Playlist: https://www.youtube.com/playlist?list=PLmefLWsXYwXYM1AOKLVWOLIlxntLWOCYt · SoundCloud: https://soundcloud.com/aemtransmissions
 
 ## Pitch a blogs (Headphone Commute, Stationary Travels, A Closer Listen, Fluid Radio)
 Mail corto: 1 línea de qué es (usar la tabla de hechos) + 2-3 fragmentos de
