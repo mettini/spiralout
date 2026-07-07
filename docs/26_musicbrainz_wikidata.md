@@ -39,7 +39,7 @@ linkear el label y el artista existentes).
 | Type | **Other** (proyecto/persona faceless — no es persona real ni banda) |
 | Area | *(dejar vacío — el proyecto es sin origen declarado)* |
 | Disambiguation | `project on the Spiral Out label` — neutra, distingue de los otros mil AEM SIN encasillar en un género (no es descripción de estilo, solo lo distingue). |
-| URLs (relationships) | homepage `https://spiralout.space/aem/` · Bandcamp `https://aemtransmissions.bandcamp.com` · SoundCloud `https://soundcloud.com/aemtransmissions` · YouTube `https://www.youtube.com/@aem.transmissions` · *(Spotify/Apple de ARTISTA: entrar al álbum y clickear el nombre "ÆM" — el site solo tiene URLs de álbum)* |
+| URLs (relationships) — **URLs de ARTISTA, no de álbum** (MB rechaza `/album/` en el artista) | homepage `https://spiralout.space/aem/` · Bandcamp `https://aemtransmissions.bandcamp.com` · SoundCloud `https://soundcloud.com/aemtransmissions` · YouTube `https://www.youtube.com/@aem.transmissions` · Spotify `https://open.spotify.com/artist/0aWMHS1wSqci4Omo4RRJ2K` · Apple Music `https://music.apple.com/us/artist/æm/6773984882` · Qobuz `https://www.qobuz.com/ar-es/interpreter/m-74/10851141` · *(Tidal/Amazon de artista: sacar de la app si querés — son secundarias)* |
 
 ### A2 · Label
 | Campo | Valor |
