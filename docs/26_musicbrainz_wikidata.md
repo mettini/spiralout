@@ -38,7 +38,7 @@ linkear el label y el artista existentes).
 | Sort name | `AEM` (alfabeto plano — en MB el sort name es para ordenar; `Æ`→`AE`) |
 | Type | **Other** (proyecto/persona faceless — no es persona real ni banda) |
 | Area | *(dejar vacío — el proyecto es sin origen declarado)* |
-| Disambiguation | `deep space ambient project on Spiral Out` |
+| Disambiguation | `project on the Spiral Out label` — neutra, distingue de los otros mil AEM SIN encasillar en un género (no es descripción de estilo, solo lo distingue). |
 | URLs (relationships) | homepage `https://spiralout.space/aem` · Bandcamp *(URL final)* · YouTube `https://www.youtube.com/@aem.transmissions` · Spotify *(URL final)* |
 
 ### A2 · Label
@@ -95,11 +95,12 @@ Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad
 
 ### B1 · Item ÆM (artista)
 - **Label (en):** `ÆM` · **(es):** `ÆM`
-- **Description (en):** `faceless ambient music project` · **(es):** `proyecto de música ambient sin rostro`
+- **Description (en):** `faceless music project` · **(es):** `proyecto de música sin rostro`
+  *(sin género — no encasillar el proyecto; las transmissions varían de estilo)*
 - **Also known as:** `AEM`
 - Statements:
   - `instance of (P31)` → `musical project` (Q107458278) *(o `musical group` Q215380 si P31 no acepta)*
-  - `genre (P136)` → `ambient music` (Q189201); `dark ambient` (Q1057598); `drone music` (Q574983)
+  - **NO poner `genre (P136)` en el artista** — el género va en el álbum (B2), no en ÆM.
   - `record label (P264)` → `Spiral Out` *(linkear al item B3 una vez creado)*
   - `official website (P856)` → `https://spiralout.space/aem`
   - `MusicBrainz artist ID (P434)` → *(el Artist MBID de A5)*

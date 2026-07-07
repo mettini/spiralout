@@ -254,7 +254,7 @@ Cuando cada uno se vaya creando, completar URL acá. Esto es la fuente
     /* completar cuando estén:
     , "https://open.spotify.com/artist/XXX"
     , "https://music.apple.com/artist/XXX"
-    , "https://www.youtube.com/@aem"
+    , "https://www.youtube.com/@aem.transmissions"
     , "https://www.instagram.com/aem.transmissions"
     , "https://bsky.app/profile/aem.bsky.social"
     , "https://musicbrainz.org/artist/XXX"
