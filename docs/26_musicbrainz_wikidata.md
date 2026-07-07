@@ -21,13 +21,21 @@ más ROI inmediato que Wikidata.
 
 ## A · MusicBrainz
 
-Cuenta: https://musicbrainz.org/register → "Add" desde el editor.
+Cuenta (editor, handle neutro): https://musicbrainz.org/register
+
+Links directos para crear cada entidad (logueado):
+- **Add Artist** (ÆM) → https://musicbrainz.org/artist/create
+- **Add Label** (Spiral Out) → https://musicbrainz.org/label/create
+- **Add Release** (Heliopause — acá cargás release group + tracks + ISRCs de una) → https://musicbrainz.org/release/add
+
+Orden sugerido: Label → Artist → Release (así al crear el release ya podés
+linkear el label y el artista existentes).
 
 ### A1 · Artist
 | Campo | Valor |
 |---|---|
 | Name | `ÆM` |
-| Sort name | `�æm` |
+| Sort name | `AEM` (alfabeto plano — en MB el sort name es para ordenar; `Æ`→`AE`) |
 | Type | **Other** (proyecto/persona faceless — no es persona real ni banda) |
 | Area | *(dejar vacío — el proyecto es sin origen declarado)* |
 | Disambiguation | `deep space ambient project on Spiral Out` |
