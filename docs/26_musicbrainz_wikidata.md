@@ -92,10 +92,11 @@ linkear el label y el artista existentes).
 
 > El ISRC se carga en cada **recording** (Edit → ISRCs). Formato sin guiones.
 
-Al terminar, anotá acá los MBIDs generados (los necesita Wikidata):
-- Artist MBID: `__________`
-- Release Group MBID: `__________`
-- Label MBID: `__________`
+MBIDs generados (creados 2026-07-08):
+- **Artist** (ÆM): `0b250427-9d41-4d4c-9d12-b06e48dbc708`
+- **Release Group** (Heliopause): `a421892a-4f1d-4d70-8f0e-484f16a22a04`
+- **Release** (Heliopause, edición concreta): `107211b1-01f1-4f72-a49a-11fd1e87c029`
+- **Label** (Spiral Out): `60da02e2-3b09-4db6-a9c0-5e545e6044a5`
 
 ---
 
@@ -113,7 +114,7 @@ Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad
   - **NO poner `genre (P136)` en el artista** — el género va en el álbum (B2), no en ÆM.
   - `record label (P264)` → `Spiral Out` *(linkear al item B3 una vez creado)*
   - `official website (P856)` → `https://spiralout.space/aem`
-  - `MusicBrainz artist ID (P434)` → *(el Artist MBID de A5)*
+  - `MusicBrainz artist ID (P434)` → `0b250427-9d41-4d4c-9d12-b06e48dbc708`
   - `country of origin (P495)` → *(opcional — dejar vacío para mantener faceless)*
 
 ### B2 · Item Heliopause (álbum)
@@ -126,7 +127,7 @@ Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad
   - `record label (P264)` → `Spiral Out` (item B3)
   - `genre (P136)` → `ambient music` (Q189201)
   - `number of parts of this work (P2635)` → `3`
-  - `MusicBrainz release group ID (P436)` → *(Release Group MBID de A3)*
+  - `MusicBrainz release group ID (P436)` → `a421892a-4f1d-4d70-8f0e-484f16a22a04`
 
 ### B3 · Item Spiral Out (sello)
 - **Label (en):** `Spiral Out` · **Description (en):** `experimental music label and sound lab`
@@ -134,7 +135,7 @@ Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad
 - Statements:
   - `instance of (P31)` → `record label` (Q18127)
   - `official website (P856)` → `https://spiralout.space`
-  - `MusicBrainz label ID (P966)` → *(Label MBID de A2)*
+  - `MusicBrainz label ID (P966)` → `60da02e2-3b09-4db6-a9c0-5e545e6044a5`
 
 > Si un editor pone "notability" en duda: las fuentes válidas son reseñas de
 > blogs independientes (no el propio sitio). Por eso conviene Wikidata
