@@ -69,15 +69,22 @@ I'd like to submit my album for review. It's called Heliopause, out under
 the name ÆM on my label Spiral Out. Three long tracks, around 24 minutes,
 deep space ambient and drone, all instrumental.
 
-Stream (SoundCloud, full album): https://soundcloud.com/aemtransmissions/sets/heliopause
+Full stream (SoundCloud): https://soundcloud.com/aemtransmissions/sets/heliopause
 Bandcamp: https://aemtransmissions.bandcamp.com/album/heliopause
 
-If it's a fit I can send the files, a landscape artist image and the
-artwork. Thanks for listening.
+There are also three official visualizers on YouTube if that's useful:
+https://www.youtube.com/@aem.transmissions
+
+If it's a fit I can send the files, a landscape artist image, the artwork
+and a one-sheet. Thanks for listening.
 
 ÆM (Spiral Out)
 emiliano@42i.co
 ```
+
+> **Nota — IA:** no mencionar el uso de IA en este pitch (ni en los de ambient
+> puro). No suma y sesga a los AI-escépticos; no se oculta (el site lo dice). El
+> ángulo humano+IA se guarda para outlets cuyo hook sea eso (prensa tech/AI-music).
 Si pasa, piden: files + imagen de artista landscape ≥1250px
 (`…/00_artist_photo/press_horizontal_1920x1080.jpg`) + artwork (`cover_streaming_3000.jpg`).
 
