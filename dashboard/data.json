@@ -320,8 +320,9 @@
             {
               "id": "press-photo",
               "title": "Foto press ÆM (cuadrada + horizontal + vertical)",
-              "status": "todo",
-              "owner": "user"
+              "status": "done",
+              "owner": "user",
+              "note": "Crops cuadrada/horiz/vertical del hexagrama en 00_artist_photo/ (regenerable make_social.sh)"
             },
             {
               "id": "canvas-video",
@@ -475,8 +476,9 @@
             {
               "id": "press-kit",
               "title": "Press kit: bio 50/150 palabras + fotos + cover + one-sheet",
-              "status": "todo",
-              "owner": "user"
+              "status": "done",
+              "owner": "user",
+              "note": "docs/25 (bio/hechos) + docs/30 one-sheet + crops foto + cover. Completo."
             },
             {
               "id": "pitch-spotify",
@@ -489,9 +491,9 @@
             {
               "id": "pitch-blogs-tier1",
               "title": "Pitch a blogs Tier 1 (Fluid Radio, Headphone Commute, Stationary Travels, ACL)",
-              "status": "todo",
+              "status": "done",
               "owner": "user",
-              "note": "Ver docs/29: mail listo + targets. Skip Headphone Commute (no-promo + anti-IA). Ir con A Closer Listen, Stationary Travels, Fluid Radio."
+              "note": "Enviados 2026-07-08: A Closer Listen, Stationary Travels, Fluid Radio (Headphone Commute skip: anti-IA). Ver docs/29."
             },
             {
               "id": "pitch-bandcamp-daily",
