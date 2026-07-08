@@ -46,7 +46,8 @@ evoluciona sin volver a ser la misma.*
 | Álbum | **Heliopause** (Transmission 01) |
 | Sello | **Spiral Out** (spiralout.space) |
 | Formato | 3 tracks · ~24 min · digital |
-| Género | Ambient (Spotify/Apple) · +Dark Ambient/Drone/Cinematic/Space/Experimental (Bandcamp) |
+| Género | Ambient (Spotify/Apple, único tag) |
+| Tags Bandcamp (LIVE) | ambient · atmospheric · cosmic ambient · dark ambient · deep space ambient · drone · experimental · space music · **Buenos Aires** (ubicación) |
 | Año | 2026 · © 2026 ÆM · Distribuidor: CD Baby |
 | Release date | **2026-05-16** |
 | UPC / barcode | `823000591084` |
