@@ -397,9 +397,9 @@
             {
               "id": "aem-lastfm-setup",
               "title": "Last.fm ÆM artist page: bio + tags + links (Tier 3 — prematuro hasta streaming live + MusicBrainz)",
-              "status": "done",
+              "status": "todo",
               "owner": "user",
-              "note": "Diferido: scrobbles vienen de Spotify/Apple (aún no live). Se nutre de MusicBrainz (va antes). Lo real es la campaña lastfm-scrobble en release week. | Creado 2026-07-08: artist/label/release-group/release MBIDs en docs/26 §A5."
+              "note": "Diferido: scrobbles vienen de Spotify/Apple (aún no live). Se nutre de MusicBrainz (va antes). Lo real es la campaña lastfm-scrobble en release week."
             },
             {
               "id": "em-medium",
