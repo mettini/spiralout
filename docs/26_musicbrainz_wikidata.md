@@ -67,7 +67,7 @@ linkear el label y el artista existentes).
 | Date | `2026-05-16` (fecha de release confirmada) |
 | Country | `[Worldwide]` (XW) |
 | Label | `Spiral Out` · Catalog# **⚠️ CD Baby (si asignó)** |
-| Barcode (UPC) | **⚠️ del panel CD Baby** |
+| Barcode (UPC) | `823000591084` (cargar en el release → Edit → Barcode) |
 | Status | `Official` |
 | Packaging | `None` (digital) |
 | Language | `[No lyrics]` · Script `Latin` |
