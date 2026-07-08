@@ -63,6 +63,10 @@ evoluciona sin volver a ser la misma.*
 
 ## Clip start para short-form (TikTok / CD Baby)
 
+⚠️ **Para Heliopause quedó BLOQUEADO** — CD Baby solo deja elegirlo en el momento
+del submission; una vez distribuido, se cierra. Esto queda como **referencia para
+las próximas transmissions**: setear el custom start EN EL SUBMISSION, no después.
+
 CD Baby deja elegir el **start time del clip de ~60s** que se usa en TikTok
 (default = primeros 60s). En ambient el arranque es lento → hay que **empezar en
 el climax** para que enganche. Calculado con la energía real del audio
