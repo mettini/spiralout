@@ -21,10 +21,17 @@ ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=-1:1720,pad=3840:2160:(ow-iw)/
 ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=2160:-1,pad=2160:2700:(ow-iw)/2:(oh-ih)/2:color=$BG,scale=1080:1350" "$APOUT/press_vertical_1080x1350.jpg"
 ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=1500:1500" "$APOUT/press_square_1500.jpg"
 
-# ---------- 2) Spotify Canvas (loop seamless: zoom+flicker+grano) ----------
-ffmpeg -y -loglevel error -loop 1 -i "$CANVAS_STILL" -t 6 -r 30 \
- -vf "scale=1188:2112:force_original_aspect_ratio=increase,crop=1188:2112,zoompan=z='1.04+0.03*sin(2*PI*on/180)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30,eq=brightness='0.02*sin(2*PI*t/6)':saturation=1.05,noise=alls=3:allf=t,format=yuv420p" \
- -c:v libx264 -preset slow -crf 23 -maxrate 6M -bufsize 12M -pix_fmt yuv420p -movflags +faststart "$OUT/aem_canvas_v1.mp4"
+# ---------- 2) Spotify Canvas (FINAL: fragmento de video del core de outbound) ----------
+# 60fps (rate nativo del visualizer -> sin judder) + loop forward-only con crossfade
+# de 1.5s (el arranque se funde sobre el final; NO boomerang/reversa, quedaba fake).
+# Momento: el core de luz de outbound (~80s).
+VISU="$OUT/1-outbound_v24_60fps.mp4"
+ffmpeg -y -loglevel error -ss 80 -t 6 -i "$VISU" -filter_complex \
+ "[0:v]crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60,setpts=PTS-STARTPTS[base];\
+[base]split[b1][b2];\
+[b2]trim=0:1.5,setpts=PTS-STARTPTS,format=yuva420p,fade=t=in:st=0:d=1.5:alpha=1,setpts=PTS+4.5/TB[head];\
+[b1][head]overlay=eof_action=pass:format=auto[out]" \
+ -map "[out]" -t 6 -an -r 60 -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart "$OUT/canvas_C_core.mp4"
 
 # ---------- 3) clips verticales 9:16 con fragmento cifrado ----------
 # overlay de texto via PIL (el ffmpeg de homebrew no trae drawtext)
