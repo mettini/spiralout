@@ -62,22 +62,29 @@ low-key, cero ruego, IA no mencionada.
 No es mail, es su [formulario](https://www.fluid-radio.co.uk/about/review-submissions/).
 Piden **link de SoundCloud** (≥2 tracks) primero, NO zips. Pegar:
 
+Como el form no sube archivos, el **one-sheet va inline** (es texto); files/imágenes
+se ofrecen para después. Pegar en Message:
+
 ```
 Hi,
 
-I'd like to submit my album for review. It's called Heliopause, out under
-the name ÆM on my label Spiral Out. Three long tracks, around 24 minutes,
-deep space ambient and drone, all instrumental.
+I'd like to submit my album for review. Streaming link is below, with the one-sheet details underneath. Happy to send the full files, a landscape artist image and the artwork if it's a fit.
 
 Full stream (SoundCloud): https://soundcloud.com/aemtransmissions/sets/heliopause
-Bandcamp: https://aemtransmissions.bandcamp.com/album/heliopause
 
-There are also three official visualizers on YouTube if that's useful:
-https://www.youtube.com/@aem.transmissions
+One-sheet
+Artist: ÆM (also written AEM)
+Album: Heliopause (Transmission 01)
+Label: Spiral Out
+Release date: 16 May 2026
+Genre: deep space ambient, dark ambient, drone (instrumental)
+Length: 3 tracks, about 24 minutes
+Description: Heliopause is the debut release by ÆM, a faceless project on the Spiral Out label. Three long instrumental tracks built around the heliopause, the boundary far past the planets where the solar wind runs out and interstellar space begins. It moves through a capsule leaving, a threshold crossed in silence, and a return that doesn't bring back the same thing that set out.
+Website: https://spiralout.space/aem
+Order / listen: Bandcamp https://aemtransmissions.bandcamp.com/album/heliopause · Spotify https://open.spotify.com/album/5omJDu1rZwe9YFeAWONY6x · Apple Music https://music.apple.com/us/album/heliopause-ep/6773985527
+There are also three official visualizers on YouTube: https://www.youtube.com/@aem.transmissions
 
-If it's a fit I can send the files, a landscape artist image, the artwork
-and a one-sheet. Thanks for listening.
-
+Thanks for listening.
 ÆM (Spiral Out)
 em@spiralout.space
 ```
