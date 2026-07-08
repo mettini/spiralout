@@ -21,17 +21,20 @@ ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=-1:1720,pad=3840:2160:(ow-iw)/
 ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=2160:-1,pad=2160:2700:(ow-iw)/2:(oh-ih)/2:color=$BG,scale=1080:1350" "$APOUT/press_vertical_1080x1350.jpg"
 ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=1500:1500" "$APOUT/press_square_1500.jpg"
 
-# ---------- 2) Spotify Canvas (FINAL: fragmento de video del core de outbound) ----------
-# 60fps (rate nativo del visualizer -> sin judder) + loop forward-only con crossfade
-# de 1.5s (el arranque se funde sobre el final; NO boomerang/reversa, quedaba fake).
-# Momento: el core de luz de outbound (~80s).
-VISU="$OUT/1-outbound_v24_60fps.mp4"
-ffmpeg -y -loglevel error -ss 80 -t 6 -i "$VISU" -filter_complex \
- "[0:v]crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60,setpts=PTS-STARTPTS[base];\
+# ---------- 2) Spotify Canvas — UNO POR TRACK (fragmento del visualizer de cada tema) ----------
+# 60fps (rate nativo -> sin judder) + loop forward-only con crossfade 1.5s
+# (el arranque se funde sobre el final; NO boomerang/reversa, quedaba fake).
+mkcanvas () { # $1=visualizer  $2=ss(seg)  $3=out.mp4
+  ffmpeg -y -loglevel error -ss "$2" -t 6 -i "$1" -filter_complex \
+   "[0:v]crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60,setpts=PTS-STARTPTS[base];\
 [base]split[b1][b2];\
 [b2]trim=0:1.5,setpts=PTS-STARTPTS,format=yuva420p,fade=t=in:st=0:d=1.5:alpha=1,setpts=PTS+4.5/TB[head];\
 [b1][head]overlay=eof_action=pass:format=auto[out]" \
- -map "[out]" -t 6 -an -r 60 -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart "$OUT/canvas_C_core.mp4"
+   -map "[out]" -t 6 -an -r 60 -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart "$3"
+}
+mkcanvas "$OUT/1-outbound_v24_60fps.mp4"  80  "$OUT/canvas_outbound.mp4"   # core de luz
+mkcanvas "$OUT/2-crossing_v7_60fps.mp4"  347  "$OUT/canvas_crossing.mp4"   # portal + fractal Kaliset
+mkcanvas "$OUT/3-recursion_v3_60fps.mp4"  92  "$OUT/canvas_recursion.mp4"  # anillos concentricos
 
 # ---------- 3) clips verticales 9:16 con fragmento cifrado ----------
 # overlay de texto via PIL (el ffmpeg de homebrew no trae drawtext)
