@@ -111,8 +111,10 @@ de streaming que todavía no hay). Ya descartado en el dashboard.
 3. **Piloto YouTube discovery ads** ($70-140) — el mejor ROI pago; yo armo targeting+copy.
 4. **Medir** (views, subs, saves, streams) → escalar lo que funcione (IG boost, más YT).
 
-## 7. Decisiones para vos (para cerrar la propuesta)
-1. **¿En qué plataformas te mantenés activo?** (recomiendo IG + Bluesky + YouTube; X opcional).
-2. **¿Apetito de budget pago?** (mínimo ~$100-150 / comprometido ~$300-500 / cero por ahora).
-3. **¿Hacés el laburo orgánico de Reddit** (semanas de comentar 9:1)? Si no, se salta.
-4. **¿Clips con texto** (font retro máquina) **o sin texto?** (define el content bank).
+## 7. Decisiones TOMADAS (2026-07-08)
+1. **Plataformas activas: Instagram (ÆM) + YouTube.** (Bluesky/X descartadas por ahora — mejor 2 bien.)
+2. **Budget: mínimo ~$100-150** → casi todo a **YouTube discovery ads**.
+3. **Reddit: "quizás" → armar el plan igual** (`docs/32`), el user decide si lo ejecuta.
+4. **Clips: LAS DOS versiones** (con texto font retro + sin texto).
+
+→ Planes de ejecución detallados: **`docs/32`** (Reddit paso a paso + YouTube ads setup).
