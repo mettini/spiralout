@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-07-06",
+    "updated": "2026-07-08",
     "next_review": "2026-06-21",
     "version": "0.5",
     "focus": "Orden de prioridad (vigente 2026-06-16): 1) difusión + cuentas (Tier 1 SO+ÆM cerradas; Tier 2/3 descartados), 2) SEO/GEO (MusicBrainz + Wikidata pendientes), 3) visuales DONE (yt-visualizer cerrado, Crossing definitivo cerrado via Hydra + build_13min), 4) blog (post setup). Audio: release:check pasado implícito (CDB aceptó + streaming live). Promo continua post-release (no día único). Backlog largo (Em+H, Rescue 100, framework público, R2) en 'ideas-futuras'."
@@ -89,9 +89,10 @@
             {
               "id": "musicbrainz",
               "title": "MusicBrainz entries (ÆM + Heliopause + label Spiral Out)",
-              "status": "todo",
+              "status": "done",
               "owner": "user",
-              "eta": "30 min"
+              "eta": "30 min",
+              "note": "Creado 2026-07-08: artist/label/release-group/release MBIDs en docs/26 §A5."
             },
             {
               "id": "wikidata",
@@ -396,9 +397,9 @@
             {
               "id": "aem-lastfm-setup",
               "title": "Last.fm ÆM artist page: bio + tags + links (Tier 3 — prematuro hasta streaming live + MusicBrainz)",
-              "status": "todo",
+              "status": "done",
               "owner": "user",
-              "note": "Diferido: scrobbles vienen de Spotify/Apple (aún no live). Se nutre de MusicBrainz (va antes). Lo real es la campaña lastfm-scrobble en release week."
+              "note": "Diferido: scrobbles vienen de Spotify/Apple (aún no live). Se nutre de MusicBrainz (va antes). Lo real es la campaña lastfm-scrobble en release week. | Creado 2026-07-08: artist/label/release-group/release MBIDs en docs/26 §A5."
             },
             {
               "id": "em-medium",
