@@ -66,7 +66,7 @@ descripción del álbum de `docs/25`.
 ## Registro de envíos (llenar a medida)
 | Blog | Enviado | Respuesta | Resultado |
 |---|---|---|---|
-| A Closer Listen | ⏳ | — | — |
-| Stationary Travels | ⏳ | — | — |
+| A Closer Listen | ✅ 2026-07-08 | — | — |
+| Stationary Travels | ✅ 2026-07-08 | — | — |
 | Fluid Radio | ⏳ | — | — |
 | Bandcamp Daily | ⏳ | — | — |
