@@ -969,6 +969,12 @@
               "status": "todo",
               "owner": "user",
               "note": "Hilo B en docs/27. Lustmord = todo deformación de grabaciones, NO modular (corroborado)."
+            },
+            {
+              "title": "Vinilo simulado desde el surco (.gro) — filtro vinilo por cadena (Nivel A) + modelado físico púa/surco (Nivel B)",
+              "status": "todo",
+              "owner": "user",
+              "note": "Hilo C en docs/27. Agarrar cualquier tema -> suena a vinilo. Nivel A = RIAA+2ºarm+wow/flutter+crackle (MVP); Nivel B = surco+púa física (novel, el hueco)."
             }
           ]
         }

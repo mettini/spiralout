@@ -135,13 +135,72 @@ la voz del proyecto):**
 
 ---
 
+## C · Experimento: simular un vinilo desde el surco (`.gro`)
+
+**La idea del user.** Un vinilo es un surco/onda en espiral donde se codifica la
+música; la púa lo lee/vibra → ondas sonoras. Idea: **replicar eso en digital** —
+codificar un tema hi-res en una réplica del surco (archivo `.gro`/`.sur`
+"grooves") y **simular la púa leyéndolo**. Objetivo final: un "filtro vinilo"
+físico — agarrás cualquier tema, lo pasás por ahí, suena a vinilo (fuzzy, warm),
+derivado del *funcionamiento*, no de un preset.
+
+**La pregunta de fondo (corroborada).** Si tenemos el tema en hi-res, ¿por qué el
+vinilo suena distinto/"más fuzzy"? NO es una cosa sola: es una pila de "defectos"
+mecánicos + de codificación:
+- **Distorsión armónica** (sobre todo 2º par) — ~2% THD, órdenes de magnitud más
+  que digital. La púa NO traza perfecto → "calidez/gordura". Peor en el surco
+  interno (radio chico = más THD → *inner-groove distortion*).
+- **Wow & flutter** — variaciones de velocidad (wow lento / flutter rápido) del
+  plato/motor/correa.
+- **Curva RIAA** — al cortar baja graves/sube agudos, al reproducir se invierte;
+  la inversión imperfecta + la curva colorean.
+- **Ruido de superficie** (crackle/pops/polvo), **rumble** (graves del motor),
+  **graves a mono** (<~150 Hz, para que la púa no salte), **rolloff de agudos**,
+  rango dinámico limitado, **crosstalk** estéreo, resonancias mecánicas.
+
+**Qué existe (no reinventar).**
+- **Leer surco → audio YA está resuelto**: **IRENE** (Carl Haber & Vitaliy
+  Fadeyev, Lawrence Berkeley Lab) escanea el surco ópticamente y reconstruye el
+  audio; **laser turntables** (leen sin contacto); **"Digital Needle" de Ofer
+  Springer** (audio desde una FOTO escaneada del disco).
+- **Emuladores de vinilo** (iZotope Vinyl gratis, XLN RC-20, Waves…): **fingen**
+  el efecto con EQ + LFO wow/flutter + samples de ruido + waveshaping. **NO
+  modelan el surco ni la púa.**
+
+**El hueco (lo nuestro).** El camino inverso y físico: **codificar audio EN una
+geometría de surco y simular una púa real (masa, compliance, radio de punta)
+trazándola** → coloración desde primeros principios, no un preset. Captura
+distorsiones dependientes de radio/velocidad (inner-groove) que la cadena de
+efectos solo aproxima. Poco explorado → terreno propio, alineado con [[Silicon]].
+
+**Dos niveles (en orden):**
+1. **Nivel A — "filtro vinilo" por cadena (rápido, MVP):** RIAA + waveshaping 2º
+   armónico + wow/flutter (LFO lento+rápido) + graves-a-mono <150 Hz + rolloff
+   agudos + capa de crackle/ruido + rumble. Agarrás cualquier tema y suena a
+   vinilo. Valida el objetivo del user en 1 tarde (Python/scipy o framework `aem`).
+2. **Nivel B — modelado físico del surco (el novel):**
+   - Codificar el WAV en un `.gro`: desplazamiento lateral (L+R) + vertical (L−R)
+     del surco a lo largo de la espiral (radio y velocidad lineal decrecientes
+     hacia el centro).
+   - Simular la púa: masa-resorte-amortiguador (masa de punta + compliance de la
+     cápsula) siguiendo el surco; el radio de punta limita cuán fino traza
+     (distorsiona agudos + inner-groove).
+   - **"Encender" cada parte por separado** (púa, plato/velocidad, correa, RIAA,
+     ruido) para OÍR qué aporta cada una — la exploración que querés.
+
+**Primer paso (rumbo):** Nivel A en Python sobre un tema hi-res nuestro → A/B vs
+original. Si el fuzzy no aparece "de verdad", ir a Nivel B (al menos el trazado
+púa: masa/radio), que es lo que da el carácter físico.
+
 ## Cómo retomar
 
 - Para **Silicon** (hilo A): arrancar por bytebeat + script `psutil`→`aem`.
 - Para **Lustmord/deformación** (hilo B): bajar PaulXStretch + Supermassive y
   hacer el track de 6 pasos. Puede alimentar **TX02/TX03** o un EP de estudio.
-- Ambos conviven con el framework `aem` (código puro) — no lo reemplazan, lo
-  extienden con material grabado/deformado y con fuentes de la máquina.
+- Para **Vinilo** (hilo C): Nivel A (filtro por cadena) en Python sobre un tema
+  hi-res → A/B. Si hace falta el carácter físico, Nivel B (surco `.gro` + púa).
+- Los tres conviven con el framework `aem` (código puro) — no lo reemplazan, lo
+  extienden con material grabado/deformado, fuentes de la máquina y física del surco.
 
 ## Fuentes (corroboración)
 
@@ -151,3 +210,7 @@ la voz del proyecto):**
 - Where to Begin With Lustmord (Bandcamp Daily): https://daily.bandcamp.com/lists/lustmord-albums-list
 - Sonificación de supercomputador (arXiv, 2026): https://arxiv.org/html/2605.21874
 - Coil whine / EMF (Corsair explainer): https://www.corsair.com/us/en/explorer/diy-builder/power-supply-units/what-is-coil-whine/
+- Vinilo — The Science of Vinyl Sound (XenonJade): https://xenonjade.com/blogs/news/the-science-of-vinyl-sound-why-do-records-sound-warmer
+- Vinilo — Archimago, thoughts on LP fidelity: http://archimago.blogspot.com/2017/06/musings-measurement-thoughts-on-vinyl.html
+- Vinilo — LP performance measurements (Stereo Lab): http://pspatialaudio.com/LP_performance.htm
+- Surco→audio — IRENE (Berkeley Lab) / Laser turntable: https://en.wikipedia.org/wiki/Laser_turntable
