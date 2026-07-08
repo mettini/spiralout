@@ -105,5 +105,5 @@ descripción del álbum de `docs/25`.
 |---|---|---|---|
 | A Closer Listen | ✅ 2026-07-08 | — | — |
 | Stationary Travels | ✅ 2026-07-08 | — | — |
-| Fluid Radio | ⏳ (form listo, docs/29+30) | — | — |
+| Fluid Radio | ✅ 2026-07-08 | — | — |
 | Bandcamp Daily | ⏳ | — | — |
