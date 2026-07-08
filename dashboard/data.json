@@ -489,13 +489,15 @@
               "id": "pitch-blogs-tier1",
               "title": "Pitch a blogs Tier 1 (Fluid Radio, Headphone Commute, Stationary Travels, ACL)",
               "status": "todo",
-              "owner": "user"
+              "owner": "user",
+              "note": "Ver docs/29: mail listo + targets. Skip Headphone Commute (no-promo + anti-IA). Ir con A Closer Listen, Stationary Travels, Fluid Radio."
             },
             {
               "id": "pitch-bandcamp-daily",
               "title": "Pitch a Bandcamp Daily (formulario)",
               "status": "todo",
-              "owner": "user"
+              "owner": "user",
+              "note": "Formulario (no mail) — daily.bandcamp.com footer. Bio 150w de docs/25. Ver docs/29."
             },
             {
               "id": "submithub",
