@@ -640,7 +640,7 @@
             {
               "id": "cdb-amazon-claim",
               "title": "Claim Amazon Music for Artists (artists.amazonmusic.com)",
-              "status": "todo",
+              "status": "done",
               "owner": "user",
               "eta": "instantáneo con login CD Baby",
               "note": "2026-06-16: EN CURSO. Claim en artists.amazonmusic.com → autenticar con login CD Baby = acceso instantáneo. Ver guía sección 5."
