@@ -80,7 +80,7 @@ Para posts hay 3 modos ya definidos en `textos.md §6`: **A** anotación margina
 
 ## Links
 
-- Web: https://spiralout.space/aem · Contacto: emiliano@42i.co
+- Web: https://spiralout.space/aem · Contacto: em@spiralout.space
 - Bandcamp: https://aemtransmissions.bandcamp.com/album/heliopause
 - Spotify: https://open.spotify.com/album/5omJDu1rZwe9YFeAWONY6x
 - Apple Music: https://music.apple.com/album/heliopause-ep/6773985527

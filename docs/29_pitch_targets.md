@@ -46,7 +46,7 @@ Bandcamp: https://aemtransmissions.bandcamp.com/album/heliopause
 Faceless project, released independently — no promo team, just the artist. If it
 fits your world, it's yours to write about; if not, no worries.
 
-— ÆM / Spiral Out · emiliano@42i.co
+— ÆM / Spiral Out · em@spiralout.space
 ```
 
 Personalizá el `[name]` cuando puedas (A Closer Listen y Stationary Travels son
@@ -79,7 +79,7 @@ If it's a fit I can send the files, a landscape artist image, the artwork
 and a one-sheet. Thanks for listening.
 
 ÆM (Spiral Out)
-emiliano@42i.co
+em@spiralout.space
 ```
 
 > **Nota — IA:** no mencionar el uso de IA en este pitch (ni en los de ambient

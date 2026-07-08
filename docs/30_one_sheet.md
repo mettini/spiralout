@@ -35,7 +35,7 @@ silence, and a return that doesn't bring back the same thing that set out.
 - Apple Music: https://music.apple.com/us/album/heliopause-ep/6773985527
 - Full stream (SoundCloud): https://soundcloud.com/aemtransmissions/sets/heliopause
 
-**Contact:** emiliano@42i.co
+**Contact:** em@spiralout.space
 
 ---
 
