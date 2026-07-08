@@ -22,25 +22,17 @@ ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=2160:-1,pad=2160:2700:(ow-iw)/
 ffmpeg -y -loglevel error -i "$ARTIST" -vf "scale=1500:1500" "$APOUT/press_square_1500.jpg"
 
 # ---------- 2) Spotify Canvas — UNO POR TRACK (fragmento del visualizer de cada tema) ----------
-# 60fps (rate nativo -> sin judder) + loop forward-only con crossfade (el arranque
-# se funde sobre el final; NO boomerang/reversa, quedaba fake). El crossfade va mas
-# largo (2s) en los tracks dinamicos para tapar el salto; outbound (mas quieto) 1.5s.
-# NOTA: crossfade hardcodeado por track (interpolar $vars dentro del filter rompe el parse).
-
-# Outbound — core de luz (~80s), crossfade 1.5s
-ffmpeg -y -loglevel error -ss 80 -t 6 -i "$OUT/1-outbound_v24_60fps.mp4" -filter_complex \
-"[0:v]crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60,setpts=PTS-STARTPTS[base];[base]split[b1][b2];[b2]trim=0:1.5,setpts=PTS-STARTPTS,format=yuva420p,fade=t=in:st=0:d=1.5:alpha=1,setpts=PTS+4.5/TB[head];[b1][head]overlay=eof_action=pass:format=auto[out]" \
--map "[out]" -t 6 -an -r 60 -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart "$OUT/canvas_outbound.mp4"
-
-# Crossing — kaleido del delirio (~300s, momento dinamico), crossfade 2s
-ffmpeg -y -loglevel error -ss 300 -t 6 -i "$OUT/2-crossing_v7_60fps.mp4" -filter_complex \
-"[0:v]crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60,setpts=PTS-STARTPTS[base];[base]split[b1][b2];[b2]trim=0:2,setpts=PTS-STARTPTS,format=yuva420p,fade=t=in:st=0:d=2:alpha=1,setpts=PTS+4/TB[head];[b1][head]overlay=eof_action=pass:format=auto[out]" \
--map "[out]" -t 6 -an -r 60 -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart "$OUT/canvas_crossing.mp4"
-
-# Recursion — rayos radiales (~62s), crossfade 2s
-ffmpeg -y -loglevel error -ss 62 -t 6 -i "$OUT/3-recursion_v3_60fps.mp4" -filter_complex \
-"[0:v]crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60,setpts=PTS-STARTPTS[base];[base]split[b1][b2];[b2]trim=0:2,setpts=PTS-STARTPTS,format=yuva420p,fade=t=in:st=0:d=2:alpha=1,setpts=PTS+4/TB[head];[b1][head]overlay=eof_action=pass:format=auto[out]" \
--map "[out]" -t 6 -an -r 60 -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart "$OUT/canvas_recursion.mp4"
+# Fragmento LIMPIO: 60fps (rate nativo -> sin judder), crop 9:16, 6s. SIN fade,
+# SIN crossfade, SIN reversa (el "mini fade" del crossfade no gustaba). Spotify
+# loopea; el corte del loop se acepta tal cual.
+mkc () { # $1=visualizer  $2=ss(seg)  $3=out.mp4
+  ffmpeg -y -loglevel error -ss "$2" -t 6 -i "$1" -an \
+   -vf "crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60" \
+   -r 60 -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart "$3"
+}
+mkc "$OUT/1-outbound_v24_60fps.mp4"  80 "$OUT/canvas_outbound.mp4"    # core de luz
+mkc "$OUT/2-crossing_v7_60fps.mp4"  300 "$OUT/canvas_crossing.mp4"    # kaleido del delirio
+mkc "$OUT/3-recursion_v3_60fps.mp4"  62 "$OUT/canvas_recursion.mp4"   # rayos radiales
 
 # ---------- 3) clips verticales 9:16 con fragmento cifrado ----------
 # overlay de texto via PIL (el ffmpeg de homebrew no trae drawtext)
