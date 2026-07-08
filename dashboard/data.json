@@ -326,8 +326,9 @@
             {
               "id": "canvas-video",
               "title": "Spotify Canvas (MP4 1080×1920, 3-8s loop) — SVG-based",
-              "status": "todo",
-              "owner": "claude"
+              "status": "done",
+              "owner": "claude",
+              "note": "3 canvas (uno por track: outbound core / crossing delirio / recursion rayos), 1080x1920 60fps, subidos a Spotify 2026-07-08. Receta en make_social.sh."
             },
             {
               "id": "motion-cover",
