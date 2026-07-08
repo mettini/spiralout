@@ -64,7 +64,7 @@ linkear el label y el artista existentes).
 | Title | `Heliopause` |
 | Release group | `Heliopause` (el de arriba) |
 | Artist | `ÆM` |
-| Date | `2026` + **día exacto ⚠️ del panel CD Baby** |
+| Date | `2026-05-16` (fecha de release confirmada) |
 | Country | `[Worldwide]` (XW) |
 | Label | `Spiral Out` · Catalog# **⚠️ CD Baby (si asignó)** |
 | Barcode (UPC) | **⚠️ del panel CD Baby** |

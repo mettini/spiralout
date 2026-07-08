@@ -48,7 +48,8 @@ evoluciona sin volver a ser la misma.*
 | Formato | 3 tracks · ~24 min · digital |
 | Género | Ambient (Spotify/Apple) · +Dark Ambient/Drone/Cinematic/Space/Experimental (Bandcamp) |
 | Año | 2026 · © 2026 ÆM · Distribuidor: CD Baby |
-| Release date / UPC | ⚠️ COMPLETAR del panel CD Baby |
+| Release date | **2026-05-16** |
+| UPC / barcode | ⚠️ COMPLETAR del panel CD Baby |
 | Concepto | Composición humano + IA, código puro (framework `aem`). Faceless. |
 
 | # | Track | Dur. | ISRC |
