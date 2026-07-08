@@ -58,6 +58,29 @@ low-key, cero ruego, IA no mencionada.
 - Imagen de artista landscape (Fluid Radio, ≥1250px): `…/00_artist_photo/press_horizontal_1920x1080.jpg`
 - Bio 50/150 + hechos: `docs/25_press_kit.md` · fragmentos: `transmissions/01/release/textos.md`
 
+## Fluid Radio — texto para el formulario
+No es mail, es su [formulario](https://www.fluid-radio.co.uk/about/review-submissions/).
+Piden **link de SoundCloud** (≥2 tracks) primero, NO zips. Pegar:
+
+```
+Hi,
+
+I'd like to submit my album for review. It's called Heliopause, out under
+the name ÆM on my label Spiral Out. Three long tracks, around 24 minutes,
+deep space ambient and drone, all instrumental.
+
+Stream (SoundCloud, full album): https://soundcloud.com/aemtransmissions/sets/heliopause
+Bandcamp: https://aemtransmissions.bandcamp.com/album/heliopause
+
+If it's a fit I can send the files, a landscape artist image and the
+artwork. Thanks for listening.
+
+ÆM (Spiral Out)
+emiliano@42i.co
+```
+Si pasa, piden: files + imagen de artista landscape ≥1250px
+(`…/00_artist_photo/press_horizontal_1920x1080.jpg`) + artwork (`cover_streaming_3000.jpg`).
+
 ## Bandcamp Daily (aparte)
 No es un mail: es un [formulario de submission](https://daily.bandcamp.com/)
 (en el footer, "Get your music featured"). Tiro largo pero gratis. Bio 150w +
@@ -68,5 +91,5 @@ descripción del álbum de `docs/25`.
 |---|---|---|---|
 | A Closer Listen | ✅ 2026-07-08 | — | — |
 | Stationary Travels | ✅ 2026-07-08 | — | — |
-| Fluid Radio | ⏳ | — | — |
+| Fluid Radio | ⏳ (form listo, docs/29+30) | — | — |
 | Bandcamp Daily | ⏳ | — | — |
