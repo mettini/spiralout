@@ -61,6 +61,19 @@ evoluciona sin volver a ser la misma.*
 
 ---
 
+## Clip start para short-form (TikTok / CD Baby)
+
+CD Baby deja elegir el **start time del clip de ~60s** que se usa en TikTok
+(default = primeros 60s). En ambient el arranque es lento → hay que **empezar en
+el climax** para que enganche. Calculado con la energía real del audio
+(`transmissions/01/video/control/*.npz`):
+
+| Track | Start | Por qué |
+|---|---|---|
+| Outbound | **6:52** (412s) | pico de energía @ 7:00 (cae ~8s dentro); climax final |
+| Crossing | **7:23** (443s) | swell más fuerte @ 7:31 (alt: 0:04 = intro, sección más sostenida) |
+| Recursion | **1:34** (94s) | payoff @ 1:42; arranca en la subida |
+
 ## Assets (a rolete — rutas en repo)
 
 | Uso | Archivo |
