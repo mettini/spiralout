@@ -35,32 +35,16 @@ mkc "$OUT/2-crossing_v7_60fps.mp4"  300 "$OUT/canvas_crossing.mp4"    # kaleido 
 mkc "$OUT/3-recursion_v3_60fps.mp4"  62 "$OUT/canvas_recursion.mp4"   # rayos radiales
 
 # ---------- 3) clips verticales 9:16 con fragmento cifrado ----------
-# overlay de texto via PIL (el ffmpeg de homebrew no trae drawtext)
-overlay () { # $1=texto $2=png
-python3.10 - "$1" "$2" << PY
-import sys,textwrap
-from PIL import Image, ImageDraw, ImageFont
-txt,out=sys.argv[1],sys.argv[2]; W,H=1080,1920
-im=Image.new("RGBA",(W,H),(0,0,0,0)); d=ImageDraw.Draw(im)
-f=ImageFont.truetype("$FONT",40); y=int(H*0.80)
-for ln in textwrap.wrap(txt,28):
-    w=d.textlength(ln,font=f); x=(W-w)/2
-    d.text((x+2,y+2),ln,font=f,fill=(0,0,0,150))
-    d.text((x,y),ln,font=f,fill=(255,255,255,235)); y+=52
-im.save(out)
-PY
+# Clips LIMPIOS (sin texto). Decisión: el visualizer no lleva texto encima —
+# el fragmento cifrado va en la DESCRIPCIÓN del post (ver textos.md §4/5), no en el video.
+# 9:16, 18s, 60fps, con audio. Momentos aprobados por track.
+clip () { # $1=src $2=ss(seg) $3=out
+ffmpeg -y -loglevel error -ss "$2" -t 18 -i "$1" \
+ -vf "crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=60" \
+ -r 60 -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -c:a aac -b:a 160k -movflags +faststart "$3"
 }
-clip () { # $1=src $2=ss(seg) $3=txtpng $4=out
-ffmpeg -y -loglevel error -ss "$2" -t 18 -i "$1" -i "$3" \
- -filter_complex "[0:v]crop=ih*9/16:ih:(iw-ih*9/16)/2:0,scale=1080:1920,fps=30[v];[v][1:v]overlay=0:0[o]" \
- -map "[o]" -map 0:a -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -c:a aac -b:a 160k -movflags +faststart "$4"
-}
-# momentos detectados de los control tracks + fragmento por track (textos.md §5.3)
-overlay "to leave was the verb that invented it"          /tmp/_txt_ob.png
-clip "$OUT/1-outbound_v24_60fps.mp4"  76  /tmp/_txt_ob.png "$OUT/clip_outbound_v1.mp4"
-overlay "the wind that had been pushing ceased to push"   /tmp/_txt_cr.png
-clip "$OUT/2-crossing_v7_60fps.mp4"  432  /tmp/_txt_cr.png "$OUT/clip_crossing_v1.mp4"
-overlay "the spiral does not ascend  it evolves never the same" /tmp/_txt_rc.png
-clip "$OUT/3-recursion_v3_60fps.mp4"  67  /tmp/_txt_rc.png "$OUT/clip_recursion_v1.mp4"
+clip "$OUT/1-outbound_v24_60fps.mp4"  76 "$OUT/clip_outbound.mp4"
+clip "$OUT/2-crossing_v7_60fps.mp4"  432 "$OUT/clip_crossing.mp4"
+clip "$OUT/3-recursion_v3_60fps.mp4"  67 "$OUT/clip_recursion.mp4"
 
 echo "OK -> crops en $APOUT/, canvas+clips en $OUT/"

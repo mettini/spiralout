@@ -65,9 +65,14 @@ espectrograma, coordenadas, timestamps).
 faceless dripea, no spamea. Las 13 frases dan para **~3 meses a 1/semana** sin
 repetir.
 
+**Decisión (2026-07-09): los clips NO llevan texto encima.** El visualizer se
+sostiene solo; agregarle palabras le resta. El fragmento cifrado va en la
+**descripción/caption del post**, no en el video. (Se probó texto sobre video —
+Atari CRT, glitch, etc. — y quedaba "de cartón" o distraía. Descartado.)
+
 **Content bank YA disponible** (para agendar):
-- 13 fragmentos cifrados ES+EN (`textos.md §4`).
-- 3 clips verticales (pendiente decisión font/texto).
+- 13 fragmentos cifrados ES+EN (`textos.md §4`) → van en los CAPTIONS.
+- 3 clips verticales LIMPIOS (`out/clip_{outbound,crossing,recursion}.mp4`).
 - 3 Spotify Canvas (core / delirio / anillos).
 - Cover, hexagram (logo), artist image (marca), fondos painterly.
 
