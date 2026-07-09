@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-07-08",
+    "updated": "2026-07-09",
     "next_review": "2026-06-21",
     "version": "0.5",
     "focus": "Orden de prioridad (vigente 2026-06-16): 1) difusión + cuentas (Tier 1 SO+ÆM cerradas; Tier 2/3 descartados), 2) SEO/GEO (MusicBrainz + Wikidata pendientes), 3) visuales DONE (yt-visualizer cerrado, Crossing definitivo cerrado via Hydra + build_13min), 4) blog (post setup). Audio: release:check pasado implícito (CDB aceptó + streaming live). Promo continua post-release (no día único). Backlog largo (Em+H, Rescue 100, framework público, R2) en 'ideas-futuras'."
@@ -485,7 +485,7 @@
               "title": "Spotify for Artists → Pitch to Editorial (T-21+, mínimo 7 días)",
               "status": "blocked",
               "owner": "user",
-              "note": "MOOT para Heliopause (Spotify solo pitchea música NO publicada). Guardar para Transmission 02: pitchear 3-4 sem ANTES de publicar.",
+              "note": "MOOT para Heliopause (Spotify solo pitchea música NO publicada; se confirmó con el artículo de CD Baby 2026-07). TX02: subir a CD Baby con fecha futura → Spotify for Artists → Music → Upcoming → pitch (máx 500 char) → 4-6 SEMANAS antes del release (mín 7 días).",
               "blockedBy": "requiere release futura sin publicar"
             },
             {
