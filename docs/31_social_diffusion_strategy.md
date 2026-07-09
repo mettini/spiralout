@@ -1,125 +1,138 @@
-# 31 — Estrategia de difusión en redes (ÆM / Heliopause)
+# 31 — Plan de difusión (ÆM / Heliopause) — MASTER
 
-> Propuesta: orgánico + pago + cadencia + content bank. Reúsa (no duplica):
-> voz/posteo → `transmissions/01/release/textos.md §6`; cuentas → `docs/15`;
-> método Reddit → `docs/18`; artistas vecinos para targeting → `docs/28`;
-> pitches → `docs/29`. Para iterar con el user.
+> El plan ordenado y realista para mover el proyecto, dimensionado al apetito
+> real: **hacer lo "de manual" para que se mueva algo, pagar poco, y que las
+> redes corran casi solas.** Nada de grind. Ejecución detallada de Reddit +
+> YouTube ads → `docs/32`. Voz/textos → `transmissions/01/release/textos.md`.
+> Actualizado 2026-07-09.
 
-## 0. Principio rector (no romper la voz)
-ÆM es **faceless** y **dripea sin calendario rígido**: sin "out now", sin
-agradecimientos, sin rogar, no responde "quién es ÆM" (`textos.md §6`). PERO
-"sin calendario" ≠ "sin plan": hay un **banco de contenido listo** y una
-**cadencia flexible**. La marca es el misterio; el plan es interno.
+---
 
-## 1. Las fases (y por qué Reddit es "un paso antes")
+## 0. Principio rector
+ÆM es **faceless** y **dripea sin calendario rígido** (sin "out now", sin
+agradecimientos, sin rogar). "Sin calendario" ≠ "sin plan": hay **banco de
+contenido** + **cadencia flexible** + **automatización**. La marca es el
+misterio; el plan es interno.
 
-- **Fase A — Fundación** *(≈ hecho)*: cuentas, voz, assets, MusicBrainz, pitches,
-  Canvas. La base.
-- **Fase B — Presencia orgánica + credibilidad** *(semanas, gratis)*: construir
-  presencia real ANTES de empujar tráfico. Acá va **Reddit** (comentar 9:1
-  durante semanas), engagement genuino, y el **drip** de contenido. Es literal
-  **el paso antes del pago**: no tiene sentido pagar tráfico a un perfil vacío o
-  sin credibilidad.
-- **Fase C — Amplificación paga** *(cuando hay contenido + perfiles vivos)*:
-  YouTube discovery ads (la mejor palanca, ya tenemos los videos) + IG boost.
-- **Fase D — Sostener + medir**: iterar lo que funcione.
+## 1. Expectativas honestas (leer antes de esperar nada)
+Proyecto **nuevo, faceless, de nicho, ~0 seguidores**. La verdad:
+- Esto es **lento y de nicho**. No se busca viralidad.
+- El **ambient NO explota en IG** — vive en **Bandcamp / YouTube / Spotify /
+  Reddit**. IG es **canal de APOYO** (presencia + algún Reel que pegue), no el motor.
+- **El motor real** = (a) estar **bien plantado/encontrable**, (b) **reach pago
+  dirigido al nicho** (YouTube), (c) **participación en comunidad** (Reddit/Discord).
+- Objetivo del user: dejar todo "de manual" hecho + un poco de ads + posteo
+  automatizado. Movimiento modesto y sostenible, sin aspirar a más.
 
-## 2. Reddit explicado (el paso antes — lo que querías entender)
+## 2. Las 3 formas de "mover" (no se mezclan)
+- **Pago** (plata, poco esfuerzo): YouTube ads, IG boost, Reddit ads.
+- **Orgánico MANUAL** (gratis, pero tiempo semanal): comentar Reddit 9:1,
+  Discord, responder IG. *"Agregar gente"/follow-for-follow = spam, se descarta.*
+- **Orgánico AUTOMATIZADO** (gratis, se setea una vez): postear con scheduler.
+  **← lo que más se usa acá.**
 
-Reddit **odia** el self-promo. Por eso NO se llega y se postea el álbum. Se
-construye credibilidad primero. Es gratis pero **lento**.
+## 3. El plan ordenado (UNA cosa a la vez)
+1. **Foundation** — dejar la info "de manual" completa en todos lados. *(§4)*
+2. **Ads** — pago dirigido, budget chico, una prueba por mes. *(§5)*
+3. **Posteo automatizado** — el content bank goteando solo. *(§6)*
+4. **Reddit/comunidad** — opcional, **último paso**, si hay ganas. *(§7)*
 
-- **Regla 9:1**: por cada 1 cosa tuya que compartís, **9 aportes genuinos**
-  (comentarios, recomendaciones, responder preguntas) sin linkear lo tuyo.
-- **Timeline**: 2-4 semanas participando de verdad en `r/ambientmusic`,
-  `r/darkambient`, `r/SpaceMusic` ANTES de cualquier post del álbum. Comentás en
-  hilos de recomendación, respondés "if you like X try Y", aportás valor.
-- **Recién después**: un post que **aporta** (no spam "out now"), y en
-  `r/ifyoulikeblank` un "if you like Lustmord / Steve Roach you'll like ÆM"
-  (usar `docs/28` para elegir bien los "if you like").
-- **Por qué es "un paso antes"**: la credibilidad se construye, no se compra.
-  Si no vas a hacer estas semanas de laburo, saltamos esta palanca (es opt-in).
+---
 
-## 3. Orgánico por plataforma
+## 4. Paso 1 — Foundation (qué falta)
+Lo pesado ya está: MusicBrainz ✅, Spotify Canvas ✅, press kit + one-sheet ✅,
+tags Bandcamp ✅, Amazon for Artists ✅, clips + captions ✅.
 
-**Recomendación clave: 2-3 plataformas BIEN, no 5 abandonadas.** Sugerido:
-**Instagram (ÆM) + Bluesky + YouTube**. X opcional. (Perfil abandonado resta.)
+Falta:
+| Item | Quién | Nota |
+|---|---|---|
+| **Wikidata** (3 items) | user (Claude guía) | campos + MBIDs listos en `docs/26 §B` |
+| **Last.fm** artist page (bio+tags+links) | user | ya se puede (streaming + MusicBrainz live) |
+| **IG ÆM** — setup Creator | user | habilita posteo + (futuro) boost |
+| Dossiers modo C *(opcional, contenido)* | Claude | espectrogramas/coordenadas |
 
-| Plataforma | Rol | Contenido | Cadencia |
+## 5. Paso 2 — Ads (pago)
+**Budget: ≤ $50/mes.** Regla de oro con poco budget: **UNA prueba por mes,
+medir, quedarse con lo que rinde.** Probar todo junto = no se aprende nada.
+
+### Rotación de pruebas
+| Mes | Prueba | Budget | Medir |
 |---|---|---|---|
-| **Instagram** (ÆM) | hub visual | Reels (clips), fragmentos (modo B), dossiers (modo C), Stories | 1-2/semana |
-| **Bluesky** | nicho ambient/indie receptivo | fragmentos cifrados, links, repost de la escena | 1-3/semana, suelto |
-| **YouTube** | ancla (los 3 visualizers) | Shorts (clips verticales), los visualizers largos | Shorts cuando haya |
-| **Bandcamp** | comunidad/compra | Notes cortos, followers | esporádico |
-| **Discord** (Ambient/Drone servers) | comunidad | presencia genuina, compartir cuando encaja | orgánico |
-| X | opcional | igual que Bluesky | solo si lo vas a mantener |
+| 1 | **YouTube discovery** (in-feed) | $50 (~$1.5/día) | views, CPV, watch-time, subs + **¿sube streaming en Spotify?** |
+| 2 | según datos: doblar YouTube, o IG boost (si IG ya postea) | $50 | ídem |
+| 3 | el que mejor rindió (o Discovery Mode, sin cash) | $50 | ídem |
 
-Los **3 modos de posteo** ya están definidos en `textos.md §6`: **A** anotación
-marginal (manuscrito/typewriter sobre papel), **B** fragmento de transmisión
-(frase sobre fondo plano), **C** ficha técnica (dossier desclasificado:
-espectrograma, coordenadas, timestamps).
+### Por qué YouTube primero (y solo)
+- Tenemos los **3 visualizers 4K** = mejor asset. El anuncio ES contenido.
+- Targeting fino por **canales/artistas similares** (Lustmord, Cryo Chamber,
+  Roach) — precisión que IG no da para nicho.
+- Alimenta las **recomendaciones orgánicas** de YouTube.
+- Setup + targeting + copy → `docs/32 §B`. Claude arma, user corre en Google Ads.
 
-## 4. Cadencia + content bank
+### Spotify pago: NO todavía
+- **Marquee** (~$250+ mín) y **Showcase**: fuera de budget + necesitan volumen de
+  streaming que no hay.
+- **Discovery Mode**: sin cash (canje de regalías), pero solo sirve con play
+  algorítmico existente → **prueba para más adelante**.
+- Pitch de playlists pagas de terceros = scam/valor bajo → **skip**.
+- Spotify se mueve cuando YouTube/orgánico le empuje streams.
 
-**Cadencia recomendada**: **1-2 posts/semana**, rotando los 3 modos. No más — el
-faceless dripea, no spamea. Las 13 frases dan para **~3 meses a 1/semana** sin
-repetir.
+### IG boost: NO todavía
+- Boostear cuenta nueva/vacía = tirar plata. Rinde amplificando un Reel que **ya
+  tiene tracción**. Se evalúa en mes 2-3 si un post pega.
 
-**Decisión (2026-07-09): los clips NO llevan texto encima.** El visualizer se
-sostiene solo; agregarle palabras le resta. El fragmento cifrado va en la
-**descripción/caption del post**, no en el video. (Se probó texto sobre video —
-Atari CRT, glitch, etc. — y quedaba "de cartón" o distraía. Descartado.)
+## 6. Paso 3 — Posteo (automatizado)
+### Realidad de IG con 0 followers
+- **Feed posts** → alcance ~0 orgánico. Sirven como **galería** (que el perfil se
+  vea vivo/legítimo cuando alguien entra desde YouTube/links/reseña).
+- **Reels** → **el ÚNICO formato que llega a no-seguidores** (algoritmo por
+  interés + hashtags `#darkambient #ambientmusic #drone`). **La prioridad.**
+- **Stories** → solo las ven followers → con 0, alcance 0. **Skip hasta tener followers.**
 
-**Content bank YA disponible** (para agendar):
-- 13 fragmentos cifrados ES+EN (`textos.md §4`) → van en los CAPTIONS.
-- 3 clips verticales LIMPIOS (`out/clip_{outbound,crossing,recursion}.mp4`).
-- 3 Spotify Canvas (core / delirio / anillos).
-- Cover, hexagram (logo), artist image (marca), fondos painterly.
+### Qué se postea
+- **Reels** = los 3 clips (visualizers limpios), espaciados. Captación.
+- **Feed** = fragmentos modo B (font Atari CRT sobre fondo plano) — galería.
+- **Stories** = no, por ahora.
+- **Texto** = en la **descripción/caption**, NUNCA sobre el video (decidido 2026-07-09).
 
-**Falta armar** (lo hago yo): **dossiers modo C** (espectrogramas de los tracks,
-coordenadas Voyager, "ficha desclasificada") — pegan fuerte y son muy on-brand.
+### Cadencia y volumen (dimensionado real)
+- **~1 post/semana** (canal de apoyo, no hace falta más).
+- **~12 posts / 3 meses** = **3 Reels** (los clips) + **~9 feed** (fragmentos/dossiers).
 
-## 5. PAGO (tu interés principal)
+### Automatización
+- Claude produce los ~9 posts de feed + captions + calendario (`docs/33`).
+- User conecta IG (Business/Creator) a un **scheduler free** (Metricool o Buffer)
+  y **carga la cola** → postea solo. Se setea una vez. (Ver `docs/23`.)
 
-### 5a. ⭐ YouTube discovery / in-feed ads (la mejor palanca)
-- **Qué es**: campaña *Video views* con anuncios **in-feed** — tu visualizer
-  aparece **sugerido** a gente que mira ambient similar (lo "pseudo-orgánico" que
-  mencionás). Targeting por **intereses, temas y canales/artistas similares**.
-- **Por qué el mejor**: YA tenemos los 3 visualizers 4K. Es contenido largo con
-  engagement real, no un banner que se ignora. Y alimenta el algoritmo orgánico
-  de YouTube (más recomendaciones gratis después).
-- **Budget**: piloto **$5-10/día × 2 semanas ≈ $70-140**. Targeting con la lista
-  de `docs/28` (canales de dark/space ambient).
-- **Costo/resultado**: ~$0.02-0.05 por view → miles de views dirigidas + algunos
-  subs. Yo te armo el targeting + los textos del anuncio; vos lo corrés en Google Ads.
+### Los 3 modos de post (de `textos.md §6`)
+- **A** anotación marginal (fragmento manuscrito/máquina sobre papel).
+- **B** fragmento de transmisión (frase en font Atari CRT sobre fondo plano). ← backbone del feed.
+- **C** ficha técnica / dossier (espectrograma, coordenadas, timestamps — "leaks").
 
-### 5b. IG / Meta boost (Reels)
-- Boostear un **Reel** (clip vertical) a audiencia de interés (fans de
-  Lustmord / Roach / ambient / experimental, o lookalike). **$5/día**.
-- **Necesita**: los clips finales (pendiente la decisión de font/texto).
+## 7. Paso 4 — Reddit / comunidad (opcional, ÚLTIMO)
+- Es **orgánico MANUAL** (gratis, pero tiempo semanal). El user quiere
+  explorarlo, pero al final y sin obligación.
+- Plan detallado (subs, regla 9:1, timeline, cómo compartir) → `docs/32 §A`.
+- Si no hay ganas de la rutina, se hace lo mínimo (un par de posts bien puestos)
+  o se saltea. No es el foco.
 
-### 5c. Reddit Ads (piloto chico, post-credibilidad)
-- $20-50 en 2-3 subs (`r/ambientmusic`, `r/darkambient`). Secundario.
+---
 
-### 5d. NO pagar
-Playlist pumps, comprar followers, SubmitHub, Spotify Marquee (necesita volumen
-de streaming que todavía no hay). Ya descartado en el dashboard.
+## 8. Content bank (inventario)
+- **13 fragmentos** cifrados ES+EN (`textos.md §4`) → captions + posts modo B.
+- **3 clips** verticales LIMPIOS (`out/clip_*.mp4`) → Reels. ✅
+- **3 Canvas** (`out/canvas_*.mp4`) → Spotify (subidos) / posibles loops. ✅
+- **Crops foto press** (marca hexagrama) ✅ · **cover** ✅ · **hexagram** ✅ ·
+  fondos painterly.
+- **Dossiers modo C** → por producir (Claude).
 
-### Budget tiers
-- **Mínimo viable (~$100-150)**: casi todo a **YouTube discovery** (donde tenemos
-  ventaja real con los videos).
-- **Comprometido (~$300-500)**: + IG boost + Reddit pilot, en una ventana de campaña.
+## 9. Métricas (para saber qué funciona)
+- **YouTube Ads**: views, CPV, view rate, watch-time, earned actions (subs/likes).
+- **Spotify for Artists**: streams, saves, listeners en la ventana de cada prueba.
+- **La pregunta clave por prueba**: ¿el gasto/acción **movió el streaming**? Si no,
+  se descarta y se prueba otra cosa. Disciplina = una variable por vez.
 
-## 6. Orden recomendado
-1. **Terminar el content bank**: cerrar los clips (font/texto) + armar los dossiers.
-2. **Fase B orgánica** (gratis, semanas): Reddit reconocimiento 9:1 + drip 1-2/semana.
-3. **Piloto YouTube discovery ads** ($70-140) — el mejor ROI pago; yo armo targeting+copy.
-4. **Medir** (views, subs, saves, streams) → escalar lo que funcione (IG boost, más YT).
-
-## 7. Decisiones TOMADAS (2026-07-08)
-1. **Plataformas activas: Instagram (ÆM) + YouTube.** (Bluesky/X descartadas por ahora — mejor 2 bien.)
-2. **Budget: mínimo ~$100-150** → casi todo a **YouTube discovery ads**.
-3. **Reddit: "quizás" → armar el plan igual** (`docs/32`), el user decide si lo ejecuta.
-4. **Clips: LAS DOS versiones** (con texto font retro + sin texto).
-
-→ Planes de ejecución detallados: **`docs/32`** (Reddit paso a paso + YouTube ads setup).
+## 10. Estado / próximo
+- **Ahora**: producir los ~9 posts de feed + captions + calendario `docs/33`
+  (Claude) · Wikidata (user, `docs/26 §B`).
+- Después: setear scheduler + cargar cola · correr YouTube ads mes 1 · medir.

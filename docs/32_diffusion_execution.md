@@ -1,7 +1,7 @@
 # 32 — Difusión: planes de ejecución (Reddit + YouTube ads)
 
 > Los dos playbooks concretos que se desprenden de `docs/31`. Decisiones: IG +
-> YouTube como plataformas, budget mínimo (~$100-150) casi todo a YouTube ads,
+> YouTube como plataformas, budget ≤ $50/mes (una prueba de ads por mes),
 > Reddit "quizás" (plan armado, el user decide ejecutar).
 
 ---
@@ -88,8 +88,8 @@ Combinar estas capas (Google deja apilar):
 - Tono: sobrio, sin hype, sin mencionar IA (ver `docs/29`).
 
 ## B5 · Budget y ritmo
-- **$8/día × 14 días ≈ $112** (entra en el mínimo ~$100-150).
-- Empezar con $5-8/día, mirar 3-4 días, y **podar** lo que no rinde (bajar pujas de
+- **~$1.5/día × 30 días ≈ $50** (budget ajustado: ≤ $50/mes, una prueba/mes).
+- Empezar bajo, mirar 3-4 días, y **podar** lo que no rinde (bajar pujas de
   segmentos caros, subir lo que trae views baratas + watch-time alto).
 - Costo esperado: **~$0.02-0.05 por view** → ~2.500-5.000 views dirigidas.
 
