@@ -100,7 +100,12 @@ MBIDs generados (creados 2026-07-08):
 
 ---
 
-## B · Wikidata (después de MusicBrainz + idealmente ≥1 fuente)
+## B · Wikidata
+
+**✅ CREADOS 2026-07-10:**
+- **Spiral Out** (sello): [Q140483015](https://www.wikidata.org/wiki/Q140483015)
+- **ÆM** (artista): [Q140483022](https://www.wikidata.org/wiki/Q140483022)
+- **Heliopause** (álbum): [Q140483035](https://www.wikidata.org/wiki/Q140483035)
 
 Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad → Valor`.
 
