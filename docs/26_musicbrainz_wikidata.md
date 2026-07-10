@@ -130,7 +130,7 @@ Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad
   - `performer (P175)` → `ÆM` (item B1)
   - `publication date (P577)` → `16 May 2026`
   - `record label (P264)` → `Spiral Out` (item B3)
-  - `genre (P136)` → `ambient music` (Q189201)
+  - `genre (P136)` → `ambient music` (Q193207)
   - `number of parts of this work (P2635)` → `3`
   - `MusicBrainz release group ID (P436)` → `a421892a-4f1d-4d70-8f0e-484f16a22a04`
 
