@@ -123,7 +123,7 @@ Cuenta: https://www.wikidata.org → "Create a new item". Statement = `Propiedad
 - Statements:
   - `instance of (P31)` → `album` (Q482994)
   - `performer (P175)` → `ÆM` (item B1)
-  - `publication date (P577)` → `2026` (afinar al día exacto)
+  - `publication date (P577)` → `16 May 2026`
   - `record label (P264)` → `Spiral Out` (item B3)
   - `genre (P136)` → `ambient music` (Q189201)
   - `number of parts of this work (P2635)` → `3`
