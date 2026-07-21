@@ -42,5 +42,17 @@ ambient, dark ambient, drone, experimental, deep space ambient, AI music, vibe c
 
 - [Home](https://spiralout.space)
 - [ÆM artist page](https://spiralout.space/aem/)
-- [Bandcamp (ÆM)](https://aemtransmissions.bandcamp.com)
+
+### Listen (Heliopause)
+- [Bandcamp](https://aemtransmissions.bandcamp.com/album/heliopause)
+- [Spotify](https://open.spotify.com/album/5omJDu1rZwe9YFeAWONY6x)
+- [Apple Music](https://music.apple.com/us/album/heliopause-ep/6773985527)
+- [Tidal](https://tidal.com/album/528526670) · [Amazon Music](https://music.amazon.com/albums/B0H34YZ4ZK) · [Qobuz](https://www.qobuz.com/album/heliopause-aem/eotey7erxe23d)
+- [YouTube](https://www.youtube.com/@aem.transmissions) · [SoundCloud](https://soundcloud.com/aemtransmissions)
+
+### Knowledge graph (canonical entities)
+- ÆM (artist): [Wikidata Q140483022](https://www.wikidata.org/wiki/Q140483022) · [MusicBrainz](https://musicbrainz.org/artist/0b250427-9d41-4d4c-9d12-b06e48dbc708)
+- Heliopause (album, released 2026-05-16): [Wikidata Q140483035](https://www.wikidata.org/wiki/Q140483035) · [MusicBrainz](https://musicbrainz.org/release-group/a421892a-4f1d-4d70-8f0e-484f16a22a04)
+- Spiral Out (label): [Wikidata Q140483015](https://www.wikidata.org/wiki/Q140483015) · [MusicBrainz](https://musicbrainz.org/label/60da02e2-3b09-4db6-a9c0-5e545e6044a5)
+
 - [Sitemap](https://spiralout.space/sitemap.xml)
