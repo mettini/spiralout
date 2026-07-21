@@ -10,7 +10,9 @@ Fragmentos en inglés (textos.md §5.4). 1080×1350 (IG portrait). PNG sin pérd
 Uso:  python3 scripts/make_posts.py   → redes/aem/social/post_NN.png
 """
 import os, textwrap
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
+
+BLUR = 0.6  # leve difuminado "señal/transmisión" (aprobado); 0 = nítido
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTDIR = os.path.join(ROOT, "redes/aem/social")
@@ -44,7 +46,9 @@ M = 90  # margen izquierdo
 
 def make_post(text, path):
     im = Image.new("RGB", (W, H), BG)
-    d = ImageDraw.Draw(im)
+    # capa de texto aparte (para difuminar solo el texto, no el fondo)
+    tl = Image.new("RGB", (W, H), (0, 0, 0))
+    d = ImageDraw.Draw(tl)
     # fragmento: Courier itálica, gris, ABAJO-IZQUIERDA (editorial / margen de dossier)
     size = 46
     f = ImageFont.truetype(COUR_I, size)
@@ -54,10 +58,12 @@ def make_post(text, path):
     for ln in lines:
         d.text((M, y), ln, font=f, fill=FG)
         y += lh
-    # firma muted debajo del fragmento
+    # firma muted debajo del fragmento (· = middot, centrado verticalmente)
     y += 20
-    d.text((M, y), "ÆM  .  HELIOPAUSE", font=ImageFont.truetype(COUR, 24), fill=MUTED)
-    im.save(path)
+    d.text((M, y), "ÆM · HELIOPAUSE", font=ImageFont.truetype(COUR, 24), fill=MUTED)
+    if BLUR > 0:
+        tl = tl.filter(ImageFilter.GaussianBlur(BLUR))
+    ImageChops.add(im, tl).save(path)
 
 
 if __name__ == "__main__":
