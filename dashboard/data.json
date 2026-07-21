@@ -400,9 +400,10 @@
             {
               "id": "aem-lastfm-setup",
               "title": "Last.fm ÆM artist page: bio + tags + links (Tier 3 — prematuro hasta streaming live + MusicBrainz)",
-              "status": "todo",
+              "status": "blocked",
               "owner": "user",
-              "note": "Diferido: scrobbles vienen de Spotify/Apple (aún no live). Se nutre de MusicBrainz (va antes). Lo real es la campaña lastfm-scrobble en release week."
+              "note": "DESCARTADO: existe un ÆM de Luxemburgo establecido (~2000 listeners); Last.fm no puede dar página separada a homónimos. Bajo valor. Las plataformas con ID único (Spotify/Apple/MusicBrainz/Wikidata) sí tienen a ÆM como entidad propia.",
+              "blockedBy": "colisión de nombre — Last.fm no separa artistas homónimos"
             },
             {
               "id": "em-medium",
