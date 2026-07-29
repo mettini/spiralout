@@ -198,9 +198,24 @@ Before the first commit in any new repo, verify `git config user.email` matches 
 
 → **`dashboard/data.json`** (servido en `dashboard/index.html`).
 
-Está estructurado por `projects` → `phases` → `tasks`. Cada task tiene `status`
-(`done` / `todo` / `blocked`), `owner` (`user` / `claude` / `both`) y a veces
-`blockedBy`, `eta`, `note`.
+**Estructura (v0.6, reorganizada 2026-07-26):** dos mundos separados a propósito.
+
+- **`projects`** — lo que tiene avance. Son **tres**, y cada uno es un contenedor
+  cerrado: `heliopause` (el release y su difusión), `comunicacion` (blog, sitio,
+  cuentas del label, SEO/GEO, storage) y `helen` (guerrilla + bases públicas).
+  Adentro: `phases` → `tasks`. Cada task tiene `status` (`done` / `todo` /
+  `blocked` / `in_progress`), `owner` (`user` / `claude` / `both`) y a veces
+  `blockedBy`, `eta`, `note`.
+- **`lab`** — experimentos. **NO tienen avance ni porcentaje** (es un lab: se
+  entra, se agarra uno, se ejecuta). Cada `experiment` tiene `state`
+  (`pending` / `in_progress` / `done` / `dead`), `summary`, y opcionalmente `ref`
+  (doc de base), `output` (qué salió) y `tasks` (pasos anotados, sin barra).
+  Cuando un experimento se vuelve proyecto o muere, queda `output` apuntando al
+  resultado o al brief. **No le agregues progreso al lab.**
+
+El dashboard es una SPA de un solo archivo con hash routing: `#/` portada con
+tarjetas, `#/p/<project-id>` detalle, `#/lab`. Los porcentajes se **calculan**
+en `index.html` — no hay ningún número hardcodeado en el JSON.
 
 Cuando el usuario pregunte por status, queue, pendientes, próximos pasos o
 quién hace qué, **leé `dashboard/data.json` primero** y filtrá por `owner` y

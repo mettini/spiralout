@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spiral Out — Control Dashboard</title>
   <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#0a0a0c" />
+  <!-- Misma espiral que spiralout.space; se referencia el archivo del site para no duplicarlo -->
+  <link rel="icon" type="image/svg+xml" href="../site/spiralout/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../site/spiralout/favicon-32x32.png" />
+  <link rel="shortcut icon" href="../site/spiralout/favicon.ico" />
   <style>
     :root {
       --bg: #0a0a0c;
@@ -18,6 +23,7 @@
       --yellow: #d4a84a;
       --red: #c66060;
       --blue: #6080c0;
+      --lab: #3a2a4a;   /* fallback; el real viene de data.json (lab.color) */
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { font-size: 17px; }
@@ -42,20 +48,31 @@
     .container { max-width: 1200px; margin: 0 auto; }
 
     /* Header */
-    header { margin-bottom: 3rem; }
+    header { margin-bottom: 2.5rem; }
     h1 {
       font-size: 1.4rem; font-weight: 300; letter-spacing: 0.3em;
       text-transform: lowercase; margin-bottom: 0.5rem;
     }
+    h1 a { color: inherit; text-decoration: none; }
     .meta { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.15em; }
     .meta .sep { opacity: 0.4; margin: 0 0.5em; }
+    .section-title {
+      font-size: 0.8rem; font-weight: 300; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--fg-2); margin-bottom: 1.2rem;
+    }
+    .back {
+      display: inline-block; font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      margin-bottom: 1.2rem;
+    }
+    .back:hover { color: var(--fg); }
 
     /* Macro stats */
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 1rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
     .stat {
       background: var(--bg-2);
@@ -75,10 +92,7 @@
     .stat .bar {
       height: 4px; background: var(--bg-3); border-radius: 2px; overflow: hidden;
     }
-    .stat .bar-fill {
-      height: 100%; background: var(--accent);
-      transition: width 0.4s ease;
-    }
+    .stat .bar-fill { height: 100%; background: var(--accent); transition: width 0.4s ease; }
     .stat .breakdown {
       font-size: 0.7rem; color: var(--muted);
       margin-top: 0.5rem; letter-spacing: 0.1em;
@@ -87,7 +101,40 @@
     .stat .breakdown .progress { color: var(--yellow); }
     .stat .breakdown .blocked { color: var(--red); }
 
-    /* Project blocks */
+    /* Overview — tarjetas de proyecto */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1.2rem; }
+    .card {
+      background: var(--bg-2);
+      border: 1px solid var(--bg-3);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    /* el hover NO mueve la caja (nada de transform): solo cambia color */
+    .card:hover { border-color: var(--fg-2); background: var(--bg-3); }
+    .card h2 {
+      font-size: 1rem; font-weight: 300; letter-spacing: 0.12em;
+      text-transform: lowercase;
+    }
+    .card .subtitle { font-size: 0.75rem; color: var(--fg-2); font-style: italic; }
+    .card .pct { font-size: 1.6rem; font-weight: 300; }
+    .card .bar { height: 4px; background: var(--bg-3); border-radius: 2px; overflow: hidden; }
+    .card .bar-fill { height: 100%; transition: width 0.4s ease; }
+    .card .counts {
+      font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em;
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+    }
+    .card .enter {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: auto;
+    }
+    /* lab y recurrentes no tienen avance: se distinguen por los chips, no por el borde */
+    .card .states { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* Project blocks (detalle) */
     .project {
       background: var(--bg-2);
       border: 1px solid var(--bg-3);
@@ -104,17 +151,14 @@
       font-size: 1.15rem; font-weight: 300; letter-spacing: 0.15em;
       text-transform: lowercase; color: var(--fg);
     }
-    .project .subtitle {
-      font-size: 0.8rem; color: var(--fg-2);
-      margin-top: 0.3rem; font-style: italic;
+    .project .subtitle { font-size: 0.8rem; color: var(--fg-2); margin-top: 0.3rem; font-style: italic; }
+    .project .description {
+      font-size: 0.8rem; color: var(--fg-2); line-height: 1.7;
+      max-width: 82ch; margin: -0.6rem 0 1.2rem; padding-bottom: 1.1rem;
+      border-bottom: 1px solid var(--bg-3);
     }
-    .project .project-progress {
-      font-size: 0.85rem; color: var(--fg);
-      text-align: right; min-width: 200px;
-    }
-    .project .project-progress .pct {
-      font-size: 1.4rem; font-weight: 300; letter-spacing: 0.05em;
-    }
+    .project .project-progress { font-size: 0.85rem; color: var(--fg); text-align: right; min-width: 200px; }
+    .project .project-progress .pct { font-size: 1.4rem; font-weight: 300; letter-spacing: 0.05em; }
     .project .project-progress .bar {
       height: 4px; background: var(--bg-3); border-radius: 2px;
       overflow: hidden; margin-top: 0.4rem;
@@ -122,15 +166,11 @@
     .project .project-progress .bar-fill { height: 100%; transition: width 0.4s ease; }
 
     /* Phase */
-    .phase {
-      margin-bottom: 1.5rem; padding-top: 1rem;
-      border-top: 1px solid var(--bg-3);
-    }
+    .phase { margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--bg-3); }
     .phase:first-child { border-top: 0; padding-top: 0; }
     .phase-header {
       display: flex; justify-content: space-between; align-items: center;
-      gap: 1rem; margin-bottom: 0.8rem; cursor: pointer;
-      user-select: none;
+      gap: 1rem; margin-bottom: 0.8rem; cursor: pointer; user-select: none;
     }
     .phase-header h3 {
       font-size: 0.85rem; font-weight: 300; letter-spacing: 0.18em;
@@ -141,44 +181,32 @@
       letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.6rem;
     }
     .phase-header .phase-progress .mini-bar {
-      width: 80px; height: 3px; background: var(--bg-3); border-radius: 2px;
-      overflow: hidden;
+      width: 80px; height: 3px; background: var(--bg-3); border-radius: 2px; overflow: hidden;
     }
-    .phase-header .phase-progress .mini-bar-fill {
-      height: 100%; transition: width 0.4s ease;
-    }
+    .phase-header .phase-progress .mini-bar-fill { height: 100%; transition: width 0.4s ease; }
     .phase-header .toggle::before {
       content: '▾'; color: var(--muted); margin-right: 0.5rem;
       display: inline-block; transition: transform 0.2s;
     }
-    .phase.collapsed .phase-header .toggle::before {
-      transform: rotate(-90deg);
-    }
+    .phase.collapsed .phase-header .toggle::before { transform: rotate(-90deg); }
     .phase.collapsed .tasks { display: none; }
 
     /* Task */
     .tasks { display: flex; flex-direction: column; gap: 0.4rem; padding-left: 0.5rem; }
     .task {
-      display: grid;
-      grid-template-columns: 24px 1fr auto auto;
+      display: grid; grid-template-columns: 24px 1fr auto auto;
       gap: 0.8rem; align-items: center;
-      padding: 0.5rem 0.6rem;
-      border-radius: 3px;
-      font-size: 0.85rem;
-      transition: background 0.15s;
+      padding: 0.5rem 0.6rem; border-radius: 3px;
+      font-size: 0.85rem; transition: background 0.15s;
     }
     .task:hover { background: var(--bg-3); }
     .task .checkbox {
       width: 18px; height: 18px;
-      border: 1.5px solid var(--muted);
-      border-radius: 3px;
+      border: 1.5px solid var(--muted); border-radius: 3px;
       display: inline-flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      position: relative;
+      flex-shrink: 0; position: relative;
     }
-    .task.done .checkbox {
-      background: var(--green); border-color: var(--green);
-    }
+    .task.done .checkbox { background: var(--green); border-color: var(--green); }
     /* Checkmark drawn with CSS borders — bottom-left corner of a rotated rectangle */
     .task.done .checkbox::after {
       content: ''; display: block;
@@ -190,43 +218,108 @@
     .task.in_progress .checkbox { border-color: var(--yellow); }
     .task.in_progress .checkbox::after {
       content: ''; display: block;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--yellow);
+      width: 6px; height: 6px; border-radius: 50%; background: var(--yellow);
     }
     .task.blocked .checkbox { border-color: var(--red); opacity: 0.6; }
     /* X drawn with two rotated lines — perfectly centered */
     .task.blocked .checkbox::before,
     .task.blocked .checkbox::after {
       content: ''; position: absolute;
-      width: 11px; height: 1.5px;
-      background: var(--red);
+      width: 11px; height: 1.5px; background: var(--red);
       top: 50%; left: 50%;
     }
     .task.blocked .checkbox::before { transform: translate(-50%, -50%) rotate(45deg); }
     .task.blocked .checkbox::after  { transform: translate(-50%, -50%) rotate(-45deg); }
-    .task .title {
-      color: var(--fg); text-decoration: none;
-    }
-    .task.done .title { color: var(--fg-2); text-decoration: line-through; opacity: 0.7; }
-    .task.blocked .title { color: var(--fg-2); }
+    .task.done .title-cell { color: var(--fg-2); opacity: 0.75; }
+    .task.blocked .title-cell { color: var(--fg-2); }
     .task .note {
       font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem;
       font-style: italic; display: block;
     }
-    .task .owner, .task .eta {
+    /* chips de owner: globales, se usan en tasks y en recurrentes */
+    .owner, .eta {
       font-size: 0.65rem; letter-spacing: 0.15em;
-      padding: 0.2rem 0.5rem; border-radius: 2px;
-      text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border-radius: 2px; text-transform: uppercase;
     }
-    .task .owner.user { background: rgba(96,128,192,0.15); color: var(--blue); }
-    .task .owner.claude { background: rgba(138,122,144,0.15); color: var(--accent); }
-    .task .owner.both { background: rgba(109,184,109,0.12); color: var(--green); }
-    .task .eta { background: var(--bg-3); color: var(--muted); }
+    .owner.user { background: rgba(96,128,192,0.15); color: var(--blue); }
+    .owner.claude { background: rgba(138,122,144,0.15); color: var(--accent); }
+    .owner.both { background: rgba(109,184,109,0.12); color: var(--green); }
+    .eta { background: var(--bg-3); color: var(--muted); }
+
+    /* Lab */
+    .lab-intro {
+      font-size: 0.8rem; color: var(--fg-2); font-style: italic;
+      max-width: 80ch; margin-bottom: 2rem; line-height: 1.7;
+    }
+    .experiment {
+      background: var(--bg-2);
+      border: 1px solid var(--bg-3);
+      border-left: 3px solid var(--lab);
+      border-radius: 4px;
+      padding: 1.3rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .experiment.state-in_progress { border-left-color: var(--yellow); }
+    .experiment.state-done { border-left-color: var(--green); }
+    .experiment.state-dead { border-left-color: var(--red); opacity: 0.75; }
+    .experiment .top {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .experiment h3 { font-size: 0.95rem; font-weight: 300; letter-spacing: 0.1em; }
+    .experiment .summary { font-size: 0.78rem; color: var(--fg-2); margin-top: 0.5rem; }
+    .experiment .links { font-size: 0.7rem; color: var(--muted); margin-top: 0.6rem; letter-spacing: 0.05em; }
+    .experiment .links a { color: var(--blue); text-decoration: none; }
+    .experiment .links a:hover { text-decoration: underline; }
+    .experiment .links .k { color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.65rem; }
+    .experiment .sub-tasks { margin-top: 0.9rem; }
+    .experiment .sub-tasks summary {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer;
+    }
+    .chip {
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem; border-radius: 2px; white-space: nowrap;
+      background: var(--bg-3); color: var(--fg-2);
+    }
+    .chip.pending { color: var(--fg-2); }
+    .chip.in_progress { background: rgba(212,168,74,0.15); color: var(--yellow); }
+    .chip.done { background: rgba(109,184,109,0.15); color: var(--green); }
+    .chip.dead { background: rgba(198,96,96,0.15); color: var(--red); }
+    .chip.rec-overdue { background: rgba(198,96,96,0.15); color: var(--red); }
+    .chip.rec-soon { background: rgba(212,168,74,0.15); color: var(--yellow); }
+    .chip.rec-later { background: var(--bg-3); color: var(--fg-2); }
+    .chip.rec-paused { background: var(--bg-3); color: var(--muted); }
+
+    /* Recurrentes */
+    .rec {
+      background: var(--bg-2);
+      border: 1px solid var(--bg-3);
+      border-left: 3px solid var(--fg-2);
+      border-radius: 4px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 0.9rem;
+    }
+    .rec.rec-state-overdue { border-left-color: var(--red); }
+    .rec.rec-state-soon { border-left-color: var(--yellow); }
+    .rec.rec-state-later { border-left-color: var(--bg-3); }
+    .rec.rec-state-paused { border-left-color: var(--bg-3); opacity: 0.7; }
+    .rec-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .rec-head h3 { font-size: 0.95rem; font-weight: 300; letter-spacing: 0.08em; }
+    .rec-meta {
+      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+      font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em;
+      margin-top: 0.6rem;
+    }
+    .rec-meta a { color: var(--blue); text-decoration: none; }
+    .rec-meta a:hover { text-decoration: underline; }
+    .rec-detail { font-size: 0.78rem; color: var(--fg-2); margin-top: 0.7rem; line-height: 1.65; }
 
     /* Filters */
-    .filters {
-      display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
-    }
+    .filters { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .filter {
       font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
       padding: 0.4rem 0.9rem; border-radius: 3px;
@@ -261,7 +354,7 @@
 
   <div class="container">
     <header>
-      <h1>spiral out · control dashboard</h1>
+      <h1><a href="#/">spiral out · control dashboard</a></h1>
       <div class="meta">
         <span>updated <span id="updated">—</span></span>
         <span class="sep">·</span>
@@ -271,17 +364,7 @@
       </div>
     </header>
 
-    <section class="stats" id="stats"></section>
-
-    <div class="filters">
-      <button class="filter active" data-filter="all">all</button>
-      <button class="filter" data-filter="mine">user todo</button>
-      <button class="filter" data-filter="claude">claude todo</button>
-      <button class="filter" data-filter="blocked">blocked</button>
-      <button class="filter" data-filter="in_progress">in progress</button>
-    </div>
-
-    <main id="projects"></main>
+    <main id="view"></main>
 
     <footer>
       data source: <a href="data.json">data.json</a> · edit it to update the board
@@ -292,30 +375,25 @@
     let DATA = null;
     let CURRENT_FILTER = 'all';
 
-    async function load() {
-      const res = await fetch('data.json');
-      DATA = await res.json();
-      render();
-    }
+    const STATE_LABEL = {
+      pending: 'pendiente', in_progress: 'en curso',
+      done: 'ejecutado', dead: 'muerto',
+    };
 
-    function render() {
+    async function load() {
+      // no-store: el board se edita a mano y hay que ver el cambio al refrescar
+      const res = await fetch('data.json', {cache: 'no-store'});
+      DATA = await res.json();
       document.getElementById('updated').textContent = DATA.meta.updated;
       document.getElementById('next-review').textContent = DATA.meta.next_review;
       document.getElementById('version').textContent = DATA.meta.version;
-      renderStats();
-      renderProjects();
-      attachToggles();
+      if (DATA.lab.color) document.documentElement.style.setProperty('--lab', DATA.lab.color);
+      route();
     }
 
-    function flattenTasks() {
-      const all = [];
-      DATA.projects.forEach(p => {
-        p.phases.forEach(ph => {
-          ph.tasks.forEach(t => all.push({...t, project: p.id, phase: ph.id}));
-        });
-      });
-      return all;
-    }
+    /* ---------- helpers ---------- */
+
+    function projectTasks(p) { return p.phases.flatMap(ph => ph.tasks); }
 
     function statusCounts(tasks) {
       const c = {done: 0, in_progress: 0, blocked: 0, todo: 0, total: tasks.length};
@@ -323,161 +401,364 @@
       return c;
     }
 
-    function pct(c) {
-      return c.total === 0 ? 0 : Math.round((c.done / c.total) * 100);
+    function pct(c) { return c.total === 0 ? 0 : Math.round((c.done / c.total) * 100); }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
     }
 
-    function renderStats() {
-      const all = flattenTasks();
-      const cAll = statusCounts(all);
+    /** Un ref/output que parece path del repo se linkea; si es prosa, va como texto. */
+    function refHtml(v) {
+      const looksPath = /^[\w./-]+\.(md|py|sh|html|json|js)$/.test(v);
+      return looksPath
+        ? `<a href="../${escapeHtml(v)}">${escapeHtml(v)}</a>`
+        : escapeHtml(v);
+    }
 
-      const blocks = [
-        {label: 'overall progress', tasks: all, color: 'var(--accent)'},
-        {label: 'user todo', tasks: all.filter(t => t.owner === 'user' && t.status !== 'done'), color: 'var(--blue)', showCount: true},
-        {label: 'claude todo', tasks: all.filter(t => t.owner === 'claude' && t.status !== 'done'), color: 'var(--accent)', showCount: true},
-        {label: 'blocked', tasks: all.filter(t => t.status === 'blocked'), color: 'var(--red)', showCount: true},
+    /* ---------- recurrentes: cálculo de próxima fecha ---------- */
+
+    const MS_DAY = 86400000;
+
+    /** "1w" / "2m" / "3w" / "1y" → días. */
+    function everyDays(every) {
+      const m = /^(\d+)([dwmy])$/.exec(every);
+      if (!m) return null;
+      const n = +m[1];
+      return n * {d: 1, w: 7, m: 30, y: 365}[m[2]];
+    }
+
+    function everyLabel(every) {
+      const m = /^(\d+)([dwmy])$/.exec(every);
+      const unit = {d: 'día', w: 'semana', m: 'mes', y: 'año'}[m[2]];
+      const n = +m[1];
+      return n === 1 ? `cada ${unit}` : `cada ${n} ${unit}${m[2] === 'm' ? 'es' : 's'}`;
+    }
+
+    function today0() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+
+    /** Próxima ejecución: última + periodicidad, o startsOn si nunca corrió. */
+    function nextRun(it) {
+      if (it.paused) return null;
+      if (it.last) return new Date(new Date(it.last + 'T00:00:00').getTime() + everyDays(it.every) * MS_DAY);
+      if (it.startsOn) return new Date(it.startsOn + 'T00:00:00');
+      return null;
+    }
+
+    /** vencida / esta semana / más adelante / en pausa */
+    function recState(it) {
+      if (it.paused) return 'paused';
+      const n = nextRun(it);
+      if (!n) return 'paused';
+      const days = Math.round((n - today0()) / MS_DAY);
+      if (days < 0) return 'overdue';
+      if (days <= 7) return 'soon';
+      return 'later';
+    }
+
+    const REC_LABEL = {overdue: 'vencida', soon: 'esta semana', later: 'más adelante', paused: 'en pausa'};
+
+    function fmtDate(d) {
+      return d.toLocaleDateString('es-AR', {day: '2-digit', month: 'short', year: 'numeric'});
+    }
+
+    /* ---------- router ---------- */
+
+    function route() {
+      const h = location.hash.replace(/^#\/?/, '');
+      if (h === 'lab') return renderLab();
+      if (h === 'recurring') return renderRecurring();
+      if (h.startsWith('p/')) {
+        const p = DATA.projects.find(x => x.id === h.slice(2));
+        if (p) return renderProject(p);
+      }
+      renderOverview();
+    }
+
+    window.addEventListener('hashchange', route);
+
+    /* ---------- vista: overview ---------- */
+
+    /** Las cajas de avance — solo dentro de un proyecto, no en la portada. */
+    function statsHtml(tasks) {
+      const c = statusCounts(tasks);
+      const boxes = [
+        {label: 'avance', value: pct(c) + '%', width: pct(c), color: 'var(--accent)',
+         sub: `<span class="done">${c.done}</span> done · ${c.total} total`},
+        {label: 'pending', value: c.todo, width: 0, sub: 'sin arrancar'},
+        {label: 'tuyas', value: tasks.filter(t => t.owner !== 'claude' && t.status !== 'done').length,
+         width: 0, sub: 'todo + blocked · owner user/both'},
+        {label: 'mías', value: tasks.filter(t => t.owner !== 'user' && t.status !== 'done').length,
+         width: 0, sub: 'todo + blocked · owner claude/both'},
+        {label: 'blocked', value: c.blocked, width: 0,
+         sub: c.blocked ? 'ver blockedBy en la task' : 'nada trabado'},
       ];
-
-      const el = document.getElementById('stats');
-      el.innerHTML = blocks.map(b => {
-        const c = statusCounts(b.tasks);
-        if (b.showCount) {
-          return `
-            <div class="stat">
-              <div class="label">${b.label}</div>
-              <div class="value">${b.tasks.length}</div>
-              <div class="bar"><div class="bar-fill" style="width: ${pct(c)}%; background: ${b.color};"></div></div>
-              <div class="breakdown">${c.done} done · ${c.in_progress} in progress · ${c.blocked} blocked</div>
-            </div>
-          `;
-        }
-        return `
+      return `<section class="stats">
+        ${boxes.map(b => `
           <div class="stat">
             <div class="label">${b.label}</div>
-            <div class="value">${pct(c)}%</div>
-            <div class="bar"><div class="bar-fill" style="width: ${pct(c)}%; background: ${b.color};"></div></div>
-            <div class="breakdown">
-              <span class="done">${c.done}</span> · <span class="progress">${c.in_progress}</span> · <span class="blocked">${c.blocked}</span> · ${c.total} total
-            </div>
-          </div>
-        `;
-      }).join('');
+            <div class="value">${b.value}</div>
+            ${b.width ? `<div class="bar"><div class="bar-fill" style="width:${b.width}%;background:${b.color}"></div></div>` : ''}
+            <div class="breakdown">${b.sub}</div>
+          </div>`).join('')}
+      </section>`;
     }
+
+    function renderOverview() {
+      const labStates = {};
+      DATA.lab.experiments.forEach(e => { labStates[e.state] = (labStates[e.state] || 0) + 1; });
+
+      const cards = DATA.projects.map(p => {
+        const c = statusCounts(projectTasks(p));
+        const mine = projectTasks(p).filter(t => t.owner !== 'claude' && t.status !== 'done').length;
+        const claude = projectTasks(p).filter(t => t.owner !== 'user' && t.status !== 'done').length;
+        return `
+          <a class="card" href="#/p/${p.id}" style="border-left-color:${p.color}">
+            <h2>${escapeHtml(p.title)}</h2>
+            <div class="subtitle">${escapeHtml(p.brief)}</div>
+            <div>
+              <div class="pct">${pct(c)}%</div>
+              <div class="bar"><div class="bar-fill" style="width:${pct(c)}%;background:${p.color}"></div></div>
+            </div>
+            <div class="counts">
+              <span>${c.done}/${c.total} done</span>
+              <span>${mine} tuyas</span>
+              <span>${claude} mías</span>
+              ${c.blocked ? `<span style="color:var(--red)">${c.blocked} blocked</span>` : ''}
+            </div>
+            <div class="enter">entrar →</div>
+          </a>`;
+      }).join('');
+
+      const labCard = `
+        <a class="card lab" href="#/lab" style="border-left-color:${DATA.lab.color}">
+          <h2>${escapeHtml(DATA.lab.title)}</h2>
+          <div class="subtitle">${escapeHtml(DATA.lab.brief)}</div>
+          <div class="states">
+            ${Object.entries(labStates).map(([k, v]) =>
+              `<span class="chip ${k}">${v} ${STATE_LABEL[k]}</span>`).join('')}
+          </div>
+          <div class="counts"><span>sin avance — no es un plan</span></div>
+          <div class="enter">entrar →</div>
+        </a>`;
+
+      const rec = DATA.recurring.items;
+      const recCount = {};
+      rec.forEach(it => { const s = recState(it); recCount[s] = (recCount[s] || 0) + 1; });
+      const recCard = `
+        <a class="card" href="#/recurring" style="border-left-color:${DATA.recurring.color}">
+          <h2>${escapeHtml(DATA.recurring.title)}</h2>
+          <div class="subtitle">${escapeHtml(DATA.recurring.brief)}</div>
+          <div class="states">
+            ${['overdue', 'soon', 'later', 'paused'].filter(s => recCount[s]).map(s =>
+              `<span class="chip rec-${s}">${recCount[s]} ${REC_LABEL[s]}</span>`).join('')}
+          </div>
+          <div class="counts"><span>${rec.length} tareas · fecha calculada por periodicidad</span></div>
+          <div class="enter">entrar →</div>
+        </a>`;
+
+      document.getElementById('view').innerHTML = `
+        <h2 class="section-title">Proyectos</h2>
+        <section class="cards">${cards}${recCard}${labCard}</section>
+      `;
+    }
+
+    /* ---------- vista: recurrentes ---------- */
+
+    function renderRecurring() {
+      const order = {overdue: 0, soon: 1, later: 2, paused: 3};
+      const items = [...DATA.recurring.items].sort((a, b) => {
+        const d = order[recState(a)] - order[recState(b)];
+        if (d) return d;
+        const na = nextRun(a), nb = nextRun(b);
+        return (na ? na.getTime() : Infinity) - (nb ? nb.getTime() : Infinity);
+      });
+
+      const projTitle = id => (DATA.projects.find(p => p.id === id) || {}).title || '';
+
+      const rows = items.map(it => {
+        const st = recState(it);
+        const n = nextRun(it);
+        const days = n ? Math.round((n - today0()) / MS_DAY) : null;
+        const when = it.paused
+          ? `en pausa — ${escapeHtml(it.paused)}`
+          : days < 0
+            ? `vencida hace ${-days} día${-days === 1 ? '' : 's'} · ${fmtDate(n)}`
+            : days === 0 ? `hoy` : `en ${days} día${days === 1 ? '' : 's'} · ${fmtDate(n)}`;
+        return `
+          <div class="rec rec-state-${st}">
+            <div class="rec-head">
+              <h3>${escapeHtml(it.title)}</h3>
+              <span class="chip rec-${st}">${when}</span>
+            </div>
+            <div class="rec-meta">
+              <span class="owner ${it.owner}">${it.owner}</span>
+              <span>${everyLabel(it.every)}</span>
+              <span>última: ${it.last ? fmtDate(new Date(it.last + 'T00:00:00')) : 'nunca'}</span>
+              ${it.project ? `<a href="#/p/${it.project}">${escapeHtml(projTitle(it.project))}</a>` : '<span>cross-proyecto</span>'}
+            </div>
+            <div class="rec-detail">${escapeHtml(it.detail)}</div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('view').innerHTML = `
+        <a class="back" href="#/">← proyectos</a>
+        <h2 style="font-size:1.15rem;font-weight:300;letter-spacing:0.15em;text-transform:lowercase;margin-bottom:0.8rem;">
+          ${escapeHtml(DATA.recurring.title)}
+        </h2>
+        <p class="lab-intro">${escapeHtml(DATA.recurring.description)}</p>
+        ${rows}`;
+    }
+
+    /* ---------- vista: proyecto ---------- */
 
     function taskMatchesFilter(t) {
       if (CURRENT_FILTER === 'all') return true;
-      if (CURRENT_FILTER === 'mine') return t.owner === 'user' && t.status !== 'done';
-      if (CURRENT_FILTER === 'claude') return t.owner === 'claude' && t.status !== 'done';
+      if (CURRENT_FILTER === 'pending') return t.status === 'todo';
+      if (CURRENT_FILTER === 'mine') return t.owner !== 'claude' && t.status !== 'done';
+      if (CURRENT_FILTER === 'claude') return t.owner !== 'user' && t.status !== 'done';
       if (CURRENT_FILTER === 'blocked') return t.status === 'blocked';
       if (CURRENT_FILTER === 'in_progress') return t.status === 'in_progress';
       return true;
     }
 
-    function renderProjects() {
-      const el = document.getElementById('projects');
-      el.innerHTML = DATA.projects.map(p => {
-        const allTasks = p.phases.flatMap(ph => ph.tasks);
-        const c = statusCounts(allTasks);
-        const projectPct = pct(c);
-
-        const phasesHtml = p.phases.map(ph => {
-          const phC = statusCounts(ph.tasks);
-          const phPct = pct(phC);
-          const tasksHtml = ph.tasks
-            .filter(taskMatchesFilter)
-            .map(t => renderTask(t))
-            .join('');
-          const hidden = tasksHtml === '' ? 'style="display:none"' : '';
-          return `
-            <div class="phase" data-phase-id="${p.id}-${ph.id}" ${hidden}>
-              <div class="phase-header">
-                <h3><span class="toggle"></span>${escapeHtml(ph.title)}</h3>
-                <div class="phase-progress">
-                  <span>${phC.done}/${phC.total}</span>
-                  <div class="mini-bar"><div class="mini-bar-fill" style="width: ${phPct}%; background: ${p.color};"></div></div>
-                  <span>${phPct}%</span>
-                </div>
-              </div>
-              <div class="tasks">${tasksHtml || '<span style="color:var(--muted);font-size:0.75rem;padding:0.5rem;">no tasks match filter</span>'}</div>
-            </div>
-          `;
-        }).join('');
-
-        return `
-          <section class="project" style="border-left-color: ${p.color};">
-            <div class="project-header">
-              <div>
-                <h2>${escapeHtml(p.title)}</h2>
-                <div class="subtitle">${escapeHtml(p.subtitle)}</div>
-              </div>
-              <div class="project-progress">
-                <div class="pct">${projectPct}%</div>
-                <div class="bar"><div class="bar-fill" style="width: ${projectPct}%; background: ${p.color};"></div></div>
-                <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;margin-top:0.3rem;">
-                  ${c.done} / ${c.total} done · ${c.blocked} blocked
-                </div>
-              </div>
-            </div>
-            ${phasesHtml}
-          </section>
-        `;
-      }).join('');
+    /** Un eta con formato de fecha lleva el mismo semáforo que las recurrentes. */
+    function etaHtml(raw, status) {
+      if (!raw) return '';
+      const isDate = /^\d{4}-\d{2}-\d{2}$/.test(raw);
+      if (!isDate || status === 'done') return `<span class="eta">${escapeHtml(raw)}</span>`;
+      const days = Math.round((new Date(raw + 'T00:00:00') - today0()) / MS_DAY);
+      const cls = days < 0 ? 'rec-overdue' : days <= 7 ? 'rec-soon' : 'rec-later';
+      const label = days < 0 ? `vencida hace ${-days}d`
+        : days === 0 ? 'hoy'
+        : `en ${days}d · ${raw}`;
+      return `<span class="chip ${cls}">${label}</span>`;
     }
 
     function renderTask(t) {
       const owner = t.owner || 'user';
       const status = t.status || 'todo';
       const note = t.note ? `<span class="note">${escapeHtml(t.note)}</span>` : '';
-      const eta = t.eta ? `<span class="eta">${escapeHtml(t.eta)}</span>` : '';
+      const eta = etaHtml(t.eta, status);
       return `
         <div class="task ${status}">
           <div class="checkbox"></div>
           <div class="title-cell">${escapeHtml(t.title)}${note}</div>
           <span class="owner ${owner}">${owner}</span>
           ${eta}
+        </div>`;
+    }
+
+    function renderProject(p) {
+      const phasesHtml = p.phases.map(ph => {
+        const phC = statusCounts(ph.tasks);
+        const tasksHtml = ph.tasks.filter(taskMatchesFilter).map(renderTask).join('');
+        const hidden = tasksHtml === '' ? 'style="display:none"' : '';
+        return `
+          <div class="phase" data-phase-id="${p.id}-${ph.id}" ${hidden}>
+            <div class="phase-header">
+              <h3><span class="toggle"></span>${escapeHtml(ph.title)}</h3>
+              <div class="phase-progress">
+                <span>${phC.done}/${phC.total}</span>
+                <div class="mini-bar"><div class="mini-bar-fill" style="width:${pct(phC)}%;background:${p.color}"></div></div>
+                <span>${pct(phC)}%</span>
+              </div>
+            </div>
+            <div class="tasks">${tasksHtml}</div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('view').innerHTML = `
+        <a class="back" href="#/">← proyectos</a>
+        ${statsHtml(projectTasks(p))}
+        <div class="filters">
+          ${['all', 'pending', 'mine', 'claude', 'blocked', 'in_progress'].map(f =>
+            `<button class="filter ${f === CURRENT_FILTER ? 'active' : ''}" data-filter="${f}">${f.replace('_', ' ')}</button>`).join('')}
         </div>
-      `;
+        <section class="project" style="border-left-color:${p.color}">
+          <div class="project-header">
+            <div>
+              <h2>${escapeHtml(p.title)}</h2>
+              <div class="subtitle">${escapeHtml(p.brief)}</div>
+            </div>
+          </div>
+          ${p.description ? `<p class="description">${escapeHtml(p.description)}</p>` : ''}
+          ${phasesHtml}
+        </section>`;
+
+      attachFilters(() => renderProject(p));
+      attachToggles();
+    }
+
+    /* ---------- vista: lab ---------- */
+
+    function renderLab() {
+      const order = {in_progress: 0, pending: 1, done: 2, dead: 3};
+      const exps = [...DATA.lab.experiments].sort((a, b) => order[a.state] - order[b.state]);
+
+      const html = exps.map(e => {
+        const links = [];
+        if (e.ref) links.push(`<span class="k">ref</span> ${refHtml(e.ref)}`);
+        if (e.output) links.push(`<span class="k">output</span> ${refHtml(e.output)}`);
+        const sub = (e.tasks || []).length ? `
+          <details class="sub-tasks">
+            <summary>${e.tasks.length} pasos anotados</summary>
+            <div class="tasks">${e.tasks.map(renderTask).join('')}</div>
+          </details>` : '';
+        return `
+          <div class="experiment state-${e.state}">
+            <div class="top">
+              <h3>${escapeHtml(e.title)}</h3>
+              <span class="chip ${e.state}">${STATE_LABEL[e.state]}</span>
+            </div>
+            <div class="summary">${escapeHtml(e.summary)}</div>
+            ${links.length ? `<div class="links">${links.join(' &nbsp;·&nbsp; ')}</div>` : ''}
+            ${sub}
+          </div>`;
+      }).join('');
+
+      document.getElementById('view').innerHTML = `
+        <a class="back" href="#/">← proyectos</a>
+        <h2 style="font-size:1.15rem;font-weight:300;letter-spacing:0.15em;text-transform:lowercase;margin-bottom:0.8rem;">
+          ${escapeHtml(DATA.lab.title)}
+        </h2>
+        <p class="lab-intro">${escapeHtml(DATA.lab.description)}</p>
+        ${html}`;
+    }
+
+    /* ---------- interacción ---------- */
+
+    function attachFilters(rerender) {
+      document.querySelectorAll('.filter').forEach(btn => {
+        btn.addEventListener('click', () => {
+          CURRENT_FILTER = btn.dataset.filter;
+          rerender();
+        });
+      });
     }
 
     function attachToggles() {
+      const KEY = 'spiralout.collapsed';
       document.querySelectorAll('.phase-header').forEach(h => {
         h.addEventListener('click', () => {
           const phase = h.closest('.phase');
           const id = phase.dataset.phaseId;
           phase.classList.toggle('collapsed');
-          // remember
-          const collapsed = JSON.parse(localStorage.getItem('spiralout.collapsed') || '[]');
+          const collapsed = JSON.parse(localStorage.getItem(KEY) || '[]');
+          const idx = collapsed.indexOf(id);
           if (phase.classList.contains('collapsed')) {
-            if (!collapsed.includes(id)) collapsed.push(id);
-          } else {
-            const idx = collapsed.indexOf(id);
-            if (idx >= 0) collapsed.splice(idx, 1);
+            if (idx < 0) collapsed.push(id);
+          } else if (idx >= 0) {
+            collapsed.splice(idx, 1);
           }
-          localStorage.setItem('spiralout.collapsed', JSON.stringify(collapsed));
+          localStorage.setItem(KEY, JSON.stringify(collapsed));
         });
       });
-      // restore
-      const collapsed = JSON.parse(localStorage.getItem('spiralout.collapsed') || '[]');
-      collapsed.forEach(id => {
+      JSON.parse(localStorage.getItem(KEY) || '[]').forEach(id => {
         const phase = document.querySelector(`[data-phase-id="${id}"]`);
         if (phase) phase.classList.add('collapsed');
       });
-    }
-
-    document.querySelectorAll('.filter').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        CURRENT_FILTER = btn.dataset.filter;
-        renderProjects();
-        attachToggles();
-      });
-    });
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[c]));
     }
 
     load();
