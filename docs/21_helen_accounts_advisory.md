@@ -133,7 +133,7 @@ del drop.
 20. **X / Bluesky activados** posteando el arco del pivote
 21. **Newsletter primera edición** ("la historia del pivote")
 22. **Diary serial** (3-5 posts) en sitio + crosspost Medium
-23. **Patches / posts técnicos** en r/modularsynth, lines, Discord modular
+23. **Patches / posts técnicos** en r/modular, lines, Discord modular
 24. **Mixcloud** subiendo set de presentación si tocás vivo el drop
 25. **AlbumOfTheYear + RateYourMusic** submissions
 26. **Bandcamp Daily pitch** + **Fluid Radio / Norient / CDM** pitches (con press kit nuevo)
@@ -314,10 +314,13 @@ Snapchat · VK/WeChat (a menos que apuntes esos mercados).
   sets ahí. Si vas a tocar en vivo, grabás y subís.
 - **Costo**: free tier alcanza.
 
-### 16. r/modular / r/modularsynth / r/synthesizers 🟢 opcional
-- **Por qué**: comunidad activa en Reddit, especialmente
-  `r/modularsynth`. Postear videos de patches o conversaciones técnicas
-  funciona bien si tenés algo concreto que mostrar.
+### 16. r/modular / r/Modularsynths / r/synthesizers 🟢 opcional
+- **Por qué**: comunidad activa en Reddit, sobre todo en **`r/modular`** (el
+  grande; `r/modularsynth` **no existe** — corregido 2026-07-26). Postear videos
+  de patches o conversaciones técnicas funciona bien si tenés algo concreto que
+  mostrar.
+- **Ojo con r/synthesizers**: pide **50 de karma** mínimo (regla 11) y borra los
+  posts de link/video sin comentario sustancioso del OP a la hora (regla 5).
 - **Cuidado**: Reddit detesta self-promotion sin contexto. Regla 9:1
   (9 comentarios genuinos por cada 1 post propio). Mejor empezar
   comentando 2-3 semanas antes de postear nada propio.

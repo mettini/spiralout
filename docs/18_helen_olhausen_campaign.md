@@ -220,16 +220,28 @@ de las fuentes consultadas).
 
 ### 2) Community recommendation
 
+> **Agenda operativa → `docs/36`.** El plan día por día (integrado con el de
+> ÆM, una sola cuenta: u/emettini) y los bloques de copy H1-H6 viven ahí. Esta
+> lista de subs quedó **corregida el 2026-07-26**: ver abajo.
+
 Subreddits relevantes para el sonido de Helen:
-- r/ifyoulikeblank ("if you like [Caterina Barbieri / Suzanne Ciani /
-  Julianna Barwick] you'll like Helen Olhausen")
-- r/SynthGenerators
-- r/modularsynth
-- r/ambientmusic (si el nuevo disco entra)
-- r/listentothis
+- ~~r/ifyoulikeblank~~ — **DESCARTADO**: la regla 2 es instaban e incluye "media
+  created by yourself **or someone you know**". Helen entra en esa cláusula.
+- **r/modular** (17 años, el grande) · r/Modularsynths · r/modularsynthesizer —
+  **reglas SIN verificar, hay que leerlas antes de participar**
+- ~~r/modularsynth~~ — **NO EXISTE** (verificado 2026-07-26)
+- ~~r/SynthGenerators~~ — **sin verificar que exista**; tratarlo como inexistente
+  hasta comprobarlo
+- r/synthesizers — **cerrado por ahora**: regla 11 pide **50 de karma** mínimo
+- r/ambientmusic (si el nuevo disco entra; prohíbe links de Spotify, regla 5)
+- r/listentothis (self-promo **y** "personal association" solo en el weekly
+  "music melting pot thread", regla 3)
 - r/Uruguay (no se aprovecha mucho la audiencia hispanohablante natural)
 - r/argentina (cultura)
 - r/musicasudamericana
+
+*(Las reglas de r/Uruguay, r/argentina y r/musicasudamericana tampoco están
+verificadas.)*
 
 **Cómo postear**: voz fan / curator. "I've been listening to this Uruguayan
 artist who's pivoting from indie-pop to modular synth, her older album is
