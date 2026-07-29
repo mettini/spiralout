@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ÆM — review de posts (calendario docs/33)</title>
+<style>
+  :root { --bg:#0a0a0a; --fg:#e8e8e8; --muted:#8a8a8a; --line:#242424; --ok:#7bb87b; --no:#c46a6a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:13px/1.5 ui-monospace,"SF Mono",Menlo,Courier,monospace; padding:32px 24px 80px; }
+  h1 { font-size:15px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; margin:0 0 6px; }
+  .sub { color:var(--muted); margin:0 0 28px; max-width:70ch; }
+  .sub a { color:var(--fg); }
+  h2 { font-size:12px; font-weight:400; letter-spacing:.12em; text-transform:uppercase;
+       color:var(--muted); border-bottom:1px solid var(--line); padding-bottom:8px; margin:40px 0 20px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:24px; }
+  .card { border:1px solid var(--line); background:#0e0e0e; }
+  .card img, .card video { width:100%; display:block; background:#000; }
+  .meta { padding:10px 12px 12px; }
+  .slot { color:var(--muted); font-size:11px; letter-spacing:.1em; text-transform:uppercase; }
+  .file { font-size:11px; color:#5f5f5f; word-break:break-all; }
+  .caption { margin:8px 0 0; white-space:pre-wrap; font-style:italic; color:#cfcfcf; }
+  .verdict { margin-top:10px; display:flex; gap:6px; }
+  .verdict button { flex:1; background:transparent; border:1px solid var(--line); color:var(--muted);
+                    font:inherit; padding:4px 0; cursor:pointer; }
+  .verdict button:hover { border-color:#3a3a3a; color:var(--fg); }
+  .card.ok { border-color:var(--ok); } .card.no { border-color:var(--no); }
+  .card.ok .slot { color:var(--ok); } .card.no .slot { color:var(--no); }
+  #tally { position:fixed; left:0; right:0; bottom:0; background:#111; border-top:1px solid var(--line);
+           padding:10px 24px; color:var(--muted); display:flex; gap:20px; }
+  #tally button { background:transparent; border:1px solid var(--line); color:var(--muted); font:inherit;
+                  padding:3px 10px; cursor:pointer; margin-left:auto; }
+</style>
+</head>
+<body>
+
+<h1>ÆM · review de posts</h1>
+<p class="sub">
+  Los 12 slots del calendario de <code>docs/33_content_calendar.md</code> (1/semana, 3 meses).
+  Reels = captación, feed = galería. Reglas de caption: sin "out now", sin explicar; hashtags SOLO en Reels.
+  Marcá cada uno OK / NO — el estado queda guardado en este browser (localStorage), no toca ningún archivo.
+  Regenerar feed: <code>python3 scripts/make_posts.py</code>.
+</p>
+
+<h2>Reels — 1080×1920, van en W1 / W5 / W9</h2>
+<div class="grid" id="reels"></div>
+
+<h2>Feed — 1080×1350, 9 posts (W2-W4, W6-W8, W10-W12)</h2>
+<div class="grid" id="feed"></div>
+
+<div id="tally">
+  <span id="count"></span>
+  <button id="ver" onclick="toggleVer()">ver v1 (todo negro)</button>
+  <button onclick="localStorage.clear();location.reload()">reset marcas</button>
+</div>
+
+<script>
+const HASH = '#darkambient #ambientmusic #dronemusic #spaceambient #experimentalmusic';
+const REELS = [
+  {slot:'W1', file:'../../../transmissions/01/video/out/clip_outbound.mp4',
+   caption:'outbound.\n\nto leave was, in truth, the verb that invented it.\n\n' + HASH},
+  {slot:'W5', file:'../../../transmissions/01/video/out/clip_crossing.mp4',
+   caption:'crossing.\n\na trajectory that doubts is not a curve: an orbit that breaks to find its new distance.\n\n' + HASH},
+  {slot:'W9', file:'../../../transmissions/01/video/out/clip_recursion.mp4',
+   caption:'recursion.\n\nthe spiral does not ascend: it evolves, never the same.\n\n' + HASH},
+];
+const FEED_SLOTS = ['W2','W3','W4','W6','W7','W8','W10','W11','W12'];
+const FEED_HINT = [
+  'no es lo que mandamos…', 'what returned…', 'la espiral no asciende…',
+  'salir, en rigor…', 'the wind that had been pushing…', 'una onda no atraviesa…',
+  'lo que estaba pasando…', 'a note, while heard…', 'avanzar sin cambio…',
+];
+
+function card(id, slot, mediaHTML, file, caption) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.dataset.id = id;
+  el.innerHTML = `${mediaHTML}
+    <div class="meta">
+      <div class="slot">${slot}</div>
+      <div class="file">${file.split('/').pop()}</div>
+      <p class="caption">${caption}</p>
+      <div class="verdict"><button data-v="ok">ok</button><button data-v="no">rehacer</button></div>
+    </div>`;
+  el.querySelectorAll('button').forEach(b => b.onclick = () => {
+    const v = b.dataset.v;
+    const cur = localStorage.getItem(id);
+    if (cur === v) localStorage.removeItem(id); else localStorage.setItem(id, v);
+    paint();
+  });
+  return el;
+}
+
+REELS.forEach((r, i) => document.getElementById('reels').appendChild(
+  card('reel_' + i, r.slot + ' · Reel', `<video src="${r.file}" controls muted loop preload="metadata"></video>`, r.file, r.caption)
+));
+FEED_SLOTS.forEach((slot, i) => {
+  const n = String(i + 1).padStart(2, '0');
+  const f = `post_${n}.png`;
+  document.getElementById('feed').appendChild(
+    card('feed_' + n, slot + ' · Feed', `<img src="${f}" loading="lazy" alt="post ${n}">`, f,
+         `(caption vacío o "·" — el fragmento está en la imagen)\nfragmento: ${FEED_HINT[i]}`)
+  );
+});
+
+let VER = 2;
+function toggleVer() {
+  VER = VER === 2 ? 1 : 2;
+  document.getElementById('ver').textContent =
+    VER === 2 ? 'ver v1 (todo negro)' : 'ver v2 (con fondo)';
+  document.querySelectorAll('#feed img').forEach(img => {
+    const name = img.getAttribute('alt').replace('post ', '');
+    img.src = (VER === 1 ? '_v1/' : '') + `post_${name}.png?v=${VER}`;
+  });
+}
+
+function paint() {
+  let ok = 0, no = 0;
+  document.querySelectorAll('.card').forEach(c => {
+    const v = localStorage.getItem(c.dataset.id);
+    c.classList.toggle('ok', v === 'ok');
+    c.classList.toggle('no', v === 'no');
+    if (v === 'ok') ok++; if (v === 'no') no++;
+  });
+  const total = document.querySelectorAll('.card').length;
+  document.getElementById('count').textContent =
+    `${ok} ok · ${no} a rehacer · ${total - ok - no} sin revisar (de ${total})`;
+}
+paint();
+</script>
+</body>
+</html>

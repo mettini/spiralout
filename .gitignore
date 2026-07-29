@@ -97,3 +97,6 @@ transmissions/*/video/**/*.png
 transmissions/*/video/**/*.pyc
 transmissions/*/video/**/__pycache__/
 **/.DS_Store
+
+# copia local v1 de los posts (solo para comparar en review.html)
+redes/aem/social/_v1/
