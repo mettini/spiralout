@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0a0a0c" />
 
   <title>ÆM — Heliopause / Transmission 01 · Spiral Out</title>
-  <meta name="description" content="ÆM — Heliopause / Transmission 01. A 24-minute journey through deep space ambient. Three transmissions from the edge of the solar system, composed in collaboration between human and AI." />
-  <meta name="keywords" content="ÆM, AEM, Heliopause, ambient album, dark ambient, experimental music, AI music, deep space ambient, drone music, Spiral Out, vibe composing" />
+  <meta name="description" content="ÆM — Heliopause / Transmission 01. A 24-minute journey through deep space ambient. Three transmissions from the edge of the solar system." />
+  <meta name="keywords" content="ÆM, AEM, Heliopause, ambient album, dark ambient, experimental music, deep space ambient, drone music, space ambient, Spiral Out" />
   <meta name="author" content="ÆM" />
   <meta name="robots" content="index, follow" />
 
@@ -16,7 +16,7 @@
   <!-- Open Graph -->
   <meta property="og:site_name" content="Spiral Out" />
   <meta property="og:title" content="ÆM — Heliopause / Transmission 01" />
-  <meta property="og:description" content="A 24-minute journey through deep space ambient. Composed in collaboration between human and AI." />
+  <meta property="og:description" content="A 24-minute journey through deep space ambient. Three transmissions from the edge of the solar system." />
   <meta property="og:type" content="music.album" />
   <meta property="og:url" content="https://spiralout.space/aem/" />
   <meta property="og:image" content="https://spiralout.space/aem/og-image-wide.jpg" />
@@ -25,20 +25,19 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Heliopause / Transmission 01 album cover centered on a dark background" />
-  <meta property="og:image" content="https://spiralout.space/aem/og-image.jpg" />
-  <meta property="og:image:secure_url" content="https://spiralout.space/aem/og-image.jpg" />
-  <meta property="og:image:type" content="image/jpeg" />
-  <meta property="og:image:width" content="3000" />
-  <meta property="og:image:height" content="3000" />
-  <meta property="og:image:alt" content="Heliopause / Transmission 01 album cover" />
+  <!-- Una sola og:image, y horizontal. Declarar dos hace que WhatsApp/Telegram/Facebook
+       elijan la última (la cuadrada de 1,8 MB) donde debería ir la wide de 1200x630.
+       La cuadrada sigue disponible en og-image.jpg para quien la pida explícitamente. -->
   <meta property="og:locale" content="en_US" />
-  <meta property="music:musician" content="https://spiralout.space/aem/" />
-  <meta property="music:release_date" content="2026" />
+  <meta property="music:musician" content="https://spiralout.space/aem/#aem" />
+  <meta property="music:release_date" content="2026-05-16" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@aem_space" />
+  <meta name="twitter:creator" content="@aem_space" />
   <meta name="twitter:title" content="ÆM — Heliopause / Transmission 01" />
-  <meta name="twitter:description" content="A 24-minute journey through deep space ambient." />
+  <meta name="twitter:description" content="A 24-minute journey through deep space ambient. Three transmissions from the edge of the solar system." />
   <meta name="twitter:image" content="https://spiralout.space/aem/og-image-wide.jpg" />
   <meta name="twitter:image:alt" content="Heliopause / Transmission 01 album cover centered on a dark background" />
 
@@ -96,8 +95,37 @@
         "name": "Heliopause / Transmission 01",
         "byArtist": { "@id": "https://spiralout.space/aem/#aem" },
         "numTracks": 3,
+        "track": [
+          {
+            "@type": "MusicRecording",
+            "position": 1,
+            "name": "Outbound",
+            "duration": "PT8M",
+            "isrcCode": "USHM82659668",
+            "byArtist": { "@id": "https://spiralout.space/aem/#aem" }
+          },
+          {
+            "@type": "MusicRecording",
+            "position": 2,
+            "name": "Crossing",
+            "duration": "PT13M",
+            "isrcCode": "USHM82659669",
+            "byArtist": { "@id": "https://spiralout.space/aem/#aem" }
+          },
+          {
+            "@type": "MusicRecording",
+            "position": 3,
+            "name": "Recursion",
+            "duration": "PT3M",
+            "isrcCode": "USHM82659670",
+            "byArtist": { "@id": "https://spiralout.space/aem/#aem" }
+          }
+        ],
         "genre": ["Ambient", "Dark Ambient", "Experimental", "Drone"],
-        "image": "https://spiralout.space/aem/og-image.jpg",
+        "image": [
+          "https://spiralout.space/aem/og-image.jpg",
+          "https://spiralout.space/aem/og-image-wide.jpg"
+        ],
         "url": "https://spiralout.space/aem/",
         "datePublished": "2026-05-16",
         "sameAs": [
@@ -116,12 +144,7 @@
           "@type": "Organization",
           "name": "Spiral Out",
           "url": "https://spiralout.space"
-        },
-        "track": [
-          {"@type": "MusicRecording", "name": "Outbound", "duration": "PT8M", "byArtist": { "@id": "https://spiralout.space/aem/#aem" }},
-          {"@type": "MusicRecording", "name": "Crossing", "duration": "PT13M", "byArtist": { "@id": "https://spiralout.space/aem/#aem" }},
-          {"@type": "MusicRecording", "name": "Recursion", "duration": "PT3M", "byArtist": { "@id": "https://spiralout.space/aem/#aem" }}
-        ]
+        }
       }
     ]
   }
@@ -160,6 +183,9 @@
     .about h2 { font-size:0.8rem; letter-spacing:0.4em; text-transform:lowercase; color:var(--muted); font-weight:300; margin-bottom:2rem; }
     .artist-photo { width:140px; height:140px; border-radius:50%; object-fit:cover; margin:0 auto 1.5rem; display:block; border:1px solid #2a2a30; }
     .about p { font-size:0.85rem; line-height:2; color:var(--fg); }
+    /* los fragmentos van separados: plantados solos, no como un bloque de prosa */
+    .about p + p { margin-top:1.6rem; }
+    .about p:last-child { margin-top:2.4rem; color:var(--muted); font-size:0.78rem; letter-spacing:0.06em; }
     footer { text-align:center; font-size:0.7rem; color:var(--muted); letter-spacing:0.25em; text-transform:lowercase; padding:4rem 2rem 2rem; display:flex; justify-content:center; gap:0.8rem; align-items:center; flex-wrap:wrap; }
     footer a { color:var(--muted); text-decoration:none; transition:color 0.3s; }
     footer a:hover { color:var(--fg); }
@@ -232,7 +258,13 @@
       <h2>about</h2>
       <img src="artist.jpg" alt="ÆM artist photo" class="artist-photo" />
       <p>
-        ÆM is the meeting point of AI and EM, a journey through co-composition between human and artificial intelligence. Heliopause is the first transmission.
+        A wave is not what crosses a medium: it is the medium itself, crossing.
+      </p>
+      <p>
+        A note, while it is being heard, no longer remembers having been a note: it is the listening itself.
+      </p>
+      <p>
+        Heliopause is the first transmission.
       </p>
     </section>
   </main>

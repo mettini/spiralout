@@ -59,7 +59,7 @@ hand-edit the JPGs — re-run `task site:share` instead. The generator emits:
 | `share/home-story.jpg`            | 1080x1920  | Instagram / TikTok story (top + bottom 250px = UI safe zone)          |
 | `share/home-pinterest.jpg`        | 1000x1500  | Pinterest pin 2:3                                                     |
 | `aem/og-image-wide.jpg`           | 1200x630   | Default OG for /aem                                                   |
-| `aem/og-image.jpg`                | 3000x3000  | `music.album` OG (raw album art) + Bandcamp ingestion source          |
+| `aem/og-image.jpg`                | 3000x3000  | Album art para Schema.org + fuente de ingestión de Bandcamp. **NO va como `og:image`** — pesa 1,8 MB y WhatsApp/Bluesky descartan previews de más de ~1 MB. Además, declarar dos `og:image` hace que varios clientes elijan la última. Una sola `og:image`, la wide (corregido 2026-07-28) |
 | `aem/share/aem-{square,portrait,story,pinterest}.jpg` | per-network | manual upload                       |
 
 Compression target: **keep every `og-*.jpg` under 300 KB**. WhatsApp and
@@ -86,6 +86,30 @@ When you edit a page, **check all three locations** stay in sync:
 
 Don't introduce a templating engine to dedupe these — the site is two
 pages. Keeping them inline is the right tradeoff.
+
+### X (Twitter) cachea la tarjeta fallida — cómo se rompe
+
+Vivido el 2026-07-28. Si compartís una URL en X **antes** de que los tags o la
+imagen estén bien, X cachea ese estado fallido y sigue mostrando la tarjeta
+chica sin imagen **por horas o días**, aunque arregles el sitio. El Card
+Validator, que servía para purgarla, ya no existe.
+
+Diagnóstico antes de tocar nada (los tres dan verde si el sitio está bien):
+
+```bash
+curl -sI -A "Twitterbot/1.0" https://spiralout.space/aem/og-image-wide.jpg | head -1   # 200?
+curl -sI -A "Twitterbot/1.0" -e "https://x.com/" <imagen> | head -1                    # hotlink protection?
+curl -s https://spiralout.space/robots.txt | grep -i twitter                            # bloqueado?
+```
+
+La única solución es **cambiar la URL** para que X la trate como nueva. La
+convención del proyecto es un parámetro temático con la distancia de Voyager 1
+en unidades astronómicas: `?au=121` (donde cruzó la heliopausa en 2012). Si hay
+que romperla otra vez, se sube el número — la sonda se aleja ~3,5 AU por año.
+
+No afecta el SEO: la página declara `canonical` a la URL limpia y Google
+consolida ahí. Y cuando la tarjeta renderiza, X **saca el texto de la URL** del
+cuerpo del post, así que el parámetro no se ve.
 
 ## Deploying
 
