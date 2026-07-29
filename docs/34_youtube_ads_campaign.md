@@ -4,6 +4,37 @@
 > Objetivo: reach dirigido al nicho dark/space ambient con los visualizers.
 > Estrategia → `docs/31 §5` · `docs/32 §B`. Claude arma, user corre.
 
+## 0. Activación — la primera vez (donde se pierde el tiempo)
+
+Hacer **en este orden**. Los dos primeros puntos son la trampa clásica: si los
+saltás, no vas a encontrar las campañas de video en ningún menú.
+
+1. **Entrá a `ads.google.com` con la cuenta de Google dueña del canal de
+   YouTube.** Si usás otra, después no vas a poder ver earned actions (subs y
+   views que gana el canal gracias al ad) ni armar remarketing.
+2. **Salí del modo simplificado.** Google Ads abre las cuentas nuevas en *Smart
+   mode*, que solo ofrece campañas automáticas y **no tiene campañas de Video**.
+   Buscá **"Switch to Expert Mode"** (suele estar en el menú de tres puntos /
+   Settings, o como link al pie del asistente de creación de campaña). Si el
+   asistente te empuja a crear una campaña antes de dejarte entrar, buscá el
+   link chico tipo *"Create an account without a campaign"* / *"Switch to Expert
+   Mode"* y usalo. **Es un camino de ida en la práctica: hacelo antes de crear
+   nada.**
+3. **Método de pago.** Billing → agregar tarjeta. La campaña no sale al aire sin
+   esto. Elegí país y moneda con cuidado: **la moneda no se puede cambiar
+   después** (y afecta cómo lees el CPV).
+4. **Vinculá el canal de YouTube.** Tools → *Linked accounts* (o *Data manager*)
+   → YouTube → vincular `@aem.transmissions`. Sin esto las métricas de earned
+   actions quedan vacías, que es justo lo que más importa medir acá.
+5. **Recién ahora** creá la campaña con lo de §1.
+6. **Poné un límite de gasto mensual** en Billing (account budget) además del
+   budget diario. Cinturón y tiradores: el budget diario puede sobre-entregar
+   hasta 2x en un día puntual.
+
+> Los nombres exactos de los menús de Google Ads cambian seguido. Si un label no
+> coincide, buscá el concepto (expert mode, linked accounts, account budget), no
+> el texto literal.
+
 ## 1. Setup de la campaña (Google Ads)
 - Cuenta: ads.google.com (crear si no hay; método de pago).
 - **New campaign** → objetivo **"Awareness and consideration"** → tipo **Video**

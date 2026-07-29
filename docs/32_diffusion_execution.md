@@ -107,6 +107,43 @@ Combinar estas capas (Google deja apilar):
 
 ---
 
+---
+
+# C · Palancas pagas — el menú para decidir el mes 2
+
+> Escrito el 2026-07-26, cuando arrancó la campaña de YouTube. La decisión de
+> qué se hace después está agendada para el **28/09/2026**, un mes largo después
+> de que termine este test, con los números de `docs/37` en la mano.
+>
+> Regla de `docs/31` que no se rompe: **una sola palanca paga por mes.** Dos
+> campañas en paralelo no se pueden leer.
+
+| Palanca | Costo de entrada | Qué compra | Estado / veredicto |
+|---|---|---|---|
+| **Escalar YouTube ads** | lo que ya gastás, ×2 o ×3 | Más de lo mismo, con el targeting ya afinado por el reporte de emplazamientos | **La opción por defecto** si el view rate dio >15-20% y la retención >30s. Es la más barata del nicho: CPV real ~19,74 ARS (~1,3 centavos de dólar) |
+| **YouTube ads · segunda campaña LatAm** | ~USD 15-30 | Probar si el público hispanohablante responde, sin canibalizar el presupuesto del mercado principal | Descartado en la campaña 1 a propósito (con puja CPV, LatAm se come el presupuesto de US/EU porque la vista es más barata). Como campaña **aparte** sí es un test limpio |
+| **IG boost de Reels** | USD 20-40 | Alcance pago a no-seguidores sobre un Reel que ya funcionó | **Solo si un Reel pegó orgánicamente.** Boostear algo que orgánicamente no funcionó es tirar plata: el boost amplifica, no arregla |
+| **Reddit Ads** | USD 20-50 | Targeting por subreddit — el nicho está concentrado en r/ambientmusic y r/darkambient | Descartado 2026-07-26 por el user. La contra real: el redditor detesta la publicidad y el formato se lee como intruso justo en la comunidad donde estás construyendo credibilidad a mano |
+| **Spotify Marquee** | USD 250-500 | Un pop-up a oyentes que ya te escucharon | Fuera de escala, y **Marquee necesita un release nuevo**. Recién aplicaría en TX02 |
+| **SubmitHub / Groover** | USD 30-80 | Pitch pago a curadores de blogs y playlists | Descartado por costo/valor. Pagás por **review**, no por publicación: el resultado más probable es un "no" pago |
+| **Patrocinio de newsletter / blog de nicho** | USD 20-100 (sin explorar) | Un lugar fijo frente a gente que ya *lee* sobre el género, no que lo escucha de paso | **La menos explorada y la más interesante.** Requiere investigar quién vende espacios (A Closer Listen, Headphone Commute y afines tienen newsletter). Si el mes 2 va a probar algo nuevo, sería esto |
+| **Playlist pitching pago** | variable | Presencia en playlists de terceros | **No.** El mercado está lleno de fraude, y Spotify penaliza streams artificiales. El riesgo es la cuenta del artista |
+
+## Lo que hay que responder el 28/09 antes de elegir
+
+1. ¿El view rate de YouTube pasó el 15-20% y la retención los 30 segundos?
+2. ¿**Se movió el streaming** en la ventana del test? (la pregunta de fondo)
+3. ¿De qué canales y videos vino la gente? → eso define el targeting del mes 2
+4. ¿Algún Reel de IG pegó solo, sin plata?
+5. ¿Reddit dio algo (tráfico, comentarios reales, alguien preguntando)?
+
+Si la respuesta a 1 y 2 es sí → escalar YouTube. Si es 1 sí pero 2 no → el
+problema es el puente del video al streaming, no el targeting: revisar la
+descripción del video y el link. Si 1 es no → cambiar el video o el copy antes
+de gastar un peso más.
+
+---
+
 ## Orden sugerido de ejecución
 1. Cerrar **content bank** (clips 2 versiones + dossiers) — en curso.
 2. **YouTube ads piloto** ($112) — el mejor ROI, ya tenemos el video. *(Claude arma targeting+copy, user corre.)*
