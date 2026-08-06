@@ -349,7 +349,7 @@
         <div class="framework-block">
           <h4>Estructura del paquete</h4>
           <ul>
-            <li>5 docs HTML standalone + 1 skill ejecutable</li>
+            <li>5 docs HTML standalone + 1 doc markdown (06, para leer con Claude) + 1 skill ejecutable</li>
             <li>El deck de difusión tiene tres bloques visualmente diferenciados (pre-lanzamiento, durante el lanzamiento, post-lanzamiento)</li>
             <li>Cada doc lleva bibliografía completa + fuentes auditables inline</li>
             <li>HTML standalone: abre con doble click, sin servidor</li>
@@ -488,6 +488,31 @@
           <div class="when"><strong>Cuándo abrirlo</strong>: ahora — antes de empezar a operar la presencia digital. La auditoría es de mayo 2026.</div>
         </div>
 
+        <div class="doc-card data">
+          <div class="doc-card-header">
+            <span class="num">06 · estructura repo</span>
+            <h3>Cómo estructuramos el repo de un disco</h3>
+          </div>
+          <div class="path">helen-pack/06-estructura-repo.md</div>
+          <p class="desc">
+            El único doc del paquete que está en <strong>markdown y no en
+            HTML</strong>, a propósito: está escrito para que lo lea el Claude
+            de Helen tan bien como ella, y para que se pueda copiar dentro de
+            su propio repo. Cuenta cómo está armado el repo de Spiral Out y
+            qué de eso conviene copiar para un disco solo: la regla de qué va
+            a git y qué no (con los <strong>30 GB</strong> de videos que se nos
+            quedaron pegados en el <code>.git</code> por un <code>git add</code>
+            que nunca llegó a commit), el patrón
+            <code>CLAUDE.md</code> por área con reglas duras y antipatrones,
+            los <code>docs/</code> numerados, <code>textos.md</code> como
+            biblia de voz y <code>metadata.md</code> con los ISRC, cómo está
+            construido el dashboard (<code>data.json</code> + un HTML, con el
+            progreso calculado y no escrito) y el <code>Taskfile</code> como
+            superficie de comandos. Cierra con qué de todo esto NO copiar.
+          </p>
+          <div class="when"><strong>Cuándo abrirlo</strong>: antes del primer commit del repo del disco. Después del primer commit ya hay cosas que no se pueden deshacer.</div>
+        </div>
+
         <div class="doc-card skill">
           <div class="doc-card-header">
             <span class="num">skill</span>
@@ -529,6 +554,7 @@
           <li><span class="label">4.</span> <strong>Skill <code>creative-direction</code></strong> — cargarla en Claude para usarla cuando aparezca cualquier decisión creativa que necesite segunda lectura.</li>
           <li><span class="label">5.</span> <strong>Casos de estudio (02)</strong> — cuando haya energía para mirar trayectorias completas. Más denso, más largo, no urgente.</li>
           <li><span class="label">6.</span> <strong>Independencia económica (03)</strong> — cuando aparezca la pregunta "¿cómo sostengo esto a largo plazo?". Marco macro, no para el día a día del release.</li>
+          <li><span class="label">7.</span> <strong>Estructura del repo (06)</strong> — fuera de orden: leerlo <em>antes del primer commit</em> del repo del disco, sin importar en qué parte de la lista estés. Es el único que tiene una ventana que se cierra sola.</li>
         </ol>
       </div>
 
