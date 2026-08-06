@@ -1036,19 +1036,21 @@
         "owner": "user"
       },
       {
-        "id": "tx-02-em-h",
-        "title": "Transmission 02 — 'Em+H', sobre el amor",
-        "state": "pending",
-        "summary": "Idea propuesta 2026-05-31. Sin scope: tracklist, duración y tema central a definir. Colaboración con Helen.",
-        "ref": "docs/16_video_H_helen_collab.md",
+        "id": "tx-02",
+        "title": "Transmission 02 — la caida al planeta (3 tracks)",
+        "state": "in_progress",
+        "summary": "Pasa en el planeta que se vislumbra en Heliopause, con los anillos trastocados. TX02 es la caida. Tres tracks: 1) el pasaje por la atmosfera (Lustmord, ya en marcha en lab/thermal_mass), 2) Rescue 101, la vida en el planeta — flora, fauna, pajaros (referencia KMRU 'By Absence' 20:22 + Steve Roach), 3) +H, el amor y la conexion con una fuerza superior (synth modular, VCV Rack). Em+H es LA FUSION y es material del cuento de TX02, que hay que escribir: el metodo del proyecto es cuento -> fragmentos -> voz publica. Fusiona lo que antes eran TX02 'Em+H' y TX03 'Rescue 100'. Duracion propuesta 11:11 cada uno = 33:33. Cada track con su propio motor, y eso separa los tracks solo: track 1 Python+numpy (deformacion offline determinista), track 2 Pure Data (generacion por reglas, ver docs/40), track 3 VCV Rack 2 (modulacion que se autoorganiza).",
+        "ref": "docs/39_transmission_02.md",
         "owner": "user"
       },
       {
-        "id": "tx-03-rescue-100",
-        "title": "Transmission 03 — 'Rescue 100'",
+        "id": "pd-rescue-101",
+        "title": "Rescue 101 con Pure Data (flora y fauna)",
         "state": "pending",
-        "summary": "Operación de rescate en un planeta con flores y plantas. Narrativa sci-fi/botánica. Sin scope.",
-        "owner": "user"
+        "summary": "Track 2 de TX02 generado con Pure Data: cajitas conectadas, corre solo y nunca se repite dos veces. La tecnica central es analisis -> sintesis: se graba fauna real y se usa solo su FORMA (sigmund~ la altura, env~ la envolvente, bonk~ los ataques) para manejar voces sinteticas, asi queda el fraseo de algo vivo con el timbre de algo que no existe. Es tambien donde por fin vive la capa de grano (1-6 kHz) que le falta a todo el proyecto. Concepto cerrado y documentado, patch sin arrancar: primero hay que instalar plugdata y salir a grabar una mañana.",
+        "ref": "docs/40_pure_data_lab.md",
+        "owner": "both",
+        "output": "lab/rescue_101/README.md"
       },
       {
         "id": "framework-publico",
