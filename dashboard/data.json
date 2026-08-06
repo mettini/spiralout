@@ -320,16 +320,18 @@
             {
               "id": "reddit-recon",
               "title": "Reconocimiento r/ambientmusic, r/darkambient, r/SpaceMusic (comentar 9:1)",
-              "status": "todo",
+              "status": "in_progress",
               "owner": "user",
-              "note": "Regla 9:1. Hilos donde aportar de verdad (recomendando OTROS): 'recommendations similar to these', 'starter recommendations', 'favorite soft noise albums', discusiones de género. Cero mención propia. AGENDA DÍA POR DÍA + bloques de copy: docs/36 (fase 1, días 1-14, cuenta u/emettini con 1 de karma → meta 20-30). La mitad 'recomendar a otros' del 9:1 es además el vehículo de amplificación de Helen. Reglas por sub en docs/35."
+              "note": "En marcha desde 2026-07-28 con la agenda dia por dia de docs/36. Hechos los Dias 1-9 (r/ambientmusic, r/darkambient, r/drone, r/modular, r/SpaceMusic): comentarios recomendando a otros (Blood Incantation Timewave Zero, Biosphere Substrata, Murcof, Lustmord, Steve Roach). Cero mencion propia todavia, que es el punto del 9:1. Checkpoint el Dia 14 (10/08): si el karma de comentarios no llego a ~20, se estira la fase de karma antes de postear nada de ÆM. Regla de escritura aprendida en el camino: una o dos lineas, un dato concreto, cero justificacion (docs/36 §A8).",
+              "ref": "docs/36_reddit_daily_plan.md"
             },
             {
               "id": "reddit-launch",
               "title": "Post de lanzamiento: r/drone + r/SpaceMusic (post directo) · r/ambientmusic + r/listentothis (solo weekly thread)",
               "status": "todo",
               "owner": "user",
-              "note": "Reglas verificadas 2026-07-26 (docs/35): r/drone y r/SpaceMusic permiten postear lo propio y NO tienen regla de IA. r/ambientmusic permite self-promo casual solo en el Weekly Community Thread (o post propio con 200 palabras mínimo de técnica, sin ChatGPT) y PROHÍBE links de Spotify. r/listentothis solo en los weekly 'music melting pot'. r/ambientmusic y r/darkambient prohíben contenido de IA — decisión tomada: no linkear nada propio ahí (queda descartado también el post de 200 palabras). Días asignados en docs/36: r/drone el Día 15, r/SpaceMusic el Día 19 (4 días de separación), melting pot de r/listentothis en fase 3."
+              "note": "Reglas verificadas 2026-07-26 (docs/35): r/drone y r/SpaceMusic permiten postear lo propio y NO tienen regla de IA. r/ambientmusic permite self-promo casual solo en el Weekly Community Thread (o post propio con 200 palabras mínimo de técnica, sin ChatGPT) y PROHÍBE links de Spotify. r/listentothis solo en los weekly 'music melting pot'. r/ambientmusic y r/darkambient prohíben contenido de IA — decisión tomada: no linkear nada propio ahí (queda descartado también el post de 200 palabras). Días asignados en docs/36: r/drone el Día 15, r/SpaceMusic el Día 19 (4 días de separación), melting pot de r/listentothis en fase 3. | AGENDA (docs/36): primer post de ÆM en r/drone el Dia 15 = mar 11/08, y r/SpaceMusic el Dia 19 = lun 17/08. Ambos condicionados al checkpoint de karma del Dia 14.",
+              "eta": "2026-08-11"
             },
             {
               "id": "reddit-ifyoulike",
@@ -894,6 +896,13 @@
     "description": "Experimentos. No tienen avance porque no son un plan: se entra, se agarra uno y se ejecuta. Cuando algo se convierte en proyecto o muere, queda la referencia al output o al brief.",
     "color": "#3a2a4a",
     "experiments": [
+      {
+        "id": "ikeda-research",
+        "title": "Ryoji Ikeda — entender el camino",
+        "state": "pending",
+        "summary": "Linea de research pedida por el user el 2026-08-06. SOLO RESEARCH, sin ejecutar nada. Entender: 1) que hace exactamente Ikeda (que tipo de musica, que tipo de presentacion, instalacion vs concierto vs disco), 2) si es un camino posible para ÆM o si es otra disciplina, 3) que habria que hacer concretamente para convertir a ÆM en eso — que tecnica, que equipo, que circuito, que costo, y que de lo que ya tenemos sirve (los visualizers 4K, el Hydra audio-reactivo de Crossing, los control tracks .npz, el framework en Python). Output esperado: un doc numerado con veredicto honesto, no un brief de ejecucion.",
+        "owner": "claude"
+      },
       {
         "id": "resonance",
         "title": "Resonance — discovery engine",
