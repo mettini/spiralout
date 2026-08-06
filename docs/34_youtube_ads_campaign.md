@@ -89,3 +89,137 @@ Pegar estos canales como **placements** (o como custom segment "browses these ch
 ## 5. Recordatorio (docs/31)
 Una prueba por mes. Este es el mes 1. NO correr IG boost / otros al mismo tiempo
 (dilución). Medir → decidir mes 2.
+
+---
+
+## 6. Optimización del 2026-08-06 (lo que se hizo y lo que se aprendió)
+
+### Los números al día 11 (26/07 → 05/08)
+
+| | |
+|---|---|
+| Presupuesto | ARS 2.500/día · estado **Limited by budget** |
+| Impresiones | 9.115 |
+| TrueView views | 311 |
+| CPV promedio | ARS 77,19 |
+| Gasto | ARS 24.005,90 |
+| Clics | 9 |
+| Conversiones | 0 |
+
+### El diagnóstico
+
+El asistente de IA de Google analizó la campaña **entera por clics** (9 eventos) y
+propuso cortar horario, dispositivo, edad y geo. En una campaña de *video views* los
+clics son la métrica menos relevante, y con 9 eventos ninguno de esos cortes tiene
+respaldo estadístico: en la franja de las 7-8 am se esperaban 1,8 clics y salieron 0,
+lo cual pasa 1 de cada 6 veces por azar.
+
+Mirando lo que sí tenía muestra, el problema real estaba en otro lado. Los 12
+targetings eran **todos keywords** (los emplazamientos por canal de §2.B nunca se
+habían cargado), y la reparación era ahí:
+
+| Keyword | Impr | Views | View rate |
+|---|---|---|---|
+| **cosmic ambient** | **5.345** | 188 | 3,5% |
+| ambient music | 1.386 | 48 | 3,5% |
+| dark ambient | 698 | 21 | 3,0% |
+| steve roach | 596 | 16 | 2,7% |
+| atrium carceri | 537 | 20 | 3,7% |
+| lustmord | 432 | 10 | 2,3% |
+| **drone music** | 66 | 8 | **12,1%** |
+| space ambient | 22 | 0 | 0% |
+| dark drone | 13 | 0 | — |
+| deep space ambient | 10 | 0 | — |
+| dungeon synth | 9 | 0 | — |
+| cryo chamber | **1** | 0 | — |
+
+Dos cosas saltan: **"cosmic ambient" se comía el 59% de las impresiones** siendo el
+término más vago de la lista (y es lo que ponía el anuncio en canales de dormir bebés
+y relax profundo), y **los términos precisos estaban muertos de hambre** — `cryo
+chamber` tuvo 1 impresión en once días, no por falta de público sino porque el
+término ancho se llevaba el presupuesto.
+
+La única señal real de todo el análisis: **`drone music` tiene 12,1% de view rate**
+contra 3,4% del promedio.
+
+### Lo que se aplicó
+
+1. **Cuenta renombrada** de "Google Ads account" a **"Spiral Out"**.
+2. **`cosmic ambient` y `ambient music` pausadas** (74% de las impresiones). No se
+   subió el presupuesto: se liberó el que ya había para los términos finos.
+3. **29 keywords negativas** a nivel campaña: `baby · babies · baby sleep · lullaby ·
+   newborn · nursery · spa · massage · yoga · reiki · chakra · manifestation ·
+   healing frequency · solfeggio · 432 hz · 528 hz · binaural beats · guided
+   meditation · asmr · white noise · pink noise · tinnitus · study music · focus
+   music · sleep music · sleep sounds · deep relaxation · stress relief · anxiety
+   relief`.
+   **Ojo con lo que NO se excluyó y es a propósito**: "sleep" y "meditation" pelados.
+   Mucha gente que escucha dark ambient de verdad busca eso, excluirlos corta público
+   real. Los términos targeteados hacen el trabajo sin ese daño.
+4. **No se tocó** dispositivo, horario, edad ni geo. Lo de desktop además estaba mal
+   medido: en ambient la tele y la compu es donde se escucha largo, no donde se
+   clickea.
+
+### Lo que se descartó y por qué (para no volver a intentarlo)
+
+**Los emplazamientos por canal quedan DESCARTADOS a este presupuesto.**
+
+El aprendizaje que costó la tarde: **un emplazamiento no agrega alcance, lo
+restringe.** El propio panel lo dice: *"Your ad can appear on any eligible Google
+Display Network placement **and only on the following YouTube placements**"*. Cargar
+4 canales saca el anuncio de todo YouTube y lo encierra en esos 4. Google calcula el
+inventario, ve que no alcanza para gastar ARS 2.500/día y **se niega a guardar**:
+
+> "You need more placements for your ads to show on. Add more channels and videos or
+> remove the ones you have already added."
+
+Para que sea viable haría falta una lista de **20 a 40 canales**, y ahí los
+emplazamientos pasan a ser toda la estrategia del ad group (las keywords dejan de
+importar). Eso es una tarea de research —los "- Topic" de cada artista necesitan el
+ID del canal, más los canales de mixes con volumen— y no se justifica para un test de
+USD 1,5/día. Se revisa si algún día el presupuesto sube en serio.
+
+**Handles verificados uno por uno en YouTube**, para cuando haga falta:
+
+```
+youtube.com/@cryochamberlabel      Cryo Chamber, 428K subs  ← el ancla
+youtube.com/@BLustmord             Lustmord (Official), 35,2K
+youtube.com/@SteveRoachOfficial    Steve Roach, 12,5K
+youtube.com/@biophonrecords        Biophon, el sello de Biosphere
+```
+
+**No adivinar handles.** `@CryoChamber` es un canal llamado "mercury" y `@northaunt`
+es uno llamado "mountsun". Se cargaron los dos por adivinanza y hubo que descartarlos.
+
+Kammarheit, Northaunt, Atrium Carceri, Biosphere y Thomas Köner **no tienen canal
+propio**, solo los "- Topic" que genera YouTube. Se pueden targetear pero requieren el
+ID. Dato: Steve Roach - Topic tiene más subs (15,7K) que su canal oficial (12,5K).
+
+### Chequeos de configuración (verificados el 06/08)
+
+- **Networks: solo YouTube.** No hay fuga a Display ni a video partners. ✓
+- **Auto-apply: apagado.** Google no aplica recomendaciones solo. ✓
+- **La UI empuja "Raise limited budget" constantemente. NO se aplica** — decisión
+  explícita del user.
+- **"Ads funded by EMILIANO JORGE METTINI"** aparece público en el Ads Transparency
+  Center. Es el requisito legal de Google: si el que paga es una persona y no una
+  entidad, va su nombre legal. **Se deja así** (decisión del user, 06/08). Tensión
+  menor con que ÆM es faceless, asumida a conciencia.
+- **Copy del anuncio**: la tabla de Ads no renderiza las filas en el navegador, así
+  que no se pudo leer desde ahí. La descripción pública del video de Outbound arranca
+  con el texto cifrado del cuento ("To leave was, in truth, the verb that invented
+  it"), sin mención de IA. La frase "proyecto de IA" que usó el asistente de Google
+  salió con toda probabilidad de la conversación del user con él, no del copy.
+
+### Qué mirar en 5-7 días
+
+La pregunta única: **¿se movieron los términos precisos?** `deep space ambient`,
+`dark drone`, `dungeon synth`, `space ambient` y `cryo chamber` estaban en 0-22
+impresiones porque no les llegaba presupuesto. Ahora sí les llega.
+
+- Si empiezan a moverse con view rate decente → el problema era la distribución del
+  presupuesto y está resuelto.
+- Si siguen muertos → no hay volumen en esos términos, y ahí sí la única salida es la
+  lista grande de emplazamientos o cambiar de palanca (`docs/32 §C`).
+
+Y seguir mirando **view rate, CPV y earned actions**, no clics.

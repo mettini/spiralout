@@ -360,6 +360,14 @@
               "note": "Campaña creada 2026-07-26 (docs/34). Modo experto, tipo Video → Visualizaciones de vídeo, SOLO formato in-feed (in-stream y Shorts destildados). Presupuesto diario 1.500 ARS (~USD 1/día, ~76 vistas/día), prepago 50.000 ARS. Puja CPV 19,74 ARS. Geo: US/UK/DE/NL/CA/AU (Argentina, México y Colombia descartados: con puja por CPV se comen el presupuesto de los mercados donde vive la escena — irían como campaña aparte). Targeting: solo palabras clave, emplazamientos descartados porque Cryo Chamber (@cryochamberlabel, 427k) y Steve Roach (/c/SteveRoachOfficial, 12,5k) son los ÚNICOS canales oficiales verificados del nicho: Lustmord, Atrium Carceri, Kammarheit, Northaunt, Deathprod, Köner y Stars of the Lid NO tienen canal propio. Los 3 videos cargados. Versiones verticales automáticas destildadas (recortan el encuadre 4K). Sin CTA, para que lea orgánico. URL final: spiralout.space/aem/. Pendiente: vincular GA4 (G-4VMFWJJE14)."
             },
             {
+              "id": "ads-verificar-terminos-precisos",
+              "title": "Verificar si los terminos precisos de los ads arrancaron a recibir impresiones",
+              "status": "todo",
+              "owner": "claude",
+              "note": "Sale de la optimizacion del 06/08 (docs/34 §6). Se pausaron 'cosmic ambient' y 'ambient music', que se comian el 74% de las impresiones. La pregunta unica: ¿se movieron 'deep space ambient' (10 impr), 'dark drone' (13), 'dungeon synth' (9), 'space ambient' (22) y 'cryo chamber' (1) en los 11 dias previos? Mirar view rate y CPV por keyword, NO clics. Si se mueven con view rate decente, el problema era la distribucion del presupuesto y esta resuelto. Si siguen en cero, no hay volumen en esos terminos y hay que cambiar de palanca (docs/32 §C). Recordar: NO subir el presupuesto por mas que la UI insista, y los emplazamientos por canal estan descartados a este presupuesto.",
+              "eta": "2026-08-13"
+            },
+            {
               "id": "difusion-decision-mes2",
               "title": "Decidir cómo sigue la difusión paga (con los números del test de YouTube en la mano)",
               "status": "todo",
@@ -817,8 +825,8 @@
         "every": "1w",
         "owner": "both",
         "project": "heliopause",
-        "last": null,
-        "detail": "docs/34 §4: primera lectura a los 3-4 días del arranque, después semanal. Mirar view rate (>15-20% en in-feed), CPV real vs puja (19,74 ARS), retención en YouTube Analytics, earned actions (subs y views ganados por el canal) y el reporte 'Dónde se mostraron los anuncios' — de ahí sale la lista de emplazamientos verificada para el mes 2. La pregunta de fondo no es el CPV: es si movió el streaming.",
+        "last": "2026-08-06",
+        "detail": "docs/34 §4: primera lectura a los 3-4 días del arranque, después semanal. Mirar view rate (>15-20% en in-feed), CPV real vs puja (19,74 ARS), retención en YouTube Analytics, earned actions (subs y views ganados por el canal) y el reporte 'Dónde se mostraron los anuncios' — de ahí sale la lista de emplazamientos verificada para el mes 2. La pregunta de fondo no es el CPV: es si movió el streaming. | 06/08: primera optimización real hecha (docs/34 §6). Se pausaron 'cosmic ambient' y 'ambient music' (74% de las impresiones, terminos genericos que metian el anuncio en canales de bebes/relax) y se cargaron 29 keywords negativas. Los emplazamientos por canal quedaron DESCARTADOS: restringen el alcance en vez de sumarlo y Google no los guarda con este presupuesto. Cuenta renombrada a 'Spiral Out'. NO subir el presupuesto por mas que la UI insista. Proxima lectura: ¿se movieron los terminos precisos (deep space ambient, dark drone, cryo chamber)?",
         "startsOn": "2026-07-30"
       },
       {
