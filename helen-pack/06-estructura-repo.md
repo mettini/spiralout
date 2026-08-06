@@ -1,253 +1,178 @@
-# Cómo estructuramos el repo de un disco
+# Estructura de repositorio para un sello discográfico
 
-> Escrito para Helen, agosto 2026. Es **cómo lo hicimos nosotros**, no cómo hay que
-> hacerlo. Copiá lo que te sirva y tirá el resto. Hay cosas acá que para tu caso son
-> claramente demasiado, y están marcadas.
->
-> Contexto: Spiral Out es un sello con un artista (ÆM), un disco publicado
-> (*Heliopause*), un framework de audio en Python, un sitio y tres canales de
-> difusión. Vos tenés un disco por salir. Bastante de esto te va a sobrar.
+Especificación de la organización del repositorio de Spiral Out: un sello, un artista
+(ÆM), un release publicado (*Heliopause*), un framework de audio en Python, un sitio y
+tres canales de difusión, en un único repo.
+
+Documento de referencia para replicar la estructura.
 
 ---
 
-## 1. La idea de fondo: el repo guarda decisiones, no archivos pesados
+## 1. Criterio de inclusión de archivos
 
-Esto es lo único que de verdad importa y todo lo demás se deduce de acá.
+Git versiona texto de forma incremental y binarios de forma completa: cada versión de un
+binario se almacena entera y permanente. Dos restricciones que definen la política:
 
-Un repo de git es **buenísimo** para texto: guarda cada versión, te deja ver qué
-cambió, y pesa nada. Y es **malísimo** para binarios grandes: cada versión de un WAV
-de 300 MB queda guardada entera, para siempre, aunque después lo borres.
+- **`git add` escribe el archivo al object store.** El espacio en disco se consume en el
+  `add`, no en el `commit`. Deshacer el add no libera el espacio; requiere `git gc`.
+- **Un binario commiteado es permanente.** Removerlo de la historia exige reescribir el
+  repo (`git filter-repo`), lo que invalida todos los clones existentes.
 
-Así que la pregunta para cada archivo es: **¿esto se puede volver a generar?**
+Consecuencia: el `.gitignore` se escribe **antes del primer commit**. Cobertura mínima:
+`*.wav`, `*.aiff`, `*.flac`, `*.mp3`, `*.mp4`, `*.zip` y las carpetas de proyecto del
+DAW.
 
-- **Si se puede regenerar → no va al repo.** Nuestros WAV renderizados salen de
-  scripts de Python, así que guardamos el script (5 KB) y no el audio (300 MB).
-- **Si no se puede regenerar → va al repo, o a un backup si es grande.** Una
-  grabación de campo, una toma de voz, la tapa original: eso es irreemplazable.
+Criterio por archivo: **¿se puede regenerar?**
 
-**En tu caso la ecuación se invierte y es importante que lo veas.** Vos no generás
-el audio desde código: lo grabás. Tus multitracks y tus tomas **son** la fuente
-original y no se pueden regenerar. Entonces:
+| Caso | Destino | Ejemplo |
+|---|---|---|
+| Regenerable desde código | Repo: solo la fuente | `compose_*.py` (5 KB) en lugar del WAV renderizado (300 MB) |
+| No regenerable, texto | Repo | letras, notas de sesión, metadata, textos públicos, decisiones, contactos |
+| No regenerable, binario grande | Backup externo (disco + Drive o Backblaze) | multitracks, tomas, masters, stems |
+| Referencia de comparación | Repo, opcional | MP3 del mix v3 para comparar contra v4 |
 
-- **Al repo**: letras, notas de sesión, metadata, textos, decisiones, listas de
-  contactos, planes.
-- **A un backup aparte** (disco externo + Drive o Backblaze): multitracks, tomas,
-  masters, stems. Git no es un backup de audio.
-- Lo único de audio que tiene sentido versionar son **referencias chicas**: un MP3
-  del mix v3 para poder comparar con el v4. Y eso si querés.
+El criterio depende del flujo de producción:
 
-### La cagada que cometimos, para que no la repitas
+| Flujo | Fuente original | Va al repo |
+|---|---|---|
+| Composición por código | El script | El script; el audio se regenera |
+| Grabación en DAW | Los multitracks | Solo texto; el audio va a backup |
 
-Nuestra carpeta `.git` pesa **30 GB**. Los archivos que están hoy en el repo suman
-**22 MB**.
-
-Fuimos a ver qué eran y son **once archivos huérfanos**, todos videos: uno de 12 GB,
-dos de 7,8 GB, y así. Nunca se commitearon. Lo que pasó es que durante el mes de los
-renders de video alguien hizo `git add` sobre la carpeta de salida, se dio cuenta,
-lo deshizo... y **git ya había copiado los archivos adentro de `.git`**. Ahí
-quedaron.
-
-Dos cosas de esto que valen para vos:
-
-1. **Un `git add` ya te cuesta el disco, aunque nunca hagas el commit.** No hace
-   falta equivocarse mucho.
-2. **En nuestro caso se puede recuperar el espacio** porque nunca llegaron a un
-   commit, así que basta un `git gc` y desaparecen. **Si hubiéramos commiteado, no.**
-   Ahí queda en la historia para siempre y sacarlo es reescribir todo el repo con
-   `git filter-repo`, que es cirugía y rompe el repo de cualquiera que lo haya
-   clonado.
-
-**La moraleja: escribí el `.gitignore` ANTES del primer commit.** Diez minutos que
-después no se pueden deshacer.
+Git no funciona como backup de audio en ninguno de los dos casos.
 
 ---
 
-## 2. Cómo está armado el nuestro
+## 2. Árbol
 
 ```
 spiralout/
-├── CLAUDE.md              ← las instrucciones para Claude (lo más importante)
+├── CLAUDE.md              instrucciones para el asistente
 ├── README.md
-├── Taskfile.yml           ← los comandos del proyecto
-├── docs/                  ← 45 documentos numerados: concepto, planes, decisiones
-├── dashboard/             ← el tablero de estado (data.json + un HTML)
-├── transmissions/         ← los releases. 01/ es Heliopause
+├── Taskfile.yml           comandos del proyecto
+├── docs/                  documentos numerados: concepto, planes, decisiones
+├── dashboard/             tablero de estado (data.json + index.html)
+├── transmissions/         releases; 01/ es Heliopause
 │   └── 01/
 │       ├── README.md
-│       ├── themes/        ← una carpeta por track
-│       ├── artwork/       ← tapa, banners, imágenes
-│       ├── release/       ← metadata, textos, masters (ignorado)
+│       ├── themes/        una carpeta por track
+│       ├── artwork/       tapa, banners, imágenes
+│       ├── release/       metadata, textos, masters (ignorado)
 │       └── video/
-├── site/                  ← el sitio web
-├── redes/                 ← assets de redes sociales, por plataforma
-├── scripts/               ← utilidades de línea de comandos
-├── lab/                   ← experimentos de sonido
-└── framework/             ← el motor de audio en Python (esto vos no lo necesitás)
+├── site/                  sitio web
+├── redes/                 assets de redes sociales, por plataforma
+├── scripts/               utilidades de línea de comandos
+├── lab/                   experimentos de sonido
+├── player/                reproductor web local para los renders
+└── framework/             motor de audio en Python
 ```
 
-Para un disco solo, yo empezaría con mucho menos:
-
-```
-tu-disco/
-├── CLAUDE.md
-├── docs/                  ← concepto, plan de release, decisiones
-├── album/
-│   ├── README.md          ← qué es este disco, estado de cada tema
-│   ├── temas/             ← una carpeta por tema: letra, notas, historial
-│   ├── arte/
-│   └── release/           ← metadata, textos, ISRCs
-├── redes/                 ← los assets por plataforma
-└── prensa/                ← press kit, lista de contactos, qué mandaste y cuándo
-```
+`transmissions/NN/` implementa un catálogo numerado: cada release es una carpeta hermana
+(`02/`, `03/`) con la misma estructura interna, y los comandos de render seleccionan la
+activa por variable de entorno (`TX=02 task render:all`). Un proyecto de un solo release
+sustituye el nivel `NN/` por una carpeta única.
 
 ---
 
-## 3. `CLAUDE.md`: lo que más rinde de todo esto
+## 3. `CLAUDE.md` — configuración del asistente
 
-Si te llevás una sola cosa, llevate esta.
+Archivo que el asistente carga automáticamente al inicio de cada sesión. Establece el
+contexto que de otro modo hay que reconstruir en cada conversación.
 
-Un archivo `CLAUDE.md` en la raíz es **el manual de instrucciones para tu asistente**.
-Claude lo lee automáticamente al empezar cada sesión. Sin él, cada conversación
-arranca de cero y le tenés que volver a explicar todo. Con él, ya sabe cómo trabajás.
+Distribución: uno por área — raíz, `site/`, `transmissions/`, `framework/`. El de cada
+subcarpeta se carga al operar dentro de ella, lo que mantiene cada archivo acotado.
 
-Nosotros tenemos **uno por área** (raíz, `site/`, `transmissions/`, `framework/`), y
-el de cada subcarpeta se lee cuando se trabaja ahí. Eso evita un archivo gigante que
-nadie mantiene.
+Contenido por tipo:
 
-### Qué poner adentro
+| Tipo | Función | Ejemplo |
+|---|---|---|
+| Perfil de trabajo | Fija idioma y prioridades de decisión | "Español en comentarios y docstrings; prioridad al resultado sonoro sobre la elegancia del código" |
+| Reglas duras | Prohibiciones en imperativo | No modificar el motivo protegido sin aprobación; no commitear WAVs; no agregar atribución de IA a los commits; correr QA espectral después de cada render |
+| Antipatrones | Error técnico + corrección | `abs()` como excitador genera intermodulaciones audibles como distorsión — usar `tanh`; ruido filtrado con corte > 1 kHz suena a estática — sesgar a ≤ 800 Hz |
+| Terminología del proyecto | Traduce vocabulario propio | "menos opacity" sobre una foto significa subir el alpha del overlay |
+| Fuentes de verdad | Desambigua qué documento manda | "El estado está en `dashboard/data.json`; los planes de composición están congelados y no son fuente de estado" |
+| Comandos | Entradas habituales | 4–5 líneas de `task ...` |
 
-Lo que funciona no es descripción, son **reglas y cicatrices**:
+La sección de antipatrones concentra el mayor rendimiento por línea escrita: documenta
+errores no deducibles del código, que de otro modo se repiten.
 
-**Quién sos y cómo trabajás.** "Hablo español, el código está comentado en español,
-me importa el resultado sonoro y no la elegancia del código." Eso solo ya cambia
-todas las respuestas.
-
-**Las reglas duras, en imperativo.** Las nuestras incluyen:
-
-- Nunca cambiar el motivo musical protegido sin aprobación explícita.
-- Nunca commitear WAVs.
-- Nunca agregar líneas de atribución de IA a los commits.
-- Correr el QA espectral después de cada render, antes de decir que algo está listo.
-
-**Los antipatrones que ya te costaron una tarde.** Esta es la parte más valiosa y la
-que nadie escribe. Ejemplos reales del nuestro:
-
-- "Usar `abs()` como excitador genera cientos de intermodulaciones y suena a
-  fritura. Usar `tanh`."
-- "Ruido filtrado con corte arriba de 1 kHz suena a estática, no a aire. Sesgar a
-  800 Hz o menos."
-- "Cuando el usuario dice 'menos opacity' se refiere a que la FOTO se vea menos, o
-  sea SUBIR el alpha del overlay. Invertir la intuición."
-
-Cada una de esas líneas es un error que cometimos dos veces antes de escribirlo.
-
-**Dónde está la verdad de cada cosa.** "El estado del proyecto está en
-`dashboard/data.json`, no en los planes viejos, que están congelados." Sin eso, el
-asistente te va a citar un plan de hace tres meses con toda seguridad.
-
-**Los comandos.** Cuatro o cinco líneas con lo que se corre habitualmente.
-
-### Y algo aparte: la memoria
-
-Claude además guarda notas entre sesiones (en un directorio propio, fuera del repo).
-Ahí van las cosas que aprendió trabajando con vos: preferencias, correcciones,
-diagnósticos. Cuando algo te resulta obvio y lo tenés que repetir por segunda vez,
-eso va a memoria o al `CLAUDE.md`. La diferencia: el `CLAUDE.md` lo escribís vos y
-está en el repo; la memoria la escribe el asistente y es suya.
+**Memoria del asistente.** Notas persistentes entre sesiones, almacenadas fuera del
+repo: preferencias, correcciones, diagnósticos. Diferencia operativa con `CLAUDE.md`: el
+`CLAUDE.md` lo escribe el equipo y se versiona; la memoria la escribe el asistente y no
+es parte del repo.
 
 ---
 
-## 4. `docs/` numerados
+## 4. `docs/` — documentos numerados
 
-Cuarenta y cinco archivos, todos con número al principio: `00_concepto.md`,
-`12_release_pipeline.md`, `38_capas_dark_ambient.md`.
+Archivos con prefijo numérico correlativo: `00_concepto.md`, `12_release_pipeline.md`,
+`38_capas_dark_ambient.md`.
 
-**Por qué numerados**: porque después podés decir "está en el 38" y se encuentra. Y
-porque el número es cronológico, así que ves el orden en que se pensaron las cosas.
+Función del prefijo:
 
-Lo que va ahí: concepto, cosmología del disco, el cuento que da origen a los textos,
-el plan de release, la guía de estilo visual, los playbooks de difusión, la anatomía
-de las capas de sonido, la lista de contactos de prensa.
+- Referencia inequívoca en conversación y en otros documentos.
+- Orden cronológico de las decisiones.
 
-**La regla de oro**: cuando algo se decide, se escribe. Cuando algo se descarta, **se
-escribe por qué**. Nuestro doc de difusión tiene una tabla de palancas pagas donde
-cada una dice "descartada porque X". Eso vale más que la lista de lo que sí vamos a
-hacer, porque evita volver a discutirlo en tres meses.
+Contenido: concepto y cosmología del release, el texto narrativo que origina los textos
+públicos, plan de release, guía de estilo visual, playbooks de difusión, anatomía de las
+capas de sonido, contactos de prensa.
 
-Para vos, los que yo tendría desde el día uno:
+Regla de registro: lo decidido se documenta; **lo descartado se documenta con el
+motivo**. El doc de difusión mantiene una tabla de palancas pagas con el campo
+"descartada porque X", que cierra la discusión de forma permanente.
 
-1. **Concepto del disco** — de qué se trata, en tus palabras.
-2. **Plan de release** — fechas, distribuidor, qué falta.
-3. **Textos** — ver abajo, es el más útil de todos.
-4. **Metadata** — ver abajo.
-5. **Prensa** — a quién le mandaste qué y cuándo.
+Núcleo mínimo, cinco documentos: concepto, plan de release, textos, metadata, prensa.
 
 ---
 
-## 5. Dos archivos que te van a ahorrar semanas
+## 5. Documentos canónicos de release
 
-### `textos.md` — la biblia de voz
+### `textos.md` — voz pública
 
-Un solo archivo con **todo el texto público del disco, ya escrito**:
+Archivo único con todo el texto público del release, redactado antes de necesitarlo:
 
-- Bio del artista en tres largos: tagline de una línea, corta para Spotify (150
-  caracteres), larga para Bandcamp y Apple.
-- Descripción del disco, en corta y larga.
-- Un texto por tema.
-- Trece frases sueltas para redes, en español y en inglés.
-- Las reglas de voz: qué nunca se dice.
+- Bio del artista en tres extensiones: tagline de una línea, corta (150 caracteres, tope
+  de Spotify), larga (Bandcamp, Apple).
+- Descripción del release, corta y larga.
+- Un texto por track.
+- Frases para redes, en cada idioma de publicación.
+- Reglas de voz, incluido el listado de lo que no se dice.
 
-**Por qué importa tanto**: cuando cargás el disco en el distribuidor, te va a pedir
-la bio en tres tamaños distintos, y después Bandcamp te pide otra, y Spotify otra, y
-cada formulario tiene un límite de caracteres distinto. Si no lo tenés escrito de
-antes, lo improvisás a las once de la noche con el upload a medio hacer, y te queda
-una bio distinta en cada plataforma.
+Función: distribuidor, Bandcamp y Spotify piden la bio con topes de caracteres
+distintos. Con el archivo, cada formulario se completa por copia y todas las plataformas
+declaran lo mismo; sin el archivo, el texto se redacta durante el upload y divergen
+entre plataformas.
 
-Con el archivo, es copiar y pegar. Y todas las plataformas dicen lo mismo, que es
-lo que hace que una identidad se sienta sólida.
+### `metadata.md` — datos canónicos
 
-### `metadata.md` — la fuente de verdad de los datos
+Tabla por track: título exacto, artista como debe figurar, número de track, **ISRC**.
+Campos globales: género principal, año, sello, copyright, fecha de release, nombre exacto
+del release.
 
-La tabla de tu disco: por track, título exacto, artista como debe figurar, número de
-track, y el **ISRC** cuando el distribuidor te lo asigne.
+Función: los mismos datos se cargan en el distribuidor, Bandcamp, la metadata embebida
+de los archivos, MusicBrainz y el press kit. Sin fuente única, las variantes de un
+título se propagan a todo el ecosistema, donde la corrección es costosa y parcial.
 
-Más: género principal, año, sello, copyright, la fecha exacta de release, el nombre
-tal cual va a aparecer.
-
-**Por qué**: esos datos se cargan en el distribuidor, en Bandcamp, en la metadata de
-los archivos, en MusicBrainz, en el press kit. Si no hay una fuente única, terminás
-con el título escrito de tres formas distintas y ese error se propaga a todo el
-ecosistema, donde es carísimo de corregir.
-
-Los ISRC en particular: son los identificadores únicos de cada grabación. Te los da
-el distribuidor y **hay que anotarlos**, porque después los necesitás para
-MusicBrainz, para reclamos de regalías y para cualquier corrección.
+Los ISRC identifican cada grabación de forma única, los asigna el distribuidor y se
+registran al recibirlos: se requieren para MusicBrainz, reclamos de regalías y
+correcciones posteriores.
 
 ---
 
-## 6. El dashboard: cómo está armado
+## 6. Dashboard — estado del proyecto
 
-Es un tablero de estado del proyecto. **Dos archivos, sin dependencias, sin build**:
+Dos archivos, sin dependencias ni build, servidos por un servidor local estático:
 
 ```
 dashboard/
-├── data.json     ← todos los datos
-└── index.html    ← todo el código (HTML + CSS + JS en un archivo)
+├── data.json     datos
+└── index.html    HTML + CSS + JS en un archivo
 ```
 
-Se abre con un servidor local simple y listo. Nada de npm, nada que se rompa en seis
-meses.
+**Los porcentajes se calculan, no se almacenan.** `data.json` contiene solo el estado de
+cada tarea; `index.html` cuenta y calcula al cargar. Un porcentaje almacenado queda
+desactualizado en el primer cambio de estado.
 
-### La decisión clave: los porcentajes se calculan, no se escriben
-
-En el JSON **no hay ni un solo porcentaje**. Solo el estado de cada tarea. El HTML
-cuenta y calcula al cargar la página.
-
-Eso parece un detalle y es lo que hace que el tablero no mienta: si el número
-estuviera escrito, quedaría viejo a la primera tarea que cambia, y a los dos meses
-nadie le cree.
-
-### La estructura de `data.json`
+### Estructura de `data.json`
 
 ```json
 {
@@ -258,7 +183,7 @@ nadie le cree.
       "id": "heliopause",
       "title": "ÆM · Heliopause",
       "brief": "El release y su difusión.",
-      "description": "El texto largo, se ve solo al entrar al proyecto",
+      "description": "Texto largo, visible al entrar al proyecto",
       "color": "#503c5a",
       "phases": [
         {
@@ -285,45 +210,41 @@ nadie le cree.
 }
 ```
 
-Los campos de una tarea: **`status`** (`done` / `todo` / `in_progress` /
-`blocked`), **`owner`** (quién la hace), **`note`** (el contexto, y es la parte más
-valiosa: ahí va por qué algo se decidió o se descartó), **`blockedBy`** y **`eta`**.
+Campos de una tarea:
 
-### Las tres secciones, y por qué están separadas
+| Campo | Contenido |
+|---|---|
+| `status` | `done` / `todo` / `in_progress` / `blocked` |
+| `owner` | responsable de la ejecución |
+| `note` | contexto: por qué se decidió o se descartó |
+| `blockedBy` | id de la tarea bloqueante |
+| `eta` | fecha estimada |
 
-Esto lo aprendimos mezclándolo mal primero.
+### Tres secciones, con semántica distinta
 
-**`projects`** — lo que tiene avance y termina. Cada uno con fases y tareas, y su
-barra de progreso.
+| Sección | Contenido | Progreso |
+|---|---|---|
+| `projects` | Trabajo finito, en fases y tareas | Barra calculada sobre tareas cerradas |
+| `recurring` | Trabajo sin fin: métricas, cola de posts, reportes periódicos | Sin barra. Próxima fecha calculada (última ejecución + periodicidad); vencidas en rojo |
+| `lab` | Experimentos, con estado `pending` / `in_progress` / `done` / `dead` | Sin barra, por diseño |
 
-**`recurring`** — lo que **no termina nunca**: revisar métricas, recargar la cola del
-programador de posts, mandar un reporte cada tres semanas. Antes las teníamos como
-tareas normales y quedaban en 0% para siempre, porque no se pueden terminar. Cada una
-tiene su periodicidad y **la próxima fecha se calcula** (última vez + cada cuánto), y
-se pinta en rojo si está vencida.
+La separación es funcional, no cosmética: una tarea recurrente no se cierra por
+definición, por lo que computarla dentro del progreso de un proyecto lo mantiene por
+debajo del 100 % de forma permanente. Los experimentos tampoco admiten porcentaje: al
+cerrarse o promoverse a proyecto conservan una referencia al resultado.
 
-**`lab`** — los experimentos. **Sin barra de progreso**, a propósito. Un lab no es un
-plan: se entra, se agarra uno y se ejecuta. Cada uno tiene un estado (pendiente / en
-curso / ejecutado / muerto) y, cuando muere o se convierte en proyecto, queda la
-referencia a lo que salió.
+### Fuente única de estado
 
-Mezclar las tres es lo que hace que un tablero se abandone: el progreso general nunca
-avanza porque lo tironean las cosas que no terminan.
-
-### Y lo más importante del tablero
-
-Es **la única fuente de verdad del estado**. En nuestro `CLAUDE.md` está escrito que
-cuando se pregunte "qué falta" o "en qué estamos", se lea `data.json` y **no** los
-planes viejos, que están congelados en una etapa que ya pasó.
-
-Sin esa regla, el asistente te contesta con un plan de marzo y suena muy convincente.
+El `CLAUDE.md` establece que las consultas de estado se responden leyendo `data.json`, y
+no los planes de fases ya cerradas. Sin esa regla explícita el asistente responde con
+documentos vencidos.
 
 ---
 
-## 7. El `Taskfile`: los comandos del proyecto
+## 7. `Taskfile.yml` — comandos del proyecto
 
-Usamos [Task](https://taskfile.dev), que es como un `Makefile` pero en YAML y
-legible. Un solo archivo en la raíz con todos los comandos del proyecto:
+El proyecto usa [Task](https://taskfile.dev): equivalente a `Makefile`, declarado en
+YAML. Un archivo en la raíz con todos los comandos.
 
 ```yaml
 vars:
@@ -341,57 +262,44 @@ tasks:
       - "{{.PYTHON}} player/serve.py --port 8765"
 
   qa:spectral:
-    desc: Analiza los WAV renderizados y avisa si hay frituras
+    desc: Analiza los WAV renderizados y detecta distorsión
     cmds:
       - "{{.PYTHON}} scripts/qa_spectral.py"
 ```
 
-Y después `task --list` te muestra todo lo que se puede hacer, con su descripción.
+`task --list` enumera los comandos con su descripción. Nomenclatura agrupada por dos
+puntos: `render:all`, `qa:spectral`, `site:deploy`, `release:plan`.
 
-### Por qué vale la pena aunque tengas tres comandos
+Funciones que cumple:
 
-**Porque los nombrás una vez y no los volvés a recordar.** El comando real para
-levantar nuestro sitio en local es largo y tiene flags que nadie se acuerda. Con el
-Taskfile es `task site:dev`.
+- **Estabiliza invocaciones.** Los comandos reales llevan flags que no se retienen; el
+  alias sí.
+- **Habilita la ejecución por el asistente.** Con la task documentada en `CLAUDE.md`, la
+  invocación es correcta en el primer intento; sin ella, el asistente construye el
+  comando y sus flags por inferencia.
+- **Documenta las operaciones del repo** sin documento aparte: `task --list` es el
+  inventario.
 
-**Porque el asistente los usa.** Si en el `CLAUDE.md` dice "para desplegar corré
-`task site:deploy`", Claude lo corre bien la primera vez. Si no existe, va a
-inventar un comando de wrangler con los flags equivocados.
-
-**Y porque documenta el proyecto sin escribir documentación.** Leer `task --list` te
-dice qué se puede hacer con el repo.
-
-Para vos, los que tendrían sentido: convertir los masters a los formatos de release
-(FLAC, MP3, WAV 44.1), incrustar la metadata y la tapa en los archivos, validar que
-los masters cumplan el nivel de loudness que piden las plataformas, y hacer el backup
-del audio al disco externo.
-
-Los nombres van con dos puntos para agrupar: `release:formats`, `release:tag`,
-`release:check`.
+Tasks pertinentes en un flujo de grabación: conversión de masters a formatos de release
+(FLAC, MP3 320, WAV 44.1/24), embedding de metadata y artwork, validación de loudness
+contra los targets de plataforma, backup de audio al disco externo.
 
 ---
 
-## 8. Qué de todo esto NO copiar
+## 8. Componentes condicionados al flujo de trabajo
 
-Para ser honesto sobre lo que en tu caso es carga y no ayuda:
+| Componente | Condición que lo justifica |
+|---|---|
+| `framework/` | La composición se escribe en código. Un flujo de grabación en DAW no lo usa |
+| `player/` | Necesidad de escuchar renders sin abrir un DAW |
+| `transmissions/NN/` | Catálogo con más de un release. Un release único no requiere el nivel |
+| Dashboard | Volumen de tareas superior al manejable de memoria. Por debajo, una lista en el README cumple la función |
+| `docs/` extenso | Acumulación por avance del proyecto; el punto de partida son cinco documentos |
 
-- **`framework/`** — nosotros componemos escribiendo código Python. Vos grabás. No
-  aplica.
-- **`player/`** — un reproductor web local para escuchar los renders. Vos usás tu DAW.
-- **La estructura de `transmissions/NN/`** — tiene sentido para un sello con
-  releases numerados. Para un disco, una carpeta `album/` alcanza.
-- **El dashboard con tres secciones** — si tenés veinte tareas, una lista en el
-  README alcanza. El tablero se justifica cuando dejás de acordarte de lo que hay
-  pendiente.
-- **45 documentos** — eso creció en cuatro meses. Empezá con cinco.
+Orden de creación del conjunto mínimo:
 
-Y lo que yo sí armaría el primer día, en este orden:
-
-1. **`.gitignore`**, antes del primer commit. Con `*.wav`, `*.aiff`, `*.mp3`,
-   `*.mp4`, `*.zip` y cualquier carpeta de proyecto del DAW.
-2. **`CLAUDE.md`** con cómo trabajás, tus reglas duras y lo que ya te salió mal.
-3. **`docs/textos.md`** con las bios en tres tamaños.
-4. **`docs/metadata.md`** con la tabla de tracks y un lugar para los ISRC.
-5. Un **backup de audio** que no sea git.
-
-Con eso ya estás mejor parada que el 90% de los proyectos, y son un par de horas.
+1. **`.gitignore`** — antes del primer commit.
+2. **`CLAUDE.md`** — perfil de trabajo, reglas duras, antipatrones conocidos.
+3. **`docs/textos.md`** — bios en tres extensiones.
+4. **`docs/metadata.md`** — tabla de tracks con espacio para los ISRC.
+5. **Backup de audio** externo a git.
