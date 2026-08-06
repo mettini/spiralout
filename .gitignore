@@ -100,3 +100,16 @@ transmissions/*/video/**/__pycache__/
 
 # copia local v1 de los posts (solo para comparar en review.html)
 redes/aem/social/_v1/
+
+# ============================================================
+# lab/ — experimentos de sonido
+# ============================================================
+# Regla: se versiona lo que NO se puede regenerar.
+#   VA    → README.md, render.py / mix.py, patches .pd (son texto)
+#           y las grabaciones fuente originales (m4a del celular: irrepetibles
+#           y pesan poco)
+#   NO VA → todo lo que sale de correr el código: los wav de cada capa, las
+#           mezclas, y el wav intermedio a 22k que render.py rehace del m4a
+lab/**/*.wav
+lab/**/*.aiff
+lab/**/*.flac

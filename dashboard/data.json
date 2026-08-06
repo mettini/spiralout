@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-07-26",
+    "updated": "2026-08-06",
     "next_review": "2026-08-31",
     "version": "0.6",
     "focus": "Estructura por proyecto (2026-07-26): Heliopause = el release y su difusión · Comunicación = blog/sitio/cuentas del label · Helen = guerrilla + bases públicas · Lab = experimentos sin avance. Foco de hoy: difusión de Heliopause (posts IG cargados en scheduler, YouTube ads, Reddit) y arrancar el blog."
@@ -1021,10 +1021,11 @@
       {
         "id": "lustmord-deform",
         "title": "Dark ambient por deformación digital (línea Lustmord)",
-        "state": "pending",
-        "summary": "Hilo B en docs/27. Lustmord = todo deformación de grabaciones, NO modular (corroborado).",
+        "state": "in_progress",
+        "summary": "Deformar grabaciones con time-stretch extremo. Primera pieza en marcha: dos grabaciones de celular (la bomba de la losa radiante + el lavarropas sarandeandose) convertidas en 4 de las 6 capas de un track dark ambient — Thermal Mass (cama), Manifold (cuerpo), Cloud Chamber (nube) y Flywheel (eventos, maquinaria pesada). Mezcla con arco de 2 min rendida. Faltan grano, aire y el arco de 8 min.",
         "ref": "docs/27_lab_experiments_and_references.md",
-        "owner": "user"
+        "owner": "user",
+        "output": "lab/thermal_mass/README.md + docs/38_capas_dark_ambient.md"
       },
       {
         "id": "vinilo-surco",

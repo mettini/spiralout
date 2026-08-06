@@ -214,3 +214,13 @@ púa: masa/radio), que es lo que da el carácter físico.
 - Vinilo — Archimago, thoughts on LP fidelity: http://archimago.blogspot.com/2017/06/musings-measurement-thoughts-on-vinyl.html
 - Vinilo — LP performance measurements (Stereo Lab): http://pspatialaudio.com/LP_performance.htm
 - Surco→audio — IRENE (Berkeley Lab) / Laser turntable: https://en.wikipedia.org/wiki/Laser_turntable
+
+
+---
+
+## Nota (2026-07-31)
+
+El hilo B (deformación línea Lustmord) dejó de ser solo un experimento: es el
+**track 1 de Transmission 02**. Concepto y tracklist de esa transmisión →
+`docs/39_transmission_02.md`. Anatomía de capas y qué fuente grabar →
+`docs/38_capas_dark_ambient.md`. La primera pieza está en `lab/thermal_mass/`.
