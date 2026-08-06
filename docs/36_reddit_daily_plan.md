@@ -869,6 +869,31 @@ post borrado por el autor que un hilo de acusaciones de IA indexado para siempre
 
 ## A8 · Reglas de escritura (para no volver al tono de IA)
 
+### Largo: mucho más corto de lo que parece
+
+Feedback del user, 2026-08-05: *"es una fuckin biblia, nadie pone eso"*. El
+registro correcto es **una o dos líneas**: el dato y nada más.
+
+Así se ve un comentario que funciona:
+
+```
+Biosphere, Substrata. Built out of ice and wind he recorded up in the Arctic.
+
+Lustmord too if you want it darker.
+```
+
+Y así uno que no, aunque cada frase sea cierta: tres párrafos explicando el
+método del artista, por qué el disco es canónico y qué escuela representa. Eso
+no lo escribe nadie en un hilo de recomendaciones.
+
+Reglas concretas:
+
+- **Un dato concreto por recomendación.** De dónde salió el material, un
+  timestamp, un momento. Nada de contexto histórico ni de análisis de género.
+- **Cero justificación.** No se explica por qué la recomendación es buena.
+- **Los agregados van en una línea aparte**, no en una cláusula subordinada.
+- Si el comentario necesita un "por qué", va en **media línea**, no en un párrafo.
+
 Los dos comentarios del Día 1 son la referencia. Del skill `humanizar-texto`, lo
 que se saca de cualquier texto que vayas a postear:
 

@@ -41,11 +41,67 @@ El user tira un candidato; después se corrobora antes de usarlo en un pitch:
 > Agregar filas a medida que el user tire candidatos. No borrar los ⏳ hasta
 > validar — un pitch con un vecino mal elegido quema credibilidad.
 
+---
+
+## Cosecha de r/ambientmusic (leído el 2026-07-28/29)
+
+Salió de leer hilos reales del sub durante la fase de karma (`docs/36`), no de
+una búsqueda. **Nada de esto está validado todavía** — vale como pista, no como
+lista de targeting.
+
+### Releases 2026 que nombró el sub
+
+El hilo "2026 ambient releases" juntó 45 comentarios. Consenso claro y, sobre
+todo, un hueco: **de todo el hilo, una sola mención del lado oscuro.**
+
+| Release | Por qué está acá | Uso |
+|---|---|---|
+| **Ugasanie — Endless Cold Endless Darkness** (Cryo Chamber) | La ÚNICA mención dark ambient del hilo. Y está en el sello que es el emplazamiento principal de los ads | Emplazamiento + entender qué escucha esa audiencia |
+| **Rafael Anton Irisarri — Points of Inaccessibility** | Tres personas distintas lo defendieron. Denso, cargado de graves. El título es el mismo concepto que Heliopause: los puntos más remotos | Vecino sónico fuerte, candidato a "for fans of" |
+| **Abul Mogard & R. A. Irisarri — Where Light Pauses in the Silence of the Sun** | Drone de analógico, lento y enorme | Vecino sónico |
+| **KMRU — Kin** | Nombrado 4 veces por separado: es el disco del año para ese sub | Literacidad. Hay que conocerlo para hablar ahí |
+| **Sarah Davachi — The Will of Tongues** (28/08/2026) | Órgano y analógico de forma larga | Vecino sónico |
+| **Rod Modell — Frequencies of the Fog** | Dub-ambient profundo, mismo territorio que Köner | Vecino sónico |
+
+### Sellos activos que aparecieron
+
+Cryo Chamber (ya estaba, es el ancla de los ads) · **Past Inside the Present**
+(el sello de zakè, grande en ambient y recibe demos) · Kranky (Pan American,
+Stars of the Lid) · Black Knoll Editions (Irisarri) · Geometric Lullaby ·
+Mississippi Records.
+
+### Curadores con audiencia propia (la pista más valiosa)
+
+En esos hilos hay gente que no es solo público. Esto es lo que le da nombres
+concretos a la palanca de `docs/32 §C` que estaba marcada como la menos
+explorada: entrar en una newsletter o un programa de nicho.
+
+| Quién | Qué tiene | Cómo se llega |
+|---|---|---|
+| `ambienthead_space` | Programa de radio. En el hilo mismo estaba invitando gente | Su canal público, NO por DM |
+| `Ghosttropics` | Substack, y lo invitan a programas | Substack |
+| `berusplants` | Serie de mixes ("My Brutal Life Ambient mix") | Su canal |
+| `SecretAmbientClub` | Ambient diario en redes + newsletter semanal | Newsletter |
+| **NTS Radio** | Apareció dos veces con sets (Sophie Birch, Claire Rousay) | Submissions de NTS |
+
+**Regla dura**: a nadie de esta tabla se le manda un DM promocional. Reddit lo
+prohíbe y quema la cuenta y la credibilidad al mismo tiempo. Se llega por el
+canal público de cada uno: el formulario de la newsletter, la política de demos
+del sello, las submissions de la radio. Y recién después de que la cuenta tenga
+historial real (`docs/36`).
+
+---
+
 ## Próximo paso (cuando el user quiera)
+- Escuchar los dos primeros de la cosecha (Ugasanie e Irisarri) y validarlos
+  contra los ejes de arriba. Son los que sirven para las dos cosas: targeting y
+  poder hablar con autoridad en el sub.
 - Análisis exhaustivo de **AMIANGELIKA & 1100** (escuchar *BLCK SUN*, ubicar
   ejes sónicos, ver si el nexo es sónico o solo estético-audiovisual).
-- Con 5-8 vecinos validados → redactar el post r/ifyoulikeblank y la lista de
-  targeting para los ads (hilo de `docs/25` + dashboard).
+- Con 5-8 vecinos validados → la lista de targeting para los ads del mes 2
+  (cruzar con el reporte "dónde se mostraron los anuncios" de `docs/37`).
+  Ojo: r/ifyoulikeblank quedó descartado (instaban, ver `docs/35`), así que ese
+  destino de la lista ya no existe.
 
 ## Fuentes
 - AMIANGELIKA & 1100 — *BLCK SUN* (Bandcamp): https://blcksunrecords.bandcamp.com/album/blck-sun
