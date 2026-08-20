@@ -27,6 +27,40 @@ artefactos del codec**, porque cada cuadro espectral queda sostenido un segundo
 entero en vez de pasar en 20 ms. Para la próxima, WAV con la Volt 276, cerca **y**
 a distancia.
 
+### Fuentes de lluvia (2026-08-08)
+
+Cuatro clips de lluvia grabados por el user en video 4K, en `~/Downloads/Videos-Aem/`.
+El audio sale con `ffmpeg -vn -acodec pcm_s24le -ar 48000`. Son AAC 48 kHz estéreo,
+bastante mejores que los m4a de arriba, aunque siguen siendo codec con pérdida.
+
+**Cierran el agujero que tenía el track**: la mezcla de 2 minutos (`mix_v2_arco.wav`)
+mide **0.0% de energía arriba de 1.5 kHz** y se termina en 1237 Hz. O sea que las
+capas 4 (grano) y 5 (aire) de `docs/38` no existían.
+
+| archivo | dur | reparto | movimiento | transitorios | techo | altura | capa |
+|---|---|---|---|---|---|---|---|
+| `IMG_4739` | 9,7 s | **26% grano + 28% aire** | no | no | 19,2 kHz | C#2 +25 | **4 · grano, 5 · aire** |
+| `IMG_4740` | 10,3 s | 57% en 60-120 | sí (4,9 dB) | **sí, 15 saltos >9 dB** | 8,8 kHz | G2 +28 | **6 · eventos** |
+| `IMG_4741` | 3,4 s | 46% en 60-120 | sí (6,2 dB) | no | 10,2 kHz | D#2 −3 | 1 · cama (redundante) |
+| `IMG_4742` | 7,8 s | 40% en 60-120 | sí (3,5 dB) | no | 18,8 kHz | G#2 −22 | 1 · cama (redundante) |
+
+**Las dos que sirven son 4739 y 4740, y son complementarias:**
+
+- **4739 es la única con agudo real.** Tiene el 53,5% de su energía arriba de 1.5 kHz
+  y llega limpia hasta 19 kHz. Es el complemento exacto de la mezcla actual. Va
+  filtrada en pasa-altos: su grave está a 70,3 Hz y la base está a 71,3 Hz, o sea a
+  **25 cents**, que batiría feo. Filtrarla no es gusto, es evitar el choque.
+- **4740 es la única con transitorios**, 15 saltos de más de 9 dB. Es la capa 6, la
+  de eventos. Su grave no se usa: la base ya tiene 52% en 60-120 Hz.
+- 4741 y 4742 duplican lo que la mezcla ya tiene de sobra. Quedan de reserva.
+
+> **Ojo con la capa de grano.** 1.5-6 kHz es la banda exacta que marca
+> `task qa:spectral` como fritura. La regla del proyecto (`memory/pattern_noise_fritura.md`)
+> es no pasar de ~800 Hz **en ruido sintetizado**, porque no tiene estructura. La
+> lluvia real sí la tiene, y `docs/38` define la capa 4 justamente ahí. Pero el
+> margen es fino: correr `qa:spectral` sobre la mezcla nueva antes de dar nada por
+> bueno.
+
 ## Las cuatro capas
 
 | capa | rol (docs/38) | banda propia | LUFS | crest |

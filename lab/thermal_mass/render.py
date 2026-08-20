@@ -62,16 +62,42 @@ def notch_parcial(x, f0, q, mezcla, sr=SR):
     return (1 - mezcla) * x + mezcla * filtrado
 
 
+def _lfo(n, periodo, sr=SR):
+    """Modulacion lenta SIN ciclo detectable.
+
+    Un seno de periodo fijo es una REGULARIDAD, y la regularidad es lo que el oido
+    engancha: a los dos ciclos ya sabe cuando viene el proximo y cada vuelta se escucha
+    como un salto. Es el mismo error que el corte cada 39 s del moog, pero disfrazado de
+    modulacion suave.
+
+    Medido sobre las capas viejas: `aire` tenia respiracion de 37 s al 18% y su
+    autocorrelacion daba r=0,83. El user marco saltos en 8:58 y 9:36, a 38 s de
+    distancia. Sumar dos senos en proporcion aurea tampoco alcanza (bajaba a r=0,59 a
+    0,79): dos senos siguen teniendo estructura.
+
+    Lo que no tiene ciclo es RUIDO suavizado a la escala del periodo. `periodo` deja de
+    ser "cada cuanto se repite" y pasa a ser "cada cuanto cambia", que es lo que se
+    queria desde el principio.
+
+    Determinista: la semilla sale del propio periodo, asi que dos renders dan igual.
+    """
+    seg = int(np.ceil(n / sr)) + 4
+    rng = np.random.default_rng(int(periodo * 1000))
+    r = rng.standard_normal(seg)
+    k = max(3, int(periodo))
+    v = np.convolve(r, np.hanning(k) / np.hanning(k).sum(), "same")
+    v /= np.abs(v).max() or 1.0
+    return np.interp(np.linspace(0, len(v) - 1, n), np.arange(len(v)), v)
+
+
 def barrido(x, hz_a, hz_b, periodo, sr=SR):
     """Cruce lento entre dos low-pass: movimiento sin filtro variable en el tiempo."""
-    t = np.arange(len(x)) / sr
-    l = (0.5 + 0.5 * np.sin(2 * np.pi * t / periodo))[:, None]
+    l = (0.5 + 0.5 * _lfo(len(x), periodo, sr))[:, None]
     return lp(x, hz_a) * (1 - l) + lp(x, hz_b) * l
 
 
 def respiracion(x, prof, periodo, sr=SR):
-    t = np.arange(len(x)) / sr
-    return x * (1 + prof * np.sin(2 * np.pi * t / periodo))[:, None]
+    return x * (1 + prof * _lfo(len(x), periodo, sr))[:, None]
 
 
 def camara(x, segundos, ir_lowpass, wet, sr=SR, semilla=1000, pre_ms=0):
@@ -98,6 +124,25 @@ def mono_graves(x, hz, sr=SR):
     sos = butter(4, hz / (sr / 2), "low", output="sos")
     bajo = np.stack([sosfiltfilt(sos, x[:, c]) for c in range(x.shape[1])], axis=1)
     return (x - bajo) + bajo.mean(axis=1, keepdims=True)
+
+
+def stretch_justo(fuente, dur, ventana, mult=1.0, piso=45.0, margen=1.12):
+    """El stretch necesario para cubrir `dur`, nunca menos que `piso`.
+
+    La formula vieja era max(45, dur/N). A 30 s el piso de 45 mandaba siempre, pero a
+    671 s (11:11) daba factores de 160 a 335: sobre una fuente de 15 s eso genera
+    HORAS de audio intermedio para tirar el 90%, con picos de varios GB.
+
+    Aca el factor se calcula desde el largo real de la fuente y del multiplicador que
+    venga despues (bajar_octavas cuadruplica). A 30 s da 45 en las tres capas, o sea
+    que el render corto queda byte por byte igual.
+
+    OJO CON LA VENTANA: paulstretch avanza mientras `pos + ventana < len(samples)`,
+    asi que la salida es (largo - ventana) * stretch, NO largo * stretch. Ignorar eso
+    hacia que las capas salieran cortas y despues quedaran rellenadas con silencio.
+    """
+    util = max(len(fuente) / SR - ventana, 0.5)
+    return max(piso, dur * margen / (util * mult))
 
 
 def estirar_estereo(mono, stretch, window, sr=SR):
@@ -178,7 +223,8 @@ def ducking(seco, prof=0.75, ventana_ms=120, release_s=1.2, sr=SR):
 # ---------------------------------------------------------------- las piezas
 def thermal_mass(fuente, dur=DUR):
     """El sotano. Pastoso, grave, lento, SIN saturacion."""
-    x = estirar_estereo(fuente, stretch=max(45, dur / 4), window=5.0)  # ventana 5 s: maximo fundido
+    x = estirar_estereo(fuente, stretch=stretch_justo(fuente, dur, 5.0, mult=4),
+                        window=5.0)  # ventana 5 s: maximo fundido
     x = bajar_octavas(x, 2.0)
     x = del_medio(x, dur)
     x = notch_parcial(x, RESONANCIA_TM, q=6, mezcla=0.75)  # ~-9 dB solo en 71 Hz
@@ -194,7 +240,9 @@ def thermal_mass(fuente, dur=DUR):
 
 def cloud_chamber(fuente, lufs_objetivo, dur=DUR):
     """La capa media. Nube de copias transpuestas, desafinadas y desfasadas."""
-    base = estirar_estereo(fuente, stretch=max(45, dur / 3), window=1.5)  # ventana chica: mas detalle
+    # mult 4: la copia transpuesta +24 semitonos queda cuatro veces mas corta
+    base = estirar_estereo(fuente, stretch=stretch_justo(fuente, dur, 1.5, mult=0.25),
+                           window=1.5)  # ventana chica: mas detalle
     n = int(dur * SR)
     # (semitonos, ganancia, cents de desafinacion, offset en segundos)
     capas = [(0, 1.00, 0, 0.0), (7, 0.55, 4, 2.5), (12, 0.45, -5, 5.0),
@@ -238,8 +286,12 @@ def manifold(fuente, lufs_objetivo, dur=DUR):
     semitonos la deja exactamente una octava arriba del bed, consonante, y su
     contenido aterriza en la banda de cuerpo.
     """
-    x = estirar_estereo(fuente, stretch=max(45, dur / 2), window=2.0)
+    # mult 0,442: los 14,14 semitonos de abajo ACORTAN el audio 2,26 veces, asi que
+    # hay que estirar de mas para compensar. Sin esto la capa sale a la mitad y el
+    # resto del tema queda relleno con silencio.
     f = 2.0 ** (14.14 / 12.0)
+    x = estirar_estereo(fuente, stretch=stretch_justo(fuente, dur, 2.0, mult=1 / f),
+                        window=2.0)
     idx = np.arange(0, len(x) - 1, f)
     x = np.stack([np.interp(idx, np.arange(len(x)), x[:, c]) for c in range(2)], axis=1)
     x = del_medio(x, dur)

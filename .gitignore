@@ -113,3 +113,16 @@ redes/aem/social/_v1/
 lab/**/*.wav
 lab/**/*.aiff
 lab/**/*.flac
+# y lo mismo del lado de video: los concepts salen de correr concepto.sh, y con
+# grano encima comprimen malisimo (2 min en 1080 = 736 MB). Un `git add` de esto
+# se copia al .git para siempre aunque despues se deshaga (docs/41 §1).
+lab/**/*.mp4
+lab/**/*.mov
+lab/**/.segmentos/
+lab/**/.capas/
+lab/**/fuentes/
+
+# El plan de planos: se congela junto a cada entregable (`<salida>.plan.txt`) y ESO se
+# versiona, porque documenta con que se hizo el video que se publico. El `ultimo_plan.txt`
+# es transitorio: lo reescribe cada build.
+lab/**/ultimo_plan.txt

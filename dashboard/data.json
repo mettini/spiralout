@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-08-06",
+    "updated": "2026-08-15",
     "next_review": "2026-08-31",
     "version": "0.6",
     "focus": "Estructura por proyecto (2026-07-26): Heliopause = el release y su difusión · Comunicación = blog/sitio/cuentas del label · Helen = guerrilla + bases públicas · Lab = experimentos sin avance. Foco de hoy: difusión de Heliopause (posts IG cargados en scheduler, YouTube ads, Reddit) y arrancar el blog."
@@ -904,6 +904,15 @@
     "description": "Experimentos. No tienen avance porque no son un plan: se entra, se agarra uno y se ejecuta. Cuando algo se convierte en proyecto o muere, queda la referencia al output o al brief.",
     "color": "#3a2a4a",
     "experiments": [
+      {
+        "id": "estrella-negra",
+        "title": "Estrella Negra: estructura Grinderman + armonía Blackstar",
+        "state": "in_progress",
+        "summary": "Muestra de sonido pedida por el user el 2026-08-15. No es una transmisión: es un lab para probar qué pasa cruzando la ESTRUCTURA de \"No Pussy Blues\" (Grinderman: un riff, un acorde, la pieza no modula sino que se carga hasta reventar) con la ARMONÍA de \"Blackstar\" (Bowie: pedal grave fijo + frigio dominante, o sea b2 y 3 mayor juntas). 96 BPM, 84 compases, 3:30, mi frigio dominante. Ocho stems separados (riff / bajo / batería / platillos / pad / lead / ruido / grano) para que el user escuche cada capa sola ANTES de mezclar. Todo con el framework aem: la escalera Moog Huovilainen para el riff y voz_moog para el lead. Arco medido: 15 dB entre la intro (-29,7 LUFS) y la explosión (-15,0), qa:spectral OK. Falta el veredicto del user sobre qué capa sobra y qué falta. | v2 (2026-08-15): el user bajó veredicto \"de plástico, cada tecla igual, el hihat de fábrica, la melodía conconcon\". La causa era estructural (el riff se generaba una vez y se copiaba 42 veces). Reescrito: cada vuelta se genera nota por nota con nivel/fase/afinación/tiempo sorteados, notas fantasma, respuesta melódica y vuelta B cada cuatro. Framework: dos módulos nuevos aditivos, aem/granular.py (granulador, el agujero que marcaba docs/46) y aem/instruments.hihat_metalico (seis cuadradas 808 en vez de ruido blanco). Stem nuevo grano = microsonido sobre el propio riff, de 10 a 220 granos/s. Falta el veredicto del user sobre la v2. | v3 (2026-08-15): el user bajó platillos y riff (\"una verga\") y el grano (\"feria de circo gitana\"). Dirección corregida: el riff toca UNA sola nota (mi), notas que se pisan para emborronar, filtro casi cerrado en la intro (90+350 Hz) abriendo hasta 1600 en la explosión, drive de la escalera de 34 a 70, cinta y fizz. Platillos eliminados (el kit queda sin metal, 0% arriba de 6 kHz, a propósito). El grano pasa a unísono sin transposiciones, granos largos y techo en 900 Hz: la calesita eran los granos cortos transpuestos a la octava y la docena. Siete stems. Falta el veredicto del user sobre la v3.",
+        "ref": "lab/estrella_negra/README.md",
+        "output": "lab/estrella_negra/stems/*.wav + mezcla_referencia.wav + escuchar.html (mute/solo por pista). Doc de microsonido asociado: docs/46_microsonido.md",
+        "owner": "both"
+      },
       {
         "id": "ikeda-research",
         "title": "Ryoji Ikeda — entender el camino",

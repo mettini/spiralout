@@ -83,6 +83,41 @@ def reverb(audio, decay=2.0, mix=0.3, pre_delay_ms=0):
     return out
 
 
+def eco(audio, tiempo_s, realim=0.45, mezcla=0.4, lp_hz=2200, sr=SR):
+    """Delay realimentado con filtro en el lazo: deja una ESTELA del sonido.
+
+    Cada repeticion vuelve a pasar por el pasabajos, asi que la cola se va oscureciendo
+    y perdiendo definicion en vez de repetir lo mismo mas bajo. Eso es lo que hace que
+    se escuche como una estela y no como un eco de karaoke.
+
+    Sirve para que una nota que llego siga presente sin tener que sostener el oscilador:
+    el tono crudo se apaga y lo que queda sonando es la cola. Es la diferencia entre una
+    nota que RESUENA y una nota que esta siendo mantenida.
+
+    `realim` es la ganancia de cada repeticion. Se cortan las repeticiones cuando caen
+    por debajo del 2%, o sea unas 5 con realim=0.45.
+
+    Funciona sobre mono (n,) y sobre estereo (n, 2), filtrando por canal.
+    """
+    d = int(tiempo_s * sr)
+    if d <= 0 or realim <= 0:
+        return audio
+
+    def filtrar(a):
+        if a.ndim == 1:
+            return lpf(a, lp_hz)
+        return np.stack([lpf(a[:, c], lp_hz) for c in range(a.shape[1])], axis=1)
+
+    cola = np.zeros_like(audio)
+    w = audio
+    i = 1
+    while realim ** i > 0.02 and d * i < len(audio):
+        w = filtrar(w) * realim
+        cola[d * i:] += w[:len(w) - d * i]
+        i += 1
+    return audio + cola * mezcla
+
+
 def distort(audio, amount=2.0):
     """Saturacion tanh. amount controla cuanto comprime."""
     return np.tanh(audio * amount) / np.tanh(amount)

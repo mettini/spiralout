@@ -10,6 +10,9 @@ you write Python; you get a WAV.
 ```
 synth.py         → primitives (sine, saw, noise, silence)
 instruments.py   → composites (detuned_drone, voice_pad, kick, hihat, melody, riser, flute_motif)
+synths.py        → subtractive synthesis: exact band-limited oscillators, hard sync,
+                   analog drift, microtonal clusters, the Moog ladder filter
+                   (Huovilainen DAFx-04 model) and voz_moog. See docs/44
 motifs.py        → musical motifs (voyager_motif, voyager_safe_fx, VARIATIONS, VOYAGER_NOTES, VOYAGER_NOTCH_FREQS)
 effects.py       → per-track FX (fade, lpf, hpf, reverb, distort, lfo_amp, notch_eq)
 master.py        → stereo-bus FX (dirty_intro, master chain v2)

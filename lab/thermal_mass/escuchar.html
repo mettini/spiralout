@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>thermal_mass · escuchar</title>
+<style>
+  :root {
+    --fondo:   #0D0E10;
+    --panel:   #16181B;
+    --linea:   #262A2F;
+    --texto:   #DEDAD1;
+    --tenue:   #7C7972;
+    --activo:  #C98A3C;
+    --nuevo:   #4E8FA6;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--fondo); color: var(--texto);
+    font: 15px/1.55 system-ui, -apple-system, sans-serif;
+    padding: 2.5rem 1.25rem 6rem;
+  }
+  .wrap { max-width: 52rem; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+  h1 { font: 600 1.35rem/1.2 var(--mono); margin: 0; letter-spacing: -.01em; }
+  .sub { color: var(--tenue); font-size: .92rem; margin: .4rem 0 0; }
+
+  .transporte {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--panel); border: 1px solid var(--linea); border-radius: 4px;
+    padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .8rem;
+  }
+  .fila { display: flex; align-items: center; gap: .9rem; }
+  button {
+    font: 600 .8rem var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    background: var(--linea); color: var(--texto); border: 1px solid #34383E;
+    border-radius: 3px; padding: .5rem .9rem; cursor: pointer;
+  }
+  button:hover { background: #2E333A; }
+  button:focus-visible { outline: 2px solid var(--activo); outline-offset: 2px; }
+  .tiempo { font: .85rem var(--mono); color: var(--tenue); font-variant-numeric: tabular-nums; }
+  .ahora { color: var(--activo); font: .85rem var(--mono); }
+  input[type=range] { flex: 1; accent-color: var(--activo); }
+
+  .grupo { display: flex; flex-direction: column; gap: .55rem; }
+  .grupo h2 {
+    font: 600 .7rem var(--mono); letter-spacing: .18em; text-transform: uppercase;
+    color: var(--tenue); margin: 0; padding-bottom: .5rem; border-bottom: 1px solid var(--linea);
+  }
+  .pista {
+    display: grid; grid-template-columns: 1.6rem 1fr auto; gap: .9rem; align-items: center;
+    padding: .6rem .8rem; border: 1px solid transparent; border-radius: 3px;
+    cursor: pointer; text-align: left; background: none; text-transform: none; letter-spacing: 0;
+    font: inherit; color: inherit; width: 100%;
+  }
+  .pista:hover { background: var(--panel); }
+  .pista[aria-current="true"] { border-color: var(--activo); background: var(--panel); }
+  .pista .n { font: .72rem var(--mono); color: var(--tenue); }
+  .pista[aria-current="true"] .n { color: var(--activo); }
+  .pista .nombre { font: 600 .95rem var(--mono); }
+  .pista .desc { color: var(--tenue); font-size: .87rem; font-family: system-ui, sans-serif; }
+  .etiqueta {
+    font: .62rem var(--mono); letter-spacing: .12em; text-transform: uppercase;
+    padding: .15rem .45rem; border-radius: 2px; border: 1px solid var(--nuevo); color: var(--nuevo);
+  }
+  .aviso { color: var(--tenue); font-size: .88rem; }
+  kbd {
+    font: .8rem var(--mono); background: var(--linea); border: 1px solid #34383E;
+    border-radius: 3px; padding: .05rem .35rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>thermal_mass · escuchar</h1>
+    <p class="sub">
+      Al cambiar de versión se mantiene la posición, que es lo único que sirve para
+      comparar. Con <kbd>↑</kbd> <kbd>↓</kbd> saltás entre versiones y con
+      <kbd>espacio</kbd> pausás.
+    </p>
+  </header>
+
+  <div class="transporte">
+    <div class="fila">
+      <button id="play">play</button>
+      <span class="ahora" id="ahora">nada cargado</span>
+    </div>
+    <div class="fila">
+      <span class="tiempo" id="t">0:00</span>
+      <input type="range" id="barra" min="0" max="1000" value="0" step="1" aria-label="posición" />
+      <span class="tiempo" id="total">0:00</span>
+    </div>
+  </div>
+
+  <div id="grupos"></div>
+
+  <p class="aviso">
+    Servido por <code>player/serve.py</code> desde la raíz del proyecto. Los WAV van sin
+    recomprimir, a 22050 Hz.
+  </p>
+</div>
+
+<audio id="audio" preload="none"></audio>
+
+<script>
+const GRUPOS = [
+  { titulo: "el tema", pistas: [
+    { f: "tema_1111_master.wav", n: "11:11 · MASTERIZADO", d: "cadena master v2, LUFS −16. Esta es la que va a monitores", nuevo: 1 },
+    { f: "tema_1111.wav", n: "11:11 · scratch", d: "la suma sin masterizar, para comparar" },
+  ]},
+  { titulo: "los conceptos de 2 min, en orden de construcción", pistas: [
+    { f: "mix_v2_arco.wav",   n: "v2 · base",        d: "las cuatro capas originales. Nada arriba de 1,5 kHz" },
+    { f: "mix_v3.wav",        n: "v3 · + lluvia",    d: "se suman grano y aire. El techo pasa de 1237 a 5564 Hz" },
+    { f: "mix_v4_limpia.wav", n: "v4 · + voz limpia",  d: "36 gargantas desde la toma recitada" },
+    { f: "mix_v4_gutural.wav",n: "v4 · + voz gutural", d: "lo mismo desde la toma cantada" },
+    { f: "mix_v5.wav",        n: "v5 · + resonadores", d: "brillo y chelo sacados de la propia lluvia" },
+    { f: "mix_v6.wav",        n: "v6 · + moog",        d: "el motivo Em+H con la escalera Huovilainen", nuevo: 1 },
+  ]},
+  { titulo: "las capas solas", pistas: [
+    { f: "rain_grano.wav",   n: "grano",   d: "1,2 a 6 kHz, desde el clip 4739" },
+    { f: "rain_aire.wav",    n: "aire",    d: "6 kHz para arriba" },
+    { f: "rain_eventos.wav", n: "eventos", d: "desde el 4740, el único con transitorios. No entra en la mezcla" },
+    { f: "coro_limpia.wav",  n: "coro limpio",  d: "sub 35,6 · raíz 71,3 · quinta 107 Hz" },
+    { f: "coro_gutural.wav", n: "coro gutural", d: "más sub y más densidad" },
+    { f: "brillo.wav",       n: "brillo",  d: "resonadores en 856 a 2282 Hz, por destellos" },
+    { f: "chelo.wav",        n: "chelo",   d: "tres notas con vibrato. Quedó granular" },
+    { f: "moog.wav",         n: "moog",    d: "Si → Sol → Mi, con glide de 2,4 s", nuevo: 1 },
+  ]},
+  { titulo: "las capas originales", pistas: [
+    { f: "thermal_mass.wav",  n: "cama",   d: "60 a 120 Hz" },
+    { f: "manifold.wav",      n: "cuerpo", d: "120 a 250 Hz" },
+    { f: "cloud_chamber.wav", n: "nube",   d: "250 Hz a 1 kHz" },
+    { f: "flywheel.wav",      n: "eventos",d: "los golpes del lavarropas" },
+  ]},
+];
+
+const audio = document.getElementById("audio");
+const barra = document.getElementById("barra");
+const elT = document.getElementById("t"), elTotal = document.getElementById("total");
+const elAhora = document.getElementById("ahora"), btn = document.getElementById("play");
+const cont = document.getElementById("grupos");
+let botones = [], actual = -1, arrastrando = false;
+
+const mmss = s => isFinite(s) ? `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}` : "0:00";
+
+GRUPOS.forEach(g => {
+  const d = document.createElement("div");
+  d.className = "grupo";
+  d.innerHTML = `<h2>${g.titulo}</h2>`;
+  g.pistas.forEach(p => {
+    const b = document.createElement("button");
+    b.className = "pista";
+    b.setAttribute("aria-current", "false");
+    b.innerHTML = `<span class="n">${String(botones.length + 1).padStart(2,"0")}</span>`
+      + `<span><span class="nombre">${p.n}</span><br><span class="desc">${p.d}</span></span>`
+      + (p.nuevo ? `<span class="etiqueta">nuevo</span>` : `<span></span>`);
+    const i = botones.length;
+    b.onclick = () => cargar(i);
+    botones.push({ el: b, archivo: p.f });
+    d.appendChild(b);
+  });
+  cont.appendChild(d);
+});
+
+// El punto de todo esto: cambiar de versión SIN perder el lugar.
+function cargar(i, forzarPlay) {
+  if (i < 0 || i >= botones.length) return;
+  const pos = audio.currentTime || 0;
+  const sonaba = !audio.paused && audio.currentTime > 0;
+  actual = i;
+  botones.forEach((b, k) => b.el.setAttribute("aria-current", String(k === i)));
+  elAhora.textContent = botones[i].archivo;
+  audio.src = botones[i].archivo;
+  audio.addEventListener("loadedmetadata", () => {
+    audio.currentTime = Math.min(pos, audio.duration - 0.05);
+    if (sonaba || forzarPlay) audio.play();
+    elTotal.textContent = mmss(audio.duration);
+  }, { once: true });
+  audio.load();
+}
+
+btn.onclick = () => {
+  if (actual < 0) return cargar(0, true);
+  audio.paused ? audio.play() : audio.pause();
+};
+audio.addEventListener("play",  () => btn.textContent = "pausa");
+audio.addEventListener("pause", () => btn.textContent = "play");
+audio.addEventListener("timeupdate", () => {
+  if (arrastrando || !audio.duration) return;
+  barra.value = Math.round(1000 * audio.currentTime / audio.duration);
+  elT.textContent = mmss(audio.currentTime);
+});
+barra.addEventListener("input", () => { arrastrando = true; elT.textContent = mmss(barra.value/1000*(audio.duration||0)); });
+barra.addEventListener("change", () => {
+  if (audio.duration) audio.currentTime = barra.value / 1000 * audio.duration;
+  arrastrando = false;
+});
+addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.code === "Space") { e.preventDefault(); btn.click(); }
+  if (e.code === "ArrowDown") { e.preventDefault(); cargar(Math.min(actual + 1, botones.length - 1)); }
+  if (e.code === "ArrowUp")   { e.preventDefault(); cargar(Math.max(actual - 1, 0)); }
+});
+</script>
+</body>
+</html>

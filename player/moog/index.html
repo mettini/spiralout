@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>escalera · ÆM</title>
+<style>
+:root{
+  --fondo:#0a0b0c; --panel:#111214; --panel2:#0d0e10; --linea:#23252a;
+  --texto:#e6e4df; --tenue:#6f747c; --tenue2:#4a4e55;
+  --brasa:#c07040; --brasa-tenue:#7a4526;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--fondo); color:var(--texto);
+  font:400 14px/1.5 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  display:flex; flex-direction:column; min-height:100vh;
+}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+.et{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tenue)}
+
+/* ---------- cabecera ---------- */
+header{
+  display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+  padding:14px 22px;border-bottom:1px solid var(--linea);background:var(--panel2);
+}
+header h1{margin:0;font-size:15px;font-weight:500;letter-spacing:.22em;text-transform:uppercase}
+header .sub{font-size:11px;color:var(--tenue);letter-spacing:.1em}
+header .der{margin-left:auto;display:flex;gap:20px;align-items:baseline}
+.lectura{display:flex;flex-direction:column;gap:1px;text-align:right}
+.lectura b{font:500 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+.octavas{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.pasos{display:flex;align-items:center;gap:8px}
+.pasos b{font-size:15px;min-width:30px;text-align:center}
+.pasos button{
+  width:22px;height:22px;padding:0;line-height:1;background:none;cursor:pointer;
+  border:1px solid var(--linea);border-radius:3px;color:var(--tenue);font-size:14px;
+}
+.pasos button:hover:not(:disabled){border-color:var(--tenue);color:var(--texto)}
+.pasos button:disabled{opacity:.3;cursor:default}
+.octavas.disco b{color:var(--brasa)}
+
+/* ---------- pantalla ---------- */
+.pantalla{position:relative;background:#08090a;border-bottom:1px solid var(--linea)}
+canvas{display:block;width:100%;height:190px}
+.pantalla .tag{position:absolute;top:10px;left:14px}
+.pantalla .estado{position:absolute;top:10px;right:14px;display:flex;gap:14px;align-items:center}
+.punto{width:6px;height:6px;border-radius:50%;background:var(--tenue2);transition:background .12s}
+.punto.on{background:var(--brasa);box-shadow:0 0 8px var(--brasa)}
+
+/* ---------- controles ---------- */
+.controles{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));
+  gap:2px;background:var(--linea);border-bottom:1px solid var(--linea);
+}
+.k{background:var(--panel);padding:14px 6px 10px;display:flex;flex-direction:column;
+   align-items:center;gap:7px;user-select:none;touch-action:none;cursor:ns-resize}
+.k:hover{background:#15161a}
+.k svg{display:block;overflow:visible}
+.k .val{font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+.k .nom{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--tenue)}
+.k.caliente .val{color:var(--brasa)}
+
+/* ---------- teclado ---------- */
+.teclado{flex:1;display:flex;gap:2px;padding:2px;background:var(--linea);min-height:150px}
+.tecla{
+  flex:1;background:var(--panel);border:0;color:var(--tenue);cursor:pointer;
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  gap:6px;padding:0 0 14px;transition:background .06s,color .06s;position:relative;
+  font-family:inherit;
+}
+.tecla:hover{background:#17181c}
+.tecla.on{background:var(--brasa-tenue);color:#fff}
+.tecla .n{font-size:13px;letter-spacing:.04em}
+.tecla .t{font:500 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+          border:1px solid var(--linea);border-radius:3px;padding:2px 5px;color:var(--tenue2)}
+.tecla.on .t{border-color:rgba(255,255,255,.35);color:#fff}
+.tecla.motivo::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--brasa)
+}
+.tecla.motivo .n{color:var(--texto)}
+
+/* ---------- pie ---------- */
+footer{padding:10px 22px;border-top:1px solid var(--linea);background:var(--panel2);
+        display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+footer .et{color:var(--tenue2)}
+button.txt{background:none;border:1px solid var(--linea);color:var(--tenue);
+  font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 12px;border-radius:3px;cursor:pointer}
+button.txt:hover{border-color:var(--tenue);color:var(--texto)}
+.modo{display:flex;border:1px solid var(--linea);border-radius:3px;overflow:hidden}
+.modo button{background:none;border:0;border-right:1px solid var(--linea);color:var(--tenue);
+  font:inherit;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 14px;cursor:pointer}
+.modo button:last-child{border-right:0}
+.modo button.on{background:var(--brasa-tenue);color:#fff}
+#velo{position:fixed;inset:0;background:rgba(8,9,10,.94);display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:18px;z-index:9;cursor:pointer}
+#velo p{max-width:340px;text-align:center;color:var(--tenue);font-size:13px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Escalera</h1>
+  <span class="sub mono">bj3 n pt · ÆM</span>
+  <div class="der">
+    <div class="octavas">
+      <span class="et">octava</span>
+      <div class="pasos">
+        <button id="octMenos" title="flecha abajo">−</button>
+        <b id="rOct" class="mono">×4</b>
+        <button id="octMas" title="flecha arriba">+</button>
+      </div>
+      <span class="et" id="rRango">—</span>
+    </div>
+    <div class="lectura"><span class="et">nota</span><b id="rNota">—</b></div>
+    <div class="lectura"><span class="et">hz</span><b id="rHz">—</b></div>
+    <div class="lectura"><span class="et">cents vs 440</span><b id="rCents">—</b></div>
+  </div>
+</header>
+
+<div class="pantalla">
+  <canvas id="lienzo"></canvas>
+  <span class="tag et">respuesta del filtro · en vivo</span>
+  <div class="estado">
+    <span class="et" id="artic">—</span>
+    <span class="punto" id="luz"></span>
+  </div>
+</div>
+
+<div class="controles" id="controles"></div>
+
+<div class="teclado" id="teclado"></div>
+
+<footer>
+  <div class="modo" id="modo">
+    <button data-v="0" class="on">mono</button><button data-v="1">duo</button>
+  </div>
+  <span class="et">afinado en re 71,3 hz · 50 cents bajo</span>
+  <span class="et">mi sol si = el motivo del disco</span>
+  <span class="et">mantené una tecla y tocá otra: ligado, con glide</span>
+  <span class="et">flechas arriba y abajo: octava</span>
+  <button class="txt" id="btnMotivo">tocar el motivo</button>
+  <button class="txt" id="btnPanico">silencio</button>
+</footer>
+
+<div id="velo"><p>Esto suena. El navegador no deja arrancar el audio solo.</p>
+  <button class="txt">tocar para empezar</button></div>
+
+<script type="module">
+// ---------------------------------------------------------------- afinacion
+// La del disco: Re en 71,3 Hz, que son 50 cents por debajo del Re de 73,42 del
+// temperamento a 440. Todo el tema esta construido sobre esa base.
+const FUND = 71.3;
+const ESCALA = [
+  {n:"re", s:0},  {n:"mi", s:2},  {n:"fa#", s:4}, {n:"sol", s:5},
+  {n:"la", s:7},  {n:"si", s:9},  {n:"do", s:10},
+];
+const MOTIVO = new Set(["mi","sol","si"]);   // Em + H, ver docs/43
+const TECLAS = ["z","x","c","v","b","n","m","a","s","d","f","g","h","j","k"];
+
+const notas = [];
+for (let o = 0; o < 2; o++)
+  for (const e of ESCALA) notas.push({...e, oct:o, semi:e.s + 12*o});
+notas.push({n:"re", s:0, oct:2, semi:24});
+
+// ---------------------------------------------------------------- controles
+const PARAMS = [
+  {id:"corte",     nom:"corte",     min:60,   max:6000, val:1400, uni:"hz", log:true},
+  {id:"res",       nom:"resonancia",min:0,    max:1.25, val:0.72, uni:"",   dec:2, marca:1.0},
+  {id:"drive",     nom:"drive",     min:1,    max:80,   val:14,   uni:"",   dec:0},
+  {id:"envFiltro", nom:"env filtro",min:0,    max:1,    val:0.65, uni:"",   dec:2},
+  {id:"sub",       nom:"sub",       min:0,    max:1,    val:0.35, uni:"",   dec:2},
+  {id:"detune",    nom:"detune",    min:0,    max:40,   val:2.5,  uni:"ct", dec:1},
+  {id:"glide",     nom:"glide",     min:0,    max:2,    val:0.08, uni:"s",  dec:2},
+  {id:"ataque",    nom:"ataque",    min:0.001,max:4,    val:0.02, uni:"s",  dec:2, log:true},
+  {id:"caida",     nom:"caida",     min:0.02, max:8,    val:1.2,  uni:"s",  dec:2},
+  {id:"sostiene",  nom:"sostiene",  min:0,    max:1,    val:0.85, uni:"",   dec:2},
+  {id:"suelta",    nom:"suelta",    min:0.02, max:8,    val:1.4,  uni:"s",  dec:2},
+  {id:"estela",    nom:"estela",    min:0,    max:1,    val:0.45, uni:"",   dec:2, local:true},
+  {id:"sala",      nom:"sala",      min:0,    max:1,    val:0.36, uni:"",   dec:2, local:true},
+];
+const estado = {};
+PARAMS.forEach(p => estado[p.id] = p.val);
+
+// ---------------------------------------------------------------- audio
+let ctx, nodo, filtroSalida, pasaltos, ecoRet, ecoLp, ecoMez, salaMez, maestro, listo = false;
+
+function irSala(seg, lpHz) {
+  // Misma idea que `camara()` del framework: ruido con caida exponencial, un canal
+  // distinto por lado para que la sala tenga ancho.
+  const n = Math.floor(ctx.sampleRate * seg);
+  const buf = ctx.createBuffer(2, n, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const d = buf.getChannelData(c);
+    let y = 0, a = Math.exp(-2 * Math.PI * lpHz / ctx.sampleRate);
+    for (let i = 0; i < n; i++) {
+      y = (Math.random()*2 - 1) * (1 - a) + y * a;      // ruido ya filtrado
+      d[i] = y * Math.pow(1 - i/n, 2.6);
+    }
+  }
+  return buf;
+}
+
+async function arrancar() {
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  await ctx.audioWorklet.addModule("worklet.js");
+  nodo = new AudioWorkletNode(ctx, "moog", {outputChannelCount:[1]});
+
+  // La cadena de `melodia.py`: pasabajos, ancho por retardo, estela y sala.
+  filtroSalida = ctx.createBiquadFilter();
+  filtroSalida.type = "lowpass"; filtroSalida.frequency.value = 3800;
+
+  // EL PASALTOS SIGUE A LA OCTAVA. En el tema esta fijo en 32 Hz porque la mezcla lo
+  // necesita, pero acá eso se comeria la fundamental entera en los registros graves: en
+  // ×1/4 el Re esta en 17,8 Hz. Baja a 14 cuando se toca abajo de ×1.
+  pasaltos = ctx.createBiquadFilter();
+  pasaltos.type = "highpass"; pasaltos.frequency.value = 32;
+  const alto = pasaltos;
+
+  // ancho: 19 ms de retardo en un solo lado. Es el truco de Haas.
+  const mezcla = ctx.createChannelMerger(2);
+  const retardoDer = ctx.createDelay(0.05); retardoDer.delayTime.value = 0.019;
+  alto.connect(mezcla, 0, 0);
+  alto.connect(retardoDer); retardoDer.connect(mezcla, 0, 1);
+
+  // ESTELA: delay realimentado con pasabajos EN EL LAZO, asi cada repeticion se
+  // oscurece. Es lo que hace que la nota resuene en vez de estar siendo sostenida.
+  const eco = ctx.createDelay(4);  eco.delayTime.value = 2.9;
+  ecoRet = ctx.createGain();       ecoRet.gain.value = 0.44;
+  ecoLp = ctx.createBiquadFilter();ecoLp.type = "lowpass"; ecoLp.frequency.value = 1900;
+  ecoMez = ctx.createGain();       ecoMez.gain.value = estado.estela;
+  mezcla.connect(eco); eco.connect(ecoLp); ecoLp.connect(ecoRet); ecoRet.connect(eco);
+  ecoLp.connect(ecoMez);
+
+  const sala = ctx.createConvolver(); sala.buffer = irSala(7, 2800);
+  salaMez = ctx.createGain(); salaMez.gain.value = estado.sala;
+  mezcla.connect(sala); ecoMez.connect(sala); sala.connect(salaMez);
+
+  maestro = ctx.createGain(); maestro.gain.value = 0.55;
+  nodo.connect(filtroSalida); filtroSalida.connect(alto);
+  mezcla.connect(maestro); ecoMez.connect(maestro); salaMez.connect(maestro);
+  maestro.connect(ctx.destination);
+
+  nodo.port.onmessage = (e) => {
+    const m = e.data;
+    if (m.tipo === "medida") {
+      med = m;
+      if (duoActivo && m.voces > 1 && m.env > 0.02)
+        document.getElementById("rHz").textContent =
+          m.hz.toFixed(0) + " · " + m.hz2.toFixed(0);
+    }
+    else if (m.tipo === "art") {
+      document.getElementById("artic").textContent = m.legato ? "ligado · con glide" : "ataque";
+    }
+  };
+  PARAMS.filter(p => !p.local).forEach(p => nodo.parameters.get(p.id).value = estado[p.id]);
+  listo = true;
+}
+
+function set(id, v) {
+  estado[id] = v;
+  if (!listo) return;
+  if (id === "estela") ecoMez.gain.setTargetAtTime(v, ctx.currentTime, 0.05);
+  else if (id === "sala") salaMez.gain.setTargetAtTime(v, ctx.currentTime, 0.05);
+  else nodo.parameters.get(id).setTargetAtTime(v, ctx.currentTime, 0.02);
+}
+
+// ---------------------------------------------------------------- perillas
+const cont = document.getElementById("controles");
+for (const p of PARAMS) {
+  const el = document.createElement("div");
+  el.className = "k"; el.tabIndex = 0;
+  el.innerHTML = `<svg width="52" height="52" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="19" fill="none" stroke="#23252a" stroke-width="2"/>
+      <path class="arco" fill="none" stroke="#e6e4df" stroke-width="2" stroke-linecap="round"/>
+      <line class="aguja" x1="26" y1="26" x2="26" y2="10" stroke="#e6e4df" stroke-width="2"
+            stroke-linecap="round" transform-origin="26 26"/>
+      ${p.marca ? '<circle class="tope" cx="26" cy="26" r="23" fill="none" stroke="#7a4526" stroke-width="1" stroke-dasharray="2 4"/>' : ""}
+    </svg>
+    <span class="val"></span><span class="nom">${p.nom}</span>`;
+  cont.appendChild(el);
+  const arco = el.querySelector(".arco"), aguja = el.querySelector(".aguja"),
+        val = el.querySelector(".val");
+
+  const aNorm = (v) => p.log
+    ? Math.log(v / p.min) / Math.log(p.max / p.min)
+    : (v - p.min) / (p.max - p.min);
+  const deNorm = (t) => p.log
+    ? p.min * Math.pow(p.max / p.min, t)
+    : p.min + t * (p.max - p.min);
+
+  function pintar() {
+    const t = Math.min(1, Math.max(0, aNorm(estado[p.id])));
+    const a0 = -220, a1 = 40, ang = a0 + t * (a1 - a0);
+    const rad = (g) => (g - 90) * Math.PI / 180, R = 19;
+    const x0 = 26 + R*Math.cos(rad(a0)), y0 = 26 + R*Math.sin(rad(a0));
+    const x1 = 26 + R*Math.cos(rad(ang)), y1 = 26 + R*Math.sin(rad(ang));
+    arco.setAttribute("d", `M ${x0} ${y0} A ${R} ${R} 0 ${ang-a0>180?1:0} 1 ${x1} ${y1}`);
+    aguja.setAttribute("transform", `rotate(${ang})`);
+    const v = estado[p.id];
+    val.textContent = (p.dec === 0 ? Math.round(v) : v.toFixed(p.dec ?? 0)) + (p.uni ? " "+p.uni : "");
+    el.classList.toggle("caliente", !!p.marca && v > p.marca);
+  }
+  pintar();
+
+  let arrastre = null;
+  el.addEventListener("pointerdown", (e) => {
+    arrastre = {y:e.clientY, t:aNorm(estado[p.id])}; el.setPointerCapture(e.pointerId);
+  });
+  el.addEventListener("pointermove", (e) => {
+    if (!arrastre) return;
+    const t = Math.min(1, Math.max(0, arrastre.t + (arrastre.y - e.clientY) / 190));
+    set(p.id, deNorm(t)); pintar();
+  });
+  el.addEventListener("pointerup", () => arrastre = null);
+  el.addEventListener("dblclick", () => { set(p.id, p.val); pintar(); });
+}
+
+// ---------------------------------------------------------------- teclado
+const tec = document.getElementById("teclado");
+const porTecla = {};
+notas.forEach((nt, i) => {
+  const base = FUND * Math.pow(2, nt.semi/12);        // sin octava: la multiplica el selector
+  const b = document.createElement("button");
+  b.className = "tecla" + (MOTIVO.has(nt.n) ? " motivo" : "");
+  b.innerHTML = `<span class="n">${nt.n}${nt.oct ? "'".repeat(nt.oct) : ""}</span>
+                 <span class="t">${(TECLAS[i]||"").toUpperCase()}</span>`;
+  b.dataset.base = base; b.dataset.hz = base * 4;
+  b.dataset.nom = nt.n + (nt.oct ? "'".repeat(nt.oct) : "");
+  tec.appendChild(b);
+  if (TECLAS[i]) porTecla[TECLAS[i]] = b;
+  b.addEventListener("pointerdown", (e) => { e.preventDefault(); pulsar(b); });
+  b.addEventListener("pointerup", () => soltar(b));
+  b.addEventListener("pointerleave", () => soltar(b));
+});
+
+// ---------------------------------------------------------------- octavas
+// El multiplicador ×4 es el registro donde vive la melodia del tema (285 a 640 Hz), y
+// esta marcado porque abajo de ~150 Hz el oido deja de percibir melodia y percibe BAJO:
+// sigue la funcion armonica y no el contorno. Ver `docs/45`.
+//
+// Las otras dos octavas no son un capricho: en ×1 y ×2 el mismo motivo deja de ser una
+// linea y pasa a ser fundamento, y en ×8 se vuelve un silbido.
+const OCTAVAS = [0.125, 0.25, 0.5, 1, 2, 4, 8];
+const NOMBRE_OCT = {0.125:"×1/8", 0.25:"×1/4", 0.5:"×1/2", 1:"×1", 2:"×2", 4:"×4", 8:"×8"};
+let iOct = 5;                                   // arranca en ×4, el del disco
+
+function aplicarOctava() {
+  const m = OCTAVAS[iOct];
+  [...tec.children].forEach((b) => b.dataset.hz = (+b.dataset.base * m).toFixed(4));
+  document.getElementById("rOct").textContent = NOMBRE_OCT[m];
+  const lo = +tec.firstElementChild.dataset.hz, hi = +tec.lastElementChild.dataset.hz;
+  let nota = "";
+  if (m === 4) nota = " · el del disco";
+  else if (lo < 20) nota = " · la fundamental no se oye, se siente";
+  else if (hi < 150) nota = " · esto ya no es melodia, es fundamento";
+  document.getElementById("rRango").textContent =
+    `${lo.toFixed(lo < 40 ? 1 : 0)} a ${hi.toFixed(0)} hz` + nota;
+  // el pasaltos se corre para no comerse la fundamental en los graves
+  if (listo) pasaltos.frequency.setTargetAtTime(m < 1 ? 14 : 32, ctx.currentTime, 0.05);
+  document.querySelector(".octavas").classList.toggle("disco", m === 4);
+  document.getElementById("octMenos").disabled = iOct === 0;
+  document.getElementById("octMas").disabled = iOct === OCTAVAS.length - 1;
+  // si hay notas sonando, se las lleva al registro nuevo sin re-disparar: el glide las
+  // arrastra, que es exactamente lo que hace un mono cuando se mueve el selector
+  if (listo) sonando.forEach((b) =>
+    nodo.port.postMessage({tipo:"on", id:b.dataset.nom, hz:+b.dataset.hz}));
+}
+function moverOctava(d) {
+  const n = Math.min(OCTAVAS.length - 1, Math.max(0, iOct + d));
+  if (n !== iOct) { iOct = n; aplicarOctava(); }
+}
+// ---------------------------------------------------------------- mono / duo
+// El Subsequent 25 es de DOS notas y parafonico. En modo Duo, OSC1 sigue una tecla y
+// OSC2 otra, pero las dos alturas entran al MISMO filtro y comparten UNA envolvente.
+// Eso es parafonia: no son dos voces completas, es un instrumento monofonico al que se
+// le pueden dar dos alturas a la vez.
+//
+// La linea del disco es monofonica de verdad (`melodia.py` usa un solo oscilador
+// continuo), asi que mono es el modo fiel al tema. Duo es fiel al hardware.
+document.getElementById("modo").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  [...e.currentTarget.children].forEach((x) => x.classList.toggle("on", x === b));
+  duoActivo = b.dataset.v === "1";
+  if (listo) nodo.parameters.get("duo").value = duoActivo ? 1 : 0;
+  document.getElementById("artic").textContent = duoActivo
+    ? "duo · dos alturas, un filtro" : "—";
+});
+let duoActivo = false;
+
+document.getElementById("octMenos").onclick = () => moverOctava(-1);
+document.getElementById("octMas").onclick = () => moverOctava(+1);
+
+const sonando = new Set();
+function pulsar(b) {
+  if (!listo || sonando.has(b)) return;
+  sonando.add(b); b.classList.add("on");
+  nodo.port.postMessage({tipo:"on", id:b.dataset.nom, hz:+b.dataset.hz});
+  const hz = +b.dataset.hz;
+  document.getElementById("rNota").textContent = b.dataset.nom;
+  document.getElementById("rHz").textContent = hz.toFixed(1);
+  // cuanto se corre de la afinacion estandar: la base del disco esta 50 cents abajo
+  const midi = 69 + 12*Math.log2(hz/440);
+  const cents = Math.round((midi - Math.round(midi)) * 100);
+  document.getElementById("rCents").textContent = (cents>0?"+":"") + cents;
+}
+function soltar(b) {
+  if (!sonando.has(b)) return;
+  sonando.delete(b); b.classList.remove("on");
+  nodo.port.postMessage({tipo:"off", id:b.dataset.nom});
+}
+addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey) return;
+  if (e.key === "ArrowUp")   { e.preventDefault(); moverOctava(+1); return; }
+  if (e.key === "ArrowDown") { e.preventDefault(); moverOctava(-1); return; }
+  if (e.repeat) return;
+  const b = porTecla[e.key.toLowerCase()]; if (b) { e.preventDefault(); pulsar(b); }
+});
+addEventListener("keyup", (e) => { const b = porTecla[e.key.toLowerCase()]; if (b) soltar(b); });
+
+document.getElementById("btnPanico").onclick = () => {
+  sonando.forEach(b => b.classList.remove("on")); sonando.clear();
+  if (listo) nodo.port.postMessage({tipo:"panico"});
+};
+
+// el motivo del disco, tal como suena en el tema: mi sol la sol fa# si
+document.getElementById("btnMotivo").onclick = () => {
+  const sec = [["mi",900],["sol",400],["la",400],["sol",320],["fa#",320],["si",1500]];
+  let t = 0;
+  for (const [n, ms] of sec) {
+    const b = [...tec.children].find(x => x.dataset.nom === n);
+    setTimeout(() => pulsar(b), t);
+    setTimeout(() => soltar(b), t + ms + 60);   // se solapan: por eso hay glide
+    t += ms;
+  }
+};
+
+// ---------------------------------------------------------------- pantalla
+let med = {pico:0, hz:0, env:0, voces:0};
+const cv = document.getElementById("lienzo"), g = cv.getContext("2d");
+function dibujar() {
+  const w = cv.width = cv.clientWidth * devicePixelRatio;
+  const h = cv.height = 190 * devicePixelRatio;
+  g.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  const W = cv.clientWidth, H = 190;
+  g.clearRect(0,0,W,H);
+
+  // rejilla por decadas
+  g.strokeStyle = "#16181c"; g.lineWidth = 1; g.font = "9px ui-monospace,monospace";
+  const f0 = 20, f1 = 11000;
+  const X = (f) => (Math.log(f/f0)/Math.log(f1/f0)) * W;
+  for (const f of [50,100,200,500,1000,2000,5000,10000]) {
+    g.beginPath(); g.moveTo(X(f),0); g.lineTo(X(f),H); g.stroke();
+    g.fillStyle = "#33363c";
+    g.fillText(f>=1000 ? (f/1000)+"k" : f, X(f)+4, H-6);
+  }
+
+  // la respuesta de la escalera: 24 dB por octava y el pico de resonancia
+  const corte = estado.corte * (1 - estado.envFiltro + estado.envFiltro * (med.env||0));
+  const res = estado.res;
+  g.beginPath();
+  for (let px = 0; px <= W; px++) {
+    const f = f0 * Math.pow(f1/f0, px/W);
+    const r = f / Math.max(corte, 1);
+    // 4 polos + realce cerca del corte, que crece con la resonancia
+    let mag = 1 / Math.pow(1 + Math.pow(r, 2), 2);
+    mag *= 1 + res * 3.6 * Math.exp(-Math.pow(Math.log(r) * 2.2, 2));
+    const db = 20 * Math.log10(Math.max(mag, 1e-4));
+    const y = H*0.62 - db * 1.55;
+    px ? g.lineTo(px, y) : g.moveTo(px, y);
+  }
+  g.strokeStyle = res > 1 ? "#c07040" : "#e6e4df";
+  g.lineWidth = 1.6; g.stroke();
+
+  // el corte, y la nota que esta sonando
+  g.strokeStyle = "#c07040"; g.setLineDash([2,4]); g.lineWidth = 1;
+  g.beginPath(); g.moveTo(X(corte),0); g.lineTo(X(corte),H); g.stroke(); g.setLineDash([]);
+  if (med.hz > 20 && med.env > 0.02) {
+    g.strokeStyle = "rgba(230,228,223,.5)";
+    g.beginPath(); g.moveTo(X(med.hz),H*0.15); g.lineTo(X(med.hz),H); g.stroke();
+    // en duo la segunda altura tambien: se ve como las dos entran al mismo filtro
+    if (med.hz2 > 20 && Math.abs(med.hz2 - med.hz) > 1) {
+      g.beginPath(); g.moveTo(X(med.hz2),H*0.15); g.lineTo(X(med.hz2),H); g.stroke();
+    }
+  }
+
+  // barra de nivel
+  const lv = Math.min(1, med.pico);
+  g.fillStyle = lv > 0.95 ? "#c07040" : "#3a3e45";
+  g.fillRect(W-8, H - lv*H, 4, lv*H);
+
+  document.getElementById("luz").classList.toggle("on", med.env > 0.02);
+  requestAnimationFrame(dibujar);
+}
+aplicarOctava();
+dibujar();
+
+// ---------------------------------------------------------------- arranque
+document.getElementById("velo").addEventListener("click", async () => {
+  document.getElementById("velo").remove();
+  await arrancar();
+}, {once:true});
+</script>
+</body>
+</html>
