@@ -24,6 +24,11 @@ import numpy as np
 AQUI = os.path.dirname(os.path.abspath(__file__))
 VIDEO = sys.argv[1] if len(sys.argv) > 1 else os.path.join(AQUI, "bj3_n_pt_1080.mp4")
 AUDIO = os.path.join(AQUI, "..", "tema_1111_master.wav")
+# La raiz del repo se BUSCA, no se cuenta en niveles: contarlos rompio al mover la
+# carpeta del lab a `transmissions/02/`, que baja un nivel mas.
+RAIZ = AQUI
+while RAIZ != "/" and not os.path.isdir(os.path.join(RAIZ, ".git")):
+    RAIZ = os.path.dirname(RAIZ)
 # el plan congelado JUNTO a ese entregable, no el ultimo que se genero
 
 MOOG = [501, 524, 544, 564, 582, 603, 627]   # cambios de enunciado, de melodia.py
@@ -129,10 +134,12 @@ def main():
           f"{negros} planos con mas del 70% casi negro (aprobado con 27, tope 29)")
 
     # 9 · el audio
-    qa = subprocess.run(["python3.10", os.path.join(AQUI, "..", "..", "..",
-                                                    "scripts", "qa_scan_spectral.py"), AUDIO],
-                        capture_output=True, text=True).stdout
-    marca("9 · QA espectral del audio", "OK" in qa, qa.strip().splitlines()[-1][:52])
+    qa = subprocess.run(["python3.10", os.path.join(RAIZ, "scripts", "qa_scan_spectral.py"),
+                         AUDIO], capture_output=True, text=True).stdout
+    if not qa.strip():
+        qa = "sin salida del QA espectral"
+    marca("9 · QA espectral del audio", "OK" in qa,
+          (qa.strip().splitlines() or ["sin salida"])[-1][:52])
 
     print()
     fallan = [n for ok, n, _ in resultados if not ok]
