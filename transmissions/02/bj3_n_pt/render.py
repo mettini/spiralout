@@ -6,7 +6,7 @@ en el subsuelo de una casa de la calle Ortiz de Ocampo, 15 segundos grabados con
 el celular. Thermal Mass es el sotano, Cloud Chamber es lo que flota arriba.
 Estan pensadas para sonar juntas: sus bandas casi no se cruzan.
 
-    python3.10 lab/thermal_mass/render.py
+    python3.10 transmissions/02/bj3_n_pt/render.py
 
 Requiere ffmpeg (para el m4a) + numpy, scipy, pyloudnorm.
 El porque de cada paso esta en README.md.

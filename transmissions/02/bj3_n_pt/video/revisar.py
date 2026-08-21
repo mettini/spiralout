@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Detecta placas de titulo y marcas de agua en material de archivo.
 
-    python3.10 lab/thermal_mass/video/revisar.py clip.mp4 [otro.mp4 ...]
+    python3.10 transmissions/02/bj3_n_pt/video/revisar.py clip.mp4 [otro.mp4 ...]
 
 POR QUE EXISTE
 

@@ -4,7 +4,7 @@
 Fuente: las tomas del user recitando las cuatro formulas en protoindoeuropeo
 (`docs/42`). Dos versiones para comparar, una limpia y una medio cantada/gutural.
 
-    python3.10 lab/thermal_mass/voces.py
+    python3.10 transmissions/02/bj3_n_pt/voces.py
 
 LA DECISION QUE MANDA: la afinacion.
 

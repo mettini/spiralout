@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verifica CADA PLANO tal como va a salir, antes de renderizar el video entero.
 
-    python3.10 lab/thermal_mass/video/planos.py | python3.10 lab/thermal_mass/video/verificar.py
+    python3.10 transmissions/02/bj3_n_pt/video/planos.py | python3.10 transmissions/02/bj3_n_pt/video/verificar.py
 
 POR QUE ESTE Y NO `ventanas.py`
 --------------------------------------------------------------------------------

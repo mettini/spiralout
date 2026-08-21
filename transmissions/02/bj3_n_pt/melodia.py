@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """La melodia del moog, armada con estructura de melodia y no como paseo al azar.
 
-    python3.10 lab/thermal_mass/melodia.py
+    python3.10 transmissions/02/bj3_n_pt/melodia.py
 
 QUE ESTABA MAL, Y NO ERA EL SONIDO
 --------------------------------------------------------------------------------

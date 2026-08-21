@@ -12,7 +12,7 @@ gusto, es aritmetica: de los cuatro clips el 4739 es el unico con agudo real (26
 transitorios (15 saltos de mas de 9 dB) y de ahi sale la capa de eventos de lluvia,
 que se rinde aparte para poder compararla contra `flywheel` antes de meterla.
 
-    python3.10 lab/thermal_mass/rain.py
+    python3.10 transmissions/02/bj3_n_pt/rain.py
 
 Determinista: misma semilla que `render.py` (24, el hexagrama del proyecto).
 

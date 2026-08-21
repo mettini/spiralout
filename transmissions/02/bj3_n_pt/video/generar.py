@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Clips generados para el video de Aerolite (TX02 track 1).
 
-    python3.10 lab/thermal_mass/video/generar.py            # todo
-    python3.10 lab/thermal_mass/video/generar.py cielo_01   # uno solo
+    python3.10 transmissions/02/bj3_n_pt/video/generar.py            # todo
+    python3.10 transmissions/02/bj3_n_pt/video/generar.py cielo_01   # uno solo
 
 DOS ESCENAS, bajadas por el user:
 

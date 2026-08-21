@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """El tema completo: 11:11 con el arreglo de `docs/39`.
 
-    python3.10 lab/thermal_mass/tema.py
+    python3.10 transmissions/02/bj3_n_pt/tema.py
 
 11:11 son 671 segundos. Nada se estira: cada capa se REN DERIZA a 671, que es como
 esta pensado el codigo (todas toman `dur`). Time-stretchear el archivo final embarra

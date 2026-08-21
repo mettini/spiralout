@@ -223,4 +223,4 @@ púa: masa/radio), que es lo que da el carácter físico.
 El hilo B (deformación línea Lustmord) dejó de ser solo un experimento: es el
 **track 1 de Transmission 02**. Concepto y tracklist de esa transmisión →
 `docs/39_transmission_02.md`. Anatomía de capas y qué fuente grabar →
-`docs/38_capas_dark_ambient.md`. La primera pieza está en `lab/thermal_mass/`.
+`docs/38_capas_dark_ambient.md`. La primera pieza está en `transmissions/02/bj3_n_pt/`.

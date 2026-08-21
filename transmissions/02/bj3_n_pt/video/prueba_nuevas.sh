@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Clip de validacion de las fuentes NUEVAS, ya con el grado del video puesto.
 #
-#   bash lab/thermal_mass/video/prueba_nuevas.sh
+#   bash transmissions/02/bj3_n_pt/video/prueba_nuevas.sh
 #
 # Son tres fuentes que no estaban en el repo, bajadas de Wikimedia Commons:
 #

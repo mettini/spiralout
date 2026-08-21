@@ -8,7 +8,7 @@ la misma casa. Cada una es dueña de una banda distinta y están pensadas para s
 juntas.
 
 ```bash
-python3.10 lab/thermal_mass/render.py
+python3.10 transmissions/02/bj3_n_pt/render.py
 ```
 
 Rinde las cuatro capas más la mezcla. **Determinista**: la semilla está fijada en
@@ -196,7 +196,7 @@ Resultado medido: **5 golpes en 30 s**, cada uno ~12 dB sobre el piso local, con
 ## La mezcla con arco
 
 ```bash
-python3.10 lab/thermal_mass/mix.py     # -> mix_v2_arco.wav, 2 minutos
+python3.10 transmissions/02/bj3_n_pt/mix.py     # -> mix_v2_arco.wav, 2 minutos
 ```
 
 Sumar las cuatro capas a nivel fijo suena a paisaje, no a pieza: todo empieza y

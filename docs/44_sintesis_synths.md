@@ -2,7 +2,7 @@
 
 > Estado: **en uso**. Módulo en `framework/aem/synths.py`.
 > Doc general del proyecto, no de una transmisión. El primer uso concreto es la voz
-> del track 1 de TX02 (`lab/thermal_mass/moog.py`), pero esto sirve para cualquiera.
+> del track 1 de TX02 (`transmissions/02/bj3_n_pt/moog.py`), pero esto sirve para cualquiera.
 
 ## Qué hay
 

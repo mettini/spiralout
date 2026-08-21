@@ -88,7 +88,7 @@ en 20 ms.
 
 ## Cómo se transforma en coro
 
-`lab/thermal_mass/voces.py`.
+`transmissions/02/bj3_n_pt/voces.py`.
 
 Las tres voces del stack **se derivan de la fundamental de la base, no de la toma**,
 así el coro no se apoya sobre el tema sino que es el tema:

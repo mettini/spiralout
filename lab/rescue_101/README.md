@@ -14,7 +14,7 @@ Caés al planeta en el track 1 y **acá descubrís que hay vida**. Flora y fauna
 lugar: plantas, flores, bichos, algo parecido a pájaros.
 
 Es **el track luminoso de los tres**, y es a propósito. Contra el track 1, que es
-mineral y violento (`lab/thermal_mass/`), este es orgánico y paciente. El arco de la
+mineral y violento (`transmissions/02/bj3_n_pt/`), este es orgánico y paciente. El arco de la
 transmisión es descendente y después ascendente: caés, encontrás que hay vida, y en
 el track 3 te conectás con algo más grande.
 
@@ -115,7 +115,7 @@ El track necesita tres escalas de tiempo corriendo a la vez:
 - **Medio** (5 a 40 s): qué voces están prendidas. Acá manda `coin` y `random`. Es lo
   que hace que el minuto 3 no sea el minuto 8.
 - **Lento** (minutos): el arco. **Esto va escrito a mano, no al azar**, igual que la
-  tabla de automatización de `lab/thermal_mass/mix.py`.
+  tabla de automatización de `transmissions/02/bj3_n_pt/mix.py`.
 
 La regla que ya aprendimos en thermal_mass: **el azar decide el detalle, la mano
 decide la forma.** Un patch enteramente generativo suena a demo de patch.

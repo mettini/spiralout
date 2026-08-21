@@ -9,7 +9,7 @@
 
 ## El audio contra el que se sincroniza
 
-`lab/thermal_mass/tema_1111_master.wav`, 11:11 (671 s), masterizado, LUFS −16.
+`transmissions/02/bj3_n_pt/tema_1111_master.wav`, 11:11 (671 s), masterizado, LUFS −16.
 
 Los tiempos del arreglo salen de `tema.py` y son los que manda el montaje:
 
@@ -126,7 +126,7 @@ TX01 genera un `.npz` por track (ver `transmissions/01/video/control/`) con las 
 `rms`, `rms_sub`, `rms_air`, `centroid`, `flux`, `onset` a 30 fps.
 
 **Falta generarlo para este tema**: hay que correr el mismo análisis sobre
-`tema_1111_master.wav` y guardar `lab/thermal_mass/video/control/bj3_n_pt.npz`.
+`tema_1111_master.wav` y guardar `transmissions/02/bj3_n_pt/video/control/bj3_n_pt.npz`.
 
 Con eso: el zoom sigue a `rms_sub`, el brillo a `centroid`, y los cortes o destellos
 caen en `onset`. Los 36 golpes de sílaba del coro son eventos identificables y ahí
@@ -149,21 +149,21 @@ tape el escalado en vez de delatarlo.
 
 ```bash
 # regenerar clips (opcional, ya están los diez)
-python3.10 lab/thermal_mass/video/generar.py               # todos los que falten
-python3.10 lab/thermal_mass/video/generar.py cielo_04 --rehacer
-python3.10 lab/thermal_mass/video/generar.py cielo_04 --rapido   # sin offload, más RAM
+python3.10 transmissions/02/bj3_n_pt/video/generar.py               # todos los que falten
+python3.10 transmissions/02/bj3_n_pt/video/generar.py cielo_04 --rehacer
+python3.10 transmissions/02/bj3_n_pt/video/generar.py cielo_04 --rapido   # sin offload, más RAM
 
 # el concepto de 2 min con la lluvia
-bash lab/thermal_mass/video/concepto.sh
+bash transmissions/02/bj3_n_pt/video/concepto.sh
 
 # el audio
-python3.10 lab/thermal_mass/tema.py              # usa el cache de capas
-python3.10 lab/thermal_mass/tema.py --rehacer    # rinde todo de nuevo (~3 min)
-python3.10 scripts/qa_scan_spectral.py lab/thermal_mass/tema_1111_master.wav
+python3.10 transmissions/02/bj3_n_pt/tema.py              # usa el cache de capas
+python3.10 transmissions/02/bj3_n_pt/tema.py --rehacer    # rinde todo de nuevo (~3 min)
+python3.10 scripts/qa_scan_spectral.py transmissions/02/bj3_n_pt/tema_1111_master.wav
 
 # escuchar
 python3.10 player/serve.py --port 8765 --no-open
-# http://localhost:8765/lab/thermal_mass/escuchar.html
+# http://localhost:8765/transmissions/02/bj3_n_pt/escuchar.html
 ```
 
 ## Notas de generación que ya costaron tiempo
@@ -705,7 +705,7 @@ planos que la usaban (uno arrancaba en el segundo 24, o sea de lleno en la placa
 **El fix de fondo no es corregir la ventana, es dejar de confiar en ellas.** Se agrego
 a `revisar.py` un escaneo del VIDEO YA ARMADO:
 
-    python3.10 lab/thermal_mass/video/revisar.py --salida bj3_n_pt_1080.mp4
+    python3.10 transmissions/02/bj3_n_pt/video/revisar.py --salida bj3_n_pt_1080.mp4
 
 Recorre la salida buscando texto quemado y lista los tramos. Es lo unico que el
 espectador ve, y es el unico chequeo que no depende de que yo haya anotado bien una

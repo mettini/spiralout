@@ -71,7 +71,7 @@ TX01 el narrador observa desde afuera, en TX02 narra desde adentro.
 
 | # | Track | Qué pasa | Referencia sonora |
 |---|---|---|---|
-| 1 | **bj3 n pt** | **El pasaje por la atmósfera**, visto desde abajo. Algo entra | Lustmord. Ya en marcha → `lab/thermal_mass/` |
+| 1 | **bj3 n pt** | **El pasaje por la atmósfera**, visto desde abajo. Algo entra | Lustmord. Ya en marcha → `transmissions/02/bj3_n_pt/` |
 | 2 | **Rescue 101** | **La vida en el planeta**: flora y fauna local, flores, plantas, pájaros | Steve Roach / **KMRU**. Lab → `lab/rescue_101/` |
 | 3 | **+H** | **El amor.** La fusión. La Æ | Synth modular |
 
@@ -172,11 +172,11 @@ cielo".
 
 ## El estado técnico del track
 
-Vive en `lab/thermal_mass/` (nombre de carpeta heredado de la fuente original, la bomba
+Vive en `transmissions/02/bj3_n_pt/` (nombre de carpeta heredado de la fuente original, la bomba
 de la losa radiante: **no es el título**).
 
 Ya existe como cuatro capas rendidas más las nuevas (lluvia, coro, brillo, moog).
-El arreglo completo de 11:11 se arma con `lab/thermal_mass/tema.py`.
+El arreglo completo de 11:11 se arma con `transmissions/02/bj3_n_pt/tema.py`.
 
 ## Track 2 · Rescue 101
 
@@ -269,7 +269,7 @@ Lo que sigue abajo es el razonamiento que llevó ahí, y se conserva como contex
 ### Cómo se llega a 671 segundos sin estirar nada
 
 **No se time-stretchea el archivo final.** Eso embarra todo. Las capas ya son
-paramétricas: `lab/thermal_mass/render.py` tiene `DUR` como constante de módulo y
+paramétricas: `transmissions/02/bj3_n_pt/render.py` tiene `DUR` como constante de módulo y
 cada capa recibe `dur=DUR`. El concepto de 2 minutos y el master de 11:11 son **el
 mismo código con otro DUR**.
 
@@ -357,7 +357,7 @@ nosotros no explicamos nada.
 
 ### Cómo grabarla
 
-- **WAV limpio por la Volt 276, cerca.** El README de `lab/thermal_mass/` ya tiene la
+- **WAV limpio por la Volt 276, cerca.** El README de `transmissions/02/bj3_n_pt/` ya tiene la
   lección: las fuentes anteriores estaban a ~70 kbps y el stretch extremo amplifica
   los artefactos del codec, porque cada cuadro espectral queda sostenido un segundo
   entero en vez de pasar en 20 ms.
@@ -402,7 +402,7 @@ lluvia y saltar de ahí al primer corte, aprovechando que el track 1 se llamarí
 
 ## Cosas que ya existen y aplican
 
-- **`lab/thermal_mass/`** — track 1 en marcha, cuatro de seis capas.
+- **`transmissions/02/bj3_n_pt/`** — track 1 en marcha, cuatro de seis capas.
 - **`docs/38_capas_dark_ambient.md`** — anatomía de capas y qué fuente grabar.
 - **`docs/22_game_of_life_sintes_modulares.md`** — CA + modular, para el track 3.
 - **`docs/16_video_H_helen_collab.md`** — el concepto visual de "CERN legos
@@ -422,7 +422,7 @@ lluvia y saltar de ahí al primer corte, aprovechando que el track 1 se llamarí
    que después da los textos, los fragmentos y los posts. La Æ vive ahí.
 5. Si hay colaboración con Helen y dónde (es una decisión separada de Em+H).
 6. ~~Grabar las capas de grano y aire del track 1~~ → **resuelto con los cuatro
-   clips de lluvia del 2026-08-08.** Ver `lab/thermal_mass/README.md`. Para el track
+   clips de lluvia del 2026-08-08.** Ver `transmissions/02/bj3_n_pt/README.md`. Para el track
    2 sigue faltando todo lo orgánico.
 7. Grabar la voz en PIE y armar el coro.
 8. Definir con qué abre el video antes del primer corte seco.

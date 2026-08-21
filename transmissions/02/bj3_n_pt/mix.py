@@ -7,7 +7,7 @@ tiene su propia automatizacion de nivel, y el orden de entrada sigue el criterio
 de `docs/38`: la cama define la nota, los EVENTOS definen la estructura temporal,
 y el relleno se acomoda alrededor.
 
-    python3.10 lab/thermal_mass/mix.py
+    python3.10 transmissions/02/bj3_n_pt/mix.py
 
 Estructura (2:00):
 

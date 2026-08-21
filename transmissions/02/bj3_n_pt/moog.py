@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """La voz tipo Moog: el motivo Em + H tocado por un monosintetizador.
 
-    python3.10 lab/thermal_mass/moog.py
+    python3.10 transmissions/02/bj3_n_pt/moog.py
 
 POR QUE ACA SI VA UN SYNTH
 

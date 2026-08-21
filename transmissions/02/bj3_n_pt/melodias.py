@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Candidatas de melodia para el moog. Una WAV por cada una, para elegir.
 
-    python3.10 lab/thermal_mass/melodias.py
+    python3.10 transmissions/02/bj3_n_pt/melodias.py
 
 Idea del user: pensarlo como un tema. Si la melodia no cambia, el que escucha queda
 atrapado ahi. Asi que en vez de una melodia que se repite 190 s, se arman VARIAS y

@@ -3,7 +3,7 @@
 Referencia de trabajo. Qué es el microsonido, por qué es una escala de TIEMPO y no de
 altura, y qué se puede hacer con él en este repo.
 
-Primo directo de lo que ya se usa en [`lab/thermal_mass/`](../lab/thermal_mass/README.md)
+Primo directo de lo que ya se usa en [`transmissions/02/bj3_n_pt/`](../transmissions/02/bj3_n_pt/README.md)
 (Paulstretch) y de la línea de datos como origen de
 [`41_data_como_origen.md`](41_data_como_origen.md).
 

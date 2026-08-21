@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # El tramo 4:50 a 6:30 del video: donde suena la lluvia clara y granular.
 #
-#   bash lab/thermal_mass/video/tramo_lluvia.sh
+#   bash transmissions/02/bj3_n_pt/video/tramo_lluvia.sh
 #
 # POR QUE ESTE TRAMO TIENE TRATAMIENTO PROPIO
 #

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # El video de `bj3 n pt` (TX02 track 1), 11:11 contra el master.
 #
-#   bash lab/thermal_mass/video/montaje.sh          # 1080p60, para revisar
-#   bash lab/thermal_mass/video/montaje.sh --4k     # 3840x2160 60fps, entrega
+#   bash transmissions/02/bj3_n_pt/video/montaje.sh          # 1080p60, para revisar
+#   bash transmissions/02/bj3_n_pt/video/montaje.sh --4k     # 3840x2160 60fps, entrega
 #
 # CUATRO TRAMOS, sobre los tiempos del arreglo (docs/39):
 #

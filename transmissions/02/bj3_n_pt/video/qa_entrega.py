@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """El examen de entrega. Trece criterios medibles, sin opinion.
 
-    python3.10 lab/thermal_mass/video/qa_entrega.py
+    python3.10 transmissions/02/bj3_n_pt/video/qa_entrega.py
 
 POR QUE EXISTE
 --------------------------------------------------------------------------------

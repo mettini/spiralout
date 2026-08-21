@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """La progresion del moog: un solo track continuo, para escuchar como evoluciona.
 
-    python3.10 lab/thermal_mass/progresion.py
+    python3.10 transmissions/02/bj3_n_pt/progresion.py
 
 QUE SE CORRIGE DE LA TANDA ANTERIOR
 

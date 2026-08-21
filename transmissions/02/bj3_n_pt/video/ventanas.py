@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Escanea cada fuente DENSO y saca sus ventanas limpias.
 
-    python3.10 lab/thermal_mass/video/ventanas.py            # todas
-    python3.10 lab/thermal_mass/video/ventanas.py archivo    # una
+    python3.10 transmissions/02/bj3_n_pt/video/ventanas.py            # todas
+    python3.10 transmissions/02/bj3_n_pt/video/ventanas.py archivo    # una
 
 POR QUE EXISTE
 --------------------------------------------------------------------------------

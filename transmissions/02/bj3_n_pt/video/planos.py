@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Arma la lista de planos del video cumpliendo las CUATRO reglas por construccion.
 
-    python3.10 lab/thermal_mass/video/planos.py > lista.txt
+    python3.10 transmissions/02/bj3_n_pt/video/planos.py > lista.txt
 
 POR QUE EXISTE ESTE ARCHIVO
 --------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ try:
         VENTANAS = {k: [tuple(v) for v in vs] for k, vs in json.load(_fh).items()}
 except FileNotFoundError:
     sys.exit("ABORTA: falta ventanas.json. Corre primero:\n"
-             "    python3.10 lab/thermal_mass/video/ventanas.py")
+             "    python3.10 transmissions/02/bj3_n_pt/video/ventanas.py")
 
 # ---------------------------------------------------------------- las fuentes
 # (clave, ruta, categoria, velocidad, tratamiento, [recortes...])

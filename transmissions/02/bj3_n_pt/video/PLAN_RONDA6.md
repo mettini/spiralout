@@ -64,7 +64,7 @@ Sol y Si todo intervalo es una 3ra o más, y eso el oído lo lee como arpegio de
 armonía), ningún pico, y ningún par antecedente / consecuente.
 
 **La versión correcta está en `docs/45_como_se_arma_una_melodia.md`** e implementada en
-`lab/thermal_mass/melodia.py`: forma A A' B A'' sobre los 200 s, motivo de ritmo fijo que
+`transmissions/02/bj3_n_pt/melodia.py`: forma A A' B A'' sobre los 200 s, motivo de ritmo fijo que
 vuelve en tres de las cuatro frases, 77% de grados conjuntos usando Fa# La y Do como
 notas de paso, y un pico único (Mi 640 Hz) al 54% de la ventana.
 

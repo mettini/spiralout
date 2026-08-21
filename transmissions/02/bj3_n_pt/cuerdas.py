@@ -5,7 +5,7 @@ Dos capas nuevas, y ninguna trae un instrumento. Las dos salen de filtrar la llu
 con resonadores afinados a la serie armonica de la base (71,3 Hz), que es la jugada
 Lustmord: no hay synths, hay grabaciones deformadas.
 
-    python3.10 lab/thermal_mass/cuerdas.py
+    python3.10 transmissions/02/bj3_n_pt/cuerdas.py
 
 POR QUE RESONADORES Y NO UN SYNTH
 

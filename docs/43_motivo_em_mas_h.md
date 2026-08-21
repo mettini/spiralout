@@ -2,7 +2,7 @@
 
 > Estado: **decidido**. Bajado por el user el 2026-08-09.
 > Es el motivo melódico de TX02 entero, los tres tracks.
-> Implementado en `lab/thermal_mass/cuerdas.py` (`MOTIVO`, `SEMITONOS`, `altura()`).
+> Implementado en `transmissions/02/bj3_n_pt/cuerdas.py` (`MOTIVO`, `SEMITONOS`, `altura()`).
 
 ## De dónde sale
 
@@ -76,7 +76,7 @@ Heliopause era el hogar, acá es la disonancia de abajo.
 
 ## Dónde está implementado
 
-`lab/thermal_mass/cuerdas.py`:
+`transmissions/02/bj3_n_pt/cuerdas.py`:
 
 ```python
 SEMITONOS = {"mi": 2, "sol": 5, "si": 9}

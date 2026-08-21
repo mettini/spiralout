@@ -2,11 +2,11 @@
 
 > Para qué existe este doc: saber **qué salir a grabar** y **cómo se apilan las
 > capas**, sin improvisar. Sale de la primera vuelta completa del experimento de
-> deformación (`lab/thermal_mass/`), donde quedó claro que una fuente equivocada
+> deformación (`transmissions/02/bj3_n_pt/`), donde quedó claro que una fuente equivocada
 > no se arregla con procesamiento.
 >
 > Técnica y referentes → `docs/27` hilo B. Cadenas concretas y qué salió mal →
-> `lab/thermal_mass/README.md`.
+> `transmissions/02/bj3_n_pt/README.md`.
 
 ## El principio: un edificio de bandas
 
@@ -116,7 +116,7 @@ deformado**. Reverb largo y nada más.
 
 **Y si la fuente trae los golpes mezclados con zumbido** (un lavarropas, un motor
 con carga), hay tres técnicas que salieron del primer experimento y sirven siempre
-(implementadas en `lab/thermal_mass/render.py`):
+(implementadas en `transmissions/02/bj3_n_pt/render.py`):
 
 1. **Separar golpe de zumbido con filtro de mediana** sobre el espectrograma
    (HPSS): mediana en el **tiempo** aísla lo estacionario, mediana en **frecuencia**

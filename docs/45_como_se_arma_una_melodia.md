@@ -4,7 +4,7 @@ Referencia de trabajo para las líneas melódicas del proyecto. Escrito después
 intentos fallidos con el moog de TX02, donde el sonido estaba bien y la melodía no
 existía.
 
-Implementación: `lab/thermal_mass/melodia.py`. El instrumento está en
+Implementación: `transmissions/02/bj3_n_pt/melodia.py`. El instrumento está en
 [`44_sintesis_synths.md`](44_sintesis_synths.md), el material armónico en
 [`43_motivo_em_mas_h.md`](43_motivo_em_mas_h.md).
 

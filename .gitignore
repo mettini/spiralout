@@ -126,3 +126,16 @@ lab/**/fuentes/
 # versiona, porque documenta con que se hizo el video que se publico. El `ultimo_plan.txt`
 # es transitorio: lo reescribe cada build.
 lab/**/ultimo_plan.txt
+
+# TX02 salio del lab a `transmissions/02/bj3_n_pt/`. Las reglas de `lab/**` ya no lo
+# cubren, y lo que sale de correr el codigo (wavs de capa, mezclas, videos, fuentes
+# bajadas, cache de capas) no va al repo: se rehace desde los compose.
+transmissions/02/**/*.wav
+transmissions/02/**/*.mp4
+transmissions/02/**/*.mov
+transmissions/02/**/.capas/
+transmissions/02/**/.montaje/
+transmissions/02/**/fuentes/
+transmissions/02/**/melodias/
+transmissions/02/**/ultimo_plan.txt
+transmissions/02/**/__pycache__/

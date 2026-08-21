@@ -27,7 +27,7 @@ El patrón es siempre el mismo: **verifiqué una parte y afirmé sobre el todo.*
 ## El examen
 
 ```bash
-python3.10 lab/thermal_mass/video/qa_entrega.py
+python3.10 transmissions/02/bj3_n_pt/video/qa_entrega.py
 ```
 
 Devuelve PASA o FALLA por criterio y un veredicto final. Si algo falla, no se entrega.

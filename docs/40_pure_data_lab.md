@@ -223,7 +223,7 @@ tiempo corriendo a la vez:
 - **Medio** (5 a 40 segundos): qué voces están activas. Acá va `coin` y `random`, que
   encienden y apagan cosas. Es lo que hace que el minuto 3 no sea el minuto 8.
 - **Lento** (minutos): el arco general. Esto **no** lo dejo al azar. Va escrito, igual
-  que la tabla de automatización de `lab/thermal_mass/mix.py`.
+  que la tabla de automatización de `transmissions/02/bj3_n_pt/mix.py`.
 
 La regla que ya aprendimos en thermal_mass y que aplica igual: **el azar decide el
 detalle, la mano decide la forma.** Un patch 100% generativo suena a demo de patch.
@@ -232,7 +232,7 @@ detalle, la mano decide la forma.** Un patch 100% generativo suena a demo de pat
 
 ### Determinismo
 
-`lab/thermal_mass/render.py` tiene `SEMILLA = 24` y por eso rinde igual siempre. En
+`transmissions/02/bj3_n_pt/render.py` tiene `SEMILLA = 24` y por eso rinde igual siempre. En
 Pd se consigue lo mismo: los objetos de azar aceptan un mensaje **`seed`** con un
 número. Hay que mandarle la semilla a cada uno al cargar el patch, desde un `loadbang`.
 
@@ -264,7 +264,7 @@ Cuando esté andando, esto entra al `Taskfile` como `task tx02:render:rescue`.
 
 Las grabaciones fuente son el caso incómodo: **no se regeneran** (son irrepetibles) y
 pesan. Van a un backup aparte, con una línea en el README que diga qué es cada una y
-de dónde salió. Igual que en `lab/thermal_mass/`.
+de dónde salió. Igual que en `transmissions/02/bj3_n_pt/`.
 
 ## Referencias
 

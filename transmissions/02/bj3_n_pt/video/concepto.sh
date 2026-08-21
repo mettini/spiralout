@@ -14,7 +14,7 @@
 # 4K obligatorio (memory/feedback_video_must_be_4k.md) y a 60 fps
 # (memory/feedback_render_60fps_for_youtube.md).
 #
-#   bash lab/thermal_mass/video/concepto.sh
+#   bash transmissions/02/bj3_n_pt/video/concepto.sh
 set -euo pipefail
 
 AQUI="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
