@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>estrella_negra · escuchar los stems</title>
+<style>
+  :root {
+    --fondo:  #0D0E10;
+    --panel:  #16181B;
+    --linea:  #262A2F;
+    --texto:  #DEDAD1;
+    --tenue:  #7C7972;
+    --activo: #C98A3C;
+    --solo:   #4E8FA6;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--fondo); color: var(--texto);
+    font: 15px/1.55 system-ui, -apple-system, sans-serif;
+    padding: 2.5rem 1.25rem 6rem;
+  }
+  .wrap { max-width: 54rem; margin: 0 auto; display: flex; flex-direction: column; gap: 1.6rem; }
+  h1 { font: 600 1.35rem/1.2 var(--mono); margin: 0; letter-spacing: -.01em; }
+  .sub { color: var(--tenue); font-size: .92rem; margin: .4rem 0 0; }
+  .sub b { color: var(--texto); font-weight: 600; }
+
+  .transporte {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--panel); border: 1px solid var(--linea); border-radius: 4px;
+    padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .8rem;
+  }
+  .fila { display: flex; align-items: center; gap: .9rem; }
+  button {
+    font: 600 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    background: var(--linea); color: var(--texto); border: 1px solid #34383E;
+    border-radius: 3px; padding: .45rem .8rem; cursor: pointer;
+  }
+  button:hover { background: #2E333A; }
+  button:focus-visible { outline: 2px solid var(--activo); outline-offset: 2px; }
+  .tiempo { font: .85rem var(--mono); color: var(--tenue); font-variant-numeric: tabular-nums; }
+  input[type=range] { flex: 1; accent-color: var(--activo); }
+
+  .mapa { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .mapa button { font-size: .65rem; letter-spacing: .06em; padding: .3rem .55rem; background: transparent; }
+  .mapa button.aca { border-color: var(--activo); color: var(--activo); }
+
+  .pistas { display: flex; flex-direction: column; gap: .5rem; }
+  .pista {
+    display: grid; grid-template-columns: 3px 8.5rem auto 1fr 4.5rem;
+    align-items: center; gap: .9rem;
+    background: var(--panel); border: 1px solid var(--linea); border-radius: 4px;
+    padding: .7rem .9rem;
+  }
+  .pista.apagada { opacity: .38; }
+  .color { width: 3px; height: 2.1rem; border-radius: 2px; }
+  .nombre { font: 600 .95rem var(--mono); }
+  .rol { display: block; font: .72rem/1.35 system-ui; color: var(--tenue); }
+  .botones { display: flex; gap: .3rem; }
+  .botones button { padding: .32rem .5rem; font-size: .62rem; }
+  .botones button.on { background: var(--activo); color: #0D0E10; border-color: var(--activo); }
+  .botones button.solo.on { background: var(--solo); border-color: var(--solo); color: #0D0E10; }
+  .nivel { font: .72rem var(--mono); color: var(--tenue); text-align: right; }
+
+  .nota { color: var(--tenue); font-size: .84rem; border-top: 1px solid var(--linea); padding-top: 1rem; }
+  code { font: .85em var(--mono); color: var(--texto); }
+  @media (max-width: 640px) {
+    .pista { grid-template-columns: 3px 1fr; grid-auto-rows: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>estrella_negra · stems</h1>
+    <p class="sub">
+      Estructura de <b>Grinderman</b>, armonia de <b>Blackstar</b>. 96 BPM, 3:30, mi frigio dominante.
+      Las pistas suenan sincronizadas: apagalas y prendelas para escuchar cada una sola.
+      La suma de todas <b>es</b> la mezcla.
+    </p>
+  </div>
+
+  <div class="transporte">
+    <div class="fila">
+      <button id="play">play</button>
+      <span class="tiempo"><span id="t">0:00</span> / <span id="total">3:30</span></span>
+      <input type="range" id="barra" min="0" max="1000" value="0" />
+      <button id="reset">todas</button>
+    </div>
+    <div class="mapa" id="mapa"></div>
+  </div>
+
+  <div class="pistas" id="pistas"></div>
+
+  <p class="nota" id="estado">cargando…</p>
+  <p class="nota">
+    Servido por <code>player/serve.py</code> desde la raiz del proyecto:
+    <code>task serve</code> y despues <code>/lab/estrella_negra/escuchar.html</code>.
+    Se renderiza con <code>python3.10 lab/estrella_negra/render.py</code>.
+  </p>
+</div>
+
+<script>
+const ROLES = {
+  riff:      "el motor. Todo en mi, sin cambios de nota: notas que se pisan, filtro casi cerrado y la escalera Moog con drive alto",
+  bajo:      "el pedal de Mi1. La nota que sostiene todo y casi no se mueve",
+  bateria:   "bombo, caja y toms. Sin platillos: no queda un solo metal en el kit",
+  pad:       "el acorde entero (mi sol# si re fa), cada voz respirando por su cuenta",
+  lead:      "el lugar del saxo: entra desde abajo (scoop) y el vibrato aparece despues del ataque",
+  ruido:     "la sala, el acople y el muro. Es la capa que crece",
+  grano:     "microsonido: el propio riff granulado al unisono, granos largos y techo en 900 Hz. Polvo, no chispas",
+};
+const MARCAS = [
+  ["intro", 0], ["ciclo 1", 20], ["ciclo 2", 60], ["ciclo 3", 100],
+  ["explosion", 140], ["derrumbe", 170], ["cola", 200],
+];
+
+const $ = s => document.querySelector(s);
+const mmss = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const master = ctx.createGain();
+master.connect(ctx.destination);
+
+let pistas = [], dur = 0, sonando = false, t0 = 0, offset = 0, arrastrando = false;
+
+(async function cargar() {
+  const man = await (await fetch("stems/manifest.json", { cache: "no-store" })).json();
+  dur = man.duration;
+  $("#total").textContent = mmss(dur);
+
+  for (const meta of man.tracks) {
+    const buf = await ctx.decodeAudioData(await (await fetch(`stems/${meta.file}`)).arrayBuffer());
+    const gain = ctx.createGain();
+    gain.connect(master);
+    const p = { meta, buf, gain, fuente: null, mute: false, solo: false, nivel: 1 };
+    pistas.push(p);
+    fila(p);
+  }
+  $("#estado").textContent = `${pistas.length} stems · ${mmss(dur)} · ${ctx.sampleRate} Hz`;
+})().catch(e => $("#estado").textContent = `error: ${e.message}. Hay que servirlo por HTTP, no abrir el archivo.`);
+
+function fila(p) {
+  const el = document.createElement("div");
+  el.className = "pista";
+  el.innerHTML = `
+    <span class="color" style="background:${p.meta.color || "#666"}"></span>
+    <span><span class="nombre">${p.meta.name}</span></span>
+    <span class="botones">
+      <button class="mute">mute</button><button class="solo">solo</button>
+    </span>
+    <span class="rol">${ROLES[p.meta.name] || ""}</span>
+    <span class="nivel">${(20*Math.log10(p.meta.rms || 1e-6)).toFixed(0)} dB rms</span>`;
+  const bm = el.querySelector(".mute"), bs = el.querySelector(".solo");
+  bm.onclick = () => { p.mute = !p.mute; bm.classList.toggle("on", p.mute); aplicar(); };
+  bs.onclick = () => { p.solo = !p.solo; bs.classList.toggle("on", p.solo); aplicar(); };
+  p.el = el; p.bm = bm; p.bs = bs;
+  $("#pistas").appendChild(el);
+}
+
+// El solo gana sobre el mute, como en cualquier consola.
+function aplicar() {
+  const haySolo = pistas.some(p => p.solo);
+  for (const p of pistas) {
+    const suena = haySolo ? p.solo : !p.mute;
+    p.gain.gain.setTargetAtTime(suena ? p.nivel : 0, ctx.currentTime, 0.02);
+    p.el.classList.toggle("apagada", !suena);
+  }
+}
+
+function arrancar(desde) {
+  parar();
+  offset = Math.max(0, Math.min(desde, dur - 0.05));
+  const en = ctx.currentTime + 0.08;
+  for (const p of pistas) {
+    const f = ctx.createBufferSource();
+    f.buffer = p.buf;
+    f.connect(p.gain);
+    f.start(en, offset);          // todas al mismo instante del reloj de audio
+    p.fuente = f;
+  }
+  t0 = en; sonando = true; $("#play").textContent = "pausa";
+}
+
+function parar() {
+  for (const p of pistas) { if (p.fuente) { try { p.fuente.stop(); } catch (e) {} p.fuente = null; } }
+  sonando = false; $("#play").textContent = "play";
+}
+
+function ahora() { return sonando ? Math.min(offset + ctx.currentTime - t0, dur) : offset; }
+
+$("#play").onclick = async () => {
+  await ctx.resume();
+  if (sonando) { offset = ahora(); parar(); } else arrancar(offset);
+};
+$("#reset").onclick = () => {
+  pistas.forEach(p => { p.mute = p.solo = false; p.bm.classList.remove("on"); p.bs.classList.remove("on"); });
+  aplicar();
+};
+
+MARCAS.forEach(([n, t]) => {
+  const b = document.createElement("button");
+  b.textContent = `${mmss(t)} ${n}`;
+  b.onclick = async () => { await ctx.resume(); const s = sonando; parar(); offset = t; if (s) arrancar(t); else refrescar(); };
+  b.dataset.t = t;
+  $("#mapa").appendChild(b);
+});
+
+const barra = $("#barra");
+barra.addEventListener("input", () => { arrastrando = true; $("#t").textContent = mmss(barra.value/1000*dur); });
+barra.addEventListener("change", async () => {
+  await ctx.resume();
+  const s = sonando; const t = barra.value/1000*dur;
+  parar(); offset = t; arrastrando = false;
+  if (s) arrancar(t); else refrescar();
+});
+
+function refrescar() {
+  const t = ahora();
+  if (!arrastrando) { barra.value = Math.round(1000*t/(dur||1)); $("#t").textContent = mmss(t); }
+  for (const b of $("#mapa").children) {
+    const ini = +b.dataset.t;
+    b.classList.toggle("aca", t >= ini && t < (MARCAS.find(m => m[1] > ini)?.[1] ?? 1e9));
+  }
+  if (sonando && t >= dur - 0.05) { offset = 0; parar(); }
+  requestAnimationFrame(refrescar);
+}
+refrescar();
+
+addEventListener("keydown", e => {
+  if (e.code === "Space") { e.preventDefault(); $("#play").click(); }
+});
+</script>
+</body>
+</html>

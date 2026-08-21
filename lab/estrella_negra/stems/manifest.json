@@ -1,0 +1,71 @@
+{
+  "name": "estrella_negra",
+  "duration": 210.0,
+  "sample_rate": 44100,
+  "norm_factor": 0.6761988134279208,
+  "tracks": [
+    {
+      "name": "riff",
+      "file": "riff.wav",
+      "gain": 0.8,
+      "pan": 0.0,
+      "color": "#C98A3C",
+      "peak": 0.46405544522246117,
+      "rms": 0.0493796769049763
+    },
+    {
+      "name": "bajo",
+      "file": "bajo.wav",
+      "gain": 0.4,
+      "pan": 0.0,
+      "color": "#4E8FA6",
+      "peak": 0.3010571382723806,
+      "rms": 0.02758120921517657
+    },
+    {
+      "name": "bateria",
+      "file": "bateria.wav",
+      "gain": 0.42,
+      "pan": -0.05,
+      "color": "#DEDAD1",
+      "peak": 0.37034796275777093,
+      "rms": 0.044170981456718605
+    },
+    {
+      "name": "pad",
+      "file": "pad.wav",
+      "gain": 0.5,
+      "pan": 0.0,
+      "color": "#7A5CB8",
+      "peak": 0.12845449708043677,
+      "rms": 0.017446768093562586
+    },
+    {
+      "name": "lead",
+      "file": "lead.wav",
+      "gain": 0.46,
+      "pan": -0.12,
+      "color": "#D6564B",
+      "peak": 0.18836303879248564,
+      "rms": 0.015686102126623486
+    },
+    {
+      "name": "ruido",
+      "file": "ruido.wav",
+      "gain": 0.34,
+      "pan": 0.0,
+      "color": "#7C7972",
+      "peak": 0.15134488379689476,
+      "rms": 0.015263016714256573
+    },
+    {
+      "name": "grano",
+      "file": "grano.wav",
+      "gain": 1.5,
+      "pan": 0.1,
+      "color": "#8FA37A",
+      "peak": 0.24901684727085496,
+      "rms": 0.011820938748699293
+    }
+  ]
+}

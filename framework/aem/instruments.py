@@ -647,3 +647,63 @@ def flute_motif(notes, amp=0.45, vibrato=True, attack_ms=80, release_ms=250,
                                        breath_amount=breath_amount,
                                        chiff_amount=chiff_amount))
     return np.concatenate(chunks)
+
+
+# --------------------------------------------------------------- metal 808/909
+# Ratios inarmonicos del banco de osciladores de la TR-808. No son armonicos de
+# nada: es justamente esa falta de relacion entera lo que suena a metal y no a
+# nota. Cambiarlos por armonicos convierte el platillo en un acorde.
+RATIOS_808 = (2.0, 3.0, 4.16, 5.43, 6.79, 8.21)
+
+
+def hihat_metalico(dur=0.09, amp=0.3, base=40.0, ratios=RATIOS_808,
+                   corte_hz=6500, ruido=0.22, decaimiento=None, brillo=1.0,
+                   armonicos=48, semilla=None):
+    """Platillo por banco de osciladores, al modo de la 808/909.
+
+    El `hihat()` de arriba es ruido blanco con una exponencial encima: es lo que
+    hace todo el mundo y suena a fabrica, porque el ruido blanco no tiene
+    estructura y todos los golpes se parecen entre si.
+
+    Aca el material son SEIS CUADRADAS band-limited afinadas en ratios
+    inarmonicos, sumadas y pasadas por un pasa-altos. Las cuadradas aportan
+    parciales densos y no relacionados, que es de donde sale el timbre metalico;
+    el ruido queda como condimento (`ruido`) y no como fuente.
+
+    Que mover para que dos golpes no suenen iguales:
+      - `base`: mueve todo el banco. +-6% ya se escucha como otro platillo
+      - `dur` y `decaimiento`: cerrado (0,05) contra abierto (0,4)
+      - `brillo`: inclina el balance entre las cuadradas graves y las agudas
+      - `ruido`: 0 es puro metal, 0,5 se acerca al platillo de escobilla
+
+    Generar uno cuesta lo suyo (seis cuadradas exactas), asi que conviene armar un
+    juego de variantes una vez y sortear entre ellas, no generar uno por golpe.
+    """
+    from .synths import cuadrada
+
+    n = int(dur * SR)
+    if n < 8:
+        return np.zeros(max(n, 1))
+    rng = np.random.RandomState(semilla) if semilla is not None else np.random
+
+    x = np.zeros(n)
+    for i, r in enumerate(ratios):
+        # las de arriba pesan mas cuanto mas brillo se pida
+        peso = (1.0 + brillo * i / len(ratios)) / len(ratios)
+        x += cuadrada(np.full(n, base * r), armonicos=armonicos) * peso
+
+    if ruido:
+        x += rng.standard_normal(n) * ruido if hasattr(rng, 'standard_normal') \
+            else rng.randn(n) * ruido
+
+    x = hpf(x, corte_hz, order=4)
+
+    # dos exponenciales: el cuerpo del platillo y el golpe seco de arriba
+    ta = np.arange(n) / SR
+    k = decaimiento if decaimiento is not None else 3.2 / max(dur, 0.01)
+    env = np.exp(-ta * k) * 0.85 + np.exp(-ta * k * 6.0) * 0.15
+    env[:12] *= np.linspace(0, 1, 12)          # anti click en el ataque
+
+    y = x * env
+    pico = np.abs(y).max() or 1.0
+    return amp * y / pico
