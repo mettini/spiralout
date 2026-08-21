@@ -22,13 +22,15 @@ import sys
 import numpy as np
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-VIDEO = sys.argv[1] if len(sys.argv) > 1 else os.path.join(AQUI, "bj3_n_pt_1080.mp4")
-AUDIO = os.path.join(AQUI, "..", "tema_1111_master.wav")
+VIDEO = sys.argv[1] if len(sys.argv) > 1 else os.path.join(AQUI, "out", "bj3_n_pt_1080.mp4")
+
 # La raiz del repo se BUSCA, no se cuenta en niveles: contarlos rompio al mover la
 # carpeta del lab a `transmissions/02/`, que baja un nivel mas.
 RAIZ = AQUI
 while RAIZ != "/" and not os.path.isdir(os.path.join(RAIZ, ".git")):
     RAIZ = os.path.dirname(RAIZ)
+AUDIO = os.path.join(RAIZ, "transmissions", "02", "themes", "bj3_n_pt",
+                     "finals", "v1", "01_bj3_n_pt_master.wav")
 # el plan congelado JUNTO a ese entregable, no el ultimo que se genero
 
 MOOG = [501, 524, 544, 564, 582, 603, 627]   # cambios de enunciado, de melodia.py

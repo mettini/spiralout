@@ -31,14 +31,18 @@ AQUI="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LLUVIA="${CLIPS:-$HOME/Downloads/Videos-Aem}"
 GEN="$AQUI/generado"
 FTE="$AQUI/fuentes"
-AUDIO="$AQUI/../tema_1111_master.wav"
+# La RAIZ del repo se busca, no se cuenta en niveles: contarlos ya rompio una vez al
+# mover la carpeta. El master y los entregables viven en rutas fijas desde la raiz.
+RAIZ="$AQUI"; while [[ "$RAIZ" != "/" && ! -d "$RAIZ/.git" ]]; do RAIZ="$(dirname "$RAIZ")"; done
+AUDIO="$RAIZ/transmissions/02/themes/bj3_n_pt/finals/v1/01_bj3_n_pt_master.wav"
+OUT="$AQUI/out"; mkdir -p "$OUT"
 TMP="$AQUI/.montaje"
 UMBRAL_MOV="${UMBRAL_MOV:-3.0}"
 
 if [[ "${1:-}" == "--4k" ]]; then
-  W=3840; H=2160; SALIDA="$AQUI/bj3_n_pt_4k.mp4"; CRF=20
+  W=3840; H=2160; SALIDA="$OUT/bj3_n_pt_4k.mp4"; CRF=20
 else
-  W=1920; H=1080; SALIDA="$AQUI/bj3_n_pt_1080.mp4"; CRF=26
+  W=1920; H=1080; SALIDA="$OUT/bj3_n_pt_1080.mp4"; CRF=26
 fi
 FPS=60
 

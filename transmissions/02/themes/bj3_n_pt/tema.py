@@ -267,7 +267,7 @@ def main():
     mezcla = fades(mezcla, 6.0)
     mezcla = mezcla / np.abs(mezcla).max() * 10 ** (-6.0 / 20)
 
-    ruta = os.path.join(AQUI, "tema_1111.wav")
+    ruta = os.path.join(AQUI, "finals/v1/01_bj3_n_pt_scratch.wav")
     wavfile.write(ruta, SR, (mezcla * 32767).astype(np.int16))
     print(f"  -> {os.path.relpath(ruta, RAIZ)}  ({len(mezcla)/SR/60:.2f} min)  scratch")
 
@@ -276,7 +276,7 @@ def main():
     # los picos del climax no claven el limiter.
     master = master_chain(mezcla * (10 ** (-12 / 20) / np.abs(mezcla).max()),
                           lufs_target=-16.0)
-    ruta_m = os.path.join(AQUI, "tema_1111_master.wav")
+    ruta_m = os.path.join(AQUI, "finals/v1/01_bj3_n_pt_master.wav")
     wavfile.write(ruta_m, SR, (np.clip(master, -1, 1) * 32767).astype(np.int16))
     print(f"  -> {os.path.relpath(ruta_m, RAIZ)}  masterizado, LUFS -16")
 

@@ -127,9 +127,13 @@ lab/**/fuentes/
 # es transitorio: lo reescribe cada build.
 lab/**/ultimo_plan.txt
 
-# TX02 salio del lab a `transmissions/02/bj3_n_pt/`. Las reglas de `lab/**` ya no lo
-# cubren, y lo que sale de correr el codigo (wavs de capa, mezclas, videos, fuentes
-# bajadas, cache de capas) no va al repo: se rehace desde los compose.
+# TX02 usa la misma convencion que el 01: `themes/<track>/` para el codigo con sus
+# `capas/`, `prototypes/` y `finals/`, y `video/<track>/` con su `out/`. Lo que sale de
+# correr el codigo no va al repo: se rehace desde los compose.
+#
+# Lo que SI se versiona de ahi: `video/*/ventanas.json` (las ventanas limpias medidas de
+# cada fuente, que cuesta horas de escaneo) y `video/*/out/*.plan.txt` (el plan congelado
+# de cada entregable, que documenta con que se armo lo que se publico).
 transmissions/02/**/*.wav
 transmissions/02/**/*.mp4
 transmissions/02/**/*.mov
@@ -139,3 +143,14 @@ transmissions/02/**/fuentes/
 transmissions/02/**/melodias/
 transmissions/02/**/ultimo_plan.txt
 transmissions/02/**/__pycache__/
+transmissions/02/themes/*/capas/
+transmissions/02/themes/*/prototypes/
+transmissions/02/themes/*/finals/
+transmissions/02/themes/*/source/
+transmissions/02/video/*/out/*.mp4
+
+# El plan congelado de cada entregable SI se versiona, aunque viva en un `out/`. Es lo
+# unico que reconstruye con que material, recortes y puntos de entrada se armo el video
+# publicado: sin el, el `out/` es un binario sin procedencia.
+!transmissions/*/video/*/out/
+!transmissions/*/video/*/out/*.plan.txt
