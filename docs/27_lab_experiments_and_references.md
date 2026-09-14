@@ -12,11 +12,19 @@
   tectónicas) → `docs/06_diseno_sonoro.md`.
 - **Game of Life + síntesis modular** (autómatas celulares → sonido, tesis
   Ernesto Romeo, Lenia, plan de experimento VCV Rack) → `docs/22_game_of_life_sintes_modulares.md`.
-- **Próximas transmissions** (backlog dashboard): **TX02 'Em+H'** (sobre el
-  amor), **TX03 'Rescue 100'** (rescate en planeta con flores), trabajo de
-  framework `aem`.
+- **Próximas transmissions**: **TX02 = Athanor** (azul), la caída al planeta, tres
+  tracks → `docs/39_transmission_02.md`. **TX03** (rojo), rumbo bajado sin nombre
+  → `docs/49_transmission_03.md`.
+
+  > La línea vieja de este backlog decía "TX02 'Em+H' (sobre el amor)" y "TX03
+  > 'Rescue 100'". Quedó desactualizada: eran dos transmisiones separadas y se
+  > fusionaron en los tracks 2 y 3 de TX02. Corregido el 2026-08-28.
 
 Los dos hilos nuevos de abajo (A y B) son los que faltaba documentar.
+
+- **D · Biodata: sonificar un hongo** → `docs/50_biodata_sonificacion.md`. El mapeo
+  ya está hecho y sonando (`lab/biodata/`); falta hardware y organismo. Es el mismo
+  circuito del hilo A ("Silicon") pero con un hongo como componente.
 
 ---
 

@@ -1,4 +1,25 @@
-# 39 — Transmission 02: la caída al planeta
+# 39 — Transmission 02 · ATHANOR: la caída al planeta
+
+> **Nombre: Athanor. Color: azul.** Bajados por el user el 2026-08-28.
+
+**Athanor** es el horno de los alquimistas: un horno de alimentación continua,
+construido para sostener un calor bajo y CONSTANTE durante días o semanas, el
+tiempo que pide una digestión lenta. Lo que lo define, técnicamente, es la **masa
+térmica**: la capacidad de guardar calor y soltarlo despacio para que la
+temperatura no oscile.
+
+El track 1 salió del lab llamado `thermal_mass`, y esa técnica sigue siendo la de
+su cama (ver `transmissions/02/README.md`). Y `bj3 n pt` es **hierro del cielo**,
+el metal meteorítico: exactamente lo que entra al horno para ser transmutado.
+
+O sea que el disco lleva el nombre del horno cuya propiedad definitoria es la
+técnica con la que está construido, y su primer track es el material que se mete
+adentro. Queda registrado; falta confirmar con el user si el bucle fue deliberado
+o si se cerró solo.
+
+El **azul** entra como accent de transmisión, que es el mecanismo que
+`docs/14_design_system.md` ya dejaba previsto ("agregar 1 accent color si la
+transmission lo pide"). No reemplaza el fósforo de la marca.
 
 > Estado: **concepto + labs**. La forma se define experimentando, no planificando.
 > Bajado por el user el 2026-07-31.
@@ -198,6 +219,41 @@ mineral y violento, este es orgánico.
 - Lo que hace KMRU y no hacemos todavía: dejar que la grabación de campo se
   escuche **como grabación**, sin deformarla del todo.
 
+**LOS HONGOS** (bajado por el user el 2026-08-28). Usar grabaciones de "música" de
+hongos, o de cómo hablan los hongos, en el track 2 y/o el 3.
+
+Encaja donde el track ya iba: la narrativa dice que acá la entidad **nos muestra la
+flora y la fauna de su mundo**. Que la flora hable literalmente es la forma más
+directa de eso, y evita el field recording genérico de pájaros y hojas, que suena a
+planeta Tierra. Un hongo sonificado no suena a ningún lado conocido, que es lo que
+el disco necesita.
+
+**Precisión importante sobre qué son esas grabaciones.** No son sonido: los hongos
+no suenan. Son **sonificaciones de señal eléctrica**, del potencial que recorre el
+micelio. Adamatzky midió picos eléctricos en cuatro especies y les encontró
+estructura de tipo lenguaje (patrones repetidos agrupados como palabras). Los
+dispositivos tipo biodata sonification miden esa misma variación y la mapean a MIDI.
+
+Eso NO es un problema, es la línea que el proyecto ya tiene abierta en
+`docs/41_data_como_origen.md`: dato real como origen del sonido, igual que las
+señales de las Voyager. El hongo entra por la misma puerta que el plasma.
+
+**Trampa práctica**: casi toda la "música de hongos" que circula es grabación de
+otro con licencia turbia. Los dos caminos limpios son (a) los datasets publicados
+de la investigación, que son dato y no audio, y (b) medir nosotros con un sonificador
+de biodata. El (a) es más barato y encaja mejor con `docs/41`.
+
+**EL ESPACIO PROFUNDO** (mismo día, mismo bajado). Grabaciones de espacio profundo
+para el track 2 y/o el 3.
+
+También encaja con la narrativa y no por decoración: la entidad está mirando **algo
+que cayó del cielo**. Que el disco tenga adentro el sonido del lugar del que vino
+ese objeto es el contrapunto del hongo. Uno es el planeta, el otro es lo que llegó.
+
+Material ya disponible en el repo: `samples/voyager_golden_record/` y
+`samples/cmb_recordings/`. Las ondas de plasma de las Voyager, Juno y Cassini son
+de dominio público y ya están indexadas en `docs/41` §4.
+
 **Y acá entra la capa que falta en todo el proyecto**: la de grano (1-6 kHz, ver
 `docs/38`). Track 2 es donde vive naturalmente.
 
@@ -236,6 +292,88 @@ Hay research previa del proyecto que aplica directo: `docs/22_game_of_life_sinte
 (autómatas celulares y síntesis modular). Un patch **generativo que se
 autoorganiza** es la forma más literal de "una fuerza superior que lo invade": el
 tema no se toca, se deja correr.
+
+### El video: text-to-image y después image-to-video
+
+> Bajado por el user el 2026-09-13. **Es una dirección, no un plan cerrado**: la idea es
+> jugar con dos modelos encadenados y ver qué sale.
+
+La cadena tiene dos etapas y cada una es un modelo distinto:
+
+1. **text-to-image**: se genera el cuadro inicial desde un prompt.
+2. **image-to-video**: ese cuadro se anima con un segundo prompt, el de movimiento.
+
+Lo importante de partir la cadena en dos es que **el movimiento se pide aparte**. Un
+modelo de texto a video decide solo qué se mueve; acá el encuadre se clava primero y
+recién después se le dice qué hace. Es la misma lógica de "stills antes de animar" que ya
+usamos en Crossing (`memory/feedback_stills_before_animation`).
+
+#### La base que trajo el user, verificada en otro proyecto
+
+**Imagen**
+
+- Modelo: **Animagine XL 4.0** (`cagliostrolab/animagine-xl-4.0`), un SDXL fine-tuneado
+  para anime. El 3.1 ya no se sirve.
+- Técnica: difusión latente text-to-image, prompt por **tags Danbooru** (`1boy`, `solo`,
+  `from behind`) más prompt negativo y sufijo de calidad.
+- Vía: el Space demo con `gradio_client` (ZeroGPU gratis). Respaldo: LoRAs de FLUX por
+  Inference Providers.
+- Costo medido: 9 a 13 s por imagen, con cuota diaria de ZeroGPU.
+
+**Video**
+
+- Modelo: **Wan 2.2 I2V** (`amisima/Wan_2.2_I2V_Studio`), el default.
+- Técnica: image-to-video condicionado por texto (imagen inicial + prompt de movimiento).
+  Por eso el personaje camina, en vez de quedarse quieto con la cámara moviéndose.
+- Descartado: **Stable Video Diffusion**, que no acepta prompt (solo parallax y cámara).
+  Queda de respaldo.
+- Salida medida: **832x576, 53 cuadros, 16 fps, ~2 min por clip**.
+
+#### Tres fricciones que ya se pueden anticipar
+
+Ninguna invalida la idea, pero conviene tenerlas escritas antes de arrancar y no
+descubrirlas a mitad de camino.
+
+1. **El modelo de imagen es de anime y ÆM no lo es.** Lo que se reusa tal cual es la
+   CADENA (t2i y después i2v) y la técnica de prompt de movimiento aparte. El modelo de la
+   primera etapa hay que cambiarlo: los candidatos ya están en
+   `docs/video/09_ai_video_models_2026.md`. El prompt por tags Danbooru tampoco se
+   transfiere, porque es vocabulario propio de ese fine-tune.
+
+2. **La salida es 832x576 y el proyecto entrega en 4K.** Son 4,6x de escalado, y eso no es
+   un paso resuelto: en el video del track 1 (septiembre 2026) se midió que Real-ESRGAN
+   **inventa estructura** sobre material plano, al punto de generar algo con forma de
+   renglón de texto que salió al aire. Se probaron tres formas de detectarlo
+   automáticamente (varianza local, inestabilidad temporal, banda de contraste) y las tres
+   fallan. Ver la nota larga en `transmissions/02/video/bj3_n_pt/mejorar.py`. O sea que el
+   upscale hay que resolverlo ANTES de generar en volumen, no después.
+
+3. **La escala, y cómo se resuelve.** Cada clip son 3,3 s (53 cuadros a 16 fps) y el
+   track dura 11:11. Ningún modelo de estos entrega once minutos de una.
+
+   **La forma es la que bajó el user el 2026-09-13: se generan MUCHOS videos cortos y
+   después se montan hasta llegar a los 11 minutos.** No se busca el clip largo. Eso
+   además juega a favor, porque **el montaje ya está resuelto en este repo**: el track 1
+   se arma exactamente así, con `planos.py` eligiendo qué va dónde bajo reglas de
+   repetición y `montaje.sh` concatenando con cortes secos. Lo generado entra en esa
+   cadena como una fuente más.
+
+   Lo que sí hay que tener en cuenta del volumen: del orden de 200 clips a ~2 min cada uno
+   son unas 7 horas de generación contra una cuota diaria, así que conviene generar por
+   tandas. Y los 16 fps hay que llevarlos a 60 (el proyecto no acepta 24, ver
+   `memory/feedback_render_60fps_for_youtube`).
+
+   **El 4K se deja para el final**, también por decisión del user: primero que exista el
+   montaje de 11 minutos, después se ve cómo se sube. Ver la fricción 2: ahí está el
+   problema abierto, y conviene atacarlo cuando ya haya material real con qué probar y no
+   antes.
+
+#### Por qué encaja con el track 3
+
+El track 3 es la fusión y "una fuerza superior que lo invade". Un patch modular que se
+autoorganiza y se deja correr es la versión sonora de eso. La versión visual es la misma
+idea: se elige el encuadre y se suelta el movimiento, muchas veces, y después se monta lo
+que salió. El material no se dirige plano por plano, se cosecha.
 
 ## Los Ramanes y la obsesión con el tres
 
@@ -426,3 +564,9 @@ lluvia y saltar de ahí al primer corte, aprovechando que el track 1 se llamarí
    2 sigue faltando todo lo orgánico.
 7. Grabar la voz en PIE y armar el coro.
 8. Definir con qué abre el video antes del primer corte seco.
+9. ~~Nombre del disco~~ → **decidido: Athanor. Color azul.** (2026-08-28)
+10. Confirmar si el bucle athanor / masa térmica / hierro del cielo fue deliberado.
+    Si lo fue, es fundamento y puede ir a la voz pública; si se cerró solo, se deja
+    como nota interna.
+11. Conseguir el material de hongos: decidir entre dataset publicado (dato, encaja
+    con `docs/41`) o medición propia con sonificador de biodata.

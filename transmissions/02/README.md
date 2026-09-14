@@ -1,6 +1,11 @@
-# Transmission 02
+# Transmission 02 · Athanor
 
-Segunda transmisión. En composición.
+Segunda transmisión. En composición. **Nombre: Athanor. Color: azul.**
+
+El athanor es el horno de los alquimistas: alimentación continua, calor bajo y
+constante durante días. Lo que lo define técnicamente es la **masa térmica**, que
+es la técnica con la que está construida la cama de este disco y el nombre del lab
+del que salió el track 1. Concepto completo en `docs/39_transmission_02.md`.
 
 | Track | Nombre | Audio | Video |
 |---|---|---|---|
