@@ -23,7 +23,13 @@ from scipy.signal import (butter, find_peaks, iirnotch, istft, oaconvolve,
                           resample_poly, sosfilt, sosfiltfilt, stft, tf2sos, welch)
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-RAIZ = os.path.abspath(os.path.join(AQUI, "..", ".."))
+# LA RAIZ SE BUSCA, NO SE CUENTA EN NIVELES. Contarlos decia "..", ".." y quedo mal
+# cuando el tema se movio a `transmissions/02/themes/`, que agrega dos niveles: el
+# import de `paulstretch` se rompia con ModuleNotFoundError. Es el mismo error que ya
+# se arreglo en `qa_entrega.py` y `montaje.sh`.
+RAIZ = AQUI
+while RAIZ != "/" and not os.path.isdir(os.path.join(RAIZ, ".git")):
+    RAIZ = os.path.dirname(RAIZ)
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 from paulstretch import make_ir, paulstretch  # noqa: E402
 

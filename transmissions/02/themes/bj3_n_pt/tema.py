@@ -39,7 +39,11 @@ import pyloudnorm as pyln
 from scipy.io import wavfile
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-RAIZ = os.path.abspath(os.path.join(AQUI, "..", ".."))
+# LA RAIZ SE BUSCA, NO SE CUENTA EN NIVELES: contarlos quedo mal cuando el tema se
+# movio a `transmissions/02/themes/`, que agrega dos niveles.
+RAIZ = AQUI
+while RAIZ != "/" and not os.path.isdir(os.path.join(RAIZ, ".git")):
+    RAIZ = os.path.dirname(RAIZ)
 sys.path.insert(0, AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "framework"))
 
@@ -138,8 +142,18 @@ ARREGLO = {
     # La tercera lluvia, pedida para el medio del tema: entra justo en la ventana
     # donde las otras dos se retiran, asi no se suma barro sino que se cambia el
     # color. Va adelante y con brillo, no debajo.
+    # LA SEGUNDA APARICION SE ACHICA Y SE CORRE. Marca del user sobre 8:30: "pones una
+    # lluvia fuerte cuando entran los sintes, con los sintes no se jode, en todo caso un
+    # poquito de lluvia, mas bajo el volumen, al principio de los sintes, pero no mucho".
+    #
+    # Antes TREPABA de 498 a 520, que es exactamente mientras el moog esta entrando, y se
+    # quedaba hasta 600. Medido, estaba 12,6 dB por debajo del moog, o sea que el problema
+    # no era el nivel sino QUE SUBIA JUSTO AHI y que es lo unico con transitorios en ese
+    # tramo. Ahora asoma al principio del moog, a menos de la mitad, y se va antes de que
+    # el moog empiece a crecer de verdad.
     "lluvia_brillo": [(0, 0), (282, 0), (300, 0.75), (352, 0.9), (368, 0.55),
-                      (392, 0), (498, 0), (520, 0.7), (566, 0.5), (600, 0)],
+                      (392, 0), (474, 0), (492, 0.34), (518, 0.30), (545, 0),
+                      (671, 0)],
     # EL MOOG. Antes era una meseta: subia a 1.0 en 495 y se quedaba plano hasta 620.
     # Pedido: "que tenga un incremento de volumen y luego ir bajando, no te digo fade,
     # pero si que sea progresivo el volumen entrando y saliendo".
@@ -147,8 +161,19 @@ ARREGLO = {
     # Ahora es un ARCO, y el maximo cae en 543 s, que es donde la melodia toca su PICO
     # (el Mi de 640 Hz, la nota mas alta de toda la linea). O sea que el nivel y la
     # melodia llegan arriba en el mismo lugar en vez de pelearse.
-    "moog":      [(0, 0), (455, 0), (480, 0.35), (505, 0.60), (525, 0.80),
-                  (543, 1.0), (575, 0.92), (605, 0.72), (635, 0.40), (658, 0)],
+    # EL PICO SE CORRE DE 9:03 A 10:00. Pedido del user: "que los sintes tengan, de forma
+    # progresiva, mas volumen (...) en todo caso que lleguen a un punto de volumen y luego
+    # vaya bajando, quizas del minuto 10 en adelante que vaya bajando".
+    #
+    # Antes el maximo caia en 543 s (9:03) y de ahi SOLO BAJABA, o sea lo contrario de lo
+    # que se pidio: a las 10:00 ya habia perdido 2,5 dB. Ahora sube durante todo el tramo,
+    # clava el maximo en 600 s (10:00) y recien ahi arranca el descenso hasta el final.
+    #
+    # Se pierde la coincidencia exacta con el pico de la melodia (el Mi de 640 Hz en 543),
+    # pero en 543 el nivel sigue en 0,72 y subiendo: la nota mas alta no cae en un pozo.
+    "moog":      [(0, 0), (455, 0), (478, 0.30), (505, 0.50), (530, 0.66),
+                  (555, 0.80), (578, 0.91), (600, 1.0), (622, 0.80), (642, 0.52),
+                  (660, 0)],
 }
 
 # Niveles por capa, en dB. Los de docs/38 mas los nuevos.
@@ -156,8 +181,12 @@ ARREGLO = {
 # El moog bajo de -6 a -13. Medido, a -6 quedaba a -0,3 dB de la mezcla entera, o sea
 # tan fuerte como todo lo demas junto. Un elemento solista se sienta entre -8 y -12
 # respecto del RMS de la mezcla; si no, deja de ser una voz y pasa a ser el tema.
+# EL MOOG SUBE DE -9 A -7. "se que vas incrementando el volumen, pero los siento
+# bajito, necesito mas presencia de los sintes". No sube mas que eso porque a -6 ya se
+# midio que quedaba a -0,3 dB de la mezcla entera; los otros 3 dB de presencia salen de
+# abrirle lugar (ver DUCKING_MOOG), que es de donde tenian que salir.
 NIVELES = {"cama": 0, "cuerpo": -4, "nube": -8, "lavarropas": -1,
-           "grano": -14, "aire": -20, "voces": -6, "brillo": -17, "moog": -9,
+           "grano": -14, "aire": -20, "voces": -6, "brillo": -17, "moog": -7,
            "lluvia_brillo": -13}
 
 # Quien se aparta cuando entran las voces, y cuanto.
@@ -184,7 +213,12 @@ DUCKING = {"lavarropas": 0.55, "nube": 0.40, "cuerpo": 0.22}
 # 0.62. El moog es la voz de ese tramo y el fondo tiene que apartarse de verdad, no un
 # poquito. Con los 25 s de suavizado el camino se abre bien antes de que el moog suene,
 # asi que no hay ninguna bajada de golpe.
-DUCKING_MOOG = {"cama": 0.34, "nube": 0.40, "cuerpo": 0.30,
+# LA CAMA ES LA QUE TAPA, y por eso es la que mas se mueve. Medido sobre las ganancias
+# efectivas del arreglo anterior: en 8:20 la cama estaba +12,3 dB por encima del moog y
+# en el pico seguia +5,5. La lluvia, que era la sospechosa, estaba 12,6 dB POR DEBAJO.
+# Con la cama en 0,52 y la nube en 0,55 el moog queda con lugar propio sin tener que
+# subirlo hasta comerse la mezcla.
+DUCKING_MOOG = {"cama": 0.52, "nube": 0.55, "cuerpo": 0.40,
                 "lluvia_brillo": 0.78, "grano": 0.62, "aire": 0.45}
 
 # El sidechain no puede seguir la envolvente de las voces tal cual: esa sube de 0 a

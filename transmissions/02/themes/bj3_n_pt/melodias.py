@@ -25,7 +25,11 @@ import pyloudnorm as pyln
 from scipy.io import wavfile
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-RAIZ = os.path.abspath(os.path.join(AQUI, "..", ".."))
+# LA RAIZ SE BUSCA, NO SE CUENTA EN NIVELES: contarlos quedo mal cuando el tema se
+# movio a `transmissions/02/themes/`, que agrega dos niveles.
+RAIZ = AQUI
+while RAIZ != "/" and not os.path.isdir(os.path.join(RAIZ, ".git")):
+    RAIZ = os.path.dirname(RAIZ)
 sys.path.insert(0, AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "framework"))
 

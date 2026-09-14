@@ -32,7 +32,11 @@ from scipy.io import wavfile
 from scipy.signal import butter, sosfilt, welch
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-RAIZ = os.path.abspath(os.path.join(AQUI, "..", ".."))
+# LA RAIZ SE BUSCA, NO SE CUENTA EN NIVELES: contarlos quedo mal cuando el tema se
+# movio a `transmissions/02/themes/`, que agrega dos niveles.
+RAIZ = AQUI
+while RAIZ != "/" and not os.path.isdir(os.path.join(RAIZ, ".git")):
+    RAIZ = os.path.dirname(RAIZ)
 sys.path.insert(0, AQUI)
 
 from render import (SEMILLA, SR, barrido, camara, del_medio, estirar_estereo,  # noqa: E402
