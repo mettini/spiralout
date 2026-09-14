@@ -154,3 +154,13 @@ transmissions/02/video/*/out/*.mp4
 # publicado: sin el, el `out/` es un binario sin procedencia.
 !transmissions/*/video/*/out/
 !transmissions/*/video/*/out/*.plan.txt
+
+# Video TX02: intermedios del modelo y scratch de revision. Regenerables.
+# `.ia/` son los recortes reconstruidos con Real-ESRGAN (12 GB): se rehacen con
+# `mejorar.py` y los pesos se bajan solos de huggingface. `.rev/` es scratch de A/B.
+transmissions/02/video/*/.ia/
+transmissions/02/video/*/.rev/
+transmissions/02/video/*/modelos/__pycache__/
+
+# hojas de contacto para revisar a ojo: se regeneran con hoja_contacto.py
+transmissions/*/video/*/out/hoja/

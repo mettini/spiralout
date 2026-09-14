@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-08-15",
+    "updated": "2026-09-14",
     "next_review": "2026-08-31",
     "version": "0.6",
     "focus": "Estructura por proyecto (2026-07-26): Heliopause = el release y su difusión · Comunicación = blog/sitio/cuentas del label · Helen = guerrilla + bases públicas · Lab = experimentos sin avance. Foco de hoy: difusión de Heliopause (posts IG cargados en scheduler, YouTube ads, Reddit) y arrancar el blog."
@@ -905,6 +905,44 @@
     "color": "#3a2a4a",
     "experiments": [
       {
+        "id": "tx02-t3-video-ia",
+        "title": "Video del track 3 con t2i + i2v encadenados",
+        "state": "pending",
+        "summary": "Bajado por el user el 2026-09-13. Dos modelos en cadena: uno genera el cuadro (text-to-image) y otro lo anima con un prompt de movimiento aparte (image-to-video). Se generan MUCHOS clips cortos y se montan hasta los 11:11; el 4K se deja para el final. La base verificada en otro proyecto: Animagine XL 4.0 para imagen (via Space con gradio_client, ZeroGPU, 9-13 s por imagen) y Wan 2.2 I2V para video (832x576, 53 cuadros, 16 fps, ~2 min por clip). Stable Video Diffusion descartado porque no acepta prompt. Tres fricciones anotadas: el modelo de imagen es de anime y hay que cambiarlo, la salida esta muy por debajo de 4K y el upscale NO esta resuelto (Real-ESRGAN inventa estructura, medido en el track 1), y el volumen es de ~200 clips contra una cuota diaria.",
+        "ref": "docs/39_transmission_02.md",
+        "owner": "both",
+        "tasks": [
+          {
+            "name": "Elegir el modelo de imagen que reemplaza a Animagine (es anime): candidatos en docs/video/09"
+          },
+          {
+            "name": "Probar la cadena entera con 3 o 4 clips antes de generar en volumen"
+          },
+          {
+            "name": "Meter los clips generados como una fuente mas de planos.py + montaje.sh, que ya hace el montaje del track 1"
+          },
+          {
+            "name": "Resolver 16 fps -> 60 fps"
+          },
+          {
+            "name": "AL FINAL: como se sube a 4K. Ver la nota de mejorar.py sobre lo que inventa el modelo"
+          }
+        ]
+      },
+      {
+        "id": "biodata",
+        "name": "Biodata: sonificar un hongo",
+        "state": "pending",
+        "summary": "EN PAUSA a criterio del user (29/08): copado pero puede ser desvio. El mapeo YA funciona y sirve para cualquier serie lenta, asi que no se pierde nada. Hallazgo: la COMPRESION define el genero (15x drone, 60x ambient, 360x arpegio), el hongo no compone. Alternativa mas barata y con mejor coartada narrativa: plasma de las Voyager.",
+        "ref": "docs/50_biodata_sonificacion.md",
+        "output": "lab/biodata/sonificar.py + 3 renders de prueba con señal sintetica",
+        "tasks": [
+          {
+            "name": "DECIDIR: hongo propio (caro, lento, material propio) o plasma Voyager (gratis, ya narrativo). Ver doc 50, seccion final"
+          }
+        ]
+      },
+      {
         "id": "estrella-negra",
         "title": "Estrella Negra: estructura Grinderman + armonía Blackstar",
         "state": "in_progress",
@@ -1066,7 +1104,7 @@
         "id": "tx-02",
         "title": "Transmission 02 — la caida al planeta (3 tracks)",
         "state": "in_progress",
-        "summary": "Pasa en el planeta que se vislumbra en Heliopause, con los anillos trastocados. TX02 es la caida. Tres tracks: 1) el pasaje por la atmosfera (Lustmord, ya en marcha en lab/thermal_mass), 2) Rescue 101, la vida en el planeta — flora, fauna, pajaros (referencia KMRU 'By Absence' 20:22 + Steve Roach), 3) +H, el amor y la conexion con una fuerza superior (synth modular, VCV Rack). Em+H es LA FUSION y es material del cuento de TX02, que hay que escribir: el metodo del proyecto es cuento -> fragmentos -> voz publica. Fusiona lo que antes eran TX02 'Em+H' y TX03 'Rescue 100'. Duracion propuesta 11:11 cada uno = 33:33. Cada track con su propio motor, y eso separa los tracks solo: track 1 Python+numpy (deformacion offline determinista), track 2 Pure Data (generacion por reglas, ver docs/40), track 3 VCV Rack 2 (modulacion que se autoorganiza).",
+        "summary": "Pasa en el planeta que se vislumbra en Heliopause, con los anillos trastocados. TX02 es la caida. Tres tracks: 1) el pasaje por la atmosfera (Lustmord, ya en marcha en lab/thermal_mass), 2) Rescue 101, la vida en el planeta — flora, fauna, pajaros (referencia KMRU 'By Absence' 20:22 + Steve Roach), 3) +H, el amor y la conexion con una fuerza superior (synth modular, VCV Rack). Em+H es LA FUSION y es material del cuento de TX02, que hay que escribir: el metodo del proyecto es cuento -> fragmentos -> voz publica. Fusiona lo que antes eran TX02 'Em+H' y TX03 'Rescue 100'. Duracion propuesta 11:11 cada uno = 33:33. Cada track con su propio motor, y eso separa los tracks solo: track 1 Python+numpy (deformacion offline determinista), track 2 Pure Data (generacion por reglas, ver docs/40), track 3 VCV Rack 2 (modulacion que se autoorganiza). Track 1 (bj3 n pt): APROBADO por el user el 2026-09-14. Audio y video rehechos. El audio quedo con el arco del moog al pico en 10:00 (+4,13 dB en su banda contra +0,94 antes) y la lluvia fuera del tramo de sintes. El video se rehizo entero: se saco pd_glm_rayos (era trafico aereo, con aviones), se cerraron los recortes (el ancho promediaba el movimiento a cero) y se armo un ciclo que mide los planos YA RENDERIZADOS y realimenta, porque predecir la cadena del montaje no cierra. Entregables: out/bj3_n_pt_4k.mp4 (3840x2160, 60fps, 11:11, 2,78 GB, bt709) y el 1080. Pasa los 11 criterios de qa_entrega.py. QUEDA ABIERTO: cinco planos solares con cuadrados de compresion visibles, documentado con numeros en mejorar.py.",
         "ref": "docs/39_transmission_02.md",
         "owner": "user"
       },

@@ -33,6 +33,13 @@ area. This file is the entry point.
   that threads through the album. **Protected by the user** — don't change
   voyager defaults without explicit approval and a `task qa:voyager` diff
   against the benchmark. See `memory/voyager_protegido.md`.
+- **Athanor · Transmission 02** · the second transmission, **color azul**. Three
+  tracks of 11:11: `bj3 n pt`, `Rescue 101`, `+H`. It is the fall to the planet
+  glimpsed in Heliopause, narrated by an entity of that planet. Concept lives in
+  `docs/39_transmission_02.md`.
+- **Transmission 03** · **color rojo**, unnamed so far. Track 1 migrates from dark
+  ambient to dark techno using rocket turbines as the bridge; tracks 2 and 3 are
+  lighter, acid and trippy. Direction lives in `docs/49_transmission_03.md`.
 - **Transmission** — each release is called a transmission, numbered. Future
   releases live in `transmissions/02/`, `03/`, etc.
 
