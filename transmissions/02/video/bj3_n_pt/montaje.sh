@@ -40,7 +40,10 @@ TMP="$AQUI/.montaje"
 UMBRAL_MOV="${UMBRAL_MOV:-3.0}"
 
 if [[ "${1:-}" == "--4k" ]]; then
-  W=3840; H=2160; SALIDA="$OUT/bj3_n_pt_4k.mp4"; CRF=20
+  # CRF 18 y no 20: el 4K salia a 27,3 Mbps y para 4K60 con grano eso es poco (YouTube
+  # recomienda del orden de 53 a 68). El grano es el que mas sufre: es ruido, no se
+  # predice entre cuadros, y al encoder es lo primero que le sobra cuando le faltan bits.
+  W=3840; H=2160; SALIDA="$OUT/bj3_n_pt_4k.mp4"; CRF=18
 else
   W=1920; H=1080; SALIDA="$OUT/bj3_n_pt_1080.mp4"; CRF=26
 fi
@@ -66,19 +69,25 @@ ALZADA="curves=all='0/0.02 0.26/0.18 0.58/0.74 1/0.82'"
 SUAVE="curves=all='0/0 0.30/0.12 0.70/0.80 1/0.86'"  # archivo y generados
 # La interferencia gusta pero estaba en TODOS los planos y satura. Se baja de 11 a 6,
 # y se agrega una version sin nada para que el recurso vuelva a ser puntual.
-GRANO="noise=alls=6:allf=t+u"
-GRANO_FUERTE="noise=alls=11:allf=t+u"
-SIN_GRANO="null"
+# EL GRADO CORRE EN 16 BITS Y RECIEN ACA VUELVE A 8.
+#
+# La cadena estira el contraste ~4,4 veces (normalize 1,5 . eq 1,7 . curva 1,7). Hecha en
+# 8 bits eso deja huecos: medido sobre un degradado liso, 60 niveles de gris de salida
+# contra 193 manteniendo la precision, y los huecos se ven como bandas concentricas.
+# Cuantizar al final y con el grano encima (que hace de tramado) las elimina.
+GRANO="format=gray,noise=alls=6:allf=t+u"
+GRANO_FUERTE="format=gray,noise=alls=11:allf=t+u"
+SIN_GRANO="format=gray"
 
-t_campo()    { echo "crop=$1,format=gray,$NORM,eq=contrast=1.9:brightness=-0.06,$DURO,scale=$W:$H,$GRANO"; }
-t_rotado()   { echo "crop=$1,format=gray,rotate=$2:c=black,crop=$3,$NORM,eq=contrast=1.8,$DURO,scale=$W:$H,$GRANO"; }
-t_arrastre() { echo "crop=$1,format=gray,tmix=frames=4,$NORM,eq=contrast=2.0:brightness=-0.05,$DURO,scale=$W:$H,$GRANO"; }
-t_difuso()   { echo "crop=$1,format=gray,gblur=sigma=9,unsharp=13:13:2.4,$NORM,eq=contrast=1.7,$DURO,scale=$W:$H,$GRANO"; }
-t_arch()     { echo "crop=$1,format=gray,$NORM,eq=contrast=1.7,$SUAVE,scale=$W:$H,$GRANO"; }
+t_campo()    { echo "crop=$1,format=gray16le,$NORM,eq=contrast=1.9:brightness=-0.06,$DURO,scale=$W:$H,$GRANO"; }
+t_rotado()   { echo "crop=$1,format=gray16le,rotate=$2:c=black,crop=$3,$NORM,eq=contrast=1.8,$DURO,scale=$W:$H,$GRANO"; }
+t_arrastre() { echo "crop=$1,format=gray16le,tmix=frames=4,$NORM,eq=contrast=2.0:brightness=-0.05,$DURO,scale=$W:$H,$GRANO"; }
+t_difuso()   { echo "crop=$1,format=gray16le,gblur=sigma=9,unsharp=13:13:2.4,$NORM,eq=contrast=1.7,$DURO,scale=$W:$H,$GRANO"; }
+t_arch()     { echo "crop=$1,format=gray16le,$NORM,eq=contrast=1.7,$SUAVE,scale=$W:$H,$GRANO"; }
 # Tercer nivel, pedido del user: "me gusta que haya quizas un videito un poco mas
 # vivido, tampoco distorsiono mucho". Casi sin tocar, para que contraste con el resto.
-t_vivo()     { echo "crop=$1,format=gray,$NORM,eq=contrast=1.25,scale=$W:$H,$SIN_GRANO"; }
-t_limpio()   { echo "crop=$1,format=gray,$NORM,eq=contrast=1.7,$SUAVE,scale=$W:$H,$SIN_GRANO"; }
+t_vivo()     { echo "crop=$1,format=gray16le,$NORM,eq=contrast=1.25,scale=$W:$H,$SIN_GRANO"; }
+t_limpio()   { echo "crop=$1,format=gray16le,$NORM,eq=contrast=1.7,$SUAVE,scale=$W:$H,$SIN_GRANO"; }
 
 # PARA LOS EDIFICIOS. La saturacion no sirve: aplastar niveles no toca la GEOMETRIA, y
 # una ventana sigue siendo un rectangulo brillante con bordes rectos. Lo que delata no es
@@ -86,7 +95,7 @@ t_limpio()   { echo "crop=$1,format=gray,$NORM,eq=contrast=1.7,$SUAVE,scale=$W:$
 # lente que curva las rectas, rotacion no cardinal, desenfoque fuerte con reafilado (los
 # bordes se vuelven gradientes) y recorte mucho mas cerrado (sin contexto no hay edificio).
 #   $1 recorte · $2 k1 de lente · $3 angulo · $4 recorte final tras rotar
-t_geom()     { echo "crop=$1,lenscorrection=k1=$2:k2=-0.10,format=gray,rotate=$3:c=black,crop=$4,gblur=sigma=11,unsharp=13:13:2.8,$NORM,eq=contrast=1.9:brightness=-0.05,$DURO,scale=$W:$H,$GRANO"; }
+t_geom()     { echo "crop=$1,lenscorrection=k1=$2:k2=-0.10,format=gray16le,rotate=$3:c=black,crop=$4,gblur=sigma=11,unsharp=13:13:2.8,$NORM,eq=contrast=1.9:brightness=-0.05,$DURO,scale=$W:$H,$GRANO"; }
 
 # LA PALMERA. Los clips del user son 3840x2160 con rotacion -90, o sea que ffmpeg los
 # entrega VERTICALES de 2160x3840. Los recortes de la palmera estaban escritos para un
@@ -135,22 +144,32 @@ agf() { PLANOS+=("$1|$2|$3|setpts=$4*PTS,$FLUIDO,$5|$(awk -v s="$4" 'BEGIN{print
 # Tratamiento generico: recorte primero, variante despues. Anteponer la variante rota
 # las coordenadas del recorte, que es el error que dejo los edificios a la vista.
 #   $1 recorte · $2 variante · $3 contraste · $4 curva · $5 brillo
-t_gen()      { echo "crop=$1,${2:+$2,}format=gray,$NORM,eq=contrast=${3:-1.7}:brightness=${5:--0.06},${4:-$SUAVE},scale=$W:$H,$GRANO"; }
-t_charco_v() { echo "crop=$1,lenscorrection=k1=-0.32:k2=-0.10,${2:+$2,}format=gray,$NORM,eq=contrast=1.9,$DURO,scale=$W:$H,$GRANO"; }
+t_gen()      { echo "crop=$1,${2:+$2,}format=gray16le,$NORM,eq=contrast=${3:-1.7}:brightness=${5:--0.06},${4:-$SUAVE},scale=$W:$H,$GRANO"; }
+t_charco_v() { echo "crop=$1,lenscorrection=k1=-0.32:k2=-0.10,${2:+$2,}format=gray16le,$NORM,eq=contrast=1.9,$DURO,scale=$W:$H,$GRANO"; }
 
-t_pelo()     { echo "crop=$1,${2:+$2,}format=gray,$NORM,eq=contrast=${3:-1.45}:brightness=0.02,${4:-$MEDIO},scale=$W:$H,$GRANO"; }
+t_pelo()     { echo "crop=$1,${2:+$2,}format=gray16le,$NORM,eq=contrast=${3:-1.45}:brightness=0.02,${4:-$MEDIO},scale=$W:$H,$GRANO"; }
 
-t_sol()      { echo "crop=$1,${2:+$2,}format=gray,tmix=frames=8,$NORM,eq=contrast=${3:-1.7},${4:-$SUAVE},scale=$W:$H,$GRANO"; }
+# EL tmix VA SOLO EN LA FUENTE QUE PARPADEA. Se puso para matar un estrobo de 10 Hz y
+# esta bien puesto, pero se aplicaba a TODO el material solar. Medido sobre las trece
+# fuentes solares, la unica que alterna de verdad es SDO_20170910_131 (movimiento crudo
+# 12,57, prueba de cuadros alternos positiva); el resto no alterna. Y promediar ocho
+# cuadros cuesta movimiento: pd_flare_may131 cae de 6,16 a 1,30 y pd_flare_2024feb de
+# 2,10 a 0,46. O sea que el remedio de una fuente dejaba quietas a las otras doce, que es
+# lo que el user marco como "esta escena es estatica".
+#   $5 = nombre del archivo fuente
+PARPADEAN="SDO_20170910_131_AR12673X8_4k.webm"
+t_sol()      { local tm=""; case " $PARPADEAN " in *" $5 "*) tm="tmix=frames=8," ;; esac
+               echo "crop=$1,${2:+$2,}format=gray16le,${tm}$NORM,eq=contrast=${3:-1.7},${4:-$SUAVE},scale=$W:$H,$GRANO"; }
 
-t_palma()    { echo "crop=$1,${2:+$2,}format=gray,$NORM,eq=contrast=1.9:brightness=-0.06,$DURO,scale=$W:$H,$GRANO"; }
+t_palma()    { echo "crop=$1,${2:+$2,}format=gray16le,$NORM,eq=contrast=1.9:brightness=-0.06,$DURO,scale=$W:$H,$GRANO"; }
 
 # LA FIRMA DEL TRAMO DE LLUVIA (4:40 a 6:20). `lenscorrection` despues del recorte, que no
 # aparece en ningun otro momento del video: sirve para que se note que ahi pasa algo.
 # LAS MEDUSAS. Se pidio "un pelin mas de luz": brightness pasa de -0.06 a -0.02.
-t_medusa()   { echo "crop=$1,format=gray,$NORM,eq=contrast=1.85:brightness=-0.02,$DURO,scale=$W:$H,$GRANO"; }
+t_medusa()   { echo "crop=$1,format=gray16le,$NORM,eq=contrast=1.85:brightness=-0.02,$DURO,scale=$W:$H,$GRANO"; }
 
-t_charco()   { echo "crop=$1,${2:+lenscorrection=$2,}format=gray,$NORM,eq=contrast=1.9,$DURO,scale=$W:$H,$GRANO"; }
-t_fuego()    { echo "crop=$1,${2:+lenscorrection=$2,}format=gray,$NORM,eq=contrast=1.7,$SUAVE,scale=$W:$H,$GRANO"; }
+t_charco()   { echo "crop=$1,${2:+lenscorrection=$2,}format=gray16le,$NORM,eq=contrast=1.9,$DURO,scale=$W:$H,$GRANO"; }
+t_fuego()    { echo "crop=$1,${2:+lenscorrection=$2,}format=gray16le,$NORM,eq=contrast=1.7,$SUAVE,scale=$W:$H,$GRANO"; }
 
 # LAS VARIANTES. Cambiar el recorte NO es variar: el contenido sigue siendo el mismo.
 # Lo que cambia la lectura de la imagen, de mas a menos:
@@ -185,12 +204,60 @@ FADE=2
 # ---------------------------------------------------------------------------------
 # el plan se GUARDA, no se tira: `qa_entrega.py` tiene que medir el plan que se uso
 # para este render y no regenerar uno nuevo, que ademas tarda diez minutos.
+# EL PLAN SE REUSA SI YA ESTA CONGELADO. Regenerarlo cuesta unos diez minutos de ffmpeg
+# validando cada candidata, y para pasar de 1080 a 4K el plan es EL MISMO: lo unico que
+# cambia es la resolucion de salida. Regenerarlo ahi es tiempo de maquina tirado.
+#
+#   bash montaje.sh --4k              reusa el plan congelado del 1080 si existe
+#   bash montaje.sh --replanificar    lo fuerza a regenerarlo
+CONGELADO="$AQUI/out/bj3_n_pt_1080.plan.txt"
 LISTA="$AQUI/ultimo_plan.txt"
-python3.10 "$AQUI/planos.py" > "$LISTA" || { echo "planos.py fallo" >&2; exit 1; }
+if [[ "$*" == *--replanificar* || ! -s "$CONGELADO" ]]; then
+  echo "  generando el plan (tarda: valida cada candidata con ffmpeg)"
+  python3.10 "$AQUI/planos.py" > "$LISTA" || { echo "planos.py fallo" >&2; exit 1; }
+else
+  cp "$CONGELADO" "$LISTA"
+  echo "  plan reusado de $(basename "$CONGELADO"): $(wc -l < "$LISTA" | tr -d ' ') planos"
+fi
+
+# LOS PLANOS RECONSTRUIDOS CON EL MODELO.
+#
+# `nitidez.py` mide que 41 de los 62 planos vienen de fuentes cuya compresion dejo
+# mesetas planas de 8x8 en las zonas de bajo contraste. El grado las saca a la superficie
+# y el escalado las agranda: son los cuadrados que se veian en el 4K. Debajo de la meseta
+# no hay informacion, asi que ningun filtro las recupera (se probaron deblock, hqdn3d,
+# smartblur y gblur, ninguno cambio nada). `mejorar.py` reconstruye con Real-ESRGAN los
+# que ademas se amplian 2x o mas, y deja un intermedio por plano en `.ia/`.
+#
+# El intermedio es el recorte reconstruido Y NADA MAS: sin grado, sin variante, sin
+# ralentizar, a los fps de la fuente. Entra en la cadena exactamente donde entraria la
+# fuente, asi que NO cambia ni un encuadre ni un corte ni un tiempo: el plan de planos
+# queda intacto y las cuatro reglas de repeticion se siguen cumpliendo igual.
+#
+# Los que estan cuadriculados pero casi no se amplian (las fulguraciones se recortan a
+# 3400 px y se amplian 1,1x: el bloque nunca crece) van con un blur barato en vez del
+# modelo.
+# macOS trae bash 3.2, que no tiene arrays asociativos. Se consultan los mapas con awk.
+# LA CLAVE LLEVA LA DURACION ademas de fuente, arranque y recorte. Sin ella dos planos
+# que reusan la misma fuente con otro largo colapsan en una entrada y el mas largo se
+# lleva el intermedio del mas corto. Pasa de verdad: lava1 y rio.
+ia_buscar() {   # $1 = "fuente|arranque|duracion|recorte"  ->  "intermedio|ancho|alto"
+  [[ -f "$AQUI/.ia/mapa.txt" ]] || return 0
+  awk -F'|' -v k="$1" '$1"|"$2"|"$3"|"$4==k {print $5"|"$6"|"$7; exit}' "$AQUI/.ia/mapa.txt"
+}
+ia_blur() {     # $1 = misma clave  ->  sigma  o nada
+  [[ -f "$AQUI/.ia/blur.txt" ]] || return 0
+  awk -F'|' -v k="$1" '$1"|"$2"|"$3"|"$4==k {print $5; exit}' "$AQUI/.ia/blur.txt"
+}
+[[ -f "$AQUI/.ia/mapa.txt" ]] && echo "  $(wc -l < "$AQUI/.ia/mapa.txt" | tr -d ' ') planos reconstruidos con el modelo"
+[[ -f "$AQUI/.ia/blur.txt" ]] && echo "  $(wc -l < "$AQUI/.ia/blur.txt" | tr -d ' ') planos con blur de desbloqueo"
 
 PLANOS=()
 while IFS='|' read -r clave ruta ss dur recorte variante trat vel curva; do
   [[ -z "$clave" || "$clave" == \#* ]] && continue
+  # el plan guarda rutas relativas a la raiz, para que sobreviva a mover carpetas
+  ruta_rel="$ruta"
+  [[ "$ruta" != /* ]] && ruta="$RAIZ/$ruta"
   # la curva la decide `planos.py`: "alzada" para los planos que median casi negros
   case "$curva" in
     alzada) C="$ALZADA" ;;
@@ -200,7 +267,7 @@ while IFS='|' read -r clave ruta ss dur recorte variante trat vel curva; do
   # el material de archivo (`arch`) sigue con la SUAVE cuando no se lo levanto
   if [[ "$trat" == "arch" && "$curva" != "alzada" ]]; then C="$SUAVE"; fi
   case "$trat" in
-    sol)    f="$(t_sol   "$recorte" "$variante" 1.7 "$C")" ;;
+    sol)    f="$(t_sol   "$recorte" "$variante" 1.7 "$C" "$(basename "$ruta")")" ;;
     palma)  f="$(t_palma "$recorte" "$variante")" ;;
     pelo)   f="$(t_pelo  "$recorte" "$variante" 1.45 "$C")" ;;
     charco) f="$(t_charco_v "$recorte" "$variante")" ;;
@@ -219,9 +286,53 @@ while IFS='|' read -r clave ruta ss dur recorte variante trat vel curva; do
   # DEFORMA, hace que el agua se derrita. `blend` solo mezcla los vecinos, y cuesta 25
   # veces menos.
   if awk -v v="$vel" 'BEGIN{exit !(v > 1.02)}'; then f="$FLUIDO,$f"; fi
+
+  # SUSTITUCION POR EL INTERMEDIO. La clave es la IDENTIDAD del plano (fuente, arranque,
+  # recorte) y no el numero de linea, porque este bucle saltea vacias y comentarios y los
+  # indices se correrian.
+  clave_ia="$ruta_rel|$ss|$dur|$recorte"
+  ia_hit="$(ia_buscar "$clave_ia")"
+  if [[ -n "$ia_hit" ]]; then
+    IFS='|' read -r ia_ruta ia_w ia_h <<< "$ia_hit"
+    # GUARDA. El intermedio es `escala` veces mas grande que el recorte original, asi que
+    # cualquier filtro medido en PIXELES que venga despues quedaria fuera de escala: un
+    # segundo `crop` (t_rotado, t_geom), un `gblur`, un `unsharp`. Hoy ningun plano del
+    # modelo usa esos grados, pero si alguna vez lo hace esto tiene que frenar el build
+    # en vez de sacar un encuadre corrido en silencio.
+    resto="${f#*crop=[0-9]*:[0-9]*:[0-9]*:[0-9]*}"
+    if [[ "$resto" == *crop=* || "$resto" == *gblur=* || "$resto" == *unsharp=* ]]; then
+      echo "ERROR: el plano $clave usa un grado medido en pixeles y tiene intermedio." >&2
+      echo "       Reescalá esos parametros por el factor del modelo o sacalo de mejorar.py." >&2
+      exit 1
+    fi
+    # el primer crop pasa a ser el cuadro entero del intermedio, que ya viene recortado
+    f="$(sed -E "s/crop=[0-9]+:[0-9]+:[0-9]+:[0-9]+/crop=${ia_w}:${ia_h}:0:0/" <<< "$f")"
+    ruta="$RAIZ/$ia_ruta"
+    ss=0
+  else
+    ia_sig="$(ia_blur "$clave_ia")"
+    if [[ -n "$ia_sig" ]]; then
+      # el blur va ANTES del grado: despues el contraste ya estiro el escalon del bloque
+      f="${f/format=gray16le,/format=gray16le,gblur=sigma=${ia_sig},}"
+    fi
+  fi
+
   PLANOS+=("$ruta|$ss|$dur|setpts=$vel*PTS,$f|$(awk -v v="$vel" 'BEGIN{printf "%.4f", 1/v}')")
 done < "$LISTA"
 echo "  ${#PLANOS[@]} planos leidos de planos.py"
+
+# PRUEBA EN SECO. Imprime la lista ya construida y sale, sin renderizar nada. Sirve para
+# ver que la sustitucion por los intermedios quedo bien antes de pagar un build entero.
+if [[ "${1:-}" == "--seco" || "${2:-}" == "--seco" ]]; then
+  i=1
+  for p in "${PLANOS[@]}"; do
+    IFS='|' read -r s_src s_ss s_dur s_f s_vel <<< "$p"
+    marca="   "; [[ "$s_src" == *.ia/* ]] && marca="IA "
+    printf '%s%3d  %-34s ss=%-8s dur=%-5s %s\n' "$marca" "$i" "$(basename "$s_src")" "$s_ss" "$s_dur" "$s_f"
+    i=$((i+1))
+  done
+  exit 0
+fi
 
 # LA GUARDA DE LAS CUATRO REGLAS, otra vez sobre la lista YA construida. `planos.py` las
 # cumple por construccion, pero esto verifica el resultado final: si alguna vez alguien
@@ -260,7 +371,7 @@ rm -f "$CHK"
 
 # Los cortes del acto del moog tienen que caer sobre los cambios de enunciado. Los
 # tiempos se leen de `melodia.py`, no se copian a mano.
-MOOG_T="$(cd "$AQUI/.." && python3.10 -c "
+MOOG_T="$(cd "$RAIZ/transmissions/02/themes/bj3_n_pt" && python3.10 -c "
 import sys, os
 sys.path.insert(0, os.getcwd())
 sys.path.insert(0, os.path.join(os.getcwd(), '..', '..', 'framework'))
