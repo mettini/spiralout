@@ -357,14 +357,14 @@
               "title": "YouTube discovery/in-feed ads — targetear audiencias de artistas similares con los 3 visualizers (pilot $20-50)",
               "status": "in_progress",
               "owner": "both",
-              "note": "Campaña creada 2026-07-26 (docs/34). Modo experto, tipo Video → Visualizaciones de vídeo, SOLO formato in-feed (in-stream y Shorts destildados). Presupuesto diario 1.500 ARS (~USD 1/día, ~76 vistas/día), prepago 50.000 ARS. Puja CPV 19,74 ARS. Geo: US/UK/DE/NL/CA/AU (Argentina, México y Colombia descartados: con puja por CPV se comen el presupuesto de los mercados donde vive la escena — irían como campaña aparte). Targeting: solo palabras clave, emplazamientos descartados porque Cryo Chamber (@cryochamberlabel, 427k) y Steve Roach (/c/SteveRoachOfficial, 12,5k) son los ÚNICOS canales oficiales verificados del nicho: Lustmord, Atrium Carceri, Kammarheit, Northaunt, Deathprod, Köner y Stars of the Lid NO tienen canal propio. Los 3 videos cargados. Versiones verticales automáticas destildadas (recortan el encuadre 4K). Sin CTA, para que lea orgánico. URL final: spiralout.space/aem/. Pendiente: vincular GA4 (G-4VMFWJJE14)."
+              "note": "Corriendo desde el 26/07. Segunda revision 2026-09-14 (docs/48): el ajuste del 22/08 funciono, CPV -16% y +16% views a plata constante. Con las conversiones ya prendidas se aplicaron tres cambios mas: Paises Bajos excluido (CPV 140,82 y cero conversiones), Colombia pierde su +30% (mejor CPV de la cuenta pero PEOR costo por conversion) y Argentina pasa a +30% (mejor costo por conversion, 1.583 contra 3.168 de Mexico). Presupuesto SIN tocar en ARS 2.500/dia por decision del user y porque el costo marginal que proyecta Google es 5x el CPV actual."
             },
             {
               "id": "ads-verificar-terminos-precisos",
               "title": "Verificar si los terminos precisos de los ads arrancaron a recibir impresiones",
-              "status": "todo",
+              "status": "done",
               "owner": "claude",
-              "note": "Sale de la optimizacion del 06/08 (docs/34 §6). Se pausaron 'cosmic ambient' y 'ambient music', que se comian el 74% de las impresiones. La pregunta unica: ¿se movieron 'deep space ambient' (10 impr), 'dark drone' (13), 'dungeon synth' (9), 'space ambient' (22) y 'cryo chamber' (1) en los 11 dias previos? Mirar view rate y CPV por keyword, NO clics. Si se mueven con view rate decente, el problema era la distribucion del presupuesto y esta resuelto. Si siguen en cero, no hay volumen en esos terminos y hay que cambiar de palanca (docs/32 §C). Recordar: NO subir el presupuesto por mas que la UI insista, y los emplazamientos por canal estan descartados a este presupuesto.",
+              "note": "Cerrado el 2026-09-14 como NEGATIVO: no hay volumen en los terminos finos (deep space ambient, drone music, dark drone, dungeon synth, cryo chamber suman 2,7% de las impresiones). Ver docs/48. La campana se optimiza por pais y por keywords medias, no por terminos finos.",
               "eta": "2026-08-13"
             },
             {

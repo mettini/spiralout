@@ -770,3 +770,147 @@ Base contra la que comparar (29/07 al 27/08): CPV **ARS 84,57**, view rate
   22/08 y a esta fecha sigue habiendo una sola conversión, de Argentina.
 - **Sigue pendiente la exclusión de 18-24**, que falló dos veces con error de
   servidor de Google el 22/08.
+
+---
+
+# Segunda revisión (2026-09-14)
+
+> Se entró a la cuenta a verificar si los cambios del 22/08 funcionaron y si hacía
+> falta ajustar algo más. **El ajuste del 22/08 funcionó.** Se aplicaron tres cambios
+> nuevos, esta vez apuntados a conversión.
+
+## 1. Qué se había aplicado del playbook
+
+El 22/08 entre las 20:20 y las 20:37 se aplicaron, en este orden:
+
+| Hora | Cambio | Sección |
+|---|---|---|
+| 20:20 | 2 broad match keywords enabled (`cosmic ambient`, `ambient music`) | §4.1 |
+| 20:22 | 1 negative country changed (Alemania, más Canadá y Australia) | §4.2 |
+| 20:31 | Campaign changed (entra el +30% de Colombia) | no estaba en el playbook |
+| 20:36 | Engagements (YouTube hosted) added · channel subscriptions a "Yes" | §3.4 |
+| 20:37 | YouTube follow-on views added · a "Yes" | §3.4 |
+
+Y **no se tocó nada más** entre el 22/08 y el 14/09. O sea que la ventana posterior es
+una medición limpia del efecto.
+
+Quedaron sin aplicar: §3.2 (GA4), §4.3 (18-24), §4.5 (frequency capping), §4.6 (rotar
+anuncios), §4.7 (computers -50%).
+
+## 2. El resultado: el ajuste del 22/08 funcionó
+
+Período 23/08 al 14/09 (23 días) contra el período anterior de igual largo:
+
+| | 23/08 al 14/09 | Δ |
+|---|---|---|
+| Costo | ARS 56.987,84 | -1.297,68 (plano) |
+| **TrueView CPV** | **ARS 68,66** | **-12,97 (-16%)** |
+| **TrueView views** | **830** | **+116 (+16%)** |
+| Impresiones | 28.436 | +8.639 |
+| TrueView view rate (in-feed) | 2,92% | -0,69 pp |
+| Clics | 27 · CTR 0,09% | +3 · -0,03 pp |
+| **Conversiones** | **17** · conv. rate 2,02% · ARS 3.352/conv | antes no se medían |
+
+A plata constante, **16% más views y 16% más baratas**. El view rate bajó, y está bien:
+es el intercambio esperado de comprar más inventario a menor precio.
+
+**Esto revierte el daño del 06/08**, que había subido el CPV un 28%. El CPV vuelve de
+87,87 a 68,66, o sea por debajo incluso del 68,50 pre-ajuste.
+
+## 3. Lo que habilitaron las conversiones
+
+Por primera vez hay datos de conversión, y ordenan la decisión. Período 23/08 al 14/09:
+
+| País | Impr | Views | View rate | CPV | Costo | Conv | Costo/conv |
+|---|---|---|---|---|---|---|---|
+| **Argentina** | 5.837 | 177 | 3,03% | 62,59 | 11.078,26 | **7** | **1.582,61** |
+| México | 13.596 | 343 | 2,52% | 73,88 | 25.341,01 | 8 | 3.167,63 |
+| Colombia | 4.130 | 151 | **3,66%** | **54,19** | 8.183,16 | 2 | **4.091,58** |
+| Estados Unidos | 2.752 | 104 | **3,78%** | 71,92 | 7.479,35 | 0 | n/d |
+| Reino Unido | 1.244 | 28 | 2,25% | 52,24 | 1.462,79 | 0 | n/d |
+| **Países Bajos** | 671 | 20 | 2,98% | **140,82** | 2.816,38 | **0** | n/d |
+
+**El hallazgo que cambia la lectura: el CPV y el view rate NO predicen la conversión.**
+Colombia tiene el mejor CPV de la cuenta (54,19) y el mejor view rate (3,66%), y es el
+PEOR costo por conversión de los tres países que convierten (4.091,58). Argentina tiene
+peor view rate que Colombia y convierte a menos de la mitad de costo.
+
+Hasta ahora la cuenta se venía optimizando por CPV porque era lo único que había. Con
+conversiones prendidas, optimizar por CPV puede empujar plata exactamente al lugar
+equivocado.
+
+## 4. Los tres cambios aplicados el 14/09
+
+### 4.1. Países Bajos excluido
+
+CPV 140,82, más del doble del promedio de la cuenta (68,66), 20 views y cero
+conversiones sobre ARS 2.816 gastados. Es el mismo perfil exacto que tenía Alemania
+cuando se la excluyó: caro **y** sin resonancia.
+
+Efecto inmediato medido sobre la misma ventana: el CPV del total baja de 68,66 a
+**66,68** con solo sacarla del cálculo.
+
+Exclusiones de la campaña ahora: Países Bajos, Alemania, Canadá, Australia.
+
+### 4.2. Se le sacó el +30% a Colombia
+
+Ese ajuste se había puesto el 22/08 y **no estaba en el playbook**. Con los datos de
+hoy es contraproducente: está empujando presupuesto hacia el peor costo por conversión
+de la cuenta. Queda en "—".
+
+### 4.3. Argentina pasa a +30%
+
+Mejor costo por conversión de la cuenta (1.582,61, la mitad que México), mejor tasa de
+conversión (3,91%) y segundo mejor CPV (62,59). Era el único país bueno sin ajuste.
+
+## 5. Lo que NO se tocó, y por qué
+
+**Estados Unidos y Reino Unido**, cero conversiones sobre ARS 8.942. Tentador cortarlos
+y sería un error de muestra: son 132 views entre los dos y, a la tasa de conversión
+promedio de la cuenta (2,02%), lo esperado son 2 o 3 conversiones. Cero está dentro del
+ruido. Además Estados Unidos tiene el mejor view rate de la cuenta (3,78%). **Se
+revisan en dos semanas**, no ahora.
+
+**El presupuesto**, que sigue en ARS 2.500/día. Google empuja el "Fix budget" en cada
+pantalla. Sigue siendo mal negocio por lo de §3.1: sus propias proyecciones dan un
+costo marginal de ARS 358 por view, cinco veces el CPV actual.
+
+## 6. Advertencia sobre las 17 conversiones
+
+Son **engagements de YouTube**: suscripciones al canal, follow-on views y engagements
+del video. **No son ventas ni visitas al sitio.** Sirven para lo que se usaron acá, que
+es comparar países entre sí con la misma vara, y no sirven para calcular retorno.
+
+## 7. GA4: qué estaba y qué faltaba (corrección)
+
+Este playbook decía en §3.2 que faltaba "vincular GA4", y la primera versión de esta
+revisión lo repitió sin verificarlo. **Estaba a medias y conviene dejar la distinción
+escrita, porque son dos cosas distintas que se confunden todo el tiempo:**
+
+| | Estado al 14/09 |
+|---|---|
+| GA4 instalado en `spiralout.space` | **SÍ**, desde antes. Measurement ID `G-4VMFWJJE14` |
+| Propiedad GA4 vinculada a Google Ads | **NO**. Property ID 538059451, marcada "unlinked" |
+
+Lo primero mide el sitio. Lo segundo es lo que deja que Ads **vea** esas métricas y
+pueda atribuir. Tener el tag puesto no vincula nada.
+
+Detalle que también estaba mal contado: **no es Tag Manager.** Es el snippet directo de
+GA4 (`gtag.js`). Confunde porque se sirve desde el dominio `googletagmanager.com`, pero
+no hay contenedor GTM en el sitio. Importa a la hora de agregar eventos de conversión:
+hay que tocar el HTML, no una interfaz de GTM.
+
+**Aplicado el 14/09**: se vinculó la propiedad. La recomendación desapareció de la lista
+y con ella la categoría "Measurement" del panel.
+
+Lo que habilita, y que todavía no existe: eventos propios en el sitio (escuchar en
+Bandcamp, ir a YouTube, etc.). Sin eventos definidos, el vínculo no trae nada por sí
+solo. **Ese es el próximo paso real si se quiere medir algo más que engagement de
+YouTube.**
+
+## 8. Qué mirar en la próxima revisión
+
+- ¿Bajó el costo por conversión del total, ahora que la plata se corre hacia Argentina?
+- ¿Estados Unidos y Reino Unido siguen en cero con más volumen acumulado?
+- ¿México sostiene el volumen siendo el doble de caro por conversión que Argentina?
+- ¿GA4 empezó a reportar algo? Sin eventos definidos en el sitio, probablemente no.
