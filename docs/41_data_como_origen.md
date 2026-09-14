@@ -133,8 +133,26 @@ data del CERN estando ahí.
 
 Eso además contesta la pregunta que el circuito hace primero: por qué **esta** data.
 
-**Sin verificar:** formato exacto, cadencia, vía de descarga y licencia. Es el paso
-0 del PoC, no un dato asumido.
+**VERIFICADO el 2026-08-29** (ya no es el paso 0 pendiente):
+
+- **Derechos.** El contenido de NASA en general **no tiene copyright en Estados
+  Unidos**. Se puede usar; hay que **acreditar a NASA**, no sugerir que NASA avala
+  nada, y no usar el insignia ni el logotipo, que sí están protegidos. Cuando NASA
+  publica material de terceros lo marca con el titular, y eso hay que pedirlo aparte.
+- **Dónde está la data.** Planetary Data System de NASA y el repositorio de la
+  Universidad de Iowa, que es donde vive el instrumento. El archivo de misión
+  completa de formas de onda del PWS de Voyager 1 es `VGPW_1001_R7.tar.gz`, **6,5 GB**.
+  También hay CDF calibrados del analizador de espectro de 16 canales, misión
+  completa.
+- **Por qué se puede escuchar directo.** Las ondas de plasma caen **en frecuencias
+  de audio**, entre unos cientos y unos miles de Hz. Por eso se reproducen por un
+  parlante sin transponer nada.
+- **El tramo que importa.** Voyager 1 detectó plasma interestelar denso en
+  **octubre-noviembre de 2012 y abril-mayo de 2013**. Eso es, literalmente, el cruce
+  que le da nombre al primer disco.
+
+**Sigue sin verificar:** la cadencia exacta de muestreo y qué subconjunto conviene
+bajar (6,5 GB es mucho para un PoC).
 
 **Respaldo si resulta impracticable:** el estado de la máquina (línea Silicon,
 `docs/27` hilo A). Sigue válida, pero es menos específica y no tiene coartada

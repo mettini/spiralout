@@ -382,6 +382,18 @@ NN_<topic>.md                       docs/12_release_pipeline.md
 - Renombrar el album title si se quiere algo distinto del existing concept
 - Agregar 1 accent color si la transmission lo pide (registrarlo en una
   sub-paleta documentada)
+
+### Accents por transmisión (registro)
+
+| Transmisión | Accent | Estado |
+|---|---|---|
+| 01 · Heliopause | el fósforo de la marca (`#a6d65f`) | cerrado |
+| 02 · Athanor | **azul** | bajado 2026-08-28, falta fijar el hex |
+| 03 · (sin nombre) | **rojo** | bajado 2026-08-28, falta fijar el hex |
+
+El accent NO reemplaza la paleta core: convive con `PHOSPHOR` y los fondos. Falta
+elegir los valores exactos y verificar contraste sobre `BG_DARK` con la misma vara
+que se usó para el fósforo.
 - Generar artwork nuevo SIGUIENDO los aspect ratios estándar
 - Validar QA visual: ¿se identifica como ÆM aunque el album sea otro?
 
