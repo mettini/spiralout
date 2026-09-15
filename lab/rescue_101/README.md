@@ -152,6 +152,11 @@ la misma, por continuidad.
 
 ## Próximos pasos
 
+0. **Perderse menos.** Pd no se parece a nada: no hay línea de tiempo ni play. Las
+   cinco reglas que destraban están en `docs/40_pure_data_lab.md`, sección "Los
+   primeros veinte minutos". Y hay dos patches para abrir en ese orden:
+   `patches/00_hola.pd` (verificar que sale sonido) y `patches/01_bicho.pd` (el primer
+   canto sintético). Los dos usan solo objetos de Pd vanilla, así que andan sin ELSE.
 1. **Bajar plugdata** (`plugdata.org`). Corre solo, y trae la librería ELSE adentro
    así no hay que instalar nada a mano.
 2. **Bajar Pd vanilla** (`msp.ucsd.edu/software.html`) para poder renderizar sin

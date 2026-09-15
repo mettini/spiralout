@@ -76,6 +76,118 @@ Bonus: cuando bajás ELSE por deken viene adentro la carpeta
 `Live-Electronics-Tutorial`, que son cientos de patches de ejemplo comentados. Es la
 mejor documentación que existe de Pd moderno.
 
+## Los primeros veinte minutos (leer esto antes que nada)
+
+> Pd no se parece a nada que hayas usado. No hay línea de tiempo, no hay pistas, no
+> hay play. Abrís y ves una hoja en blanco. Es normal sentirse perdido: lo que falta
+> no es talento, son cinco reglas.
+
+**Hay dos patches de arranque en `lab/rescue_101/patches/`.** Abrilos con plugdata,
+en ese orden. Están comentados adentro del propio patch.
+
+| Patch | Qué hace |
+|---|---|
+| `00_hola.pd` | Un seno que **arranca solo**, sin tocar nada. Existe para verificar que sale sonido y, si no sale, para decirte dónde está el problema |
+| `01_bicho.pd` | El primer bicho: un canto sintético que nunca repite la misma nota |
+
+### Las cinco reglas
+
+**1. Hay dos modos, y ese es el 90% de la confusión inicial.**
+`Cmd+E` alterna entre ellos.
+
+- **Modo edición**: el cursor es una manito. Ahí *construís*: arrastrás cajas, tirás
+  cables. Los clics **no** hacen nada musical.
+- **Modo ejecución**: el cursor es una flecha. Ahí *tocás*: hacés clic en los botones
+  y en los mensajes y el patch responde.
+
+Si hacés clic en algo y no pasa nada, casi seguro estás en el modo equivocado.
+
+**2. Si no prendés DSP, no suena. Nunca.**
+
+**DSP** es *digital signal processing*, y en Pd es el nombre del **motor de audio**.
+Pd tiene dos mitades que corren por separado: la de eventos (números, clics, bangs),
+que anda siempre, y la de audio, que calcula 44.100 muestras por segundo y **arranca
+apagada**. Con el DSP apagado el patch funciona perfecto, los números se mueven, y no
+sale un sonido. No te avisa de nada.
+
+Se prende con `Cmd+/` y se apaga con `Cmd+.`. En plugdata es el **botón de power
+arriba a la derecha**, al lado del medidor de nivel.
+
+**Si el power está prendido y sigue sin sonar, quedan tres sospechosos, en este
+orden:**
+
+1. **El volumen de plugdata.** Tiene su propio fader en la barra de arriba, aparte del
+   volumen de macOS. Si está abajo no suena nada aunque el patch ande.
+2. **La salida de audio.** `Settings` (el engranaje) → `Audio` → **Output Device**. Si
+   quedó apuntando a la Volt 276 y la Volt no está enchufada, no hay sonido. Ponelo en
+   los parlantes de la Mac para probar.
+3. **El patch.** Que es lo último que hay que sospechar, no lo primero.
+
+`00_hola.pd` está armado justo para separar esos tres casos: arranca solo y tiene dos
+números en pantalla, un contador y un medidor. Si el contador se mueve, el patch está
+vivo. Si el medidor marca cerca de 74, el sonido **existe** y el problema es de ahí
+para afuera: volumen o salida de audio.
+
+**3. Tres tipos de caja, tres atajos.**
+En modo edición, se crean donde está el cursor:
+
+| Atajo | Qué crea | Para qué |
+|---|---|---|
+| `Cmd+1` | **Objeto** (caja de bordes rectos) | Hace algo: `osc~`, `metro`, `random` |
+| `Cmd+2` | **Mensaje** (caja con el borde derecho mordido) | Guarda un valor y lo dispara cuando le hacés clic |
+| `Cmd+5` | **Comentario** | Texto suelto, no hace nada |
+
+Escribís adentro, hacés clic afuera y la caja se crea. Si el objeto no existe, la caja
+queda punteada: o está mal escrito o falta la librería.
+
+**4. Entradas arriba, salidas abajo, y la de más a la izquierda es la caliente.**
+Los cables van de una salida (borde de abajo) a una entrada (borde de arriba). En modo
+edición, arrastrás desde el pico de abajo hasta la caja de destino.
+
+La regla que hay que memorizar: **la entrada de más a la izquierda es la "caliente"**,
+la que dispara el cálculo. Las demás son "frías": guardan el valor y esperan. Por eso
+`[+ ]` con un 5 en la entrada derecha no hace nada hasta que le llegue algo por la
+izquierda.
+
+**5. Cable grueso es audio, cable fino son números.**
+Los objetos que terminan en `~` (se dice "tilde") trabajan con señal de audio, 22050
+veces por segundo, y sus cables se dibujan gruesos. Los que no llevan tilde trabajan
+con eventos sueltos: un número, un bang, una lista, y se dibujan finos.
+
+**No se mezclan de cualquier forma.** Un número no entra a una entrada de señal salvo
+que el objeto lo permita explícitamente. El puente entre los dos mundos son `line~` y
+`vline~`, que convierten "andá a 0.3 en 500 ms" (un mensaje) en una rampa de audio.
+
+### Las cuatro cajas que ya te alcanzan para jugar
+
+- `[metro 900]` es el reloj: manda un **bang** (un "¡ahora!") cada 900 ms. Se prende
+  con un 1 y se apaga con un 0.
+- `[random 600]` tira un entero entre 0 y 599 cada vez que le llega un bang.
+- `[osc~ 220]` es un seno a 220 Hz. Si le enchufás señal por la izquierda, la
+  frecuencia pasa a salir de ahí.
+- `[dac~]` son los parlantes. Dos entradas: izquierda y derecha.
+
+Con eso está armado `01_bicho.pd` entero. Nada más que eso.
+
+### Cuando algo no anda
+
+| Síntoma | Casi siempre es |
+|---|---|
+| No suena nada | DSP apagado. Si no, el volumen de plugdata o el Output Device (ver la regla 2) |
+| Hago clic y no pasa nada | Estás en modo edición (`Cmd+E`) |
+| La caja quedó punteada | Nombre mal escrito, o falta la librería |
+| "error: signal outlet connect to nonsignal inlet" | Estás metiendo un cable grueso donde va uno fino |
+| Cruje al prender el volumen | Te falta un `line~`: el salto instantáneo es un clic |
+
+La ventana **Pd** (`Cmd+R`, o el panel de la consola en plugdata) es donde aparecen
+los errores. Tenela a la vista: en Pd los errores no se muestran encima del patch.
+
+### El atajo que más rinde
+
+Clic derecho sobre cualquier objeto → **Help**. Abre un patch de ayuda que **suena**,
+con todos los parámetros y ejemplos andando. No es documentación escrita: es un patch
+que podés tocar. Para los objetos de ELSE la ayuda es especialmente buena.
+
 ## El vocabulario mínimo
 
 De los ~600 objetos, estos son los que vamos a tocar. Los que dicen **ELSE** vienen
