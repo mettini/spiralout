@@ -159,6 +159,30 @@
     gtag('config', 'G-4VMFWJJE14');
   </script>
 
+  <!-- Eventos GA4. Uno solo, delegado en document: no hay que tocar cada <a>.
+       salida_plataforma y ver_visualizer son los que se marcan como conversion
+       en GA4 y se importan a Google Ads. Ver docs/48. -->
+  <script>
+    document.addEventListener('click', function (ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest('a') : null;
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      var nombre = (a.textContent || '').toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 40);
+
+      if (href.slice(0, 7) === 'mailto:') { gtag('event', 'contacto', { metodo: 'mail' }); return; }
+      if (href === '/aem/') { gtag('event', 'ir_a_aem', {}); return; }
+      if (!/^https?:/.test(href)) return;
+      if (a.hostname.indexOf('spiralout.space') > -1) return;
+
+      var host = a.hostname.replace(/^www\./, '');
+      if (a.closest('.visualizers')) {
+        gtag('event', 'ver_visualizer', { pieza: nombre || host });
+      } else {
+        gtag('event', 'salida_plataforma', { plataforma: nombre || host, host: host });
+      }
+    });
+  </script>
+
   <style>
     :root { --bg:#0a0a0c; --fg:#cfcfd2; --muted:#74747e; --accent:#8a7a90; }
     * { margin:0; padding:0; box-sizing:border-box; }

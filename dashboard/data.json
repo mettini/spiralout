@@ -368,6 +368,14 @@
               "eta": "2026-08-13"
             },
             {
+              "id": "ga4-eventos-sitio",
+              "title": "Eventos GA4 en el sitio y importarlos como conversion a Google Ads",
+              "status": "in_progress",
+              "owner": "both",
+              "note": "14/09: la propiedad GA4 (538059451) quedo vinculada a Ads, y el sitio tenia el tag puesto de antes (G-4VMFWJJE14, gtag.js directo, NO Tag Manager) pero cero eventos. Se agregaron cuatro en las dos paginas con un solo listener delegado: salida_plataforma (clic a Bandcamp/Spotify/Apple/Tidal/Qobuz/SoundCloud/YouTube Music/canal), ver_visualizer, ir_a_aem y contacto. Verificado en local espiando gtag. FALTA, y el orden importa: 1) deployar el sitio, 2) esperar a que GA4 los vea (hasta 24 h), 3) marcar salida_plataforma y ver_visualizer como key event en GA4, 4) importarlos a Ads en Goals > Conversions > Import. Recien ahi la campana puede optimizar por ellos. Detalle en docs/48 seccion 8.",
+              "eta": "2026-09-21"
+            },
+            {
               "id": "difusion-decision-mes2",
               "title": "Decidir cómo sigue la difusión paga (con los números del test de YouTube en la mano)",
               "status": "todo",

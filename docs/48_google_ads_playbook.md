@@ -906,11 +906,52 @@ y con ella la categoría "Measurement" del panel.
 Lo que habilita, y que todavía no existe: eventos propios en el sitio (escuchar en
 Bandcamp, ir a YouTube, etc.). Sin eventos definidos, el vínculo no trae nada por sí
 solo. **Ese es el próximo paso real si se quiere medir algo más que engagement de
-YouTube.**
+YouTube**, y está resuelto en §8.
 
-## 8. Qué mirar en la próxima revisión
+## 8. Los eventos del sitio (agregados el 14/09)
+
+El vínculo GA4 no trae nada sin eventos. Se agregaron cuatro, en las dos páginas
+(`site/spiralout/index.html` y `site/spiralout/aem/index.html`), como **un solo
+listener delegado en `document`**: no hay que tocar cada `<a>`, y si mañana se agrega
+una plataforma queda medida sola.
+
+| Evento | Cuándo | Parámetros | ¿Conversión? |
+|---|---|---|---|
+| `salida_plataforma` | Clic a Bandcamp, Spotify, Apple, Tidal, Qobuz, SoundCloud, YouTube Music, el canal | `plataforma`, `host` | **SÍ**, es el evento que importa |
+| `ver_visualizer` | Clic a uno de los tres visualizers o a la playlist | `pieza` | **SÍ** |
+| `ir_a_aem` | Clic de la home a `/aem/` | : | No, sirve de embudo |
+| `contacto` | Clic al mail del pie | `metodo` | No |
+
+**Por qué estos y no una conversión de "compró".** No hay checkout propio: la venta
+pasa en Bandcamp y el play pasa en Spotify, o sea fuera del sitio y fuera del alcance
+de la medición. Lo último que sí se puede ver es **la salida hacia la plataforma**, y
+eso es lo que se mide. Es la mejor aproximación disponible de "el ad funcionó".
+
+**Verificado antes de subir**: se sirvió el sitio local, se reemplazó `gtag` por un
+espía y se dispararon los clics. Los cuatro eventos salen con los parámetros
+correctos, los links internos no disparan nada, y un clic sobre la imagen de adentro
+del link también cuenta (el listener sube por el DOM hasta el `<a>`).
+
+### Lo que falta, y el orden importa
+
+1. **Deployar** (`task site:deploy`). Sin eso no pasa nada.
+2. **Esperar a que GA4 los vea.** Un evento nuevo no aparece en la lista hasta que
+   llega al menos uno. En tiempo real se ve en minutos; en los informes normales tarda
+   hasta 24 h.
+3. **Marcarlos como key events** en GA4: Admin → Events → el toggle "Mark as key
+   event" en `salida_plataforma` y `ver_visualizer`.
+4. **Importarlos a Google Ads**: Goals → Conversions → New → Import → Google Analytics
+   4. Recién ahí la campaña puede optimizar por ellos.
+5. Cuando estén importados, **decidir si las 17 conversiones de engagement de YouTube
+   siguen contando como conversión primaria**. Mezclar engagement de YouTube con
+   salidas a plataforma en la misma columna hace que el número no signifique nada.
+
+## 9. Qué mirar en la próxima revisión
 
 - ¿Bajó el costo por conversión del total, ahora que la plata se corre hacia Argentina?
 - ¿Estados Unidos y Reino Unido siguen en cero con más volumen acumulado?
 - ¿México sostiene el volumen siendo el doble de caro por conversión que Argentina?
-- ¿GA4 empezó a reportar algo? Sin eventos definidos en el sitio, probablemente no.
+- ¿`salida_plataforma` y `ver_visualizer` están importados como conversión en Ads, y
+  cuántas trae cada uno? Si en un mes no traen ninguna, el problema no es la campaña:
+  es que la gente llega al sitio y no sale hacia ninguna plataforma.
+

@@ -33,8 +33,11 @@ Two surfaces, one site:
 - **Plain HTML/CSS** — no framework, no build step, no bundler. Inline
   `<style>` blocks per page. The reason: the site is small, fast-loading,
   and survives renderer quirks (preview crawlers, embed cards).
-- **No JS** on the public pages (the home has an `<svg>` spiral animated
-  via CSS keyframes — that's it).
+- **Casi no hay JS.** La home tiene un `<svg>` animado por CSS keyframes, y
+  las dos páginas llevan el snippet de GA4 (`gtag.js`, measurement ID
+  `G-4VMFWJJE14`, **no** Tag Manager) más un listener de ~15 líneas que
+  manda los eventos de salida. Ver la sección "Eventos GA4" abajo. Nada más
+  que eso: no hay framework, ni bundler, ni dependencias.
 - **Fonts**: system `'Courier New', ui-monospace, monospace`. Don't add web
   font requests. The typewriter aesthetic IS the brand. Match it.
 - **Color tokens** (mirrored in `:root` CSS vars on every page):
@@ -45,6 +48,36 @@ Two surfaces, one site:
 - **Aspect of the spiral**: dotted, growing radii, ~80 circles. The exact
   data lives in `index.html` AND in `scripts/generate_share_images.py`
   (`SPIRAL_DOTS`). If you change one, sync the other.
+
+## Eventos GA4
+
+Las dos páginas mandan cuatro eventos a GA4. El código es **un solo listener
+delegado en `document`**, pegado abajo del snippet de gtag y **idéntico en
+los dos archivos**: si tocás uno, sincronizá el otro.
+
+| Evento | Se dispara con | Parámetros |
+|---|---|---|
+| `salida_plataforma` | Cualquier link externo que no sea un visualizer (Bandcamp, Spotify, Apple, Tidal, Qobuz, SoundCloud, YouTube Music, el canal) | `plataforma`, `host` |
+| `ver_visualizer` | Cualquier link externo dentro de `section.visualizers` | `pieza` |
+| `ir_a_aem` | El link de la home a `/aem/` | : |
+| `contacto` | El `mailto:` del pie | `metodo` |
+
+La clasificación sale de **dónde está el link en el DOM**, no de la URL:
+`a.closest('.visualizers')`. Por eso el canal de YouTube de la fila de
+plataformas cuenta como `salida_plataforma` y los tres videos como
+`ver_visualizer`, aunque los cuatro apunten a youtube.com. **Si movés la
+sección `.visualizers` o le cambiás la clase, se rompe la clasificación.**
+
+Los links internos no disparan nada: ya los cuenta el `page_view`.
+
+Cómo verificarlo sin ensuciar los datos reales: servir el sitio local,
+reemplazar `window.gtag` por una función que empuje a un array, poner un
+`preventDefault` en captura para que los clics no naveguen, y disparar
+`.click()` sobre cada link.
+
+`salida_plataforma` y `ver_visualizer` son los que se marcan como key event
+en GA4 y se importan a Google Ads. El detalle y el orden de los pasos está
+en `docs/48_google_ads_playbook.md` §8.
 
 ## Share images (Open Graph / social previews)
 
@@ -140,7 +173,8 @@ the Cloudflare project, deploys are by content.
 ## Things NOT to do
 
 - Don't add a build step (Vite, Next, Astro, anything). The constraint of
-  "two pages, inline CSS, no JS" is intentional.
+  "two pages, inline CSS, casi nada de JS" is intentional. El único JS que
+  puede crecer es el de medición, y aun así tiene que entrar en una pantalla.
 - Don't add web fonts. Courier New everywhere.
 - Don't replace the SVG spiral with an image — it needs to be vector for
   the favicon, OG images, and the animated home page.
